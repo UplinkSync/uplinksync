@@ -1,0 +1,10 @@
+include:
+  - local: '/.gitlab/ci/wordpress-site.yml'
+
+variables:
+  VAULT_ROLE: "wp-site-uplinksync"
+  GITHUB_ORG: "irwindoug"
+  GITHUB_REPO: "uplinksync"
+  DEPLOY_TARGET: "hostinger"
+  VAULT_SSH_PATH: "secret/data/ssh/uplinksync"
+  SITE_URL: "https://uplinksync.com"
