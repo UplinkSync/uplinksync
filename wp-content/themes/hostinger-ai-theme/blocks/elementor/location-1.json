@@ -1,0 +1,330 @@
+[
+  {
+    "id": "33ecba2",
+    "elType": "container",
+    "settings": {
+      "flex_direction": "column",
+      "padding": {
+        "unit": "rem",
+        "top": "2.25",
+        "right": "0",
+        "bottom": "2.25",
+        "left": "0",
+        "isLinked": false
+      },
+      "padding_tablet": {
+        "unit": "rem",
+        "top": "",
+        "right": "",
+        "bottom": "",
+        "left": "",
+        "isLinked": true
+      },
+      "padding_mobile": {
+        "unit": "rem",
+        "top": "",
+        "right": "",
+        "bottom": "",
+        "left": "",
+        "isLinked": true
+      }
+    },
+    "elements": [
+      {
+        "id": "7bfd3ec",
+        "elType": "container",
+        "settings": {
+          "content_width": "full"
+        },
+        "elements": [
+          {
+            "id": "3e65cad",
+            "elType": "widget",
+            "settings": {
+              "title": "Our location",
+              "align": "left",
+              "text_stroke_text_stroke_type": "yes",
+              "_css_classes": "hostinger-ai-title",
+              "__globals__": {
+                "title_color": "globals/colors?id=09cc561",
+                "typography_typography": "globals/typography?id=c83476d"
+              }
+            },
+            "elements": [],
+            "widgetType": "heading"
+          },
+          {
+            "id": "bef5a22",
+            "elType": "widget",
+            "settings": {
+              "editor": "<p>Experience unforgettable stays in the stunning Alps.</p>",
+              "_css_classes": "hostinger-ai-description",
+              "__globals__": {
+                "text_color": "globals/colors?id=09cc561",
+                "link_color": "globals/colors?id=09cc561",
+                "typography_typography": "globals/typography?id=887fca2"
+              }
+            },
+            "elements": [],
+            "widgetType": "text-editor"
+          },
+          {
+            "id": "651ce8d",
+            "elType": "container",
+            "settings": {
+              "container_type": "grid",
+              "presetTitle": "Grid",
+              "presetIcon": "eicon-container-grid",
+              "content_width": "full",
+              "flex_direction": "row",
+              "flex_justify_content": "flex-start",
+              "flex_align_items": "center",
+              "grid_columns_grid": {
+                "unit": "fr",
+                "size": 2,
+                "sizes": []
+              },
+              "grid_rows_grid": {
+                "unit": "fr",
+                "size": 1,
+                "sizes": []
+              },
+              "margin": {
+                "unit": "px",
+                "top": "0",
+                "right": "0",
+                "bottom": "0",
+                "left": "0",
+                "isLinked": true
+              },
+              "padding": {
+                "unit": "px",
+                "top": "0",
+                "right": "0",
+                "bottom": "0",
+                "left": "0",
+                "isLinked": true
+              }
+            },
+            "elements": [
+              {
+                "id": "7677bc6",
+                "elType": "container",
+                "settings": {
+                  "presetTitle": "Container",
+                  "presetIcon": "eicon-container",
+                  "content_width": "full",
+                  "width": {
+                    "unit": "%",
+                    "size": 100,
+                    "sizes": []
+                  },
+                  "flex_direction": "column",
+                  "flex_justify_content": "center",
+                  "flex_align_items": "flex-start",
+                  "flex_gap": {
+                    "column": "0",
+                    "row": "0",
+                    "isLinked": true,
+                    "unit": "px",
+                    "size": 0
+                  },
+                  "grid_columns_grid": {
+                    "unit": "fr",
+                    "size": 1,
+                    "sizes": []
+                  },
+                  "margin": {
+                    "unit": "px",
+                    "top": "0",
+                    "right": "0",
+                    "bottom": "0",
+                    "left": "0",
+                    "isLinked": true
+                  },
+                  "padding": {
+                    "unit": "px",
+                    "top": "0",
+                    "right": "0",
+                    "bottom": "0",
+                    "left": "0",
+                    "isLinked": true
+                  }
+                },
+                "elements": [
+                  {
+                    "id": "83c7a72",
+                    "elType": "widget",
+                    "settings": {
+                      "title": "Address",
+                      "_css_classes": "hostinger-ai-title hostinger-index-1 hostinger-ai-font-bold",
+                      "__globals__": {
+                        "title_color": "globals/colors?id=09cc561",
+                        "typography_typography": "globals/typography?id=2142591"
+                      }
+                    },
+                    "elements": [],
+                    "widgetType": "heading"
+                  },
+                  {
+                    "id": "dc9a6c7",
+                    "elType": "widget",
+                    "settings": {
+                      "editor": "<p>697 Hilltop Street, Springfield, MA, USA</p>",
+                      "column_gap": {
+                        "unit": "px",
+                        "size": 0,
+                        "sizes": []
+                      },
+                      "paragraph_spacing": {
+                        "unit": "px",
+                        "size": 0,
+                        "sizes": []
+                      },
+                      "_margin": {
+                        "unit": "px",
+                        "top": "0",
+                        "right": "0",
+                        "bottom": "0",
+                        "left": "0",
+                        "isLinked": false
+                      },
+                      "_padding": {
+                        "unit": "px",
+                        "top": "0",
+                        "right": "0",
+                        "bottom": "0",
+                        "left": "0",
+                        "isLinked": false
+                      },
+                      "__globals__": {
+                        "text_color": "globals/colors?id=09cc561",
+                        "link_color": "globals/colors?id=09cc561",
+                        "typography_typography": "globals/typography?id=887fca2"
+                      }
+                    },
+                    "elements": [],
+                    "widgetType": "text-editor"
+                  }
+                ],
+                "isInner": true
+              },
+              {
+                "id": "4d23da8",
+                "elType": "container",
+                "settings": {
+                  "presetTitle": "Container",
+                  "presetIcon": "eicon-container",
+                  "content_width": "full",
+                  "width": {
+                    "unit": "%",
+                    "size": 100,
+                    "sizes": []
+                  },
+                  "flex_direction": "column",
+                  "flex_gap": {
+                    "column": "0",
+                    "row": "0",
+                    "isLinked": true,
+                    "unit": "px",
+                    "size": 0
+                  },
+                  "grid_columns_grid": {
+                    "unit": "fr",
+                    "size": 1,
+                    "sizes": []
+                  },
+                  "margin": {
+                    "unit": "px",
+                    "top": "0",
+                    "right": "0",
+                    "bottom": "0",
+                    "left": "0",
+                    "isLinked": true
+                  },
+                  "padding": {
+                    "unit": "px",
+                    "top": "0",
+                    "right": "0",
+                    "bottom": "0",
+                    "left": "0",
+                    "isLinked": true
+                  }
+                },
+                "elements": [
+                  {
+                    "id": "fc5d92b",
+                    "elType": "widget",
+                    "settings": {
+                      "title": "Hours",
+                      "_css_classes": "hostinger-ai-title hostinger-index-2 hostinger-ai-font-bold",
+                      "__globals__": {
+                        "title_color": "globals/colors?id=09cc561",
+                        "typography_typography": "globals/typography?id=2142591"
+                      }
+                    },
+                    "elements": [],
+                    "widgetType": "heading"
+                  },
+                  {
+                    "id": "1a60855",
+                    "elType": "widget",
+                    "settings": {
+                      "editor": "<p>9am - 6pm</p>",
+                      "column_gap": {
+                        "unit": "px",
+                        "size": 0,
+                        "sizes": []
+                      },
+                      "paragraph_spacing": {
+                        "unit": "px",
+                        "size": 0,
+                        "sizes": []
+                      },
+                      "_margin": {
+                        "unit": "px",
+                        "top": "0",
+                        "right": "0",
+                        "bottom": "0",
+                        "left": "0",
+                        "isLinked": false
+                      },
+                      "_padding": {
+                        "unit": "px",
+                        "top": "0",
+                        "right": "0",
+                        "bottom": "0",
+                        "left": "0",
+                        "isLinked": false
+                      },
+                      "__globals__": {
+                        "text_color": "globals/colors?id=09cc561",
+                        "link_color": "globals/colors?id=09cc561",
+                        "typography_typography": "globals/typography?id=887fca2"
+                      }
+                    },
+                    "elements": [],
+                    "widgetType": "text-editor"
+                  }
+                ],
+                "isInner": true
+              }
+            ],
+            "isInner": true
+          },
+          {
+            "id": "be46c88",
+            "elType": "widget",
+            "settings": {
+              "html": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d47368.39682225005!2d-72.489385!3d42.09623!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e6e85bbff73363%3A0x5241d930e1909b8f!2sHilltop%20St%2C%20Springfield%2C%20MA%2001128!5e0!3m2!1sen!2sus!4v1722498156021!5m2!1sen!2sus\" height=\"450\" style=\"width: 100%; min-width: 100%; border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
+            },
+            "elements": [],
+            "widgetType": "html"
+          }
+        ],
+        "isInner": true
+      }
+    ],
+    "isInner": false
+  }
+]

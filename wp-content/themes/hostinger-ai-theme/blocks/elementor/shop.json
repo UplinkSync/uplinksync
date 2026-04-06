@@ -1,0 +1,55 @@
+[
+  {
+    "id": "0e93e24",
+    "elType": "container",
+    "settings": {
+      "padding": {
+        "unit": "rem",
+        "top": "2.25",
+        "right": "0",
+        "bottom": "2.25",
+        "left": "0",
+        "isLinked": false
+      },
+      "padding_tablet": {
+        "unit": "rem",
+        "top": "",
+        "right": "",
+        "bottom": "",
+        "left": "",
+        "isLinked": true
+      },
+      "padding_mobile": {
+        "unit": "rem",
+        "top": "",
+        "right": "",
+        "bottom": "",
+        "left": "",
+        "isLinked": true
+      }
+    },
+    "elements": [
+      {
+        "id": "7d9b223",
+        "elType": "container",
+        "settings": {
+          "flex_direction": "column",
+          "content_width": "full"
+        },
+        "elements": [
+          {
+            "id": "2ad0913",
+            "elType": "widget",
+            "settings": {
+              "shortcode": "[products limit=\"9\" columns=\"3\" paginate=\"true\"]"
+            },
+            "elements": [],
+            "widgetType": "shortcode"
+          }
+        ],
+        "isInner": true
+      }
+    ],
+    "isInner": false
+  }
+]
