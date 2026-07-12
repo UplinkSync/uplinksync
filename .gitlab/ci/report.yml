@@ -120,7 +120,13 @@ policy_report:
     - job: network_membership_check_placeholder
       artifacts: true
       optional: true
-    - job: secret_audit_placeholder
+    - job: gitleaks_secret_scan
+      artifacts: true
+      optional: true
+    - job: wp_config_secret_scan
+      artifacts: true
+      optional: true
+    - job: php_syntax_check
       artifacts: true
       optional: true
     - job: public_release_validate
@@ -181,7 +187,13 @@ policy_report_on_main:
     - job: network_membership_check_placeholder
       artifacts: true
       optional: true
-    - job: secret_audit_placeholder
+    - job: gitleaks_secret_scan
+      artifacts: true
+      optional: true
+    - job: wp_config_secret_scan
+      artifacts: true
+      optional: true
+    - job: php_syntax_check
       artifacts: true
       optional: true
     - job: public_release_validate
