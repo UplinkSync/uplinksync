@@ -6,7 +6,28 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  # Deploys every push to main straight to staging.uplinksync.com.
+  # No approval gate here by design — staging is meant to be updated
+  # freely so it reflects main at all times.
+  deploy-staging:
+    uses: dirwin/platform-infra/.github/workflows/deploy-wordpress-site.yml@main
+    with:
+      site_name: uplinksync
+      deploy_target: hostinger
+      site_url: https://staging.uplinksync.com
+    secrets: inherit
+
+  # Production deploy only runs after staging succeeds, and is gated by
+  # the GitHub "production" environment. This requires a one-time manual
+  # setup step that cannot be expressed in this YAML file: in the repo's
+  # Settings -> Environments -> production, add the required reviewers
+  # (at minimum the CTO/CEO) so the deployment pauses for approval before
+  # this job is allowed to run. See docs/deploy-workflow.md for details.
+  deploy-production:
+    needs: deploy-staging
+    environment:
+      name: production
+      url: https://uplinksync.com
     uses: dirwin/platform-infra/.github/workflows/deploy-wordpress-site.yml@main
     with:
       site_name: uplinksync

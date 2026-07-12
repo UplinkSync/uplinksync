@@ -3,27 +3,105 @@
 # Phase matrix:
 #
 #   Job                      Phase 1      Phase 2      Phase 3
-#   secret_audit             BLOCKING     BLOCKING     BLOCKING
+#   gitleaks_secret_scan      BLOCKING     BLOCKING     BLOCKING
+#   wp_config_secret_scan     BLOCKING     BLOCKING     BLOCKING
 #
-# Replace secret_audit_placeholder with a repo-aware scanner when a
-# policy config tied to real secrets sources is available.
+# gitleaks_secret_scan replaced the old secret_audit_placeholder, which
+# depended on an mr_lint.secret_audit module and policy/secret-audit.yml
+# config that do not exist in this repo (see ***-39). It is a real,
+# self-contained scanner with no external package dependency.
 
-secret_audit_placeholder:
+gitleaks_secret_scan:
   extends:
     - .default_job
     - .branch_or_mr
   stage: security
-  image: python:3.12-alpine
+  image:
+    name: zricethezav/gitleaks:latest
+    entrypoint: [""]
   script:
-    - pip install --quiet pyyaml
+    - mkdir -p policy-reports
     - |
-      python -m mr_lint.secret_audit \
-        --config policy/secret-audit.yml \
-        --markdown-output policy-reports/secret-audit.md \
-        --json-output policy-reports/secret-audit.json
+      set +e
+      gitleaks detect \
+        --source . \
+        --report-format json \
+        --report-path policy-reports/gitleaks.json \
+        --redact \
+        --verbose
+      status=$?
+      set -e
+      count=$(grep -c '"RuleID"' policy-reports/gitleaks.json 2>/dev/null || echo 0)
+      if [ "$status" -ne 0 ]; then
+        echo "FAIL: gitleaks found ${count} potential secret(s). See gitleaks.json." > policy-reports/gitleaks.txt
+      else
+        echo "PASS: gitleaks found no secrets." > policy-reports/gitleaks.txt
+      fi
+      exit "$status"
   artifacts:
     when: always
     expire_in: 7 days
     paths:
-      - policy-reports/secret-audit.md
-      - policy-reports/secret-audit.json
+      - policy-reports/gitleaks.json
+      - policy-reports/gitleaks.txt
+
+# Targeted check for the WordPress config file: catches hardcoded
+# DB credentials / auth keys / salts committed in place of the
+# getenv()-based pattern this repo expects. Blocking — a real secret
+# in wp-config.php is a direct production credential leak.
+wp_config_secret_scan:
+  extends:
+    - .default_job
+    - .branch_or_mr
+  stage: security
+  image: alpine:3.20
+  script:
+    - mkdir -p policy-reports
+    - |
+      report="policy-reports/wp-config-secret-scan.txt"
+      findings="$(mktemp)"
+      : > "$report"
+
+      configs="$(find . -maxdepth 1 -iname 'wp-config*.php' ! -path './.git/*')"
+      if [ -z "$configs" ]; then
+        echo "No wp-config.php found at repo root." | tee -a "$report"
+        exit 0
+      fi
+
+      for file in $configs; do
+        echo "Scanning $file" | tee -a "$report"
+
+        # Find sensitive define() calls, then flag any whose value is NOT
+        # sourced from getenv(...) — i.e. a literal string was committed.
+        sensitive_lines="$(grep -nE \
+          "define\(\s*'(DB_PASSWORD|DB_USER|DB_NAME|DB_HOST|AUTH_KEY|SECURE_AUTH_KEY|LOGGED_IN_KEY|NONCE_KEY|AUTH_SALT|SECURE_AUTH_SALT|LOGGED_IN_SALT|NONCE_SALT)'" \
+          "$file" || true)"
+
+        [ -n "$sensitive_lines" ] || continue
+
+        old_ifs="$IFS"
+        IFS='
+      '
+        for line in $sensitive_lines; do
+          IFS="$old_ifs"
+          case "$line" in
+            *getenv\(*) ;; # value is sourced from environment — OK
+            *) echo "$line" >> "$findings" ;;
+          esac
+        done
+        IFS="$old_ifs"
+      done
+
+      if [ -s "$findings" ]; then
+        cat "$findings" | tee -a "$report"
+        echo "FAIL: literal secret-bearing define() found in wp-config.php — use getenv() instead." | tee -a "$report"
+        rm -f "$findings"
+        exit 1
+      fi
+      rm -f "$findings"
+      echo "PASS: no hardcoded secrets found in wp-config.php." | tee -a "$report"
+  artifacts:
+    when: always
+    expire_in: 7 days
+    paths:
+      - policy-reports/wp-config-secret-scan.txt

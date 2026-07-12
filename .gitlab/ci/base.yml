@@ -83,3 +83,33 @@ mr_lint_unit_tests:
   script:
     - pip install --quiet -e .
     - python -m unittest discover -s tests -p 'test_*.py'
+
+# PHP syntax check (`php -l`) on the custom, site-editable code only:
+# mu-plugins and the active theme. Deliberately excludes the vendored
+# wordpress.org/Hostinger plugins (jetpack, woocommerce, elementor,
+# litespeed-cache, hostinger-*, admin-site-enhancements) and the
+# default twentytwenty* themes — those aren't edited in this repo and
+# linting them just adds CI time without catching real regressions.
+php_syntax_check:
+  extends:
+    - .default_job
+    - .branch_or_mr
+  stage: validate
+  image: php:8.3-cli-alpine
+  script:
+    - |
+      targets="wp-content/mu-plugins wp-content/themes/hostinger-ai-theme"
+      filelist="$(mktemp)"
+      find $targets -type f -name '*.php' 2>/dev/null | sort > "$filelist"
+      if [ ! -s "$filelist" ]; then
+        echo "No custom PHP files found under: $targets"
+        rm -f "$filelist"
+        exit 0
+      fi
+      status=0
+      while IFS= read -r file; do
+        [ -n "$file" ] || continue
+        php -l "$file" || status=1
+      done < "$filelist"
+      rm -f "$filelist"
+      exit "$status"
