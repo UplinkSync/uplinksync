@@ -1,25 +1,7 @@
-stages:
-  - validate
-  - policy
-  - security
-  - network-audit
-  - docker-audit
-  - release
-  - report
-
 include:
-  - local: '/.gitlab/ci/base.yml'
-  - local: '/.gitlab/ci/policy.yml'
-  - local: '/.gitlab/ci/security.yml'
-  - local: '/.gitlab/ci/network_audit.yml'
-  - local: '/.gitlab/ci/docker_audit.yml'
-  - local: '/.gitlab/ci/release.yml'
-  - local: '/.gitlab/ci/report.yml'
+  - project: '***'
+    ref: main
+    file: '/templates/wordpress-site.gitlab-ci.yml'
 
 variables:
-  VAULT_ROLE: "wp-site-uplinksync"
-  GITHUB_ORG: "irwindoug"
-  GITHUB_REPO: "uplinksync"
-  DEPLOY_TARGET: "hostinger"
-  VAULT_SSH_PATH: "secret/data/ssh/uplinksync"
-  SITE_URL: "https://uplinksync.com"
+  THEME_SLUG: "hostinger-ai-theme"
