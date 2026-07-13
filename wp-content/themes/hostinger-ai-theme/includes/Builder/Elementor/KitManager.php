@@ -15,8 +15,8 @@ class KitManager {
             $settings = get_post_meta($this->kit_id, '_elementor_page_settings', true);
             $this->kit_settings = is_array($settings) ? $settings : [];
 
-            if (!isset($this->kit_settings['custom_colors'])) {
-                $this->kit_settings['custom_colors'] = [];
+            if ( empty( $this->kit_settings['custom_colors'] ) ) {
+                $this->transform_color_palette( self::get_default_palette() );
             }
         }
     }
@@ -98,6 +98,15 @@ class KitManager {
                 'typography_font_weight'       => 'bold',
             ],
             [
+                '_id'                          => 'ff8f921',
+                'title'                        => 'H1 Heading (400)',
+                'typography_typography'        => 'custom',
+                'typography_font_family'       => $heading,
+                'typography_font_size'         => [ 'unit' => 'rem', 'size' => 2.3, 'sizes' => [] ],
+                'typography_font_size_mobile'  => [ 'unit' => 'rem', 'size' => 1.9, 'sizes' => [] ],
+                'typography_font_weight'       => 'bold',
+            ],
+            [
                 '_id'                         => '887fca2',
                 'title'                       => 'Body',
                 'typography_typography'       => 'custom',
@@ -144,5 +153,21 @@ class KitManager {
         }
 
         return $result;
+    }
+
+    private static function get_default_palette(): ColorPaletteDto {
+        return ColorPaletteDto::from_array( [
+            'color1'    => '#F6F7F9',
+            'color2'    => '#23272F',
+            'color3'    => '#70777f',
+            'light'     => '#ffffff',
+            'dark'      => '#0d141a',
+            'grey'      => '#B8C0CC',
+            'gradients' => [
+                'z48lj' => [
+                    'gradient' => '#A8BFE4',
+                ],
+            ],
+        ] );
     }
 }

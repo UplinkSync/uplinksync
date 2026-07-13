@@ -60,7 +60,7 @@
         "sizes": []
       },
       "flex_justify_content": "flex-end",
-      "background_video_link": "https://videos.pexels.com/video-files/3992590/3992590-uhd_4096_2160_25fps.mp4"
+      "background_video_link": "https://videos.pexels.com/video-files/30014429/12877565_1920_1080_30fps.mp4"
     },
     "elements": [
       {
@@ -78,21 +78,10 @@
             "settings": {
               "title": "Hero Italian Food",
               "align": "start",
-              "typography_typography": "custom",
-              "typography_font_size": {
-                "unit": "px",
-                "size": 60,
-                "sizes": []
-              },
-              "typography_font_size_mobile": {
-                "unit": "px",
-                "size": 50,
-                "sizes": []
-              },
-              "typography_font_weight": "400",
               "_css_classes": "hostinger-ai-title hostinger-index-5 hostinger-ai-font-title",
               "__globals__": {
-                "title_color": "globals/colors?id=58be983"
+                "title_color": "globals/colors?id=58be983",
+                "typography_typography": "globals/typography?id=5535e8e"
               }
             },
             "elements": [],

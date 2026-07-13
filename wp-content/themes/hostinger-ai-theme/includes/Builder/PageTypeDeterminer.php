@@ -3,18 +3,19 @@
 namespace Hostinger\AiTheme\Builder;
 
 use Hostinger\WpHelper\Requests\Client;
+use Hostinger\WpHelper\Utils as Helper;
 use Hostinger\AiTheme\Rest\Endpoints;
 
 defined( 'ABSPATH' ) || exit;
 
 class PageTypeDeterminer {
-    /**
-     * @var Client
-     */
     private Client $client;
+    private DomainResolver $domain_resolver;
 
-    public function __construct( Client $client ) {
+    public function __construct( Client $client, ?DomainResolver $domain_resolver = null, ?Helper $helper = null ) {
         $this->client = $client;
+        $helper = $helper ?? new Helper();
+        $this->domain_resolver = $domain_resolver ?? new DomainResolver( $helper );
     }
 
     public function determine_page_type( string $description ): array {
@@ -30,8 +31,7 @@ class PageTypeDeterminer {
             'content' => $description,
         ];
 
-        $domain = parse_url( get_site_url(), PHP_URL_HOST );
-	    $domain = preg_replace('/^www\./', '', $domain);
+        $domain = $this->domain_resolver->get_current_domain();
 
         $request_body = [
             'domain'   => $domain,

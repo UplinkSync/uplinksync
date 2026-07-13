@@ -6,6 +6,24 @@ defined( 'ABSPATH' ) || exit;
 
 trait ColorUtils {
 
+	public function get_india_palette(): array {
+		return array(
+			array(
+				'color1' => '#FFF7ED',
+				'color2' => '#006C4E',
+				'color3' => '#F97316',
+		        'light' => '#FFFFFF',
+		        'dark' => '#1E1B15',
+		        'grey' => '#B8C0CC',
+		        'gradients' => array(
+		        	'z48lj' => array(
+		        		'gradient' => '#F6F4E9,#B03A2E,#FFC857,#2A1A0A',
+		        	)
+		        )
+			)
+		);
+	}
+
     public function get_required_contrast_ratio(): float {
         return 4.6;
     }
@@ -124,7 +142,14 @@ trait ColorUtils {
             );
         }
 
-        $s = $l > 0.5 ? $diff / ( 2 - $max - $min ) : $diff / ( $max + $min );
+	    $sum = $max + $min;
+	    if ( $l > 0.5 ) {
+		    $den = 2 - $sum;
+		    $s   = ( $den == 0.0 ) ? 0.0 : $diff / $den;
+	    } else {
+		    $den = $sum;
+		    $s   = ( $den == 0.0 ) ? 0.0 : $diff / $den;
+	    }
 
         switch ( $max ) {
             case $r:

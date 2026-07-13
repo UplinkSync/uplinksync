@@ -19,6 +19,6 @@ class Actions {
     public const WP_CONNECT_DOMAIN_ENTER            = 'wordpress.connect_domain.enter';
     public const WP_EASY_ONBOARDING_COMPLETED       = 'wordpress.easy_onboarding.completed';
     public const WP_BLACK_FRIDAY_BANNER_OFFER_SHOWN = 'black_friday.banner.offer_shown';
-    public const WP_ADDONS_BANNER_SHOWN             = 'wordpress.addons_banner.shown';
     public const WP_REACH_BANNER_SHOWN              = 'wordpress.reach_banner.shown';
+    public const WP_CLAIM_EMAIL_SHOWN               = 'wordpress.claim_email.shown';
 }

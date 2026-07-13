@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Hostinger AI Assistant\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-23 08:58+0000\n"
-"PO-Revision-Date: 2026-02-24 07:58+0000\n"
+"PO-Revision-Date: 2026-06-30 07:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -12,16 +12,36 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.8.1; wp-6.9.1; php-8.2.29\n"
+"X-Loco-Version: 2.8.5; wp-7.0; php-8.2.30\n"
 "X-Domain: hostinger-ai-assistant"
 
-#: includes-psr4/Mcp/Abilities/AbilitiesRegistry.php:78
+#: includes-psr4/Mcp/Abilities/AbilitiesRegistry.php:94
 msgid "Abilities that provide a way of interacting with WordPress site."
 msgstr "WordPress sitesiyle etkileşim kurmayı sağlayan yetenekler."
 
 #: includes/class-hostinger-ai-assistant-errors.php:14
 msgid "Action Failed. Try again or contact support. Apologies."
 msgstr "İşlem başarısız. Tekrar deneyin veya desteğe başvurun. Özür dileriz."
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:118
+#, fuzzy
+msgid "Activate an installed plugin by plugin file path."
+msgstr "Yüklü bir eklentiyi eklenti dosya yoluna göre etkinleştirin."
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:118
+#, fuzzy
+msgid "Activate an installed theme by stylesheet directory name."
+msgstr "Yüklü bir temayı stil sayfası dizin adına göre etkinleştirin."
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:117
+#, fuzzy
+msgid "Activate Plugin"
+msgstr "Eklentiyi Etkinleştir"
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:117
+#, fuzzy
+msgid "Activate Theme"
+msgstr "Temayı Etkinleştir"
 
 #: admin/class-hostinger-ai-assistant-translations.php:60
 msgid "Active"
@@ -40,9 +60,8 @@ msgid "Add a new product to your WooCommerce store"
 msgstr "WooCommerce mağazanıza yeni bir ürün ekleyin"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:185
-#, fuzzy
 msgid "Add a new WordPress custom post type post"
-msgstr "Yeni bir WordPress özel yazı türü gönderisi ekleme"
+msgstr "Yeni bir WordPress özel içerik türü yazısı ekleme"
 
 #: admin/class-hostinger-ai-assistant-translations.php:165
 msgid "Add a product"
@@ -55,10 +74,9 @@ msgstr "Ürün kategorisi ekleyin"
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:448
 #, fuzzy
 msgid "Add an image inside my content"
-msgstr "İçeriğimin içine bir resim ekleme"
+msgstr "İçeriğimin içine bir resim ekle"
 
 #: admin/class-hostinger-ai-assistant-translations.php:75
-#, fuzzy
 msgid "Add and manage WooCommerce products"
 msgstr "WooCommerce ürünleri ekleme ve yönetme"
 
@@ -90,9 +108,9 @@ msgstr ""
 "Yeni bir sohbet başlattıktan sonra, önceki sohbetlere geçmişten "
 "erişebileceksiniz."
 
-#: admin/class-hostinger-ai-assistant-admin.php:166
-#: admin/class-hostinger-ai-assistant-admin.php:167
-#: admin/class-hostinger-ai-assistant-admin.php:184
+#: admin/class-hostinger-ai-assistant-admin.php:171
+#: admin/class-hostinger-ai-assistant-admin.php:172
+#: admin/class-hostinger-ai-assistant-admin.php:189
 #: admin/partials/hostinger-ai-assistant-tab-view.php:24
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/index.js:10
 msgid "AI Content Creator"
@@ -107,12 +125,10 @@ msgid "AI-generated image"
 msgstr "Yapay zeka görseli"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:217
-#, fuzzy
 msgid "All LiteSpeed caches have been purged successfully."
 msgstr "Tüm LiteSpeed önbellekleri başarıyla temizlendi."
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:249
-#, fuzzy
 msgid "All websites, new users, simple websites, or cache-oriented development"
 msgstr ""
 "Tüm web siteleri, yeni kullanıcılar, basit web siteleri veya önbellek odaklı "
@@ -123,7 +139,7 @@ msgid "An unexpected error occurred. Please try again or contact support."
 msgstr ""
 "Bir hata oluştu. Lütfen tekrar deneyin veya destek ekibiyle iletişime geçin."
 
-#: includes-psr4/Mcp/McpServer.php:64
+#: includes-psr4/Mcp/McpServer.php:65
 msgid "API key required"
 msgstr "API anahtarı gerekli"
 
@@ -149,25 +165,50 @@ msgid "Are you sure you want to replace your existing content with a new one ?"
 msgstr "Mevcut içeriğinizi yenisiyle değiştirmek istediğinizden emin misiniz?"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/FindWidgets.php:28
-#, fuzzy
 msgid ""
 "Array of widget types to search for (e.g., [\"button\", \"heading\", "
 "\"image\"])"
 msgstr ""
-"Aranacak widget türlerinin dizisi (örneğin, [\"düğme\", \"başlık\", "
-"\"resim\"])"
+"Aranacak widget türlerinin dizisi (ör. [\"button\", \"heading\", \"image\"])"
 
 #: admin/class-hostinger-ai-assistant-translations.php:53
-msgid "Ask Kodee"
-msgstr "Kodee'ye Sor"
+#, fuzzy
+msgid "Ask AI"
+msgstr "AI’ya sor"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:168
+#, fuzzy
+msgid ""
+"Assign a menu to a given theme location (e.g., primary). Provide location "
+"and menu ID."
+msgstr ""
+"Belirli bir tema konumuna (örn. birincil) bir menü atayın. Konumu ve menü "
+"kimliğini belirtin."
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:73
+#, fuzzy
+msgid ""
+"Assign a navigation to a template part by providing template_part_id and "
+"navigation_id."
+msgstr ""
+"template_part_id ve navigation_id değerlerini girerek bir şablon parçasına "
+"bir gezinme öğesi atayın."
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/AssignGlobalColor.php:14
-#, fuzzy
 msgid "Assign Elementor Global Color"
 msgstr "Elementor Global Renk Atama"
 
-#: includes-psr4/Mcp/Abilities/Tools/Elementor/AssignGlobalColor.php:15
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:167
 #, fuzzy
+msgid "Assign Menu To Location"
+msgstr "Menüyü Konuma Atama"
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:72
+#, fuzzy
+msgid "Assign Navigation To Template Part"
+msgstr "Şablon Parçasına Gezinme Atama"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/AssignGlobalColor.php:15
 msgid ""
 "Assigns Elementor global colors to widget properties. First use "
 "get_active_kit to see available global colors and their IDs. Common color "
@@ -176,17 +217,17 @@ msgid ""
 "hover_color. This creates a dynamic link - when the global color changes in "
 "the kit, all widgets using it update automatically."
 msgstr ""
-"Elementor global renklerini widget özelliklerine atar. Mevcut global "
-"renkleri ve ID'lerini görmek için önce get_active_kit'i kullanın. Yaygın "
-"renk özellikleri: title_color (başlık rengi), text_color (paragraf rengi), "
+"Elementor genel renklerini widget özelliklerine atar. Önce mevcut genel "
+"renkleri ve kimliklerini görmek için get_active_kit kullanın. Yaygın renk "
+"özellikleri: title_color (başlık rengi), text_color (paragraf rengi), "
 "background_color, button_background_color, button_text_color, border_color, "
-"hover_color. Bu dinamik bir bağlantı oluşturur - kitteki global renk "
-"değiştiğinde, onu kullanan tüm widget'lar otomatik olarak güncellenir."
+"hover_color. Bu işlem dinamik bir bağlantı oluşturur. Kit içindeki genel "
+"renk değiştirildiğinde bu rengi kullanan tüm widgetlar otomatik olarak "
+"güncellenir."
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:293
-#, fuzzy
 msgid "Asynchronous CSS Loading with Critical CSS"
-msgstr "Critical CSS ile Asenkron CSS Yükleme"
+msgstr "Kritik CSS ile eşzamansız CSS yükleme"
 
 #. translators: %s: PHP version
 #: admin/class-hostinger-ai-assistant-notices.php:22
@@ -195,7 +236,6 @@ msgid "Attention:"
 msgstr "Dikkat:"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:46
-#, fuzzy
 msgid "Background color"
 msgstr "Arka plan rengi"
 
@@ -209,58 +249,79 @@ msgstr ""
 "Derinlik ve okunabilirliği dengeleyerek kitlelerin ilgisini çeker ve "
 "potansiyel müşterileri yönlendirir."
 
-#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:50
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:90
 #, fuzzy
+msgid ""
+"Batch create, update, and delete WooCommerce coupons in a single request."
+msgstr ""
+"WooCommerce kuponlarını tek bir istekle toplu olarak oluşturun, güncelleyin "
+"ve silin."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:89
+#, fuzzy
+msgid "Batch Update WooCommerce Coupons"
+msgstr "WooCommerce Kuponlarını Toplu Güncelleme"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:50
 msgid "Border color"
 msgstr "Kenarlık rengi"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:287
-#, fuzzy
 msgid "Border color (hex, rgb, rgba)"
 msgstr "Kenarlık rengi (hex, rgb, rgba)"
 
-#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:291
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:124
 #, fuzzy
+msgid "Border radius (number for all corners) or object with corners and unit"
+msgstr ""
+"Kenar yarıçapı (tüm köşeler için tek bir değer) veya köşeleri ve birimi olan "
+"nesne"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:291
 msgid "Border radius for corners"
 msgstr "Köşeler için kenarlık yarıçapı"
 
-#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:242
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:168
 #, fuzzy
+msgid "Border style"
+msgstr "Sınır stili"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:242
 msgid "Border style type"
 msgstr "Kenarlık stili türü"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:238
-#, fuzzy
 msgid "Border styling"
 msgstr "Kenarlık şekillendirme"
 
-#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:254
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:159
 #, fuzzy
+msgid "Border width (number for all sides) or object with sides and unit"
+msgstr ""
+"Kenar genişliği (tüm kenarlar için tek bir sayı) veya kenarları ve birimi "
+"olan nesne"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:254
 msgid "Border width for each side"
 msgstr "Her bir taraf için kenarlık genişliği"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:266
-#, fuzzy
 msgid "Bottom border width (as string)"
 msgstr "Alt kenarlık genişliği (dize olarak)"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:217
-#, fuzzy
 msgid "Bottom margin value (as string)"
 msgstr "Alt kenar boşluğu değeri (dize olarak)"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:179
-#, fuzzy
 msgid "Bottom padding value (as string)"
 msgstr "Alt dolgu değeri (dize olarak)"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:307
-#, fuzzy
 msgid "Bottom-left border radius (as string)"
 msgstr "Sol alt kenarlık yarıçapı (dize olarak)"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:303
-#, fuzzy
 msgid "Bottom-right border radius (as string)"
 msgstr "Sağ alt kenarlık yarıçapı (dize olarak)"
 
@@ -273,20 +334,18 @@ msgid "Browser Cache"
 msgstr "Tarayıcı Önbelleği"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:58
-#, fuzzy
 msgid "Button background color"
-msgstr "Düğme arka plan rengi"
+msgstr "Buton arka plan rengi"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:54
-#, fuzzy
 msgid "Button text color"
-msgstr "Düğme metin rengi"
+msgstr "Buton metin rengi"
 
 #: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:69
 msgid "Bypass code for maintenance mode"
 msgstr "Bakım modu için bypass kodu"
 
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:187
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:191
 msgid ""
 "Bypass code for maintenance mode. Needed only when maintenance mode is "
 "enabled."
@@ -298,6 +357,21 @@ msgstr ""
 #: admin/partials/hostinger-ai-assistant-tab-view.php:251
 msgid "Cancel"
 msgstr "İptal"
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:324
+#, fuzzy
+msgid "Cannot delete an active plugin."
+msgstr "Etkin bir eklenti silinemiyor."
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:313
+#, fuzzy
+msgid "Cannot delete the active parent theme."
+msgstr "Etkin üst tema silinemiyor."
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:305
+#, fuzzy
+msgid "Cannot delete the active theme."
+msgstr "Etkin tema silinemiyor."
 
 #: admin/class-hostinger-ai-assistant-translations.php:58
 msgid "Cannot restart the chat when Kodee is responding"
@@ -346,13 +420,49 @@ msgid "Close"
 msgstr "Kapat"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:34
-#, fuzzy
 msgid ""
 "Color properties. Values should be valid CSS colors (hex, rgb, rgba). "
 "Example: \"#FF0000\" or \"rgb(255,0,0)\""
 msgstr ""
 "Renk özellikleri. Değerler geçerli CSS renkleri (hex, rgb, rgba) olmalıdır. "
 "Örnek: \"#FF0000\" veya \"rgb(255,0,0)\""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:105
+#, fuzzy
+msgid "Column gap for grid or flex (px)"
+msgstr "Grid veya flex için sütun aralığı (px)"
+
+#: includes-psr4/Nudges/WooCommerceSetupNudge.php:61
+#, fuzzy
+msgid "Complete WooCommerce setup"
+msgstr "WooCommerce kurulumunu tamamlayın"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/DeleteContainer.php:30
+#, fuzzy
+msgid ""
+"Confirm deletion when the subtree is complex (many descendants) and children "
+"will be removed."
+msgstr ""
+"Alt ağaç karmaşık olduğunda (çok sayıda alt öğe varsa) ve alt öğeler "
+"silinecekse, silme işlemini onaylayın."
+
+#: includes-psr4/Nudges/DomainNudge.php:99
+#, fuzzy
+msgid "Connect my domain"
+msgstr "Alan adımı bağla"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:61
+#, fuzzy
+msgid "Container layout type"
+msgstr "Konteyner düzeni türü"
+
+#. translators: %s: container id
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/DeleteContainer.php:92
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:367
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateContainer.php:207
+#, fuzzy, php-format
+msgid "Container with ID '%s' not found"
+msgstr "'%s' kimlik numaralı konteyner bulunamadı"
 
 #: admin/partials/hostinger-ai-assistant-tab-view.php:121
 #: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:77
@@ -368,35 +478,77 @@ msgstr "İçerik ana fikri"
 msgid "Content Type"
 msgstr "İçerik Türü"
 
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:71
+#, fuzzy
+msgid "Content width behavior for the container"
+msgstr "Kapsayıcı için içerik genişliği davranışı"
+
 #: admin/class-hostinger-ai-assistant-translations.php:79
 msgid "Conversation was closed"
 msgstr "Görüşme sonlandırıldı"
 
 #: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:65
-#, fuzzy
 msgid "Convert emoticons to graphics"
 msgstr "İfadeleri grafiklere dönüştürme"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetContent.php:123
-#, fuzzy
 msgid "Could not determine content field for widget type"
 msgstr "Widget türü için içerik alanı belirlenemedi"
 
-#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:283
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:282
 msgid "Could not determine file type"
 msgstr "Dosya türü belirlenemedi"
 
-#: includes-psr4/Mcp/Abilities/Tools/Elementor/BaseElementorTool.php:48
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/CreateContainer.php:103
 #, fuzzy
+msgid "Could not insert the new container at requested position"
+msgstr "Yeni konteyner istenen konuma eklenemedi"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/BaseElementorTool.php:48
 msgid "Could not parse Elementor data: "
 msgstr "Elementor verileri ayrıştırılamadı:"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:108
+#, fuzzy
+msgid ""
+"Create a new menu item. Provide title, url or object_id/object, and menu "
+"(menu_id)."
+msgstr ""
+"Yeni bir menü öğesi oluşturun. Başlık, URL veya object_id/object ve menü "
+"(menu_id) bilgilerini girin."
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:38
+#, fuzzy
+msgid "Create a new navigation menu."
+msgstr "Yeni bir gezinme menüsü oluşturun."
 
 #: admin/class-hostinger-ai-assistant-translations.php:171
 msgid "Create a new product category in WooCommerce"
 msgstr "WooCommerce'de yeni bir ürün kategorisi oluşturun"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:235
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:43
+#, fuzzy
+msgid "Create a new Site Editor navigation."
+msgstr "Yeni bir Site Editörü gezinme menüsü oluşturun."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:42
+#, fuzzy
+msgid ""
+"Create a new WooCommerce coupon. Requires a coupon code and discount details."
+msgstr ""
+"Yeni bir WooCommerce kuponu oluşturun. Bir kupon kodu ve indirim ayrıntıları "
+"gerektirir."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:42
+#, fuzzy
+msgid ""
+"Create a new WooCommerce order. Provide customer and line items data as "
+"needed."
+msgstr ""
+"Yeni bir WooCommerce siparişi oluşturun. Gerektiği şekilde müşteri ve ürün "
+"bilgilerini girin."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:234
 msgid "Create a new WooCommerce product brand. Requires name."
 msgstr "Yeni bir WooCommerce ürün markası oluşturun. İsim gerektirir."
 
@@ -405,78 +557,65 @@ msgid "Create a new WooCommerce product category for my store"
 msgstr "Mağazam için yeni bir WooCommerce ürün kategorisi oluştur"
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:100
-#, fuzzy
 msgid "Create a new WooCommerce product category. Requires name."
-msgstr "Yeni bir WooCommerce ürün kategorisi oluşturun. İsim gerektirir."
+msgstr "Yeni bir WooCommerce ürün kategorisi oluşturma. İsim gereklidir."
 
 #: admin/class-hostinger-ai-assistant-translations.php:167
 msgid "Create a new WooCommerce product for my store"
 msgstr "Mağazam için yeni bir WooCommerce ürünü oluştur"
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:167
-#, fuzzy
 msgid "Create a new WooCommerce product tag. Requires name."
 msgstr "Yeni bir WooCommerce ürün etiketi oluşturun. İsim gerektirir."
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:42
-#, fuzzy
 msgid ""
 "Create a new WooCommerce product. Requires name and other product details."
 msgstr ""
-"Yeni bir WooCommerce ürünü oluşturun. İsim ve diğer ürün detaylarını "
-"gerektirir."
+"Yeni bir WooCommerce ürünü oluşturun. İsim ve diğer ürün detayları "
+"gereklidir."
 
 #: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:40
-#, fuzzy
 msgid "Create a new WordPress page. Requires title and content."
 msgstr "Yeni bir WordPress sayfası oluşturun. Başlık ve içerik gerektirir."
 
 #: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:40
-#, fuzzy
 msgid "Create a new WordPress post category. Requires a name."
 msgstr "Yeni bir WordPress yazı kategorisi oluşturun. Bir isim gerektirir."
 
 #: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:40
-#, fuzzy
 msgid "Create a new WordPress post tag. Requires a name."
 msgstr "Yeni bir WordPress yazı etiketi oluşturun. Bir isim gerektirir."
 
 #: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:40
-#, fuzzy
 msgid "Create a new WordPress post. Requires title and content."
 msgstr "Yeni bir WordPress gönderisi oluşturun. Başlık ve içerik gerektirir."
 
 #: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:58
-#, fuzzy
 msgid "Create a new WordPress user. Requires username and email."
 msgstr ""
 "Yeni bir WordPress kullanıcısı oluşturun. Kullanıcı adı ve e-posta "
 "gerektirir."
 
 #: admin/class-hostinger-ai-assistant-translations.php:181
-#, fuzzy
 msgid "Create a WooCommerce sales report for a chosen period"
-msgstr "Seçilen bir dönem için WooCommerce satış raporu oluşturma"
+msgstr "Seçilen bir dönem için WooCommerce satış raporu oluşturun"
 
 #: admin/class-hostinger-ai-assistant-translations.php:72
-#, fuzzy
 msgid "Create and edit pages or posts"
 msgstr "Sayfa veya gönderi oluşturma ve düzenleme"
 
 #: admin/class-hostinger-ai-assistant-translations.php:121
-#, fuzzy
 msgid "Create and publish a new page on your WordPress site"
 msgstr "WordPress sitenizde yeni bir sayfa oluşturun ve yayınlayın"
 
 #: admin/class-hostinger-ai-assistant-translations.php:141
-#, fuzzy
 msgid "Create and publish a new post on your WordPress site"
 msgstr "WordPress sitenizde yeni bir yazı oluşturun ve yayınlayın"
 
 #: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:39
-#, fuzzy
 msgid "Create Category"
-msgstr "Kategori Oluştur"
+msgstr "Kategori Oluşturma"
 
 #: admin/partials/hostinger-ai-assistant-tab-view.php:195
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:461
@@ -485,19 +624,36 @@ msgid "Create content"
 msgstr "İçerik üret"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:184
-#, fuzzy
 msgid "Create Custom Post Type Post"
 msgstr "Özel Yazı Türü Gönderisi Oluşturma"
 
-#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:39
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/CreateContainer.php:14
 #, fuzzy
+msgid "Create Elementor Container"
+msgstr "Elementor Konteyneri Oluştur"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:37
+#, fuzzy
+msgid "Create Menu"
+msgstr "Menü Oluştur"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:107
+#, fuzzy
+msgid "Create Menu Item"
+msgstr "Menü Öğesi Oluştur"
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:42
+#, fuzzy
+msgid "Create Navigation"
+msgstr "Gezinti Oluştur"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:39
 msgid "Create Page"
-msgstr "Sayfa Oluştur"
+msgstr "Sayfa Oluşturma"
 
 #: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:39
-#, fuzzy
 msgid "Create Post"
-msgstr "Gönderi Oluştur"
+msgstr "Gönderi Oluşturma"
 
 #: admin/class-hostinger-ai-assistant-translations.php:33
 msgid "Create Post with AI"
@@ -508,107 +664,191 @@ msgid "Create product with AI"
 msgstr "Yapay zeka ile ürün oluşturun"
 
 #: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:39
-#, fuzzy
 msgid "Create Tag"
-msgstr "Etiket Oluştur"
+msgstr "Etiket Oluşturma"
 
 #: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:57
-#, fuzzy
 msgid "Create User"
-msgstr "Kullanıcı Oluştur"
+msgstr "Kullanıcı Oluşturma"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:41
+#, fuzzy
+msgid "Create WooCommerce Coupon"
+msgstr "WooCommerce Kuponu Oluşturun"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:41
+#, fuzzy
+msgid "Create WooCommerce Order"
+msgstr "WooCommerce Siparişi Oluştur"
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:41
-#, fuzzy
 msgid "Create WooCommerce Product"
 msgstr "WooCommerce Ürünü Oluşturma"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:234
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:233
 msgid "Create WooCommerce Product Brand"
 msgstr "WooCommerce Ürün Markası Oluşturma"
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:99
-#, fuzzy
 msgid "Create WooCommerce Product Category"
 msgstr "WooCommerce Ürün Kategorisi Oluşturma"
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:166
-#, fuzzy
 msgid "Create WooCommerce Product Tag"
 msgstr "WooCommerce Ürün Etiketi Oluşturma"
 
-#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:292
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/CreateContainer.php:15
 #, fuzzy
+msgid ""
+"Creates a new Elementor container (section) at root or inside a parent "
+"container. Can optionally create multiple inner columns."
+msgstr ""
+"Kök düzeyde veya bir üst konteynerin içinde yeni bir Elementor konteyneri "
+"(bölüm) oluşturur. İsteğe bağlı olarak birden fazla iç sütun oluşturabilir."
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:85
+#, fuzzy
+msgid "Cross‑axis alignment for flex containers"
+msgstr "Esnek kaplar için çapraz eksen hizalaması"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:292
 msgid "CSS & JS Combine"
 msgstr "CSS & JS Kombinasyonu"
 
-#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:273
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:34
 #, fuzzy
+msgid "CSS color value for background (e.g., #1e90ff, rgba(...), color name)"
+msgstr "Arka plan için CSS renk değeri (örn. #1e90ff, rgba(...), renk adı)"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:163
+#, fuzzy
+msgid "CSS color value for border"
+msgstr "Kenarlık için CSS renk değeri"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:273
 msgid "CSS, JS and HTML Minification"
 msgstr "CSS, JS ve HTML Minification"
 
-#: includes-psr4/Mcp/McpServer.php:42
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:33
 #, fuzzy
+msgid "Custom global color _id to update (optional)"
+msgstr "Güncellenecek özel genel renk _id (isteğe bağlı)"
+
+#: includes-psr4/Mcp/McpServer.php:43
 msgid "Custom MCP Server for Hostinger AI Assistant."
 msgstr "Hostinger AI Assistant için Özel MCP Sunucusu."
 
-#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:49
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:60
 #, fuzzy
+msgid "Custom typography preset _id to update (optional)"
+msgstr "Güncellenecek özel tipografi ön ayarı _id (isteğe bağlı)"
+
+#: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:49
 msgid "Date format"
 msgstr "Tarih biçimi"
 
-#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:245
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:163
 #, fuzzy
+msgid "Deactivate an active plugin by plugin file path."
+msgstr "Etkin bir eklentiyi eklenti dosya yoluna göre devre dışı bırakın."
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:162
+#, fuzzy
+msgid "Deactivate Plugin"
+msgstr "Eklentiyi Devre Dışı Bırak"
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:163
+#, fuzzy
+msgid "Deactivate the currently active theme by switching to a fallback theme."
+msgstr "Bir yedek temaya geçerek o anda etkin olan temayı devre dışı bırakın."
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:162
+#, fuzzy
+msgid "Deactivate Theme"
+msgstr "Temayı Devre Dışı Bırak"
+
+#: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:245
 msgid "Default Cache"
 msgstr "Varsayılan Önbellek"
 
 #: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:81
-#, fuzzy
 msgid "Default comment status (open/closed)"
 msgstr "Varsayılan yorum durumu (açık/kapalı)"
 
 #: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:85
-#, fuzzy
 msgid "Default ping status (open/closed)"
 msgstr "Varsayılan ping durumu (açık/kapalı)"
 
 #: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:69
-#, fuzzy
 msgid "Default post category"
 msgstr "Varsayılan gönderi kategorisi"
 
 #: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:73
-#, fuzzy
 msgid "Default post format"
 msgstr "Varsayılan gönderi biçimi"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:261
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:134
 #, fuzzy
+msgid "Delete a menu item by ID."
+msgstr "Bir menü öğesini kimliğine göre sil."
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:64
+#, fuzzy
+msgid "Delete a navigation menu by ID."
+msgstr "Bir gezinme menüsünü kimliğine göre sil."
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:69
+#, fuzzy
+msgid "Delete a Site Editor navigation by ID."
+msgstr "Bir Site Editörü gezinme öğesini kimliğine göre sil."
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:70
+#, fuzzy
+msgid ""
+"Delete a specific revision for an item. Provide REST API base and parent ID, "
+"plus the revision ID."
+msgstr ""
+"Bir öğenin belirli bir revizyonunu silin. REST API taban ve üst öğe "
+"kimliklerini ve revizyon kimliğini belirtin."
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:51
+#, fuzzy
+msgid "Delete a template part by ID."
+msgstr "Bir şablon parçasını kimliğine göre sil."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:68
+#, fuzzy
+msgid "Delete a WooCommerce coupon by ID. This action cannot be undone."
+msgstr "Bir WooCommerce kuponunu kimliğe göre silin. Bu işlem geri alınamaz."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:68
+#, fuzzy
+msgid "Delete a WooCommerce order by ID. This action cannot be undone."
+msgstr ""
+"Bir WooCommerce siparişini kimlik numarasına göre silin. Bu işlem geri "
+"alınamaz."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:260
 msgid "Delete a WooCommerce product brand by ID."
 msgstr "Bir WooCommerce ürün markasını kimliğe göre silin."
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:68
-#, fuzzy
 msgid "Delete a WooCommerce product by ID. This action cannot be undone."
 msgstr "Bir WooCommerce ürününü kimliğine göre silin. Bu eylem geri alınamaz."
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:126
-#, fuzzy
 msgid "Delete a WooCommerce product category by ID."
 msgstr "Bir WooCommerce ürün kategorisini kimliğe göre silin."
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:193
-#, fuzzy
 msgid "Delete a WooCommerce product tag by ID."
 msgstr "Bir WooCommerce ürün etiketini kimliğe göre silin."
 
 #: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:66
-#, fuzzy
 msgid "Delete a WordPress category by ID. This action cannot be undone."
 msgstr "Bir WordPress kategorisini kimliğe göre silin. Bu eylem geri alınamaz."
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:297
-#, fuzzy
 msgid ""
 "Delete a WordPress custom post type post by ID. This action cannot be undone."
 msgstr ""
@@ -616,86 +856,138 @@ msgstr ""
 "alınamaz."
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:56
-#, fuzzy
 msgid ""
 "Delete a WordPress media item permanently. This action cannot be undone."
 msgstr ""
 "Bir WordPress medya öğesini kalıcı olarak silin. Bu eylem geri alınamaz."
 
 #: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:66
-#, fuzzy
 msgid "Delete a WordPress page by ID. This action cannot be undone."
 msgstr "Bir WordPress sayfasını kimliğine göre silin. Bu eylem geri alınamaz."
 
 #: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:66
-#, fuzzy
 msgid "Delete a WordPress post by ID. This action cannot be undone."
 msgstr ""
 "Bir WordPress gönderisini kimliğine göre silin. Bu eylem geri alınamaz."
 
 #: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:66
-#, fuzzy
 msgid "Delete a WordPress tag by ID. This action cannot be undone."
 msgstr "Bir WordPress etiketini kimliğine göre silin. Bu eylem geri alınamaz."
 
 #: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:90
-#, fuzzy
 msgid "Delete a WordPress user by ID. This action cannot be undone."
 msgstr ""
 "Bir WordPress kullanıcısını kimliğine göre silin. Bu işlem geri alınamaz."
 
-#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:65
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:73
 #, fuzzy
+msgid ""
+"Delete an installed plugin by plugin file path. Cannot delete an active "
+"plugin."
+msgstr ""
+"Yüklü bir eklentiyi eklenti dosya yoluna göre silin. Etkin bir eklenti "
+"silinemiyor."
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:73
+#, fuzzy
+msgid ""
+"Delete an installed theme by stylesheet directory name. Cannot delete the "
+"active or parent theme."
+msgstr ""
+"Yüklü bir temayı stil sayfası dizin adına göre silme. Etkin veya üst tema "
+"silinemez."
+
+#: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:65
 msgid "Delete Category"
-msgstr "Kategori Sil"
+msgstr "Kategori Silme"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:296
-#, fuzzy
 msgid "Delete Custom Post Type Post"
 msgstr "Özel Yazı Türü Gönderisini Silme"
 
-#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:55
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/DeleteContainer.php:14
 #, fuzzy
+msgid "Delete Elementor Container"
+msgstr "Elementor Konteynerini Sil"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:55
 msgid "Delete Media"
-msgstr "Medyayı Sil"
+msgstr "Medyayı Silme"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:63
+#, fuzzy
+msgid "Delete Menu"
+msgstr "Sil Menüsü"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:133
+#, fuzzy
+msgid "Delete Menu Item"
+msgstr "Menü Öğesini Sil"
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:68
+#, fuzzy
+msgid "Delete Navigation"
+msgstr "Gezinme Menüsünü Sil"
 
 #: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:65
-#, fuzzy
 msgid "Delete Page"
-msgstr "Sayfayı Sil"
+msgstr "Sayfa Silme"
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:72
+#, fuzzy
+msgid "Delete Plugin"
+msgstr "Eklentiyi Sil"
 
 #: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:65
-#, fuzzy
 msgid "Delete Post"
-msgstr "Gönderiyi Sil"
+msgstr "Gönderi Silme"
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:69
+#, fuzzy
+msgid "Delete Revision"
+msgstr "Revizyonu Sil"
 
 #: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:65
-#, fuzzy
 msgid "Delete Tag"
-msgstr "Etiketi Sil"
+msgstr "Etiketi Silme"
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:50
+#, fuzzy
+msgid "Delete Template Part"
+msgstr "Şablon Parçasını Sil"
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:72
+#, fuzzy
+msgid "Delete Theme"
+msgstr "Temayı Sil"
 
 #: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:89
-#, fuzzy
 msgid "Delete User"
-msgstr "Kullanıcı Sil"
+msgstr "Kullanıcı Silme"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:67
+#, fuzzy
+msgid "Delete WooCommerce Coupon"
+msgstr "WooCommerce Kupon Silme"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:67
+#, fuzzy
+msgid "Delete WooCommerce Order"
+msgstr "WooCommerce Siparişini Sil"
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:67
-#, fuzzy
 msgid "Delete WooCommerce Product"
 msgstr "WooCommerce Ürün Silme"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:260
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:259
 msgid "Delete WooCommerce Product Brand"
 msgstr "WooCommerce Ürün Markasını Silme"
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:125
-#, fuzzy
 msgid "Delete WooCommerce Product Category"
 msgstr "WooCommerce Ürün Kategorisini Silme"
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:192
-#, fuzzy
 msgid "Delete WooCommerce Product Tag"
 msgstr "WooCommerce Ürün Etiketini Silme"
 
@@ -712,22 +1004,18 @@ msgid "Description is empty. Please provide a valid description."
 msgstr "Açıklama boş. Lütfen geçerli bir açıklama girin."
 
 #: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:85
-#, fuzzy
 msgid "Disable authentication password"
 msgstr "Kimlik doğrulama parolasını devre dışı bırak"
 
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:203
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:207
 msgid "Disable authentication password status"
 msgstr "Kimlik doğrulama parolası durumunu devre dışı bırak"
 
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:191
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:195
 msgid "Disable XML-RPC status"
 msgstr "XML-RPC durumunu devre dışı bırak"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:276
-#, fuzzy
 msgid "DNS Prefetch for static files"
 msgstr "Statik dosyalar için DNS Prefetch"
 
@@ -742,24 +1030,20 @@ msgid "Drop files here"
 msgstr "Dosyaları buraya bırakın"
 
 #: admin/class-hostinger-ai-assistant-translations.php:161
-#, fuzzy
 msgid "Edit a WordPress post category by ID"
 msgstr "Bir WordPress yazı kategorisini kimliğe göre düzenleme"
 
 #: admin/class-hostinger-ai-assistant-translations.php:156
-#, fuzzy
 msgid "Edit a WordPress post tag (e.g., rename or update it)"
 msgstr ""
 "Bir WordPress gönderi etiketini düzenleme (örneğin, yeniden adlandırma veya "
 "güncelleme)"
 
 #: admin/class-hostinger-ai-assistant-translations.php:126
-#, fuzzy
 msgid "Edit an existing WordPress page by its ID"
 msgstr "Mevcut bir WordPress sayfasını kimliğine göre düzenleme"
 
 #: admin/class-hostinger-ai-assistant-translations.php:146
-#, fuzzy
 msgid "Edit an existing WordPress post by its ID"
 msgstr "Mevcut bir WordPress gönderisini kimliğine göre düzenleme"
 
@@ -767,42 +1051,48 @@ msgstr "Mevcut bir WordPress gönderisini kimliğine göre düzenleme"
 msgid "Edit as a draft"
 msgstr "Taslak olarak düzenle"
 
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:17
+#, fuzzy
+msgid "Edit Elementor Container Styles"
+msgstr "Elementor Konteyner Stilleri Düzenle"
+
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:371
 #, fuzzy
 msgid "Edit prompt"
-msgstr "İstemi düzenle"
+msgstr "Komut istemini düzenle"
 
 #: admin/partials/hostinger-ai-assistant-tab-view.php:48
 msgid "Edit site"
 msgstr "Siteyi düzenle"
 
+#. translators: %s: element id
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:229
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateContainer.php:92
+#, fuzzy, php-format
+msgid "Element '%s' is not a container"
+msgstr "'%s' öğesi bir kapsayıcı değildir"
+
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:326
-#, fuzzy
 msgid "Element alignment settings"
 msgstr "Öğe hizalama ayarları"
 
 #: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:89
-#, fuzzy
 msgid "Enable llms.txt generation"
-msgstr "Llms.txt oluşturmayı etkinleştirin"
+msgstr "llms.txt oluşturmayı etkinleştirin"
 
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:207
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:211
 msgid "Enable llms.txt status"
-msgstr "Llms.txt durumunu etkinleştir"
+msgstr "llms.txt durumunu etkinleştirin"
 
 #: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:65
-#, fuzzy
 msgid "Enable or disable maintenance mode"
 msgstr "Bakım modunu etkinleştirme veya devre dışı bırakma"
 
 #: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:73
-#, fuzzy
 msgid "Enable or disable XML-RPC"
 msgstr "XML-RPC'yi etkinleştirme veya devre dışı bırakma"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:314
-#, fuzzy
 msgid ""
 "Enables the maximum level of optimizations for improved page speed scores. "
 "Extensive testing required."
@@ -816,29 +1106,24 @@ msgid "Enter at least 10 characters"
 msgstr "En az 10 karakter girin"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:261
-#, fuzzy
 msgid "Enthusiastic beginners"
 msgstr "Hevesli yeni başlayanlar"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:291
-#, fuzzy
 msgid "Everything in Advanced"
-msgstr "Her Şey Gelişmiş"
+msgstr "Advanced'deki Her Şey"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:306
-#, fuzzy
 msgid "Everything in Aggressive"
-msgstr "Agresif'teki her şey"
+msgstr "Aggressive'deki Her Şey"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:271
-#, fuzzy
 msgid "Everything in Basic"
-msgstr "Basic'te Her Şey"
+msgstr "Basic'teki Her Şey"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:257
-#, fuzzy
 msgid "Everything in Essentials"
-msgstr "Everything in Essentials"
+msgstr "Essentials'daki Her Şey"
 
 #: admin/class-hostinger-ai-assistant-translations.php:29
 #| msgid "Example: website development, wordpress tutorial, ..."
@@ -859,153 +1144,187 @@ msgstr "Harici öne çıkan görsel"
 
 #. translators: %s: Preset name
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:373
-#, fuzzy, php-format
+#, php-format
 msgid "Failed to apply preset: %s"
 msgstr "Ön ayar uygulanamadı: %s"
 
+#. translators: %s: plugin file path.
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:353
+#, fuzzy, php-format
+msgid "Failed to delete plugin \"%s\"."
+msgstr "\"%s\" eklentisi silinemedi."
+
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:536
-#, fuzzy
 msgid "Failed to delete post"
 msgstr "Gönderi silinemedi"
 
+#. translators: %s: theme stylesheet directory name.
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:340
+#, fuzzy, php-format
+msgid "Failed to delete theme \"%s\"."
+msgstr "\"%s\" teması silinemedi."
+
 #. translators: %s: Error message
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:223
-#, fuzzy, php-format
+#, php-format
 msgid "Failed to flush cache: %s"
 msgstr "Önbellek temizlenemedi: %s"
 
 #. translators: %s: Setting name
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:193
-#, fuzzy, php-format
+#, php-format
 msgid "Failed to get settings: %s"
 msgstr "Ayarlar alınamadı: %s"
 
-#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:265
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/CreateContainer.php:84
 #, fuzzy
+msgid "Failed to insert container into parent elements"
+msgstr "Kapsayıcıyı üst öğelere eklenemedi"
+
+#. translators: %s: plugin slug.
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:282
+#, fuzzy, php-format
+msgid "Failed to install plugin \"%s\"."
+msgstr "\"%s\" eklentisi yüklenemedi."
+
+#. translators: %s: theme slug.
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:284
+#, fuzzy, php-format
+msgid "Failed to install theme \"%s\"."
+msgstr "\"%s\" teması yüklenemedi."
+
+#. translators: %s: plugin slug.
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:303
+#, fuzzy, php-format
+msgid "Failed to locate installed plugin \"%s\"."
+msgstr "Yüklü \"%s\" eklentisi bulunamadı."
+
+#. translators: %s: plugin file path.
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:474
+#, fuzzy, php-format
+msgid "Failed to update plugin \"%s\"."
+msgstr "\"%s\" eklentisi güncellenemedi."
+
+#. translators: %s: theme stylesheet directory name.
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:459
+#, fuzzy, php-format
+msgid "Failed to update theme \"%s\"."
+msgstr "\"%s\" teması güncellenemedi."
+
+#. translators: %s: theme slug name.
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:482
+#, fuzzy, php-format
+msgid "Fallback theme \"%s\" not found."
+msgstr "Yedek tema \"%s\" bulunamadı."
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:265
 msgid "File is required"
 msgstr "Dosya gereklidir"
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:227
-#, fuzzy
 msgid "File not found"
 msgstr "Dosya bulunamadı"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:102
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:101
-#, fuzzy
 msgid "Filter by author ID"
-msgstr "Yazar kimliğine göre filtrele"
+msgstr "Yazar kimliğine göre filtreleme"
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:93
-#, fuzzy
 msgid "Filter by media type (image, video, audio, application)"
 msgstr "Medya türüne göre filtreleme (görüntü, video, ses, uygulama)"
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:97
-#, fuzzy
 msgid "Filter by MIME type (e.g., image/jpeg, video/mp4)"
 msgstr "MIME türüne göre filtreleme (örn. resim/jpeg, video/mp4)"
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:105
-#, fuzzy
 msgid "Filter by parent post ID"
-msgstr "Üst gönderi kimliğine göre filtrele"
+msgstr "Üst gönderi kimliğine göre filtreleme"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/ListPages.php:28
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ListTemplates.php:22
 msgid "Filter by post status (publish, draft, any). Default: any"
 msgstr ""
-"Gönderi durumuna göre filtrele (yayınla, taslak, herhangi biri). Varsayılan: "
-"herhangi biri"
+"Gönderi durumuna göre filtrele (yayınlanan, taslak, herhangi biri). "
+"Varsayılan: herhangi biri"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:106
-#, fuzzy
 msgid "Filter by post status (publish, draft, pending, etc.)"
-msgstr "Gönderi durumuna göre filtreleme (yayınla, taslak, beklemede, vb.)"
+msgstr "Gönderi durumuna göre filtreleme (yayınlanan, taslak, beklemede, vb.)"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/ListPages.php:22
-#, fuzzy
 msgid "Filter by post type (page, post, any). Default: any"
 msgstr ""
 "Gönderi türüne göre filtrele (sayfa, gönderi, herhangi biri). Varsayılan: "
 "herhangi biri"
 
 #: admin/class-hostinger-ai-assistant-translations.php:151
-#, fuzzy
 msgid "Find and filter posts with pagination options"
 msgstr "Sayfalama seçenekleri ile gönderileri bulma ve filtreleme"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/FindWidgets.php:16
-#, fuzzy
 msgid "Find Elementor Widgets"
-msgstr "Elementor Widget'larını Bul"
+msgstr "Elementor Widgetlarını Bulma"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:66
+#, fuzzy
+msgid "Flex direction (row or column). Applies to flex layout."
+msgstr "Esneklik yönü (satır veya sütun). Esnek düzen için geçerlidir."
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:58
-#, fuzzy
 msgid "Flush LiteSpeed Cache"
-msgstr "LiteSpeed Önbelleğini Temizle"
+msgstr "LiteSpeed Önbelleğini Temizleme"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:274
-#, fuzzy
 msgid "Font Display Optimization"
 msgstr "Yazı Tipi Görüntüleme Optimizasyonu"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:76
-#, fuzzy
 msgid "Font family name. Example: \"Arial\", \"Roboto\""
 msgstr "Yazı tipi ailesi adı. Örnek: \"Arial\", \"Roboto\""
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:80
-#, fuzzy
 msgid "Font size with unit"
 msgstr "Birim ile yazı tipi boyutu"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:150
-#, fuzzy
 msgid "Font style"
 msgstr "Yazı tipi stili"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:96
-#, fuzzy
 msgid "Font weight. Example: \"400\", \"700\", \"bold\", \"normal\""
 msgstr "Yazı tipi ağırlığı. Örnek: \"400\", \"700\", \"kalın\", \"normal\""
 
 #: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:72
 #: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:72
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:132
-#, fuzzy
 msgid "Force category deletion"
-msgstr "Kategori silmeye zorla"
+msgstr "Kategori silmeyi zorlama"
 
 #: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:77
-#, fuzzy
 msgid "Force HTTPS redirects"
-msgstr "HTTPS yönlendirmelerini zorla"
-
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:195
-#, fuzzy
-msgid "Force HTTPS status"
-msgstr "HTTPS durumunu zorla"
-
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:267
-#, fuzzy
-msgid "Force Product Brand deletion"
-msgstr "Ürün Markası silmeye zorla"
-
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:199
-#, fuzzy
-msgid "Force tag deletion"
-msgstr "Etiket silmeye zorla"
-
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:81
-#, fuzzy
-msgid "Force WWW in URLs"
-msgstr "URL'lerde WWW'yi zorla"
+msgstr "HTTPS yönlendirmesini zorlama"
 
 #: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:199
-#, fuzzy
+msgid "Force HTTPS status"
+msgstr "HTTPS durumunu zorlama"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:266
+msgid "Force Product Brand deletion"
+msgstr "Ürün markası silmeyi zorlama"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:199
+msgid "Force tag deletion"
+msgstr "Etiket silmeyi zorlama"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:81
+msgid "Force WWW in URLs"
+msgstr "URL’lerde WWW kullanmayı zorlama"
+
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:203
 msgid "Force WWW status"
-msgstr "WWW durumunu zorla"
+msgstr "WWW durumunu zorlama"
 
 #: admin/class-hostinger-ai-assistant-translations.php:24
 #: admin/partials/hostinger-ai-assistant-tab-view.php:106
@@ -1026,14 +1345,12 @@ msgid "Generate new content"
 msgstr "Yeni içerik üret"
 
 #: admin/class-hostinger-ai-assistant-translations.php:180
-#, fuzzy
 msgid "Generate sales report"
 msgstr "Satış raporu oluşturun"
 
 #: admin/class-hostinger-ai-assistant-translations.php:182
-#, fuzzy
 msgid "Generate WooCommerce sales report for my store"
-msgstr "Mağazam için WooCommerce satış raporu oluşturma"
+msgstr "Mağazam için WooCommerce satış raporu oluştur"
 
 #: admin/partials/hostinger-ai-assistant-tab-view.php:264
 #: admin/partials/hostinger-ai-assistant-tab-view.php:267
@@ -1041,7 +1358,6 @@ msgid "Generating content..."
 msgstr "İçerik üretiliyor..."
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:91
-#, fuzzy
 msgid ""
 "Get a list of all available LiteSpeed Cache optimization presets with their "
 "descriptions, features, risk levels, and requirements."
@@ -1049,81 +1365,143 @@ msgstr ""
 "Açıklamaları, özellikleri, risk seviyeleri ve gereksinimleriyle birlikte "
 "mevcut tüm LiteSpeed Cache optimizasyon ön ayarlarının bir listesini alın."
 
-#: admin/class-hostinger-ai-assistant-translations.php:175
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:86
 #, fuzzy
+msgid "Get a list of menu items with filtering options."
+msgstr "Filtreleme seçenekleriyle birlikte menü öğelerinin bir listesini alın."
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:16
+#, fuzzy
+msgid "Get a list of navigation menus."
+msgstr "Gezinti menülerinin listesini alın."
+
+#: admin/class-hostinger-ai-assistant-translations.php:175
 msgid "Get a list of orders"
 msgstr "Siparişlerin bir listesini alın"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:20
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:21
 #, fuzzy
+msgid "Get a list of Site Editor navigations."
+msgstr "Site Düzenleyicisi’ndeki gezinme öğelerinin listesini alın."
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:16
+#, fuzzy
+msgid "Get a list of template parts."
+msgstr "Şablon parçalarının listesini alın."
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:156
+#, fuzzy
+msgid "Get a list of theme menu locations and their assigned menus."
+msgstr "Tema menü konumlarının ve bunlara atanan menülerin listesini alın."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:20
 msgid ""
 "Get a list of WooCommerce orders with search and filter capabilities. "
 "Returns a list of orders matching the criteria."
 msgstr ""
-"Arama ve filtreleme özellikleriyle WooCommerce siparişlerinin bir listesini "
-"alın. Kriterlerle eşleşen siparişlerin bir listesini döndürür."
+"Arama ve filtreleme özellikleriyle WooCommerce siparişlerinin listesini alın."
+" Sonuç olarak ölçütlerle eşleşen siparişlerin listesi döndürülür."
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:97
+#, fuzzy
+msgid "Get a single menu item by ID."
+msgstr "Bir menü öğesini kimliğine göre al."
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:32
+#, fuzzy
+msgid "Get a single navigation by ID."
+msgstr "Bir navigasyon öğesini kimliğine göre al."
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:27
+#, fuzzy
+msgid "Get a single navigation menu by ID."
+msgstr "Bir navigasyon menüsünü kimliğine göre al."
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:27
+#, fuzzy
+msgid "Get a single template part by ID."
+msgstr "Bir şablon parçasını kimliğine göre al."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:31
+#, fuzzy
+msgid ""
+"Get a single WooCommerce coupon by ID. Returns the full coupon object with "
+"all fields."
+msgstr ""
+"Kimliğe göre tek bir WooCommerce kuponu alın. Tüm alanları içeren tam kupon "
+"nesnesini döndürür."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:31
+#, fuzzy
+msgid ""
+"Get a single WooCommerce order by ID. Returns the full order object with all "
+"fields."
+msgstr ""
+"Bir WooCommerce siparişini kimlik numarasına göre alır. Tüm alanları içeren "
+"tam sipariş nesnesini döndürür."
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:31
-#, fuzzy
 msgid ""
 "Get a single WooCommerce product by ID. Returns the full product object with "
 "all fields."
 msgstr ""
-"Kimliğe göre tek bir WooCommerce ürünü alın. Tüm alanları içeren tam ürün "
-"nesnesini döndürür."
+"Kimliğe göre tek bir WooCommerce ürünü alın. Sonuç olarak tüm alanları "
+"içeren tam ürün nesnesi döndürülür."
 
 #: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:29
-#, fuzzy
 msgid ""
 "Get a single WordPress category by ID. Returns the full category object with "
 "all fields."
 msgstr ""
-"Kimliğe göre tek bir WordPress kategorisi alın. Tüm alanları içeren tam "
-"kategori nesnesini döndürür."
+"Kimliğe göre tek bir WordPress kategorisini alın. Sonuç olarak tüm alanları "
+"içeren tam kategori nesnesi döndürülür."
 
 #: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:29
-#, fuzzy
 msgid ""
 "Get a single WordPress page by ID. Returns the full page object with all "
 "fields."
 msgstr ""
-"Kimliğe göre tek bir WordPress sayfası alın. Tüm alanları içeren tam sayfa "
-"nesnesini döndürür."
+"Kimliğe göre tek bir WordPress sayfasını alın. Sonuç olarak tüm alanları "
+"içeren tam sayfa nesnesi döndürülür."
 
 #: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:29
-#, fuzzy
 msgid ""
 "Get a single WordPress post by ID. Returns the full post object with all "
 "fields."
 msgstr ""
-"Kimliğe göre tek bir WordPress gönderisi alın. Tüm alanları içeren tam yazı "
-"nesnesini döndürür."
+"Kimliğe göre tek bir WordPress gönderisini alın. Tüm alanları içeren tam "
+"gönderi nesnesini döndürür."
 
 #: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:29
-#, fuzzy
 msgid ""
 "Get a single WordPress tag by ID. Returns the full tag object with all "
 "fields."
 msgstr ""
-"Kimliğe göre tek bir WordPress etiketi alın. Tüm alanları içeren tam etiket "
-"nesnesini döndürür."
+"Kimliğe göre tek bir WordPress etiketini alın. Tüm alanları içeren tam "
+"etiket nesnesini döndürür."
 
 #: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:44
-#, fuzzy
 msgid ""
 "Get a single WordPress user by ID. Returns the full user object with all "
 "fields."
 msgstr ""
-"Kimliğe göre tek bir WordPress kullanıcısı alın. Tüm alanları içeren tam "
+"Kimliğe göre tek bir WordPress kullanıcısını alın. Tüm alanları içeren tam "
 "kullanıcı nesnesini döndürür."
 
-#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:145
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:46
 #, fuzzy
+msgid ""
+"Get a specific revision for an item. Provide REST API base and parent ID, "
+"plus the revision ID."
+msgstr ""
+"Bir öğe için belirli bir revizyonu alın. REST API taban ve üst öğe "
+"kimliklerini ve revizyon kimliğini belirtin."
+
+#: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:145
 msgid "Get a WordPress custom post type post by ID"
-msgstr "Kimliğe göre bir WordPress özel yazı türü gönderisi alma"
+msgstr "Kimliğe göre bir WordPress özel içerik türü gönderisi alma"
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:32
-#, fuzzy
 msgid ""
 "Get a WordPress media item details by ID. Returns the full media object with "
 "all fields."
@@ -1132,12 +1510,10 @@ msgstr ""
 "içeren tam medya nesnesini döndürür."
 
 #: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:28
-#, fuzzy
 msgid "Get Category"
-msgstr "Kategori Al"
+msgstr "Kategori Alın"
 
 #: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:28
-#, fuzzy
 msgid ""
 "Get current Hostinger plugin settings including maintenance mode, XML-RPC, "
 "HTTPS, and other security options."
@@ -1146,7 +1522,6 @@ msgstr ""
 "mevcut Hostinger eklenti ayarlarını alın."
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:30
-#, fuzzy
 msgid ""
 "Get current LiteSpeed Cache settings including active preset, cache status, "
 "and key configuration options."
@@ -1155,182 +1530,185 @@ msgstr ""
 "üzere geçerli LiteSpeed Cache ayarlarını alın."
 
 #: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:118
-#, fuzzy
 msgid "Get Current User"
-msgstr "Geçerli Kullanıcıyı Al"
+msgstr "Mevcut Kullanıcıyı Alın"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:144
-#, fuzzy
 msgid "Get Custom Post Type Post"
-msgstr "Özel Yazı Türü Gönderisi Alın"
+msgstr "Özel İçerik Türü Yazısını Alın"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetActiveKit.php:14
-#, fuzzy
 msgid "Get Elementor Active Kit"
-msgstr "Elementor Active Kit'i edinin"
+msgstr "Elementor Active Kit'i Alın"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetKitById.php:14
-#, fuzzy
 msgid "Get Elementor Kit by ID"
 msgstr "Elementor Kitini ID ile Alın"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetPageStructure.php:14
-#, fuzzy
 msgid "Get Elementor Page Structure"
 msgstr "Elementor Sayfa Yapısını Alın"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetWidgetById.php:14
-#, fuzzy
 msgid "Get Elementor Widget by ID"
-msgstr "Elementor Widget'ını Kimliğe Göre Al"
+msgstr "Elementor Widget'ını Kimliğe Göre Alın"
 
 #: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:20
-#, fuzzy
 msgid "Get General Settings"
-msgstr "Genel Ayarları Al"
+msgstr "Genel Ayarları Alın"
 
 #: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:27
-#, fuzzy
 msgid "Get Hostinger Plugin Settings"
-msgstr "Hostinger Eklenti Ayarlarını Al"
+msgstr "Hostinger Eklenti Ayarlarını Alın"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:29
-#, fuzzy
 msgid "Get LiteSpeed Cache Settings"
-msgstr "LiteSpeed Önbellek Ayarlarını Al"
+msgstr "LiteSpeed Önbellek Ayarlarını Alın"
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:31
-#, fuzzy
 msgid "Get Media"
-msgstr "Medya alın"
+msgstr "Medyayı Alın"
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:142
-#, fuzzy
 msgid "Get Media File"
-msgstr "Medya Dosyasını Al"
+msgstr "Medya Dosyasını Alın"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:26
+#, fuzzy
+msgid "Get Menu"
+msgstr "Menüye Git"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:96
+#, fuzzy
+msgid "Get Menu Item"
+msgstr "Menü Öğesini Al"
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:31
+#, fuzzy
+msgid "Get Navigation"
+msgstr "Yol Tarifi Al"
 
 #: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:28
-#, fuzzy
 msgid "Get Page"
-msgstr "Sayfa Al"
+msgstr "Sayfa Alın"
 
 #: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:28
-#, fuzzy
 msgid "Get Post"
-msgstr "Gönderiyi Al"
+msgstr "Gönderiyi Alın"
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:45
+#, fuzzy
+msgid "Get Revision"
+msgstr "Düzeltme Al"
 
 #: includes-psr4/Mcp/Abilities/Tools/SiteInfoTools.php:16
-#, fuzzy
 msgid "Get Site Info"
 msgstr "Site Bilgilerini Alın"
 
 #: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:28
-#, fuzzy
 msgid "Get Tag"
-msgstr "Etiket Al"
+msgstr "Etiket Alın"
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:26
+#, fuzzy
+msgid "Get Template Part"
+msgstr "Şablon Parçasını Al"
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:143
-#, fuzzy
 msgid "Get the actual file content (blob) of a WordPress media item."
 msgstr "Bir WordPress medya öğesinin gerçek dosya içeriğini (blob) alın."
 
 #: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:119
-#, fuzzy
 msgid "Get the current logged-in user information."
 msgstr "Oturum açmış geçerli kullanıcı bilgilerini alın."
 
 #: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:43
-#, fuzzy
 msgid "Get User"
-msgstr "Kullanıcı Al"
+msgstr "Kullanıcı Alın"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:37
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:30
 #, fuzzy
+msgid "Get WooCommerce Coupon"
+msgstr "WooCommerce Kuponu Alın"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:87
 msgid "Get WooCommerce Coupons Report"
 msgstr "WooCommerce Kupon Raporu Alın"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:38
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:88
 msgid ""
 "Get WooCommerce coupons totals report. Returns count of coupons by coupon "
 "type."
 msgstr ""
-"WooCommerce kupon toplamları raporu alın. Kupon türüne göre kupon sayısını "
-"döndürür."
+"WooCommerce kupon toplamları raporunu alın. Kupon türüne göre kupon sayısını "
+"gösterir."
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:44
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:94
 msgid "Get WooCommerce Customers Report"
 msgstr "WooCommerce Müşterileri Raporu Alın"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:45
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:95
 msgid ""
 "Get WooCommerce customers totals report. Returns statistics about customers."
 msgstr ""
-"WooCommerce müşteri toplamları raporu alın. Müşterilerle ilgili "
-"istatistikleri döndürür."
+"WooCommerce müşteri toplamları raporunu getir. Müşteriler hakkında "
+"istatistikler gösterir."
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:51
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:30
 #, fuzzy
+msgid "Get WooCommerce Order"
+msgstr "WooCommerce Siparişini Al"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:101
 msgid "Get WooCommerce Orders Report"
-msgstr "WooCommerce Siparişler Raporu Alın"
+msgstr "WooCommerce Sipariş Raporu Alın"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:52
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:102
 msgid "Get WooCommerce orders totals report. Returns statistics about orders."
 msgstr ""
-"WooCommerce sipariş toplamları raporu alın. Siparişlerle ilgili "
-"istatistikleri döndürür."
+"WooCommerce sipariş toplamları raporunu getir. Siparişlerle ilgili "
+"istatistikleri gösterir."
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:30
-#, fuzzy
 msgid "Get WooCommerce Product"
 msgstr "WooCommerce Ürünü Alın"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:58
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:108
 msgid "Get WooCommerce Products Report"
-msgstr "WooCommerce Ürünler Raporu Alın"
+msgstr "WooCommerce Ürün Raporu Alın"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:59
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:109
 msgid ""
 "Get WooCommerce products totals report. Returns statistics about products."
 msgstr ""
 "WooCommerce ürün toplamları raporu alın. Ürünlerle ilgili istatistikleri "
 "döndürür."
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:65
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:115
 msgid "Get WooCommerce Reviews Report"
 msgstr "WooCommerce İncelemeleri Raporu Alın"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:66
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:116
 msgid ""
 "Get WooCommerce reviews totals report. Returns statistics about product "
 "reviews."
 msgstr ""
-"WooCommerce yorum toplamları raporu alın. Ürün incelemeleriyle ilgili "
-"istatistikleri döndürür."
+"WooCommerce yorum toplamlarının raporunu alın. Ürün incelemeleriyle ilgili "
+"istatistikleri getirir."
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:72
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:122
 msgid "Get WooCommerce Sales Report"
 msgstr "WooCommerce Satış Raporu Alın"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:73
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:123
 msgid ""
 "Get WooCommerce sales report. Returns detailed sales statistics and revenue "
 "data."
 msgstr ""
-"WooCommerce satış raporu alın. Ayrıntılı satış istatistiklerini ve gelir "
-"verilerini döndürür."
+"WooCommerce satış raporunu alın. Ayrıntılı satış istatistiklerini ve gelir "
+"verilerini gösterir."
 
 #: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:21
-#, fuzzy
 msgid ""
 "Get WordPress general site settings including title, description, timezone, "
 "and other configuration options."
@@ -1339,40 +1717,76 @@ msgstr ""
 "üzere WordPress genel site ayarlarını alın."
 
 #: admin/class-hostinger-ai-assistant-translations.php:130
-#, fuzzy
 msgid "Get WordPress site information"
 msgstr "WordPress site bilgilerini alın"
 
 #. translators: %s: global color id
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/AssignGlobalColor.php:94
-#, fuzzy, php-format
+#, php-format
 msgid "Global color with ID '%s' not found in active kit"
-msgstr "ID'si '%s' olan global renk aktif kitte bulunamadı"
+msgstr "'%s' kimliğine sahip genel renk etkin kitte bulunamadı."
 
 #: admin/class-hostinger-ai-assistant-translations.php:82
-#, fuzzy
 msgid "Good response"
 msgstr "İyi yanıt"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:277
-#, fuzzy
 msgid "Gravatar Cache"
 msgstr "Gravatar Önbelleği"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:272
-#, fuzzy
 msgid "Guest Mode and Guest Optimization"
 msgstr "Misafir Modu ve Misafir Optimizasyonu"
 
 #: admin/class-hostinger-ai-assistant-translations.php:64
-#, fuzzy
 msgid "Hello 👋"
 msgstr "Merhaba 👋"
 
-#: admin/class-hostinger-ai-assistant-translations.php:68
+#: includes-psr4/Nudges/WooCommerceSetupNudge.php:49
 #, fuzzy
+msgid ""
+"Hey! It looks like your WooCommerce store isn't fully set up yet. Complete "
+"the remaining steps to make sure your store is ready to sell."
+msgstr ""
+"Merhaba! Görünüşe göre WooCommerce mağazanız henüz tam olarak kurulmamış. "
+"Mağazanızın satışa hazır olmasını sağlamak için kalan adımları tamamlayın."
+
+#. translators: %s: domain expiration date.
+#: includes-psr4/Nudges/DomainRenewalNudge.php:77
+#, fuzzy, php-format
+msgid ""
+"Hey! Just a heads-up — your domain is expiring on %s. Renew it now to keep "
+"your website running without interruption."
+msgstr ""
+"Merhaba! Size bir hatırlatma: Alan adınızın geçerlilik süresi %s tarihinde "
+"sona eriyor. Web sitenizin kesintisiz bir şekilde çalışmaya devam etmesi "
+"için hemen yenileyin."
+
+#. translators: %s: hosting plan expiration date.
+#: includes-psr4/Nudges/RenewalNudge.php:81
+#, fuzzy, php-format
+msgid ""
+"Hey! Just a heads-up — your hosting plan is expiring on %s. Renew it now to "
+"keep your website running without interruption."
+msgstr ""
+"Merhaba! Size bir hatırlatma: Barındırma planınızın süresi %s tarihinde "
+"dolacak. Web sitenizin kesintisiz çalışmaya devam etmesi için planınızı "
+"hemen yenileyin."
+
+#: includes-psr4/Nudges/DomainNudge.php:87
+#, fuzzy
+msgid ""
+"Hey! Your site is still running on a temporary domain. Connecting a custom "
+"domain makes your site look more professional and helps visitors find you. "
+"It only takes a few minutes!"
+msgstr ""
+"Merhaba! Siteniz hâlâ geçici bir alan adıyla çalışıyor. Özel bir alan adı "
+"bağlamak, sitenizin daha profesyonel görünmesini sağlar ve ziyaretçilerin "
+"sizi bulmasına yardımcı olur. Bu işlem sadece birkaç dakika sürer!"
+
+#: admin/class-hostinger-ai-assistant-translations.php:68
 msgid "Hey,"
-msgstr "Hey,"
+msgstr "Selam,"
 
 #: admin/class-hostinger-ai-assistant-translations.php:42
 #| msgid ""
@@ -1389,7 +1803,6 @@ msgstr ""
 "hata yapabiliyorum. Ne gibi sorularınız var?"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:246
-#, fuzzy
 msgid "Higher TTL"
 msgstr "Daha yüksek TTL"
 
@@ -1398,7 +1811,6 @@ msgid "History"
 msgstr "Geçmiş"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:330
-#, fuzzy
 msgid "Horizontal alignment"
 msgstr "Yatay hizalama"
 
@@ -1412,10 +1824,9 @@ msgstr "Hostinger"
 msgid "Hostinger AI"
 msgstr "Hostinger AI"
 
-#: includes-psr4/Mcp/Abilities/AbilitiesRegistry.php:77
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/AbilitiesRegistry.php:93
 msgid "Hostinger AI Abilities"
-msgstr "Hostinger Yapay Zeka Yetenekleri"
+msgstr "Hostinger AI Özellikleri"
 
 #. Description of the plugin
 #: hostinger-ai-assistant.php
@@ -1424,22 +1835,18 @@ msgstr "WordPress için Hostinger AI eklentisi."
 
 #: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:124
 #: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:139
-#, fuzzy
 msgid "Hostinger plugin settings option not defined"
-msgstr "Hostinger eklenti ayarları seçeneği tanımlanmamış"
+msgstr "Hostinger eklentisi ayar seçeneği tanımlanmadı"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:62
-#, fuzzy
 msgid "Hover state color"
-msgstr "Fareyle üzerine gelme durumu rengi"
+msgstr "Üzerine gelme durumu rengi"
 
 #: admin/class-hostinger-ai-assistant-translations.php:65
-#, fuzzy
 msgid "How can I help you today?"
 msgstr "Bugün size nasıl yardımcı olabilirim?"
 
 #: admin/class-hostinger-ai-assistant-translations.php:69
-#, fuzzy
 msgid "How can I help you?"
 msgstr "Size nasıl yardımcı olabilirim?"
 
@@ -1470,9 +1877,33 @@ msgstr ""
 "farklı bir şey sorar mısınız?"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:66
-#, fuzzy
 msgid "Icon color"
 msgstr "Simge rengi"
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:121
+#, fuzzy
+msgid "ID of the parent item to restore into."
+msgstr "Geri yüklenecek üst öğenin kimliği."
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:125
+#, fuzzy
+msgid "ID of the revision to restore from."
+msgstr "Geri yüklenecek revizyonun kimliği."
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:138
+#, fuzzy
+msgid "If preserving children, where to place them into remaining columns"
+msgstr ""
+"Çocukları korumak gerekirse, onları kalan sütunlara nereye yerleştirmeli?"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/DeleteContainer.php:25
+#, fuzzy
+msgid ""
+"If true, move the container's children into the parent at the same position "
+"instead of deleting them."
+msgstr ""
+"Eğer doğruysa, konteynerin alt öğelerini silmek yerine aynı konumda üst "
+"öğenin içine taşı."
 
 #: admin/partials/hostinger-ai-assistant-tab-view.php:182
 msgid ""
@@ -1483,7 +1914,6 @@ msgstr ""
 "biçimde anahtar kelime önerileri oluşturur."
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:258
-#, fuzzy
 msgid "Image Optimization"
 msgstr "Görüntü Optimizasyonu"
 
@@ -1493,30 +1923,25 @@ msgstr "Görsel URL'si:"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetActiveKit.php:32
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetKitById.php:36
-#, fuzzy
 msgid "Include all other kit settings. Default: false"
 msgstr "Diğer tüm kit ayarlarını dahil et. Varsayılan: false"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetActiveKit.php:22
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetKitById.php:26
-#, fuzzy
 msgid "Include global colors in response. Default: true"
-msgstr "Küresel renkleri yanıta dahil et. Varsayılan: true"
+msgstr "Yanıta genel renkleri dahil et. Varsayılan: true"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetActiveKit.php:27
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetKitById.php:31
-#, fuzzy
 msgid "Include global typography in response. Default: true"
 msgstr "Yanıta genel tipografiyi dahil et. Varsayılan: true"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:283
-#, fuzzy
 msgid "Includes many optimizations known to improve page speed scores."
 msgstr ""
 "Sayfa hızı skorlarını iyileştirdiği bilinen birçok optimizasyon içerir."
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:298
-#, fuzzy
 msgid ""
 "Includes many optimizations known to improve page speed scores. Testing "
 "recommended."
@@ -1525,40 +1950,68 @@ msgstr ""
 "yapılması önerilir."
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:262
-#, fuzzy
 msgid ""
 "Includes optimizations known to improve site score in page speed measurement "
 "tools."
 msgstr ""
-"Sayfa hızı ölçüm araçlarında site puanını iyileştirdiği bilinen "
-"optimizasyonları içerir."
+"Sayfa hızı ölçüm araçlarında site puanını artırdığı bilinen optimizasyonları "
+"içerir."
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:311
-#, fuzzy
 msgid "Inline CSS added to Combine"
-msgstr "Combine'a satır içi CSS eklendi"
+msgstr "Combine işlemine satır içi CSS eklendi"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:310
-#, fuzzy
 msgid "Inline JS added to Combine"
-msgstr "Combine'a satır içi JS eklendi"
+msgstr "Combine işlemine satır içi JS eklendi"
 
 #: admin/class-hostinger-ai-assistant-translations.php:37
 msgid "Insert this image inside content"
 msgstr "Bu görseli içeriğin içine yerleştirin"
 
-#: includes-psr4/Mcp/McpServer.php:72
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:42
 #, fuzzy
+msgid ""
+"Insertion position relative to list (start/end), a sibling (before/after) or "
+"a specific index."
+msgstr ""
+"Listeye (başlangıç/son), bir eş öğeye (öncesi/sonrası) veya belirli bir "
+"indekse göre ekleme konumu."
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:27
+#, fuzzy
+msgid "Install a plugin from WordPress.org by slug."
+msgstr "WordPress.org'dan slug ile bir eklenti yükleyin."
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:27
+#, fuzzy
+msgid "Install a theme from WordPress.org by slug."
+msgstr "WordPress.org'dan slug ile bir tema yükleyin."
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:26
+#, fuzzy
+msgid "Install Plugin"
+msgstr "Eklenti Yükleme"
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:26
+#, fuzzy
+msgid "Install Theme"
+msgstr "Tema Yükle"
+
+#: includes-psr4/Mcp/McpServer.php:73
 msgid "Invalid API key"
 msgstr "Geçersiz API anahtarı"
 
-#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:275
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:171
 #, fuzzy
+msgid "Invalid base API, parent, or revision ID."
+msgstr "Geçersiz temel API, üst öğe veya revizyon kimliği."
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:275
 msgid "Invalid base64 data"
 msgstr "Geçersiz base64 verileri"
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:222
-#, fuzzy
 msgid "Invalid media ID"
 msgstr "Geçersiz medya kimliği"
 
@@ -1567,31 +2020,33 @@ msgstr "Geçersiz medya kimliği"
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:426
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:465
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:516
-#, fuzzy
 msgid "Invalid post type"
 msgstr "Geçersiz gönderi türü"
 
 #. translators: %s: Allowed preset name
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:348
-#, fuzzy, php-format
+#, php-format
 msgid "Invalid preset. Allowed presets: %s"
 msgstr "Geçersiz ön ayar. İzin verilen ön ayarlar: %s"
 
-#: admin/class-hostinger-ai-assistant-translations.php:70
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:222
 #, fuzzy
+msgid "It was an error processing the request."
+msgstr "İsteğin işlenmesi sırasında bir hata oluştu."
+
+#: admin/class-hostinger-ai-assistant-translations.php:70
 msgid "I’m Kodee – your AI WordPress assistant. I can help you:"
 msgstr ""
-"Ben Kodee - yapay zekalı WordPress asistanınız. Size yardımcı olabilirim:"
+"Ben Kodee. AI destekli WordPress asistanınızım. Size şu konularda yardımcı "
+"olabilirim:"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:275
-#, fuzzy
 msgid "JS Defer for both external and inline JS"
-msgstr "Hem harici hem de satır içi JS için JS Erteleme"
+msgstr "Harici ve satır içi JS için defer uygula"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:309
-#, fuzzy
 msgid "JS Delayed"
-msgstr "JS Gecikmeli"
+msgstr "JS Ertelendi"
 
 #: admin/partials/hostinger-ai-assistant-seo-meta-view.php:9
 msgid "Keywords"
@@ -1599,9 +2054,9 @@ msgstr "Anahtar kelimeler"
 
 #. translators: %s: kit id
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/BaseElementorTool.php:302
-#, fuzzy, php-format
+#, php-format
 msgid "Kit with ID %s not found"
-msgstr "Kimliği %s olan kit bulunamadı"
+msgstr "%s kimliğine sahip kit bulunamadı"
 
 #: admin/class-hostinger-ai-assistant-translations.php:43
 msgid "Kodee"
@@ -1612,14 +2067,12 @@ msgid "Kodee only supports JPEG, JPG, PNG, GIF, HEIC, and DNG files"
 msgstr "Kodee yalnızca JPEG, JPG, PNG, GIF, HEIC ve DNG dosyalarını destekler"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:295
-#, fuzzy
 msgid "Lazy Load for Iframes"
-msgstr "Iframe'ler için Tembel Yükleme"
+msgstr "Iframe’ler için Lazy Load"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:307
-#, fuzzy
 msgid "Lazy Load for Images"
-msgstr "Görüntüler için Tembel Yükleme"
+msgstr "Görüntüler için Lazy Load"
 
 #: admin/class-hostinger-ai-assistant-translations.php:45
 #: admin/class-hostinger-ai-assistant-translations.php:86
@@ -1627,17 +2080,14 @@ msgid "Leave feedback"
 msgstr "Geri bildirim bırak"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:270
-#, fuzzy
 msgid "Left border width (as string)"
 msgstr "Sol kenarlık genişliği (dize olarak)"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:221
-#, fuzzy
 msgid "Left margin value (as string)"
 msgstr "Sol kenar boşluğu değeri (dize olarak)"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:183
-#, fuzzy
 msgid "Left padding value (as string)"
 msgstr "Sol dolgu değeri (dize olarak)"
 
@@ -1659,14 +2109,12 @@ msgstr ""
 "için daha fazla ayrıntı paylaşın"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:129
-#, fuzzy
 msgid "Letter spacing with unit"
 msgstr "Birim ile harf aralığı"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:113
-#, fuzzy
 msgid "Line height with unit"
-msgstr "Birim ile hat yüksekliği"
+msgstr "Birim ile satır yüksekliği"
 
 #. translators: %s: post type names
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:42
@@ -1674,112 +2122,164 @@ msgstr "Birim ile hat yüksekliği"
 msgid "List all available WordPress custom post types including %s"
 msgstr "%s dahil tüm mevcut WordPress özel yazı türlerini listeleyin"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:224
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:223
 msgid "List all WooCommerce product brands. Returns a list of product brands."
 msgstr ""
-"Tüm WooCommerce ürün markalarını listeler. Ürün markalarının bir listesini "
-"döndürür."
+"Tüm WooCommerce ürün markalarını listeleyin. Ürün markalarının listesini "
+"getirir."
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:89
-#, fuzzy
 msgid ""
 "List all WooCommerce product categories. Returns a list of product "
 "categories."
 msgstr ""
-"Tüm WooCommerce ürün kategorilerini listeler. Ürün kategorilerinin bir "
-"listesini döndürür."
+"Tüm WooCommerce ürün kategorilerini listeleyin. Ürün kategorilerinin "
+"listesini getirir."
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:156
-#, fuzzy
 msgid "List all WooCommerce product tags. Returns a list of product tags."
 msgstr ""
-"Tüm WooCommerce ürün etiketlerini listeler. Ürün etiketlerinin bir listesini "
+"Tüm WooCommerce ürün etiketlerini listeleyin. Ürün etiketlerinin listesini "
 "döndürür."
 
 #: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:18
-#, fuzzy
 msgid "List all WordPress post categories with pagination and filtering."
 msgstr ""
-"Tüm WordPress yazı kategorilerini sayfalandırma ve filtreleme ile listeleyin."
+"Sayfalama ve filtreleme ile tüm WordPress yazı kategorilerini listeleyin."
 
 #: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:18
-#, fuzzy
 msgid "List all WordPress post tags with pagination and filtering."
 msgstr ""
-"Tüm WordPress yazı etiketlerini sayfalandırma ve filtreleme ile listeleyin."
+"Sayfalama ve filtreleme ile tüm WordPress yazı etiketlerini listeleyin."
 
 #: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:17
-#, fuzzy
 msgid "List Categories"
-msgstr "Kategorileri Listele"
+msgstr "Kategorileri Listeleme"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/ListPages.php:14
-#, fuzzy
 msgid "List Elementor Pages"
-msgstr "Elementor Sayfalarını Listele"
+msgstr "Elementor Sayfalarını Listeleyin"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ListTemplates.php:14
+#, fuzzy
+msgid "List Elementor Templates"
+msgstr "Elementor Şablonları Listesi"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:90
-#, fuzzy
 msgid "List LiteSpeed Cache Presets"
-msgstr "LiteSpeed Önbellek Ön Ayarlarını Listele"
+msgstr "LiteSpeed Önbellek Ön Ayarlarını Listeleyin"
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:20
-#, fuzzy
 msgid "List Media"
-msgstr "Liste Medya"
+msgstr "Medyayı Listeleyin"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:85
+#, fuzzy
+msgid "List Menu Items"
+msgstr "Menü Öğelerini Listele"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:155
+#, fuzzy
+msgid "List Menu Locations"
+msgstr "Menü Konumları Listesi"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:15
+#, fuzzy
+msgid "List Menus"
+msgstr "Menü Listesi"
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:20
+#, fuzzy
+msgid "List Navigations"
+msgstr "Liste Gezinme Menüleri"
+
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:166
+#, fuzzy
+msgid "List of coupon IDs to delete"
+msgstr "Silinecek kupon kimliklerinin listesi"
+
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:156
+#, fuzzy
+msgid "List of coupon objects to create"
+msgstr "Oluşturulacak kupon nesnelerinin listesi"
+
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:161
+#, fuzzy
+msgid "List of coupon objects to update (must include id)"
+msgstr "Güncellenecek kupon nesnelerinin listesi (id içermelidir)"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:22
+#, fuzzy
+msgid "List of global color updates"
+msgstr "Küresel renk güncellemelerinin listesi"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:49
+#, fuzzy
+msgid "List of typography preset updates"
+msgstr "Tipografi ön ayar güncellemelerinin listesi"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:39
-#, fuzzy
 msgid "List Post Types"
-msgstr "Gönderi Türlerini Listele"
+msgstr "Gönderi Türlerini Listeleyin"
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:20
+#, fuzzy
+msgid "List Revisions"
+msgstr "Liste Değişiklikleri"
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:21
+#, fuzzy
+msgid ""
+"List revisions for a specific item. Provide its REST API base (e.g., posts, "
+"pages, templates) and the parent ID."
+msgstr ""
+"Belirli bir öğenin revizyonlarını listeleyin. Öğenin REST API tabanını (örn. "
+"gönderiler, sayfalar, şablonlar) ve üst öğe kimliğini belirtin."
 
 #: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:17
-#, fuzzy
 msgid "List Tags"
-msgstr "Liste Etiketleri"
+msgstr "Etiketleri Listeleyin"
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:15
+#, fuzzy
+msgid "List Template Parts"
+msgstr "Şablon Bileşenleri Listesi"
 
 #: admin/class-hostinger-ai-assistant-translations.php:135
-#, fuzzy
 msgid "List users with their roles"
-msgstr "Kullanıcıları rolleriyle listeleme"
+msgstr "Kullanıcıları rolleriyle birlikte listeleyin"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:223
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:222
 msgid "List WooCommerce Product Brands"
 msgstr "WooCommerce Ürün Markalarını Listeleme"
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:88
-#, fuzzy
 msgid "List WooCommerce Product Categories"
 msgstr "WooCommerce Ürün Kategorilerini Listeleme"
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:155
-#, fuzzy
 msgid "List WooCommerce Product Tags"
-msgstr "WooCommerce Ürün Etiketlerini Listele"
+msgstr "WooCommerce Ürün Etiketlerini Listeleme"
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:21
-#, fuzzy
 msgid "List WordPress media items with pagination and filtering."
-msgstr "WordPress medya öğelerini sayfalandırma ve filtreleme ile listeleyin."
+msgstr "Sayfalama ve filtreleme ile WordPress medya öğelerini listeleyin."
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:159
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:203
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:233
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:327
-#, fuzzy
 msgid "LiteSpeed Cache plugin is not active"
 msgstr "LiteSpeed Cache eklentisi etkin değil"
 
 #. translators: %s: Preset name
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:365
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "LiteSpeed Cache preset \"%s\" has been applied successfully. A backup of "
 "your previous settings was created automatically."
 msgstr ""
-"LiteSpeed Cache ön ayarı \"%s\" başarıyla uygulandı. Önceki ayarlarınızın "
+"LiteSpeed Cache \"%s\" ön ayarı başarıyla uygulandı. Önceki ayarlarınızın "
 "bir yedeği otomatik olarak oluşturuldu."
 
 #: admin/partials/hostinger-ai-assistant-tab-view.php:143
@@ -1793,18 +2293,27 @@ msgstr "Uzun"
 msgid "Main topic"
 msgstr "Ana konu"
 
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:183
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:187
 msgid "Maintenance mode status"
 msgstr "Bakım modu durumu"
 
-#: admin/class-hostinger-ai-assistant-translations.php:73
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:90
 #, fuzzy
+msgid "Main‑axis alignment for flex containers"
+msgstr "Esnek konteynerler için ana eksen hizalaması"
+
+#: admin/class-hostinger-ai-assistant-translations.php:73
 msgid "Manage users and permissions"
 msgstr "Kullanıcıları ve izinleri yönetme"
 
-#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:200
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:89
 #, fuzzy
+msgid "Margin in px (number for all sides) or object with sides and unit"
+msgstr ""
+"Pikselle ifade edilen kenar boşluğu (tüm kenarlar için tek bir sayı) veya "
+"kenarları ve birimi belirtilen nesne"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:200
 msgid ""
 "Margin spacing. Set \"reset\" to true to remove margin, or provide dimension "
 "values."
@@ -1813,12 +2322,10 @@ msgstr ""
 "sağlamak için \"reset\" öğesini true olarak ayarlayın."
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetPageStructure.php:26
-#, fuzzy
 msgid "Maximum recursion depth to display. Default: 10"
-msgstr "Görüntülenecek maksimum özyineleme derinliği. Varsayılan: 10"
+msgstr "Gösterilecek maksimum özyineleme derinliği. Varsayılan: 10"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/FindWidgets.php:35
-#, fuzzy
 msgid "Maximum search depth. Default: 10"
 msgstr "Maksimum arama derinliği. Varsayılan: 10"
 
@@ -1827,6 +2334,11 @@ msgstr "Maksimum arama derinliği. Varsayılan: 10"
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:120
 msgid "Medium"
 msgstr "Orta"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:177
+#, fuzzy
+msgid "Menu ID to assign to the location."
+msgstr "Konuma atanacak menü kimliği."
 
 #: admin/partials/hostinger-ai-assistant-seo-meta-view.php:29
 msgid "Meta description"
@@ -1840,15 +2352,24 @@ msgstr ""
 "Meta açıklamalar, arama sonuçlarında kısa sayfa özetleri sunarak "
 "kullanıcıların tıklamadan önce anlamalarına yardım eder."
 
+#. translators: %s is a route parameter name
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:471
+#, fuzzy, php-format
+msgid "Missing required route parameter: %s"
+msgstr "Gerekli rota parametresi eksik: %s"
+
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:259
-#, fuzzy
 msgid "Mobile Cache"
 msgstr "Mobil Önbellek"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:282
-#, fuzzy
 msgid "Most websites"
 msgstr "Çoğu web sitesi"
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:83
+#, fuzzy
+msgid "Navigation (wp_navigation) post ID."
+msgstr "Gezinti (wp_navigation) yazı kimliği."
 
 #: admin/class-hostinger-ai-assistant-translations.php:23
 #: admin/partials/hostinger-ai-assistant-tab-view.php:105
@@ -1857,96 +2378,169 @@ msgstr "Çoğu web sitesi"
 msgid "Neutral"
 msgstr "Nötr"
 
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:41
+#, fuzzy
+msgid "New color value (e.g. #FF0000 or rgba(255,0,0,1))"
+msgstr "Yeni renk değeri (örn. #FF0000 veya rgba(255,0,0,1))"
+
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/AssignGlobalColor.php:155
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetActiveKit.php:66
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:117
 msgid "No active Elementor kit found"
 msgstr "Etkin Elementor kiti bulunamadı"
 
-#: includes-psr4/Mcp/Abilities/Tools/Elementor/BaseElementorTool.php:38
+#: includes-psr4/Cli/JwtCommand.php:97
 #, fuzzy
+msgid ""
+"No administrator found to issue a token for. Pass --user=<id|login|email>."
+msgstr ""
+"Jeton verilecek bir yönetici bulunamadı. --user=<id|login|email> "
+"parametresini kullanın."
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/BaseElementorTool.php:38
 msgid "No Elementor data found for this post"
 msgstr "Bu gönderi için Elementor verisi bulunamadı"
 
-#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:114
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:504
 #, fuzzy
+msgid "No fallback theme available to switch to."
+msgstr "Geçiş yapabileceğiniz bir yedek tema yok."
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:208
+#, fuzzy
+msgid "Nothing was updated"
+msgstr "Hiçbir şey güncellenmedi"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:116
+#, fuzzy
+msgid "Number of inner columns (containers)"
+msgstr "İç sütunların (konteynerlerin) sayısı"
+
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:114
 msgid "Number of items per page"
 msgstr "Sayfa başına öğe sayısı"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/ListPages.php:34
-#, fuzzy
 msgid "Number of pages to return. Default: 50"
 msgstr "Döndürülecek sayfa sayısı. Varsayılan: 50"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/ListPages.php:41
-#, fuzzy
 msgid "Number of pages to skip for pagination. Default: 0"
-msgstr "Sayfalandırma için atlanacak sayfa sayısı. Varsayılan: 0"
+msgstr "Sayfalama için atlanacak sayfa sayısı. Varsayılan: 0"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:115
-#, fuzzy
 msgid "Number of posts per page"
 msgstr "Sayfa başına gönderi sayısı"
 
 #: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:77
-#, fuzzy
 msgid "Number of posts to show per page"
 msgstr "Sayfa başına gösterilecek gönderi sayısı"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ListTemplates.php:28
+#, fuzzy
+msgid "Number of templates to return. Default: 50"
+msgstr "Döndürülecek şablon sayısı. Varsayılan: 50"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ListTemplates.php:35
+#, fuzzy
+msgid "Number of templates to skip for pagination. Default: 0"
+msgstr "Sayfa numaralandırması için atlanacak şablon sayısı. Varsayılan: 0"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:174
+#, fuzzy
+msgid "Opacity (0..1)"
+msgstr "Opaklık (0..1)"
 
 #: admin/partials/hostinger-ai-assistant-tab-view.php:29
 msgid "Open guide"
 msgstr "Rehberi aç"
 
 #: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:93
-#, fuzzy
 msgid "Opt-in to MCP"
-msgstr "MCP'ye katılma"
+msgstr "MCP için katılım"
 
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:211
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:215
 msgid "Opt-in Web2Agent MCP status"
-msgstr "Opt-in Web2Agent MCP durumu"
+msgstr "Web2Agent MCP katılım durumu"
 
 #: admin/partials/hostinger-ai-assistant-tab-view.php:179
 msgid "Optional"
 msgstr "Tercihe bağlı"
 
-#: includes-psr4/Mcp/Abilities/Tools/Elementor/FindWidgets.php:47
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:75
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:182
 #, fuzzy
+msgid "Optional CSS class to assign/update on the container"
+msgstr "Konteyner üzerinde atanacak/güncellenecek isteğe bağlı CSS sınıfı"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/FindWidgets.php:47
 msgid "Optional CSS class to filter by (e.g., \"hostinger-ai-*\")"
-msgstr "Filtrelemek için isteğe bağlı CSS sınıfı (örneğin, \"hostinger-ai-*\")"
+msgstr "Filtreleme için isteğe bağlı CSS sınıfı (örn. \"hostinger-ai-*\")"
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:133
+#, fuzzy
+msgid ""
+"Optional list of fields to restore. Defaults to title, content, and excerpt."
+msgstr ""
+"Geri yüklenecek alanların isteğe bağlı listesi. Varsayılan olarak başlık, "
+"içerik ve özet seçilidir."
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:64
+#, fuzzy
+msgid "Optional new title/label"
+msgstr "İsteğe bağlı yeni başlık/etiket"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:37
+#, fuzzy
+msgid "Optional new title/label for the color"
+msgstr "Renk için isteğe bağlı yeni başlık/etiket"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:36
+#, fuzzy
+msgid ""
+"Optional parent container ID. If omitted, operations happen at the root "
+"level."
+msgstr ""
+"İsteğe bağlı üst konteyner kimliği. Belirtilmezse, işlemler kök düzeyinde "
+"gerçekleştirilir."
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:154
-#, fuzzy
 msgid ""
 "Optional. The size of the image to retrieve (thumbnail, medium, large, full)."
 " Defaults to full/original size."
 msgstr ""
-"İsteğe bağlı. Alınacak görüntünün boyutu (küçük resim, orta, büyük, tam). "
-"Varsayılan değer tam/orijinal boyuttur."
+"İsteğe bağlı. Alınacak görsel boyutu (thumbnail, medium, large, full). "
+"Varsayılan: full/orijinal boyut."
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetLink.php:41
-#, fuzzy
 msgid "Optional: Add nofollow attribute"
-msgstr "İsteğe bağlı: Nofollow özniteliği ekleyin"
+msgstr "İsteğe bağlı: Nofollow özelliği ekleyin"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetImage.php:38
-#, fuzzy
 msgid "Optional: Image alt text for accessibility"
-msgstr "İsteğe bağlı: Erişilebilirlik için resim alt metni"
+msgstr "İsteğe bağlı: Erişilebilirlik için görsel alt metni"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetLink.php:36
-#, fuzzy
 msgid "Optional: Open link in new tab"
-msgstr "İsteğe bağlı: Bağlantıyı yeni sekmede aç"
+msgstr "İsteğe bağlı: Bağlantıyı yeni sekmede açma"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetImage.php:34
-#, fuzzy
 msgid "Optional: WordPress media library ID"
-msgstr "İsteğe bağlı: WordPress medya kitaplığı kimliği"
+msgstr "İsteğe bağlı: WordPress medya kütüphanesi kimliği"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:95
+#, fuzzy
+msgid "Overall gap between child items (px)"
+msgstr "Alt öğeler arasındaki toplam boşluk (px)"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:69
+#, fuzzy
+msgid "Padding in px (number for all sides) or object with sides and unit"
+msgstr ""
+"Pikselle (px) dolgu (tüm kenarlar için tek bir sayı) veya kenarları ve "
+"birimi belirtilen nesne"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:162
-#, fuzzy
 msgid ""
 "Padding spacing. Set \"reset\" to true to remove padding, or provide "
 "dimension values."
@@ -1955,22 +2549,64 @@ msgstr ""
 "\"reset\" değerini true olarak ayarlayın."
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:109
-#, fuzzy
 msgid "Page number for pagination"
 msgstr "Sayfalandırma için sayfa numarası"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:110
-#, fuzzy
 msgid "Page number for pagination (starts from 1)"
-msgstr "Sayfalandırma için sayfa numarası (1'den başlar)"
+msgstr "Sayfalandırma için sayfa numarası (1’den başlar)"
+
+#. translators: %s: parent id
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/CreateContainer.php:94
+#, fuzzy, php-format
+msgid "Parent container with ID '%s' not found"
+msgstr "'%s' kimliğine sahip ana kapsayıcı bulunamadı"
 
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:411
 #, fuzzy
 msgid "Personalize your content"
 msgstr "İçeriğinizi kişiselleştirin"
 
-#: includes-psr4/Mcp/Abilities/Resources/PluginsInfoResource.php:16
+#. translators: %s: plugin slug.
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:260
+#, fuzzy, php-format
+msgid "Plugin \"%s\" is already installed."
+msgstr "\"%s\" eklentisi zaten yüklü."
+
+#. translators: %s: plugin file path.
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:335
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:372
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:406
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:436
+#, fuzzy, php-format
+msgid "Plugin \"%s\" not found."
+msgstr "\"%s\" eklentisi bulunamadı."
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:81
 #, fuzzy
+msgid ""
+"Plugin file path relative to the plugins directory (e.g. "
+"'woocommerce/woocommerce.php')"
+msgstr ""
+"Eklentiler dizinine göre eklenti dosya yolu (örneğin "
+"'woocommerce/woocommerce.php')"
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:126
+#, fuzzy
+msgid "Plugin file path relative to the plugins directory to activate"
+msgstr "Etkinleştirilecek eklentiler dizinine göre eklenti dosya yolu"
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:171
+#, fuzzy
+msgid "Plugin file path relative to the plugins directory to deactivate"
+msgstr "Devre dışı bırakılacak eklentiler dizinine göre eklenti dosya yolu"
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:216
+#, fuzzy
+msgid "Plugin file path relative to the plugins directory to update"
+msgstr "Güncellenecek eklentiler dizinine göre eklenti dosya yolu"
+
+#: includes-psr4/Mcp/Abilities/Resources/PluginsInfoResource.php:16
 msgid "Plugins Information"
 msgstr "Eklenti Bilgileri"
 
@@ -1980,14 +2616,13 @@ msgstr "Zayıf"
 
 #. translators: %1$s: kit id, %2$s template type
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/BaseElementorTool.php:312
-#, fuzzy, php-format
+#, php-format
 msgid "Post %1$s is not an Elementor kit (template type: %2$s)"
-msgstr "1$s gönderisi bir Elementor kiti değil (şablon türü: %2$s)"
+msgstr "1$s gönderisi bir Elementor kiti değildir (şablon türü: %2$s)"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:412
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:475
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:526
-#, fuzzy
 msgid "Post not found"
 msgstr "Gönderi bulunamadı"
 
@@ -1996,7 +2631,6 @@ msgid "Powered by"
 msgstr "Tarafından desteklenmektedir:"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:335
-#, fuzzy
 msgid "Preset parameter is required"
 msgstr "Ön ayar parametresi gereklidir"
 
@@ -2008,15 +2642,18 @@ msgstr "Bir anahtar kelimeyi tamamlamak için Giriş tuşuna basın"
 msgid "Preview site"
 msgstr "Siteyi önizle"
 
-#: includes-psr4/Mcp/Abilities/Resources/PluginsInfoResource.php:17
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:108
 #, fuzzy
+msgid "Provide colors and/or typography updates to apply."
+msgstr "Uygulanacak renk ve/veya tipografi güncellemelerini sağlayın."
+
+#: includes-psr4/Mcp/Abilities/Resources/PluginsInfoResource.php:17
 msgid ""
 "Provides detailed information about active and available WordPress plugins"
 msgstr ""
 "Aktif ve kullanılabilir WordPress eklentileri hakkında ayrıntılı bilgi sağlar"
 
 #: includes-psr4/Mcp/Abilities/Resources/UsersInfoResource.php:17
-#, fuzzy
 msgid ""
 "Provides detailed information about registered WordPress users and their "
 "roles"
@@ -2024,7 +2661,6 @@ msgstr ""
 "Kayıtlı WordPress kullanıcıları ve rolleri hakkında ayrıntılı bilgi sağlar"
 
 #: includes-psr4/Mcp/Abilities/Resources/ThemeInfoResource.php:17
-#, fuzzy
 msgid ""
 "Provides detailed information about the active WordPress theme and its "
 "parent theme if applicable"
@@ -2032,7 +2668,6 @@ msgstr ""
 "Etkin WordPress teması ve varsa ana teması hakkında ayrıntılı bilgi sağlar"
 
 #: includes-psr4/Mcp/Abilities/Tools/SiteInfoTools.php:17
-#, fuzzy
 msgid ""
 "Provides detailed information about the WordPress site like site name, url, "
 "description, admin email, plugins, themes, users, and more."
@@ -2042,7 +2677,6 @@ msgstr ""
 "sağlar."
 
 #: includes-psr4/Mcp/Abilities/Resources/SiteSettingsResource.php:17
-#, fuzzy
 msgid ""
 "Provides detailed information about WordPress site settings including "
 "general, reading, discussion, media, permalink, privacy, and writing settings"
@@ -2051,7 +2685,6 @@ msgstr ""
 "dahil olmak üzere WordPress site ayarları hakkında ayrıntılı bilgi sağlar"
 
 #: includes-psr4/Mcp/Abilities/Resources/SiteInfoResource.php:17
-#, fuzzy
 msgid ""
 "Provides general information about the WordPress site including site details,"
 " plugins, themes, and users"
@@ -2064,7 +2697,6 @@ msgid "Publish"
 msgstr "Yayınla"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:59
-#, fuzzy
 msgid ""
 "Purge all LiteSpeed caches including LSCache, CSS/JS, localized resources, "
 "object cache, and opcache."
@@ -2073,128 +2705,180 @@ msgstr ""
 "dahil olmak üzere tüm LiteSpeed önbelleklerini temizleyin."
 
 #: admin/class-hostinger-ai-assistant-translations.php:84
-#, fuzzy
 msgid "Rate your conversation"
 msgstr "Konuşmanızı değerlendirin"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:280
-#, fuzzy
 msgid "Remove Noscript Tags"
-msgstr "Noscript Etiketlerini Kaldır"
+msgstr "Noscript Etiketlerini Kaldırın"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:278
-#, fuzzy
 msgid "Remove Query Strings from Static Files"
-msgstr "Statik Dosyalardan Sorgu Dizelerini Kaldırma"
+msgstr "Statik Dosyalardan Sorgu Dizelerini Kaldırın"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:279
-#, fuzzy
 msgid "Remove WordPress Emoji"
-msgstr "WordPress Emoji'yi Kaldır"
+msgstr "WordPress Emoji'yi Kaldırın"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:294
-#, fuzzy
 msgid "Removed Unused CSS for Users"
 msgstr "Kullanıcılar için Kullanılmayan CSS Kaldırıldı"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:80
+#: includes-psr4/Nudges/DomainRenewalNudge.php:88
 #, fuzzy
+msgid "Renew my domain"
+msgstr "Alan adımı yenile"
+
+#: includes-psr4/Nudges/RenewalNudge.php:100
+#, fuzzy
+msgid "Renew my plan"
+msgstr "Paketimi yenilemek"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:130
 msgid "Report period. Options: week, month, last_month, year."
 msgstr "Rapor dönemi. Seçenekler: hafta, ay, son_ay, yıl."
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:239
-#, fuzzy
 msgid "Requested size not found"
 msgstr "İstenen boyut bulunamadı"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:46
+#, fuzzy
+msgid "Required when position is before/after. The sibling element ID."
+msgstr "Konum “öncesi/sonrası” olduğunda gereklidir. Kardeş öğenin kimliği."
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:32
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:57
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:84
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:117
+#, fuzzy
+msgid ""
+"REST API base for the post type (e.g., posts, pages, templates, product, etc."
+")."
+msgstr ""
+"Yazı türü için REST API tabanı (örn. yazılar, sayfalar, şablonlar, ürünler "
+"vb.)."
 
 #: admin/class-hostinger-ai-assistant-translations.php:46
 msgid "Restart chatbot"
 msgstr "Sohbet robotunu yeniden başlatın"
 
-#: admin/class-hostinger-ai-assistant-translations.php:176
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:110
 #, fuzzy
+msgid ""
+"Restore a specific revision for an item by copying its content back to the "
+"parent. Works for any post type using its REST base."
+msgstr ""
+"Bir öğenin belirli bir revizyonunu, içeriğini üst öğeye geri kopyalayarak "
+"geri yükleyin. REST tabanını kullanan her türlü yazı türü için geçerlidir."
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:109
+#, fuzzy
+msgid "Restore Revision"
+msgstr "Revizyonu Geri Yükle"
+
+#: admin/class-hostinger-ai-assistant-translations.php:176
 msgid "Retrieve a list of WooCommerce orders with filters"
-msgstr "WooCommerce siparişlerinin bir listesini filtrelerle alma"
+msgstr "Filtrelerle WooCommerce siparişlerinin listesi"
 
 #: admin/class-hostinger-ai-assistant-translations.php:132
-#, fuzzy
 msgid "Retrieve detailed information about my WordPress site"
-msgstr "WordPress sitem hakkında ayrıntılı bilgi alma"
+msgstr "WordPress sitem hakkında ayrıntılı bilgiler"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetKitById.php:15
-#, fuzzy
 msgid ""
 "Retrieves a specific Elementor kit by post ID with all settings including "
 "global colors, typography presets, and theme style settings."
 msgstr ""
-"Global renkler, tipografi ön ayarları ve tema stili ayarları dahil olmak "
-"üzere tüm ayarlarla birlikte belirli bir Elementor kitini gönderi kimliğine "
-"göre alır."
+"Post ID’sine göre belirli bir Elementor kitini; global renkler, tipografi ön "
+"ayarları ve tema stil ayarları dahil tüm ayarlarıyla birlikte getirir."
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/ListPages.php:15
-#, fuzzy
 msgid ""
 "Retrieves all posts/pages/custom post types that use Elementor builder. "
 "Supports filtering by post type and status with pagination."
 msgstr ""
-"Elementor builder kullanan tüm yazıları/sayfaları/özel yazı türlerini alır. "
-"Sayfalandırma ile gönderi türüne ve durumuna göre filtrelemeyi destekler."
+"Elementor oluşturucuyu kullanan tüm yazıları, sayfaları ve özel içerik "
+"türlerini getirir. İçerik türüne ve duruma göre filtrelemeyi destekler ve "
+"sayfalandırma sunar."
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetWidgetById.php:15
-#, fuzzy
 msgid ""
 "Retrieves complete information about a specific Elementor widget by its "
 "unique ID, including all settings, position, and parent information."
 msgstr ""
-"Tüm ayarlar, konum ve üst bilgiler dahil olmak üzere, benzersiz kimliğine "
-"göre belirli bir Elementor widget'ı hakkındaki tüm bilgileri alır."
+"Benzersiz kimliğine göre belirli bir Elementor bileşeni hakkında; tüm "
+"ayarlar, konum ve üst öğe bilgileri dahil eksiksiz bilgileri getirir."
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ListTemplates.php:15
+#, fuzzy
+msgid ""
+"Retrieves Elementor templates from the elementor_library post type. Results "
+"include the template type and support pagination."
+msgstr ""
+"elementor_library yazı türünden Elementor şablonlarını alır. Sonuçlar şablon "
+"türünü içerir ve sayfalandırmayı destekler."
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetActiveKit.php:15
-#, fuzzy
 msgid ""
 "Retrieves the active Elementor kit with all settings including global colors,"
 " typography presets, custom CSS, and theme style settings."
 msgstr ""
-"Global renkler, tipografi ön ayarları, özel CSS ve tema stili ayarları dahil "
-"olmak üzere tüm ayarlarla birlikte etkin Elementor kitini alır."
+"Aktif Elementor kitini; global renkler, tipografi ön ayarları, özel CSS ve "
+"tema stil ayarları dahil tüm ayarlarıyla birlikte getirir."
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:89
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:139
 msgid "Return sales for a specific end date. Format: YYYY-MM-DD."
-msgstr "Belirli bir bitiş tarihi için satışları döndürür. Biçim: YYYY-MM-DD."
+msgstr "Belirli bir bitiş tarihi için satışları döndürür. Format: YYYY-AA-GG"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:85
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:135
 msgid "Return sales for a specific start date. Format: YYYY-MM-DD."
 msgstr ""
-"Belirli bir başlangıç tarihi için satışları döndürür. Biçim: YYYY-MM-DD."
+"Belirli bir başlangıç tarihi için satışları döndürür. Format: YYYY-AA-GG"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetPageStructure.php:15
-#, fuzzy
 msgid ""
 "Returns a readable, hierarchical summary of Elementor page structure without "
 "raw JSON. Shows containers and widgets in a tree view."
 msgstr ""
-"Elementor sayfa yapısının ham JSON olmadan okunabilir, hiyerarşik bir "
-"özetini verir. Kapsayıcıları ve widget'ları bir ağaç görünümünde gösterir."
+"Ham JSON olmadan, Elementor sayfa yapısının okunabilir ve hiyerarşik bir "
+"özetini döndürür. Konteynerleri ve bileşenleri ağaç görünümünde gösterir."
+
+#. translators: %s: revision id
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:189
+#, fuzzy, php-format
+msgid "Revision with ID '%s' not found"
+msgstr "'%s' kimlik numaralı revizyon bulunamadı"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:262
-#, fuzzy
 msgid "Right border width (as string)"
 msgstr "Sağ kenarlık genişliği (dize olarak)"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:213
-#, fuzzy
 msgid "Right margin value (as string)"
 msgstr "Sağ kenar boşluğu değeri (dize olarak)"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:175
-#, fuzzy
 msgid "Right padding value (as string)"
 msgstr "Sağ dolgu değeri (dize olarak)"
 
-#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetContent.php:15
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:100
 #, fuzzy
+msgid "Row gap for grid or multi‑row flex (px)"
+msgstr "Izgara veya çok satırlı esnek düzen için satır aralığı (px)"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/DeleteContainer.php:15
+#, fuzzy
+msgid ""
+"Safely removes a container. Optionally preserves children by moving them to "
+"the parent at the same position. Can require confirmation for complex "
+"structures."
+msgstr ""
+"Bir kapsülü güvenli bir şekilde kaldırır. İsteğe bağlı olarak, alt öğeleri "
+"aynı konumda üst öğeye taşıyarak korur. Karmaşık yapılar söz konusu "
+"olduğunda onay gerektirebilir."
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetContent.php:15
 msgid ""
 "Safely updates text content of Elementor widgets (heading, button, text-"
 "editor). Updates text/title/editor fields while preserving all other "
@@ -2204,8 +2888,16 @@ msgstr ""
 "güvenli bir şekilde günceller. Diğer tüm ayarları korurken "
 "metin/başlık/editör alanlarını günceller."
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:20
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:20
 #, fuzzy
+msgid ""
+"Search and filter WooCommerce coupons with pagination. Returns a list of "
+"coupons matching the search criteria."
+msgstr ""
+"WooCommerce kuponlarını sayfalandırma ile arayın ve filtreleyin. Arama "
+"kriterleriyle eşleşen kuponların bir listesini döndürür."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:20
 msgid ""
 "Search and filter WooCommerce products with pagination. Returns a list of "
 "products matching the search criteria."
@@ -2215,7 +2907,7 @@ msgstr ""
 
 #. translators: %s: post type names
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:85
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "Search and filter WordPress custom post types posts including %s with "
 "pagination"
@@ -2224,7 +2916,6 @@ msgstr ""
 "ve filtreleme"
 
 #: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:18
-#, fuzzy
 msgid ""
 "Search and filter WordPress pages with pagination. Returns a list of pages "
 "matching the search criteria."
@@ -2233,7 +2924,6 @@ msgstr ""
 "kriterleriyle eşleşen sayfaların bir listesini döndürür."
 
 #: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:18
-#, fuzzy
 msgid ""
 "Search and filter WordPress posts with pagination. Returns a list of posts "
 "matching the search criteria."
@@ -2242,12 +2932,10 @@ msgstr ""
 "kriterleriyle eşleşen yazıların bir listesini döndürür."
 
 #: admin/class-hostinger-ai-assistant-translations.php:136
-#, fuzzy
 msgid "Search and filter WordPress users with pagination"
 msgstr "Sayfalandırma ile WordPress kullanıcılarını arama ve filtreleme"
 
 #: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:18
-#, fuzzy
 msgid ""
 "Search and filter WordPress users with pagination. Returns a list of users "
 "matching the search criteria."
@@ -2256,88 +2944,77 @@ msgstr ""
 "kriterleriyle eşleşen kullanıcıların bir listesini döndürür."
 
 #: admin/class-hostinger-ai-assistant-translations.php:150
-#, fuzzy
 msgid "Search blog posts"
 msgstr "Blog gönderilerini arayın"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:82
-#, fuzzy
 msgid "Search Custom Post Types Posts"
-msgstr "Özel Yazı Türlerini Ara Gönderiler"
+msgstr "Özel İçerik Türü Yazılarını Arayın"
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:81
-#, fuzzy
 msgid "Search Media"
 msgstr "Medya Arama"
 
 #: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:17
-#, fuzzy
 msgid "Search Pages"
-msgstr "Arama Sayfaları"
+msgstr "Sayfa Arama"
 
 #: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:17
-#, fuzzy
 msgid "Search Posts"
-msgstr "Mesajları Ara"
+msgstr "Gönderi Arama"
 
 #: admin/class-hostinger-ai-assistant-translations.php:152
-#, fuzzy
 msgid "Search posts on my WordPress website"
-msgstr "WordPress web sitemdeki gönderileri arama"
+msgstr "WordPress web sitemdeki gönderileri ara"
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:89
-#, fuzzy
 msgid "Search term to look for in media titles, captions, and descriptions"
-msgstr ""
-"Medya başlıklarında, alt yazılarında ve açıklamalarında aranacak arama terimi"
+msgstr "Medya başlıklarında, altyazılarda ve açıklamalarda aranacak terim"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:98
-#, fuzzy
 msgid "Search term to look for in post titles and content"
-msgstr "Yazı başlıklarında ve içerikte aranacak arama terimi"
+msgstr "Yazı başlıklarında ve içerikte aranacak terim"
 
 #: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:17
-#, fuzzy
 msgid "Search Users"
-msgstr "Kullanıcıları Ara"
+msgstr "Kullanıcıları Arama"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:19
+#, fuzzy
+msgid "Search WooCommerce Coupons"
+msgstr "WooCommerce Kuponlarını Ara"
 
 #: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:19
-#, fuzzy
 msgid "Search WooCommerce Orders"
-msgstr "WooCommerce Siparişlerini Ara"
+msgstr "WooCommerce Siparişlerini Arama"
 
 #: admin/class-hostinger-ai-assistant-translations.php:177
-#, fuzzy
 msgid "Search WooCommerce orders for my store"
-msgstr "Mağazam için WooCommerce siparişlerini arama"
+msgstr "Mağazam için WooCommerce siparişlerini ara"
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:19
-#, fuzzy
 msgid "Search WooCommerce Products"
-msgstr "WooCommerce Ürünlerini Ara"
+msgstr "WooCommerce Ürünlerini Arama"
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:82
-#, fuzzy
 msgid ""
 "Search WordPress media items by title, caption, or description with "
 "filtering options."
 msgstr ""
-"Filtreleme seçenekleriyle WordPress medya öğelerini başlığa, başlığa veya "
-"açıklamaya göre arayın."
+"WordPress medya öğelerini başlık, altyazı veya açıklamaya göre filtreleme "
+"seçenekleriyle arayın."
 
 #: admin/class-hostinger-ai-assistant-translations.php:137
-#, fuzzy
 msgid "Search WordPress users on my website"
-msgstr "Web sitemde WordPress kullanıcılarını arama"
+msgstr "Web sitemde WordPress kullanıcılarını ara"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/FindWidgets.php:17
-#, fuzzy
 msgid ""
 "Searches for specific widget types in an Elementor page structure. Returns "
 "all widgets matching the criteria with their settings and position."
 msgstr ""
-"Bir Elementor sayfa yapısında belirli widget türlerini arar. Kriterlerle "
-"eşleşen tüm widget'ları ayarları ve konumlarıyla birlikte döndürür."
+"Elementor sayfa yapısında belirli bileşen türlerini arar. Kriterlere uyan "
+"tüm bileşenleri, ayarları ve konumlarıyla birlikte döndürür."
 
 #: admin/class-hostinger-ai-assistant-translations.php:56
 msgid "Selected file type is not supported"
@@ -2356,12 +3033,10 @@ msgstr ""
 "gibi arama motorlarında web içeriğinin görünürlüğünü artırır"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:204
-#, fuzzy
 msgid "Set to true to remove margin entirely"
 msgstr "Kenar boşluğunu tamamen kaldırmak için true olarak ayarlayın"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:166
-#, fuzzy
 msgid "Set to true to remove padding entirely"
 msgstr "Dolguyu tamamen kaldırmak için true olarak ayarlayın"
 
@@ -2373,39 +3048,32 @@ msgid "Short"
 msgstr "Kısa"
 
 #: includes-psr4/Mcp/Abilities/Resources/SiteInfoResource.php:16
-#, fuzzy
 msgid "Site Information"
 msgstr "Site Bilgileri"
 
 #: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:61
-#, fuzzy
 msgid "Site language"
 msgstr "Site dili"
 
 #: includes-psr4/Mcp/Abilities/Resources/SiteSettingsResource.php:16
-#, fuzzy
 msgid "Site Settings"
 msgstr "Site Ayarları"
 
 #: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:41
-#, fuzzy
 msgid "Site tagline/description"
 msgstr "Site sloganı/açıklaması"
 
 #: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:45
-#, fuzzy
 msgid "Site timezone"
 msgstr "Site saat dilimi"
 
 #: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:37
-#, fuzzy
 msgid "Site title"
 msgstr "Site başlığı"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:84
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:117
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:133
-#, fuzzy
 msgid "Size value"
 msgstr "Boyut değeri"
 
@@ -2428,23 +3096,39 @@ msgid "Start new chat"
 msgstr "Yeni sohbet başlat"
 
 #: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:57
-#, fuzzy
 msgid "Start of week (0 = Sunday, 1 = Monday, etc.)"
 msgstr "Haftanın başlangıcı (0 = Pazar, 1 = Pazartesi, vb.)"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:30
-#, fuzzy
 msgid ""
 "Style properties to update. All properties are optional. Only provide the "
 "properties you want to change."
 msgstr ""
-"Güncellenecek stil özellikleri. Tüm özellikler isteğe bağlıdır. Sadece "
-"değiştirmek istediğiniz özellikleri girin."
+"Güncellenecek stil özellikleri. Tüm özellikler isteğe bağlıdır. Yalnızca "
+"değiştirmek istediğiniz özellikleri belirtin"
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:175
+#, fuzzy
+msgid ""
+"Stylesheet of the theme to activate as a replacement. Defaults to "
+"'twentytwentyfour'."
+msgstr ""
+"Değiştirme olarak etkinleştirilecek temanın stil sayfası. Varsayılan olarak "
+"'twentytwentyfour'."
 
 #: admin/class-hostinger-ai-assistant-translations.php:74
-#, fuzzy
 msgid "Summarize your store or site performance"
 msgstr "Mağazanızın veya sitenizin performansını özetleyin"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:28
+#, fuzzy
+msgid "System color key to update (optional)"
+msgstr "Güncellenecek sistem renk anahtarı (isteğe bağlı)"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:55
+#, fuzzy
+msgid "System typography preset key to update (optional)"
+msgstr "Güncellenmesi gereken sistem tipografi ön ayar anahtarı (isteğe bağlı)"
 
 #: admin/class-hostinger-ai-assistant-translations.php:110
 msgid "Talking to Kodee is in the works, we'll keep you posted once it's out!"
@@ -2452,23 +3136,44 @@ msgstr ""
 "Kodee ile konuşma özelliği üzerinde çalışılıyor, hazır olduğunda sizi "
 "bilgilendireceğiz!"
 
-#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:335
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:30
 #, fuzzy
+msgid "Target device for responsive settings"
+msgstr "Duyarlı ayarlar için hedef cihaz"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:189
+#, fuzzy
+msgid "Target global color not found in the active kit"
+msgstr "Aktif kitte hedef global renk bulunamadı"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:127
+#, fuzzy
+msgid "Target number of inner columns (containers)"
+msgstr "Hedeflenen iç sütun (konteyner) sayısı"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:250
+#, fuzzy
+msgid "Target typography preset not found in the active kit"
+msgstr "Etkin kitte hedef tipografi ön ayarı bulunamadı"
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:79
+#, fuzzy
+msgid "Template part ID."
+msgstr "Şablon parçası kimliği."
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:335
 msgid "Text alignment"
 msgstr "Metin hizalama"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:38
-#, fuzzy
 msgid "Text color. Used for text elements."
 msgstr "Metin rengi. Metin öğeleri için kullanılır."
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:155
-#, fuzzy
 msgid "Text decoration"
-msgstr "Metin dekorasyonu"
+msgstr "Metin süsleme"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:145
-#, fuzzy
 msgid "Text transformation"
 msgstr "Metin dönüşümü"
 
@@ -2489,7 +3194,6 @@ msgstr ""
 "istiyorsanız aşağıdaki butona tıklayın."
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/AssignGlobalColor.php:30
-#, fuzzy
 msgid ""
 "The color property to assign. Common properties: title_color (for headings), "
 "text_color (for text), background_color, button_background_color, "
@@ -2501,43 +3205,35 @@ msgstr ""
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:200
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:258
-#, fuzzy
 msgid "The content of the post"
 msgstr "Gönderinin içeriği"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:192
-#, fuzzy
 msgid "The custom post type to create"
 msgstr "Oluşturulacak özel gönderi türü"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:304
-#, fuzzy
 msgid "The custom post type to delete"
 msgstr "Silinecek özel gönderi türü"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:152
-#, fuzzy
 msgid "The custom post type to get"
 msgstr "Alınacak özel gönderi türü"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:94
-#, fuzzy
 msgid "The custom post type to search"
 msgstr "Aranacak özel gönderi türü"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:246
-#, fuzzy
 msgid "The custom post type to update"
 msgstr "Güncellenecek özel gönderi türü"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:204
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:262
-#, fuzzy
 msgid "The excerpt of the post"
-msgstr "Yazının alıntısı"
+msgstr "Yazının özeti"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/AssignGlobalColor.php:46
-#, fuzzy
 msgid ""
 "The global color ID from the active kit. Use get_active_kit tool first to "
 "see available color IDs. Common system colors: primary, secondary, text, "
@@ -2554,22 +3250,18 @@ msgid "The Hostinger AI plugin requires minimum PHP version of <b>%s</b>. "
 msgstr "Hostinger AI eklentisi en az <b>%s</b> PHP sürümü gerektirir."
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:150
-#, fuzzy
 msgid "The ID of the media item"
 msgstr "Medya öğesinin kimliği"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:308
-#, fuzzy
 msgid "The ID of the post to delete"
 msgstr "Silinecek gönderinin kimliği"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:156
-#, fuzzy
 msgid "The ID of the post to get"
 msgstr "Alınacak gönderinin kimliği"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:250
-#, fuzzy
 msgid "The ID of the post to update"
 msgstr "Güncellenecek gönderinin kimliği"
 
@@ -2579,64 +3271,73 @@ msgstr "Güncellenecek gönderinin kimliği"
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetImage.php:22
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetLink.php:24
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:22
-#, fuzzy
 msgid "The ID of the post/page containing the widget"
 msgstr "Widget'ı içeren gönderinin/sayfanın kimliği"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetPageStructure.php:22
-#, fuzzy
 msgid "The ID of the post/page to get structure for"
 msgstr "Yapısı alınacak gönderinin/sayfanın kimliği"
 
-#: includes-psr4/Mcp/Abilities/Tools/Elementor/FindWidgets.php:24
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:18
 #, fuzzy
+msgid "The ID of the post/page to modify"
+msgstr "Değiştirilecek yazının/sayfanın kimliği"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/FindWidgets.php:24
 msgid "The ID of the post/page to search in"
 msgstr "Arama yapılacak gönderinin/sayfanın kimliği"
 
-#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetContent.php:30
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:27
 #, fuzzy
+msgid "The ID of the target container"
+msgstr "Hedef konteynerin kimliği"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetContent.php:30
 msgid "The new content text"
 msgstr "Yeni içerik metni"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetImage.php:30
-#, fuzzy
 msgid "The new image URL"
 msgstr "Yeni görüntü URL'si"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetLink.php:32
-#, fuzzy
 msgid "The new link URL"
 msgstr "Yeni bağlantı URL'si"
 
-#: includes-psr4/Mcp/Abilities/Tools/Elementor/GetKitById.php:22
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:36
 #, fuzzy
+msgid "The parent item ID to list revisions for."
+msgstr "Revizyonlarının listeleneceği ana öğenin kimliği."
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:61
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:88
+#, fuzzy
+msgid "The parent item ID."
+msgstr "Ana öğenin kimliği."
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/GetKitById.php:22
 msgid "The post ID of the Elementor kit"
 msgstr "Elementor kitinin gönderi kimliği"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:127
-#, fuzzy
 msgid "The preset to apply"
 msgstr "Uygulanacak ön ayar"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:208
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:266
-#, fuzzy
 msgid "The status of the post (publish, draft, pending, etc.)"
-msgstr "Gönderinin durumu (yayınla, taslak, beklemede, vb.)"
+msgstr "Gönderinin durumu (yayında, taslak, beklemede, vb.)"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:196
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:254
-#, fuzzy
 msgid "The title of the post"
 msgstr "Gönderinin başlığı"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetImage.php:26
-#, fuzzy
 msgid "The unique ID of the image widget to update"
-msgstr "Güncellenecek resim widget'ının benzersiz kimliği"
+msgstr "Güncellenecek görsel widget'ının benzersiz kimliği"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetWidgetById.php:26
-#, fuzzy
 msgid "The unique ID of the widget to retrieve"
 msgstr "Alınacak widget'ın benzersiz kimliği"
 
@@ -2644,19 +3345,66 @@ msgstr "Alınacak widget'ın benzersiz kimliği"
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetContent.php:26
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetLink.php:28
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:26
-#, fuzzy
 msgid "The unique ID of the widget to update"
 msgstr "Güncellenecek widget'ın benzersiz kimliği"
 
+#. translators: %s: theme slug.
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:263
+#, fuzzy, php-format
+msgid "Theme \"%s\" is already installed."
+msgstr "Tema \"%s\" zaten yüklü."
+
+#. translators: %s: theme stylesheet directory name.
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:391
+#, fuzzy, php-format
+msgid "Theme \"%s\" is not the active theme."
+msgstr "Tema \"%s\" etkin tema değil."
+
+#. translators: %s: theme stylesheet directory name.
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:322
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:358
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:421
+#, fuzzy, php-format
+msgid "Theme \"%s\" not found."
+msgstr "Tema \"%s\" bulunamadı."
+
 #: includes-psr4/Mcp/Abilities/Resources/ThemeInfoResource.php:16
-#, fuzzy
 msgid "Theme Information"
 msgstr "Tema Bilgileri"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:173
+#, fuzzy
+msgid "Theme location slug (e.g., primary, header, footer)."
+msgstr "Tema konum slug'ı (örn., primary, header, footer)."
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:81
+#, fuzzy
+msgid "Theme stylesheet directory name (e.g. 'twentytwentyfour')"
+msgstr "Tema stil sayfası dizin adı (örneğin 'twentytwentyfour')"
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:126
+#, fuzzy
+msgid "Theme stylesheet directory name to activate"
+msgstr "Etkinleştirilecek tema stil sayfası dizin adı"
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:171
+#, fuzzy
+msgid ""
+"Theme stylesheet directory name to deactivate (will switch to the default "
+"theme)"
+msgstr ""
+"Devre dışı bırakılacak tema stil sayfası dizin adı (varsayılan temaya "
+"geçecektir)"
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:221
+#, fuzzy
+msgid "Theme stylesheet directory name to update"
+msgstr "Güncellenecek tema stil sayfası dizin adı"
 
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:248
 #, fuzzy
 msgid "There was an error with your request. Please try again."
-msgstr "İsteğinizle ilgili bir hata oluştu. Lütfen tekrar deneyin."
+msgstr "İsteğinizde bir hata oluştu. Lütfen tekrar deneyin."
 
 #: admin/partials/hostinger-ai-assistant-seo-meta-view.php:20
 msgid ""
@@ -2668,12 +3416,20 @@ msgstr ""
 "girebilirsiniz."
 
 #: admin/class-hostinger-ai-assistant-translations.php:61
-#, fuzzy
 msgid "Thinking"
-msgstr "Düşünme"
+msgstr "Düşünüyor"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/DeleteContainer.php:80
+#, fuzzy
+msgid ""
+"This deletion will remove a complex subtree. Set confirm=true to proceed or "
+"enable preserve_children to keep children."
+msgstr ""
+"Bu silme işlemi karmaşık bir alt ağacı kaldıracaktır. Devam etmek için "
+"confirm=true ayarını yapın veya alt öğeleri korumak için preserve_children "
+"seçeneğini etkinleştirin."
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:254
-#, fuzzy
 msgid ""
 "This low-risk preset introduces basic optimizations for speed and user "
 "experience. Appropriate for enthusiastic beginners."
@@ -2682,7 +3438,6 @@ msgstr ""
 "optimizasyonları sunar. Hevesli yeni başlayanlar için uygundur."
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:242
-#, fuzzy
 msgid ""
 "This no-risk preset is appropriate for all websites. Good for new users, "
 "simple websites, or cache-oriented development."
@@ -2691,34 +3446,30 @@ msgstr ""
 "web siteleri veya önbellek odaklı geliştirme için idealdir."
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/BaseElementorTool.php:28
-#, fuzzy
 msgid "This post does not use Elementor builder"
-msgstr "Bu yazı Elementor builder kullanmamaktadır"
+msgstr "Bu gönderi Elementor builder kullanmamaktadır"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:303
-#, fuzzy
 msgid ""
 "This preset almost certainly will require testing and exclusions for some "
 "CSS, JS and Lazy Loaded images. Pay special attention to logos, or HTML-"
 "based slider images."
 msgstr ""
-"Bu ön ayar neredeyse kesinlikle bazı CSS, JS ve Tembel Yüklenen görüntüler "
-"için test ve istisnalar gerektirecektir. Logolara veya HTML tabanlı "
-"kaydırıcı görüntülerine özellikle dikkat edin."
+"Bu ön ayar, bazı CSS, JS ve lazy load edilen görseller için büyük olasılıkla "
+"test ve istisnalar gerektirecektir. Logolara ve HTML tabanlı slider "
+"görsellerine özellikle dikkat edin."
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:268
-#, fuzzy
 msgid ""
 "This preset is good for most websites, and is unlikely to cause conflicts. "
 "Any CSS or JS conflicts may be resolved with Page Optimization > Tuning "
 "tools."
 msgstr ""
-"Bu ön ayar çoğu web sitesi için iyidir ve çakışmalara neden olma olasılığı "
-"düşüktür. Herhangi bir CSS veya JS çakışması Sayfa Optimizasyonu > Ayarlama "
-"araçları ile çözülebilir."
+"Bu ön ayar çoğu web sitesi için uygundur ve çakışma oluşturma ihtimali "
+"düşüktür. Olası CSS veya JS çakışmaları Sayfa Optimizasyonu > Ayarlama "
+"araçlarıyla giderilebilir."
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:288
-#, fuzzy
 msgid ""
 "This preset might work out of the box for some websites, but be sure to test!"
 " Some CSS or JS exclusions may be necessary in Page Optimization > Tuning."
@@ -2732,14 +3483,12 @@ msgid "This will only take a moment"
 msgstr "Bu sadece bir dakikanızı alacak"
 
 #: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:53
-#, fuzzy
 msgid "Time format"
-msgstr "Zaman formatı"
+msgstr "Saat formatı"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:42
-#, fuzzy
 msgid "Title/heading color. Used for headings and titles."
-msgstr "Başlık/başlık rengi. Başlıklar ve başlıklar için kullanılır."
+msgstr "Başlık rengi. Başlıklar ve başlık metinleri için kullanılır"
 
 #: admin/class-hostinger-ai-assistant-notices.php:22
 #| msgid ""
@@ -2754,9 +3503,22 @@ msgstr ""
 "Hostinger müşterilerine sağlanan benzersiz bir API anahtarına sahip olmanız "
 "gerekir"
 
+#: includes-psr4/Cli/JwtCommand.php:130
+#, fuzzy
+msgid "Token expiration (--expires-in) must be an integer number of seconds."
+msgstr ""
+"Jetonun geçerlilik süresi (--expires-in), saniye cinsinden bir tamsayı "
+"olmalıdır."
+
+#. translators: 1: minimum expiration in seconds, 2: maximum expiration in seconds
+#: includes-psr4/Cli/JwtCommand.php:140
+#, fuzzy, php-format
+msgid "Token expiration must be between %1$d and %2$d seconds."
+msgstr "Jetonun geçerlilik süresi %1$d ile %2$d saniye arasında olmalıdır."
+
 #. translators: 1: minimum expiration time in seconds, 2: maximum expiration time in seconds
 #: includes-psr4/Mcp/Rest/JwtAuth.php:66
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "Token expiration must be between %1$d seconds (1 hour) and %2$d seconds (1 "
 "day)"
@@ -2765,40 +3527,34 @@ msgstr ""
 "olmalıdır"
 
 #: includes-psr4/Mcp/Rest/JwtAuth.php:34
-#, fuzzy
 msgid "Token expiration time in seconds (3600-86400)"
-msgstr "Saniye cinsinden belirteç sona erme süresi (3600-86400)"
+msgstr "Saniye cinsinden token sona erme süresi (3600-86400)"
 
 #: includes-psr4/Mcp/Rest/JwtAuth.php:81
-#, fuzzy
 msgid "Token ID is required."
 msgstr "Token ID gereklidir."
 
 #: includes-psr4/Mcp/Rest/JwtAuth.php:112
-#, fuzzy
 msgid "Token is invalid, expired, or has been revoked."
 msgstr "Token geçersizdir, süresi dolmuştur veya iptal edilmiştir."
 
 #: includes-psr4/Mcp/Rest/JwtAuth.php:118
-#, fuzzy
 msgid "Token is malformed: missing user_id."
-msgstr "Belirteç hatalı biçimlendirilmiş: eksik user_id."
+msgstr "Token hatalı biçimlendirilmiş: missing user_id."
 
 #: includes-psr4/Mcp/Rest/JwtAuth.php:89
-#, fuzzy
 msgid "Token not found in registry."
-msgstr "Belirteç kayıt defterinde bulunamadı."
+msgstr "Token kayıt defterinde bulunamadı."
 
 #: includes-psr4/Mcp/Rest/JwtAuth.php:99
-#, fuzzy
 msgid "Token revoked successfully."
-msgstr "Belirteç başarıyla iptal edildi."
+msgstr "Token başarıyla iptal edildi."
 
 #. translators: %s: error message from JWT library
 #: includes-psr4/Mcp/Rest/JwtAuth.php:135
-#, fuzzy, php-format
+#, php-format
 msgid "Token validation failed: %s"
-msgstr "Belirteç doğrulaması başarısız oldu: %s"
+msgstr "Token doğrulama başarısız: %s"
 
 #: admin/partials/hostinger-ai-assistant-tab-view.php:100
 #: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:86
@@ -2811,27 +3567,22 @@ msgid "tones selected"
 msgstr "seçilen tonlar"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:258
-#, fuzzy
 msgid "Top border width (as string)"
 msgstr "Üst kenarlık genişliği (dize olarak)"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:209
-#, fuzzy
 msgid "Top margin value (as string)"
 msgstr "Üst kenar boşluğu değeri (dize olarak)"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:171
-#, fuzzy
 msgid "Top padding value (as string)"
 msgstr "Üst dolgu değeri (dize olarak)"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:295
-#, fuzzy
 msgid "Top-left border radius (as string)"
 msgstr "Sol üst kenarlık yarıçapı (dize olarak)"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:299
-#, fuzzy
 msgid "Top-right border radius (as string)"
 msgstr "Sağ üst kenarlık yarıçapı (dize olarak)"
 
@@ -2843,49 +3594,40 @@ msgid "Trustworthy"
 msgstr "Güvenilir"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:72
-#, fuzzy
 msgid "Typography settings for text appearance"
 msgstr "Metin görünümü için tipografi ayarları"
 
 #: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:104
 #: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:129
 #: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:140
-#, fuzzy
 msgid "Unique identifier for the resource"
 msgstr "Kaynak için benzersiz tanımlayıcı"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:225
-#, fuzzy
 msgid "Unit for all margin values"
-msgstr "Tüm marj değerleri için birim"
+msgstr "Tüm kenar boşluğu değerleri için birim"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:187
-#, fuzzy
 msgid "Unit for all padding values"
 msgstr "Tüm dolgu değerleri için birim"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:311
-#, fuzzy
 msgid "Unit for border radius"
 msgstr "Sınır yarıçapı için birim"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:274
-#, fuzzy
 msgid "Unit for border width"
 msgstr "Kenarlık genişliği için birim"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:137
-#, fuzzy
 msgid "Unit: px, em"
 msgstr "Birim: px, em"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:88
-#, fuzzy
 msgid "Unit: px, em, rem, %"
 msgstr "Birim: px, em, rem, %"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:121
-#, fuzzy
 msgid "Unit: px, em, rem, or empty for unitless"
 msgstr "Birim: px, em, rem veya birimsiz için boş"
 
@@ -2894,45 +3636,78 @@ msgid "Unknown error code."
 msgstr "Bilinmeyen hata kodu."
 
 #: admin/class-hostinger-ai-assistant-translations.php:162
-#, fuzzy
 msgid "Update a post category on my WordPress website"
-msgstr "WordPress web sitemdeki bir gönderi kategorisini güncelleme"
+msgstr "WordPress web sitemdeki bir gönderi kategorisini güncelle"
 
 #: admin/class-hostinger-ai-assistant-translations.php:157
-#, fuzzy
 msgid "Update a post tag on my WordPress website"
-msgstr "WordPress web sitemdeki bir gönderi etiketini güncelleme"
+msgstr "WordPress web sitemdeki bir gönderi etiketini güncelle"
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:38
+#, fuzzy
+msgid "Update a template part content or title."
+msgstr "Bir şablon parçasının içeriğini veya başlığını güncelleyin."
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:239
-#, fuzzy
 msgid "Update a WordPress custom post type post by ID"
-msgstr "WordPress özel yazı türü gönderisini kimliğe göre güncelleme"
+msgstr "WordPress özel yazı türü gönderisini kimliğe göre güncelle"
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:43
-#, fuzzy
 msgid ""
 "Update a WordPress media item metadata. Only provided fields will be updated."
 msgstr ""
 "Bir WordPress medya öğesi meta verilerini güncelleyin. Yalnızca sağlanan "
 "alanlar güncellenecektir."
 
-#: admin/class-hostinger-ai-assistant-translations.php:127
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:121
 #, fuzzy
+msgid "Update an existing menu item, including label, URL, parent, and order."
+msgstr ""
+"Mevcut bir menü öğesini, etiket, URL, üst öğe ve sıralama dahil olmak üzere "
+"güncelleyin."
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:51
+#, fuzzy
+msgid "Update an existing navigation menu by ID."
+msgstr "Mevcut bir gezinme menüsünü kimlik numarasına göre güncelle."
+
+#: admin/class-hostinger-ai-assistant-translations.php:127
 msgid "Update an existing page on my WordPress website"
-msgstr "WordPress web sitemdeki mevcut bir sayfayı güncelleme"
+msgstr "WordPress web sitemdeki mevcut bir sayfayı güncelle"
 
 #: admin/class-hostinger-ai-assistant-translations.php:147
-#, fuzzy
 msgid "Update an existing post on my WordPress site"
-msgstr "WordPress sitemdeki mevcut bir gönderiyi güncelleme"
+msgstr "WordPress sitemdeki mevcut bir gönderiyi güncelle"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:248
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:56
 #, fuzzy
+msgid "Update an existing Site Editor navigation."
+msgstr "Mevcut bir Site Editor gezinme menüsünü güncelleyin."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:55
+#, fuzzy
+msgid ""
+"Update an existing WooCommerce coupon by ID. Only provided fields will be "
+"updated."
+msgstr ""
+"Mevcut bir WooCommerce kuponunu ID'ye göre güncelleyin. Yalnızca sağlanan "
+"alanlar güncellenecektir."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:55
+#, fuzzy
+msgid ""
+"Update an existing WooCommerce order by ID. Use this to change status (e.g., "
+"pending, processing, completed, refunded) and other editable fields."
+msgstr ""
+"Mevcut bir WooCommerce siparişini kimlik numarasına göre güncelleyin. Bu "
+"işlevi, durumunu (örn. beklemede, işleniyor, tamamlandı, iade edildi) ve "
+"diğer düzenlenebilir alanları değiştirmek için kullanın."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:247
 msgid "Update an existing WooCommerce product brand by ID."
 msgstr "Mevcut bir WooCommerce ürün markasını kimliğe göre güncelleyin."
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:55
-#, fuzzy
 msgid ""
 "Update an existing WooCommerce product by ID. Only provided fields will be "
 "updated."
@@ -2941,17 +3716,14 @@ msgstr ""
 "alanlar güncellenecektir."
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:113
-#, fuzzy
 msgid "Update an existing WooCommerce product category by ID."
 msgstr "Mevcut bir WooCommerce ürün kategorisini kimliğe göre güncelleyin."
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:180
-#, fuzzy
 msgid "Update an existing WooCommerce product tag by ID."
 msgstr "Mevcut bir WooCommerce ürün etiketini kimliğe göre güncelleyin."
 
 #: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:53
-#, fuzzy
 msgid ""
 "Update an existing WordPress category by ID. Only provided fields will be "
 "updated."
@@ -2960,16 +3732,14 @@ msgstr ""
 "sağlanan alanlar güncellenecektir."
 
 #: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:53
-#, fuzzy
 msgid ""
 "Update an existing WordPress page by ID. Only provided fields will be "
 "updated."
 msgstr ""
-"Mevcut bir WordPress sayfasını ID'ye göre güncelleyin. Yalnızca sağlanan "
+"Mevcut bir WordPress sayfasını kimliğine göre güncelleyin. Yalnızca sağlanan "
 "alanlar güncellenecektir."
 
 #: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:53
-#, fuzzy
 msgid ""
 "Update an existing WordPress post by ID. Only provided fields will be "
 "updated."
@@ -2978,7 +3748,6 @@ msgstr ""
 "alanlar güncellenecektir."
 
 #: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:53
-#, fuzzy
 msgid ""
 "Update an existing WordPress tag by ID. Only provided fields will be updated."
 msgstr ""
@@ -2986,7 +3755,6 @@ msgstr ""
 "alanlar güncellenecektir."
 
 #: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:74
-#, fuzzy
 msgid ""
 "Update an existing WordPress user by ID. Only provided fields will be "
 "updated."
@@ -2994,130 +3762,165 @@ msgstr ""
 "Mevcut bir WordPress kullanıcısını kimliğe göre güncelleyin. Yalnızca "
 "sağlanan alanlar güncellenecektir."
 
-#: admin/class-hostinger-ai-assistant-translations.php:145
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:208
 #, fuzzy
+msgid "Update an installed plugin to the latest version from WordPress.org."
+msgstr "Yüklü bir eklentiyi WordPress.org'dan en son sürüme güncelleyin."
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:213
+#, fuzzy
+msgid "Update an installed theme to the latest version from WordPress.org."
+msgstr "Yüklü bir temayı WordPress.org'dan en son sürüme güncelleyin."
+
+#: admin/class-hostinger-ai-assistant-translations.php:145
 msgid "Update blog post"
 msgstr "Blog gönderisini güncelleyin"
 
 #: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:52
-#, fuzzy
 msgid "Update Category"
-msgstr "Güncelleme Kategorisi"
+msgstr "Kategori Güncelleme"
 
 #: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:132
-#, fuzzy
 msgid "Update Current User"
-msgstr "Geçerli Kullanıcıyı Güncelle"
+msgstr "Geçerli Kullanıcıyı Güncelleme"
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:238
-#, fuzzy
 msgid "Update Custom Post Type Post"
 msgstr "Özel Yazı Türü Gönderisini Güncelleme"
 
-#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetContent.php:14
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateContainer.php:14
 #, fuzzy
+msgid "Update Elementor Container"
+msgstr "Elementor Konteynerini Güncelle"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:14
+#, fuzzy
+msgid "Update Elementor Global Styles"
+msgstr "Elementor Genel Stilleri Güncelle"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetContent.php:14
 msgid "Update Elementor Widget Content"
 msgstr "Elementor Widget İçeriğini Güncelleme"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetImage.php:14
-#, fuzzy
 msgid "Update Elementor Widget Image"
 msgstr "Elementor Widget Görüntüsünü Güncelleme"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetLink.php:16
-#, fuzzy
 msgid "Update Elementor Widget Link"
-msgstr "Elementor Widget Bağlantısını Güncelle"
+msgstr "Elementor Widget Bağlantısını Güncelleme"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:14
-#, fuzzy
 msgid "Update Elementor Widget Styles"
 msgstr "Elementor Widget Stillerini Güncelleme"
 
 #: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:31
-#, fuzzy
 msgid "Update General Settings"
-msgstr "Genel Ayarları Güncelle"
+msgstr "Genel Ayarları Güncelleme"
 
 #: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:57
-#, fuzzy
 msgid "Update Hostinger Plugin Settings"
 msgstr "Hostinger Eklenti Ayarlarını Güncelleme"
 
 #: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:58
-#, fuzzy
 msgid "Update Hostinger plugin settings. Only provided fields will be updated."
 msgstr ""
 "Hostinger eklenti ayarlarını güncelleyin. Yalnızca sağlanan alanlar "
 "güncellenecektir."
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetLink.php:93
-#, fuzzy
 msgid "Update links is only supported for button widgets"
-msgstr "Bağlantıları güncelle yalnızca düğme widget'ları için desteklenir"
+msgstr "Bağlantıları güncelleme yalnızca buton widgetları için desteklenir"
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:42
-#, fuzzy
 msgid "Update Media"
 msgstr "Medya Güncelleme"
 
-#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:52
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:50
 #, fuzzy
+msgid "Update Menu"
+msgstr "Menüyü Güncelle"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:120
+#, fuzzy
+msgid "Update Menu Item"
+msgstr "Menü Öğesini Güncelle"
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:55
+#, fuzzy
+msgid "Update Navigation"
+msgstr "Gezinme Menüsünü Güncelle"
+
+#: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:52
 msgid "Update Page"
-msgstr "Güncelleme Sayfası"
+msgstr "Sayfa Güncelleme"
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:207
+#, fuzzy
+msgid "Update Plugin"
+msgstr "Eklentiyi Güncelle"
 
 #: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:52
-#, fuzzy
 msgid "Update Post"
-msgstr "Güncelleme Gönderisi"
+msgstr "Gönderi Güncelleme"
 
 #: admin/class-hostinger-ai-assistant-translations.php:160
-#, fuzzy
 msgid "Update post category"
-msgstr "Gönderi kategorisini güncelle"
+msgstr "Gönderi kategorisini güncelleyin"
 
 #: admin/class-hostinger-ai-assistant-translations.php:155
-#, fuzzy
 msgid "Update post tag"
-msgstr "Gönderi etiketini güncelle"
+msgstr "Gönderi etiketini güncelleyin"
 
 #: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:52
-#, fuzzy
 msgid "Update Tag"
-msgstr "Güncelleme Etiketi"
+msgstr "Etiket Güncelleme"
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:37
+#, fuzzy
+msgid "Update Template Part"
+msgstr "Şablon Bölümünü Güncelle"
 
 #: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:133
-#, fuzzy
 msgid "Update the current logged-in user information."
 msgstr "Oturum açmış geçerli kullanıcı bilgilerini güncelleyin."
 
-#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:73
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:212
 #, fuzzy
+msgid "Update Theme"
+msgstr "Temayı Güncelle"
+
+#: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:73
 msgid "Update User"
 msgstr "Kullanıcı Güncelleme"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:54
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:54
 #, fuzzy
+msgid "Update WooCommerce Coupon"
+msgstr "WooCommerce Kuponunu Güncelle"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:54
+#, fuzzy
+msgid "Update WooCommerce Order"
+msgstr "WooCommerce Siparişini Güncelle"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:54
 msgid "Update WooCommerce Product"
 msgstr "WooCommerce Ürününü Güncelleme"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:247
-#, fuzzy
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:246
 msgid "Update WooCommerce Product Brand"
 msgstr "WooCommerce Ürün Markasını Güncelleme"
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:112
-#, fuzzy
 msgid "Update WooCommerce Product Category"
 msgstr "WooCommerce Ürün Kategorisini Güncelleme"
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:179
-#, fuzzy
 msgid "Update WooCommerce Product Tag"
 msgstr "WooCommerce Ürün Etiketini Güncelleme"
 
 #: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:32
-#, fuzzy
 msgid ""
 "Update WordPress general site settings. Only provided fields will be updated."
 msgstr ""
@@ -3125,38 +3928,68 @@ msgstr ""
 "güncellenecektir."
 
 #: admin/class-hostinger-ai-assistant-translations.php:125
-#, fuzzy
 msgid "Update WordPress page"
 msgstr "WordPress sayfasını güncelleyin"
 
-#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetImage.php:15
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateContainer.php:15
 #, fuzzy
+msgid ""
+"Updates container layout and structure settings like layout, direction, "
+"content width, alignment, spacing, and number of inner columns."
+msgstr ""
+"Düzen, yön, içerik genişliği, hizalama, aralık ve iç sütun sayısı gibi "
+"konteyner düzeni ve yapı ayarlarını günceller."
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:18
+#, fuzzy
+msgid ""
+"Updates container styling: background color, padding/margin, border "
+"(radius/width/color/style), opacity, z-index. Supports responsive device "
+"targeting."
+msgstr ""
+"Konteyner stilini günceller: arka plan rengi, iç boşluk/kenar boşluğu, "
+"kenarlık (yarıçap/genişlik/renk/stil), opaklık, z-indeksi. Duyarlı cihaz "
+"hedeflemeyi destekler."
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:15
+#, fuzzy
+msgid ""
+"Updates Elementor global colors and/or typography presets in the active kit "
+"in a single call. Intended for intents like \"Change primary color to red\" "
+"and \"Change heading font to Arial\" with one request. Triggers site-wide "
+"CSS regeneration."
+msgstr ""
+"Tek bir çağrıyla, etkin kitteki Elementor genel renklerini ve/veya tipografi "
+"ön ayarlarını günceller. “Ana rengi kırmızıya değiştir” ve “Başlık yazı "
+"tipini Arial olarak değiştir” gibi işlemleri tek bir istekle gerçekleştirmek "
+"üzere tasarlanmıştır. Site genelinde CSS’nin yeniden oluşturulmasını "
+"tetikler."
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetImage.php:15
 msgid ""
 "Updates image widget source URLs safely. Supports updating URL, media "
 "library ID, and alt text."
 msgstr ""
-"Resim widget'ı kaynak URL'lerini güvenli bir şekilde günceller. URL, medya "
-"kitaplığı kimliği ve alt metin güncellemeyi destekler."
+"Görsel bileşeninin kaynak URL’lerini güvenli şekilde günceller. URL, medya "
+"kütüphanesi kimliği ve alt metnin güncellenmesini destekler."
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetLink.php:17
-#, fuzzy
 msgid ""
 "Updates link URLs in buttons and other link-capable Elementor widgets. "
 "Supports external and nofollow attributes."
 msgstr ""
-"Düğmelerdeki ve diğer bağlantı özellikli Elementor widget'larındaki bağlantı "
-"URL'lerini günceller. Harici ve nofollow niteliklerini destekler."
+"Buttonlardaki ve diğer bağlantı özellikli Elementor widget'larındaki "
+"bağlantı URL'lerini günceller. Harici ve nofollow niteliklerini destekler."
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:15
-#, fuzzy
 msgid ""
 "Updates visual styles of Elementor widgets including colors, typography, "
 "spacing (padding/margin), borders, and alignment. Supports both direct "
 "values and responsive settings."
 msgstr ""
-"Renkler, tipografi, aralık (dolgu/marj), kenarlıklar ve hizalama dahil "
-"Elementor widget'larının görsel stillerini günceller. Hem doğrudan değerleri "
-"hem de duyarlı ayarları destekler."
+"Renkler, tipografi, aralık (dolgu/kenar boşluğu), kenarlıklar ve hizalama "
+"dahil Elementor widget'larının görsel stillerini günceller. Hem doğrudan "
+"değerleri hem de duyarlı ayarları destekler."
 
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:377
 #, fuzzy
@@ -3167,13 +4000,19 @@ msgstr "Bu içeriği kullanın"
 msgid "Use this image as:"
 msgstr "Bu görseli şu şekilde kullan:"
 
+#. translators: %d: WordPress user ID
+#: includes-psr4/Cli/JwtCommand.php:105
+#, fuzzy, php-format
+msgid "User %d lacks the manage_options capability required to issue a token."
+msgstr ""
+"%d numaralı kullanıcı, bir jeton oluşturmak için gerekli olan manage_options "
+"yetkisine sahip değildir."
+
 #: includes-psr4/Mcp/Rest/JwtAuth.php:125
-#, fuzzy
 msgid "User associated with token no longer exists."
-msgstr "Belirteçle ilişkilendirilmiş kullanıcı artık mevcut değil."
+msgstr "Tokenla ilişkilendirilmiş kullanıcı artık mevcut değil."
 
 #: includes-psr4/Mcp/Abilities/Resources/UsersInfoResource.php:16
-#, fuzzy
 msgid "Users Information"
 msgstr "Kullanıcı Bilgileri"
 
@@ -3188,7 +4027,6 @@ msgstr ""
 "yazmak için kullanılır"
 
 #: admin/class-hostinger-ai-assistant-translations.php:131
-#, fuzzy
 msgid ""
 "View site details like name, URL, description, admin email, plugins, themes, "
 "and users"
@@ -3197,9 +4035,8 @@ msgstr ""
 "gibi site ayrıntılarını görüntüleyin"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:308
-#, fuzzy
 msgid "Viewport Image Generation"
-msgstr "Görünüm Alanı Görüntüsü Oluşturma"
+msgstr "Viewport Görüntüsü Oluşturma"
 
 #: admin/class-hostinger-ai-assistant-translations.php:109
 msgid "Voice feature is coming soon"
@@ -3214,9 +4051,8 @@ msgstr ""
 "bir sunucu hatasıyla karşılaştı. Lütfen daha sonra tekrar deneyin.\n"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:297
-#, fuzzy
 msgid "Websites willing to test and tune settings"
-msgstr "Ayarları test etmeye ve ayarlamaya istekli web siteleri"
+msgstr "Ayarları test etmeye ve optimize etmeye istekli web siteleri"
 
 #: admin/partials/hostinger-ai-assistant-tab-view.php:179
 msgid "What are the focus keywords of your content?"
@@ -3225,7 +4061,7 @@ msgstr "İçeriğinizin odak anahtar kelimeleri nelerdir?"
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:394
 #, fuzzy
 msgid "What content do you want AI to create today?"
-msgstr "Yapay zekanın bugün hangi içeriği oluşturmasını istiyorsunuz?"
+msgstr "Bugün yapay zekanın hangi içeriği oluşturmasını istersiniz?"
 
 #: admin/partials/hostinger-ai-assistant-tab-view.php:56
 msgid "What do you want to make today?"
@@ -3235,41 +4071,45 @@ msgstr "Bugün ne yapmak istersiniz?"
 msgid "What is your content about?"
 msgstr "İçeriğiniz ne hakkında?"
 
-#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:317
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:132
 #, fuzzy
+msgid ""
+"When reducing columns, keep removed columns’ children by moving them into a "
+"remaining column"
+msgstr ""
+"Sütunları azaltırken, kaldırılan sütunların alt öğelerini kalan bir sütuna "
+"taşıyarak koruyun"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:317
 msgid "Whether all corners are linked"
-msgstr "Tüm köşelerin bağlantılı olup olmadığı"
+msgstr "Tüm köşelerin bağlı olup olmadığı"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:280
-#, fuzzy
 msgid "Whether all sides are linked"
-msgstr "Tüm tarafların bağlantılı olup olmadığı"
+msgstr "Tüm kenarların bağlı olup olmadığı"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:193
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:231
-#, fuzzy
 msgid "Whether all sides are linked together"
-msgstr "Tüm tarafların birbirine bağlı olup olmadığı"
+msgstr "Tüm kenarların birbirine bağlı olup olmadığı"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetPageStructure.php:33
-#, fuzzy
 msgid "Whether to include settings. Default: false"
 msgstr "Ayarların dahil edilip edilmeyeceği. Varsayılan: false"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/FindWidgets.php:42
-#, fuzzy
 msgid "Whether to include widget settings. Default: true"
 msgstr "Widget ayarlarının dahil edilip edilmeyeceği. Varsayılan: true"
 
 #. translators: %s: widget type
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetContent.php:109
-#, fuzzy, php-format
+#, php-format
 msgid "Widget type '%s' does not support content updates"
 msgstr "Widget türü '%s' içerik güncellemelerini desteklemiyor"
 
 #. translators: %s: widget id
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetImage.php:120
-#, fuzzy, php-format
+#, php-format
 msgid "Widget with ID %s not found"
 msgstr "Kimliği %s olan widget bulunamadı"
 
@@ -3277,7 +4117,7 @@ msgstr "Kimliği %s olan widget bulunamadı"
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/AssignGlobalColor.php:112
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetContent.php:75
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:396
-#, fuzzy, php-format
+#, php-format
 msgid "Widget with ID '%s' not found"
 msgstr "Kimliği '%s' olan widget bulunamadı"
 
@@ -3288,6 +4128,16 @@ msgstr "Kimliği '%s' olan widget bulunamadı"
 msgid "Witty"
 msgstr "Zeki"
 
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:35
+#, fuzzy
+msgid "WordPress.org plugin slug (e.g. 'woocommerce')"
+msgstr "WordPress.org eklenti slug'ı (örneğin 'woocommerce')"
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:35
+#, fuzzy
+msgid "WordPress.org theme slug (e.g. 'twentytwentyfour')"
+msgstr "WordPress.org tema slug'ı (örneğin 'twentytwentyfour')"
+
 #: admin/partials/hostinger-ai-assistant-tab-view.php:220
 msgid "words"
 msgstr "kelime"
@@ -3295,33 +4145,33 @@ msgstr "kelime"
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:154
 #, fuzzy
 msgid "Write a motivational post about..."
-msgstr "Hakkında motive edici bir yazı yazın..."
+msgstr "Şu konu hakkında ilham verici bir yazı yazın..."
 
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:153
 #, fuzzy
 msgid "Write a recommendation list of..."
-msgstr "Bir tavsiye listesi yazın..."
+msgstr "Şunların tavsiye listesini hazırlayın..."
 
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:152
 #, fuzzy
 msgid "Write a step-by-step tutorial about..."
-msgstr "Hakkında adım adım bir öğretici yazın..."
+msgstr "Şu konu hakkında adım adım bir kılavuz yazın..."
 
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:157
 #, fuzzy
 msgid "Write a summary of..."
-msgstr "Bir özet yazın..."
+msgstr "Şunun bir özetini yazın..."
 
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:156
 #: gutenberg-block/src/edit.js:399
 #, fuzzy
 msgid "Write an article about ..."
-msgstr "Hakkında bir makale yazın ..."
+msgstr "... hakkında bir makale yazın"
 
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:155
 #, fuzzy
 msgid "Write promotional content about..."
-msgstr "Hakkında tanıtım içeriği yazın..."
+msgstr "Şu konu hakkında tanıtım amaçlı içerik yazın..."
 
 #: admin/class-hostinger-ai-assistant-translations.php:93
 msgid "Write your feedback (optional)"
@@ -3350,3 +4200,13 @@ msgid "You're good to go, but you can share more details for better results"
 msgstr ""
 "Artık kullanabilirsiniz ancak daha iyi sonuçlar için daha fazla ayrıntı "
 "paylaşabilirsiniz"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:178
+#, fuzzy
+msgid "Z-index"
+msgstr "Z-indeksi"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:51
+#, fuzzy
+msgid "Zero-based index to insert at when position is index."
+msgstr "Konum, indeks olduğunda eklenecek sıfır tabanlı indeks."

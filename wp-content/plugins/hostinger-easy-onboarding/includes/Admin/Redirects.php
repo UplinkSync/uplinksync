@@ -14,9 +14,11 @@ defined( 'ABSPATH' ) || exit;
 class Redirects {
 
     private string $platform;
-    public const PLATFORM_HPANEL  = 'hpanel';
-    public const BUILDER_TYPE     = 'prebuilt';
-    public const HOMEPAGE_DISPLAY = 'page';
+    public const PLATFORM_HPANEL           = 'hpanel';
+    public const PLATFORM_ONBOARDING_STEPS = 'onboarding-steps';
+    public const BUILDER_TYPE              = 'prebuilt';
+    public const HOMEPAGE_DISPLAY          = 'page';
+    public const ONBOARDING_ADMIN_URI      = 'admin.php?page=hostinger-get-onboarding';
 
     public function __construct() {
         if ( ! Settings::get_setting( 'first_login_at' ) ) {
@@ -28,8 +30,20 @@ class Redirects {
 
             if ( $this->platform === self::PLATFORM_HPANEL ) {
                 $this->login_redirect();
+            } elseif ( $this->platform === self::PLATFORM_ONBOARDING_STEPS ) {
+                $this->onboarding_steps_redirect();
             }
         }
+    }
+
+    private function onboarding_steps_redirect(): void {
+        add_action(
+            'init',
+            function () {
+                wp_safe_redirect( admin_url( self::ONBOARDING_ADMIN_URI ) );
+                exit;
+            }
+        );
     }
 
     private function is_new_website(): bool {

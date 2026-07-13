@@ -11,6 +11,7 @@ use Hostinger\AiTheme\Builder\ElementHandlers\ImageHandler;
 use Hostinger\AiTheme\Builder\ElementHandlers\MaskImageHandler;
 use Hostinger\AiTheme\Builder\ElementHandlers\TitleHandler;
 use Hostinger\AiTheme\Builder\ElementHandlers\VideoHandler;
+use Hostinger\AiTheme\Builder\LinkAssigner;
 use Hostinger\AiTheme\Constants\ElementClassConstant;
 
 defined( 'ABSPATH' ) || exit;
@@ -101,6 +102,9 @@ class ElementProcessor {
         $xpath = new DOMXPath($dom);
         $text_nodes = $xpath->query('//*[contains(@class,"' . ElementClassConstant::PREFIX . '")]');
 
+        $section_type  = $this->section['type'] ?? $this->section['section'] ?? '';
+        $link_assigner = new LinkAssigner( $section_type, $this->section['elements'] );
+
         foreach ($text_nodes as $node) {
             if ($node->nodeType === XML_ELEMENT_NODE) {
                 $classes = $node->getAttribute('class');
@@ -124,6 +128,9 @@ class ElementProcessor {
                         $element_structure = $this->helper->find_structure($this->section['elements'], $element_data);
 
                         if (!empty($element_structure)) {
+                            if ( $ai_element === ElementClassConstant::CTA_BUTTON ) {
+                                $element_structure['link'] = $link_assigner->take_for_index( (int) $index );
+                            }
                             $this->handlers[$ai_element]->handle_gutenberg($node, $element_structure);
                         }
                     }
@@ -150,7 +157,13 @@ class ElementProcessor {
 
         $this->pre_resolve_images();
 
-        $processed_data = $this->traverse_elementor_data($json_data, function ($element) use ($section_type) {
+        $link_assigner = new LinkAssigner( $section_type, $this->section['elements'] );
+
+        $processed_data = $this->traverse_elementor_data($json_data, function ($element) use ($section_type, $link_assigner) {
+            if ( isset( $element['widgetType'] ) && $element['widgetType'] === 'hostinger-reach' ) {
+                $element['settings']['formId'] = HostingerReachBuilder::FORM_ID;
+            }
+
             $css_classes = $this->get_element_css_classes( $element );
 
             if (!empty($css_classes)) {
@@ -167,6 +180,9 @@ class ElementProcessor {
 
                         $element_structure = $this->helper->find_structure($this->section['elements'], $element_data);
                         if (!empty($element_structure)) {
+                            if ( $ai_element === ElementClassConstant::CTA_BUTTON ) {
+                                $element_structure['link'] = $link_assigner->take_for_index( (int) $element_index );
+                            }
                             $this->handlers[$ai_element]->set_section_context($section_type, $element_index);
                             $this->handlers[$ai_element]->handle_elementor($element, $element_structure);
                         }

@@ -21,6 +21,32 @@ export const reachRepo = {
 		return httpService.post<{ authUrl: string; success: boolean }>(`${URL}/generate-auth-url`, {}, config);
 	},
 
+	postToken: (csrfField: string, token: string) => {
+		const { nonce } = useGeneralDataStore();
+
+		const config = {
+			headers: {
+				[Header.CORRELATION_ID]: generateCorrelationId(),
+				[Header.WP_NONCE]: nonce
+			}
+		};
+
+		return httpService.post<{ success: boolean }>(`${URL}/token`, { csrfField, token }, config);
+	},
+
+	postConnect: () => {
+		const { nonce } = useGeneralDataStore();
+
+		const config = {
+			headers: {
+				[Header.CORRELATION_ID]: generateCorrelationId(),
+				[Header.WP_NONCE]: nonce
+			}
+		};
+
+		return httpService.post<{ success: boolean }>(`${URL}/connect`, {}, config);
+	},
+
 	getOverview: (headers?: AuthorizeRequestHeaders) => {
 		const { nonce } = useGeneralDataStore();
 

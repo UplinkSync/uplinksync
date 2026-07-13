@@ -87,7 +87,7 @@ class Hostinger_Ai_Assistant_Amplitude {
             return;
         }
 
-        if ( ( 'draft' === $old_status || 'auto-draft' === $old_status ) && $new_status === 'publish' ) {
+        if ( ( $old_status === 'draft' || $old_status === 'auto-draft' ) && $new_status === 'publish' ) {
 
             if ( $ai_content_generated && ! wp_is_post_revision( $post_id ) ) {
                 $post_type      = get_post_type( $post_id );
@@ -175,7 +175,7 @@ class Hostinger_Ai_Assistant_Amplitude {
             'action'         => Hostinger_Ai_Assistant_Amplitude_Actions::AI_PLUGIN_INSTALLED,
             'location'       => $plugin_install_type,
             'plugin_name'    => basename( plugin_dir_path( dirname( __DIR__, 1 ) ) ),
-            'plugin_version' => HOSTINGER_AI_ASSISTANT_VERSION,
+            'plugin_version' => HOSTINGER_AI_PLUGIN_VERSION,
         );
 
         $is_action_executed = true;

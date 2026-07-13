@@ -19,6 +19,12 @@
     "index": "0"
   },
   {
+    "class": "hostinger-ai-cta-button",
+    "type": "CTA Button",
+    "max_words": 2,
+    "index": "1"
+  },
+  {
     "class": "hostinger-ai-background-video",
     "type": "Video",
     "index": "0",

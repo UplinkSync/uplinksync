@@ -7,9 +7,9 @@
       "padding": {
         "unit": "rem",
         "top": "2.25",
-        "right": "0",
+        "right": "2.25",
         "bottom": "2.25",
-        "left": "0",
+        "left": "2.25",
         "isLinked": false
       },
       "padding_tablet": {
@@ -935,7 +935,7 @@
                         "left": "",
                         "isLinked": true
                       },
-                      "_css_classes": "hostinger-ai-project-title hostinger-index-1 hostinger-ai-font-bold hostinger-index-3",
+                      "_css_classes": "hostinger-ai-project-title hostinger-ai-font-bold hostinger-index-3",
                       "__globals__": {
                         "title_color": "globals/colors?id=09cc561",
                         "typography_typography": "globals/typography?id=2142591"

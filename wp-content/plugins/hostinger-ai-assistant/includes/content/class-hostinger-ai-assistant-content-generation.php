@@ -13,6 +13,10 @@ class Hostinger_Ai_Assistant_Content_Generation {
     private Hostinger_Ai_Assistant_Helper $helper;
     private Hostinger_Ai_Assistant_Amplitude $amplitude;
 
+    private const EXCLUDED_POST_TYPES = array(
+        'e-floating-buttons',
+    );
+
     private const ALLOWED_LENGTHS = array(
         'default' => array(
             'short'  => array(
@@ -136,6 +140,10 @@ class Hostinger_Ai_Assistant_Content_Generation {
         $post_types_with_content_and_title = array();
 
         foreach ( $post_types as $post_type ) {
+            if ( in_array( $post_type, self::EXCLUDED_POST_TYPES, true ) ) {
+                continue;
+            }
+
             if ( post_type_supports( $post_type, 'editor' ) && post_type_supports( $post_type, 'title' ) ) {
                 $post_types_with_content_and_title[] = $post_type;
             }

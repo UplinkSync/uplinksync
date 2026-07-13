@@ -262,6 +262,19 @@ class Change_Login_URL {
                 exit;
             }
         } elseif ( !is_user_logged_in() ) {
+            // Non-empty query on path ending in /wp-admin or /admin only (not e.g. /wp-admin/admin.php?...). Must be a single boolean so the next elseif is not skipped by a broad "any query" condition.
+            $bare_wp_admin_or_admin_with_query = false;
+            $bare_admin_request_query = wp_parse_url( $url_input, PHP_URL_QUERY );
+            if ( is_string( $bare_admin_request_query ) && '' !== $bare_admin_request_query ) {
+                $bare_admin_request_path = wp_parse_url( $url_input, PHP_URL_PATH );
+                if ( is_string( $bare_admin_request_path ) && '' !== $bare_admin_request_path ) {
+                    $bare_admin_path_segments = array_values( array_filter( explode( '/', trim( $bare_admin_request_path, '/' ) ) ) );
+                    $bare_admin_last_segment = ( !empty( $bare_admin_path_segments ) ? end( $bare_admin_path_segments ) : '' );
+                    if ( 'wp-admin' === $bare_admin_last_segment || 'admin' === $bare_admin_last_segment ) {
+                        $bare_wp_admin_or_admin_with_query = true;
+                    }
+                }
+            }
             // WHen trying to access /wp-signup.php without the ?custom_login_slug, redirect to the redriect_slug
             if ( isset( $url_input_parts[1] ) && 'wp-signup.php' == $url_input_parts[1] && false === strpos( $url_input, $custom_login_slug ) ) {
                 // Redirect to /not_found/
@@ -269,16 +282,9 @@ class Change_Login_URL {
                 exit;
             } elseif ( false !== strpos( $url_input, 'wp-admin/admin-post.php' ) ) {
                 // Do nothing. i.e. do not redirect to /not_found/
-            } elseif ( is_string( $request_query = wp_parse_url( $url_input, PHP_URL_QUERY ) ) && '' !== $request_query ) {
-                $request_path = wp_parse_url( $url_input, PHP_URL_PATH );
-                if ( is_string( $request_path ) && '' !== $request_path ) {
-                    $path_segments = array_values( array_filter( explode( '/', trim( $request_path, '/' ) ) ) );
-                    $last_segment = ( !empty( $path_segments ) ? end( $path_segments ) : '' );
-                    if ( 'wp-admin' === $last_segment || 'admin' === $last_segment ) {
-                        wp_safe_redirect( home_url( $redirect_slug . '/' ), 302 );
-                        exit;
-                    }
-                }
+            } elseif ( $bare_wp_admin_or_admin_with_query ) {
+                wp_safe_redirect( home_url( $redirect_slug . '/' ), 302 );
+                exit;
             } elseif ( isset( $url_input_parts[1] ) && in_array( $url_input_parts[1], array(
                 'admin',
                 'wp-admin',
@@ -346,8 +352,11 @@ class Change_Login_URL {
      *
      * @link https://plugins.trac.wordpress.org/browser/admin-login-url-change/trunk/admin-login-url-change.php#L148
      * @since 1.4.0
+     *
+     * @param string         $username Username or email (WordPress 4.5+).
+     * @param \WP_Error|null $error    Authentication error (WordPress 5.4+).
      */
-    public function redirect_to_custom_login_url_on_login_fail() {
+    public function redirect_to_custom_login_url_on_login_fail( $username = '', $error = null ) {
         global $asenha_limit_login;
         $options = get_option( ASENHA_SLUG_U );
         $custom_login_slug = $options['custom_login_slug'];
@@ -361,8 +370,23 @@ class Change_Login_URL {
                 $should_redirect = false;
             }
             if ( $should_redirect ) {
-                // Append 'failed_login=true' so we can output custom error message above the login form
-                wp_safe_redirect( site_url( 'wp-login.php?' . $custom_login_slug . '&redirect=false&failed_login=true' ) );
+                $is_disabled_account = false;
+                if ( is_wp_error( $error ) && in_array( Disable_User_Account::ERROR_CODE, $error->get_error_codes(), true ) ) {
+                    $is_disabled_account = true;
+                    Disable_User_Account::consume_pending_disabled_login_redirect_user_id();
+                } else {
+                    $pending_disabled_id = Disable_User_Account::consume_pending_disabled_login_redirect_user_id();
+                    if ( null !== $pending_disabled_id ) {
+                        $is_disabled_account = true;
+                    }
+                }
+                if ( $is_disabled_account ) {
+                    // Preserve Disable User Account message (not the generic failed_login copy).
+                    wp_safe_redirect( site_url( 'wp-login.php?' . $custom_login_slug . '&redirect=false&asenha_account_disabled=1' ) );
+                } else {
+                    // Append 'failed_login=true' so we can output custom error message above the login form
+                    wp_safe_redirect( site_url( 'wp-login.php?' . $custom_login_slug . '&redirect=false&failed_login=true' ) );
+                }
                 exit;
             }
         }
@@ -377,6 +401,11 @@ class Change_Login_URL {
      */
     public function add_failed_login_message( $message ) {
         global $asenha_limit_login;
+        $asenha_account_disabled = ( isset( $_REQUEST['asenha_account_disabled'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['asenha_account_disabled'] ) ) : '' );
+        if ( '1' === $asenha_account_disabled ) {
+            $message = '<div id="login_error" class="notice notice-error"><b>' . esc_html__( 'Error:', 'admin-site-enhancements' ) . '</b> ' . esc_html__( 'Your account has been disabled.', 'admin-site-enhancements' ) . '</div>';
+            return $message;
+        }
         if ( isset( $_REQUEST['failed_login'] ) && $_REQUEST['failed_login'] == 'true' ) {
             if ( is_null( $asenha_limit_login ) ) {
                 $message = '<div id="login_error" class="notice notice-error"><b>' . __( 'Error:', 'admin-site-enhancements' ) . '</b> ' . __( 'Invalid username/email or incorrect password.', 'admin-site-enhancements' ) . '</div>';

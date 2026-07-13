@@ -154,6 +154,49 @@ class Hostinger_Ai_Assistant_Helper {
         echo ob_get_clean();
     }
 
+    public function add_vue_instance_on_frontend(): void {
+        if ( ! self::should_load_frontend_chatbot() ) {
+            return;
+        }
+
+        $this->add_vue_instance();
+    }
+
+    public static function should_load_frontend_chatbot(): bool {
+        if ( is_admin() || ! current_user_can( 'manage_options' ) ) {
+            return false;
+        }
+
+        if ( class_exists( '\Elementor\Plugin' ) ) {
+            $elementor = \Elementor\Plugin::$instance;
+
+            if ( isset( $elementor->preview ) && $elementor->preview->is_preview_mode() ) {
+                return false;
+            }
+
+            if ( isset( $elementor->editor ) && $elementor->editor->is_edit_mode() ) {
+                return false;
+            }
+        }
+
+        if ( self::is_divi_visual_builder() ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Detect whether the Divi Visual (Frontend) Builder is active for the current request.
+     */
+    public static function is_divi_visual_builder(): bool {
+        if ( function_exists( 'et_core_is_fb_enabled' ) && et_core_is_fb_enabled() ) {
+            return true;
+        }
+
+        return isset( $_GET['et_fb'] ) && sanitize_text_field( wp_unslash( $_GET['et_fb'] ) === '1' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+    }
+
     public function get_edit_site_url(): string {
         if ( wp_is_block_theme() ) {
             return '';

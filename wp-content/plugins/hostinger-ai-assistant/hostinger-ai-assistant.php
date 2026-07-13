@@ -16,11 +16,11 @@
  * Plugin Name:       Hostinger AI
  * Plugin URI:        https://hostinger.com
  * Description:       Hostinger AI plugin for WordPress.
- * Version:           3.0.33
+ * Version:           3.0.48
  * Author:            Hostinger
  * Requires PHP:      8.1
  * Requires at least: 5.0
- * Tested up to:      6.9
+ * Tested up to:      7.0
  * Author URI:        https://hostinger.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
@@ -40,7 +40,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Currently plugin version.
  */
 
-define( 'HOSTINGER_AI_ASSISTANT_VERSION', '3.0.33' );
+define( 'HOSTINGER_AI_PLUGIN_VERSION', '3.0.48' );
 
 /**
  * Plugin path.

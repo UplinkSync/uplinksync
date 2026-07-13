@@ -2,6 +2,7 @@
 
 namespace Hostinger\AiTheme\Builder;
 
+use Hostinger\AiTheme\Constants\GenerationConstant;
 use Hostinger\AiTheme\Data\WebsiteTypeHelper;
 
 defined( 'ABSPATH' ) || exit;
@@ -32,13 +33,15 @@ class NavigationBuilder {
      */
     private function createMenu(): int {
         $content = $this->generateMenuItems();
-
         $menu_id = wp_insert_post(
             array(
-                'post_title'   => 'AI menu',
+                'post_title'   => __('Main menu', 'hostinger-ai-theme'),
                 'post_type'    => 'wp_navigation',
                 'post_status'  => 'publish',
-                'post_content' => $content
+                'post_content' => $content,
+                'meta_input'   => array(
+	                GenerationConstant::META_KEY => '1',
+                ),
             ),
             false,
             false);
@@ -183,6 +186,7 @@ class NavigationBuilder {
 
         if ($template_part === 'footer' || $template_part === 'footer-landing') {
             $file_content = $this->updateFooterCopyright($file_content);
+            $file_content = $this->maybeRemoveWhatsappSocialLink($file_content);
         }
 
         $translator = new Translator();
@@ -229,6 +233,27 @@ class NavigationBuilder {
 
         return $content;
     }
+
+    /**
+     * Remove the WhatsApp social-link block from the footer when WhatsApp is not connected.
+     *
+     * @param string $content Template content
+     * @return string Modified content
+     */
+    private function maybeRemoveWhatsappSocialLink( string $content ) : string {
+        $contact = get_option( 'hostinger_ai_contact', array() );
+
+        if ( ! empty( $contact['whatsapp'] ) ) {
+            return $content;
+        }
+
+        return preg_replace(
+            '/<!-- wp:social-link \{[^}]*"service":"whatsapp"[^}]*\} \/-->/',
+            '',
+            $content
+        );
+    }
+
     /**
      * @param string $post_name
      *

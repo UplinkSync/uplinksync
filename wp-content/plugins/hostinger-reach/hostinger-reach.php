@@ -3,11 +3,11 @@
  * Plugin Name:       Hostinger Reach
  * Plugin URI:        https://hostinger.com
  * Description:       Integrate your WordPress site with Hostinger Reach.
- * Version:           1.4.5
+ * Version:           1.5.9
  * Author:            Hostinger
  * Requires PHP:      8.1
  * Requires at least: 6.0
- * Tested up to:      6.9
+ * Tested up to:      7.0
  * Author URI:        https://www.hostinger.com/email-marketing
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     die;
 }
 
-define( 'HOSTINGER_REACH_PLUGIN_VERSION', '1.3.9' );
+define( 'HOSTINGER_REACH_PLUGIN_VERSION', '1.5.9' );
 define( 'HOSTINGER_REACH_DB_VERSION', '1.2.1' );
 define( 'HOSTINGER_REACH_MINIMUM_PHP_VERSION', '8.0' );
 define( 'HOSTINGER_REACH_PLUGIN_FILE', __FILE__ );
@@ -65,15 +65,10 @@ if ( ! version_compare( phpversion(), HOSTINGER_REACH_MINIMUM_PHP_VERSION, '>=' 
     return;
 }
 
-$vendor_file       = __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload_packages.php';
-$composer_autoload = __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+$vendor_file = __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload_packages.php';
 
 if ( file_exists( $vendor_file ) ) {
     require_once $vendor_file;
-}
-
-if ( file_exists( $composer_autoload ) ) {
-    require_once $composer_autoload;
 }
 
 if ( class_exists( 'Hostinger\Reach\Setup\Activator' ) ) {

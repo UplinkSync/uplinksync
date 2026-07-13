@@ -19,6 +19,10 @@ use Hostinger\AiAssistant\Mcp\Abilities\Tools\WooOrdersTools;
 use Hostinger\AiAssistant\Mcp\Abilities\Tools\PluginTools;
 use Hostinger\AiAssistant\Mcp\Abilities\Tools\ThemeTools;
 use Hostinger\AiAssistant\Mcp\Abilities\Tools\WooProductsTools;
+use Hostinger\AiAssistant\Mcp\Abilities\Tools\RevisionsTools;
+use Hostinger\AiAssistant\Mcp\Abilities\Tools\MenusTools;
+use Hostinger\AiAssistant\Mcp\Abilities\Tools\NavigationTools;
+use Hostinger\AiAssistant\Mcp\Abilities\Tools\TemplatePartsTools;
 use Hostinger\AiAssistant\Mcp\Abilities\Resources\PluginsInfoResource;
 use Hostinger\AiAssistant\Mcp\Abilities\Resources\SiteInfoResource;
 use Hostinger\AiAssistant\Mcp\Abilities\Resources\SiteSettingsResource;
@@ -50,6 +54,10 @@ class AbilitiesRegistry {
         ElementorTools::class,
         ThemeTools::class,
         PluginTools::class,
+        RevisionsTools::class,
+        MenusTools::class,
+        NavigationTools::class,
+        TemplatePartsTools::class,
     );
 
     private array $resources = array(

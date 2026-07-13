@@ -4,6 +4,7 @@ namespace Hostinger\LlmsTxtGenerator;
 
 use Hostinger\Admin\Jobs\LlmsTxtInjectContentJob;
 use Hostinger\Admin\PluginSettings;
+use Hostinger\Helper;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -48,6 +49,8 @@ class LlmsTxtGenerator {
     }
 
     public function init(): void {
+        $this->init_hooks();
+
         if ( wp_doing_ajax() || wp_doing_cron() || ! current_user_can( 'manage_options' ) ) {
             return;
         }
@@ -57,8 +60,6 @@ class LlmsTxtGenerator {
         if ( $settings->get_enable_llms_txt() && ! $this->file_helper->llmstxt_file_exists() ) {
             $this->generate();
         }
-
-        $this->init_hooks();
     }
 
     public function on_settings_update( bool $is_enabled ): void {
@@ -143,7 +144,7 @@ class LlmsTxtGenerator {
     }
 
     protected function is_woocommerce_active(): bool {
-        return ( is_null( $this->woocommerce_status ) && is_plugin_active( 'woocommerce/woocommerce.php' ) ) || $this->woocommerce_status === 'active';
+        return ( is_null( $this->woocommerce_status ) && Helper::is_plugin_active( 'woocommerce/woocommerce' ) ) || $this->woocommerce_status === 'active';
     }
 
     protected function maybe_inject_woocommerce_products(): string {

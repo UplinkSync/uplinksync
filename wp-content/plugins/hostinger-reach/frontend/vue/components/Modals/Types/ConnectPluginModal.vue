@@ -127,7 +127,10 @@ pagesStore.loadData();
 										variant="outline"
 										size="small"
 										:color="integration.isActive ? 'danger' : 'neutral'"
-										:is-disabled="integrationsStore.isIntegrationLoading(integration.id)"
+										:is-disabled="
+											(integration.id === 'elementor' && integration.isActive) ||
+											integrationsStore.isIntegrationLoading(integration.id)
+										"
 										@click="handleToggle(integration.id, !integration.isActive)"
 									>
 										{{

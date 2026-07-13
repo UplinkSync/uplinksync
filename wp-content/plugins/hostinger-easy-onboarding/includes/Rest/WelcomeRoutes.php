@@ -87,29 +87,6 @@ class WelcomeRoutes {
         return $response;
     }
 
-    /**
-     * @param WP_REST_Request $request
-     *
-     * @return WP_Error|WP_REST_Response
-     */
-    public function update_addons_banner_status( WP_REST_Request $request ) {
-        $parameters = $request->get_params();
-
-        if ( ! isset( $parameters['choice'] ) || ! is_bool( $parameters['choice'] ) ) {
-            return new WP_Error( 'data_invalid', __( 'Choice parameter missing or invalid', 'hostinger-easy-onboarding' ), array( 'status' => WP_Http::BAD_REQUEST ) );
-        }
-
-        $choice = $parameters['choice'] ? 0 : 1;
-
-        set_transient( Helper::HIDE_ADDONS_BANNER, $choice, YEAR_IN_SECONDS );
-
-        $response = new WP_REST_Response( array( 'data' => array() ) );
-        $response->set_headers( array( 'Cache-Control' => 'no-cache' ) );
-        $response->set_status( WP_Http::OK );
-
-        return $response;
-    }
-
     public function update_reach_banner_status( WP_REST_Request $request ) {
         $parameters = $request->get_params();
 

@@ -22,6 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class StepRoutes {
     public const LIST_VISIBILITY_OPTION = 'hostinger_onboarding_list_visibility';
+    public const EARLY_ACCESS_OPTION    = 'hostinger_early_access';
 
     private const DEFAULT_DOWNLOAD_URI = 'https://wp-update.hostinger.io/';
     private const CANARY_DOWNLOAD_URI  = 'https://wp-update-canary.hostinger.io/';
@@ -32,7 +33,8 @@ class StepRoutes {
             return self::STAGING_DOWNLOAD_URI;
         }
 
-        if ( isset( $_SERVER['H_CANARY'] ) && filter_var( $_SERVER['H_CANARY'], FILTER_VALIDATE_BOOLEAN ) === true ) {
+        $early_access = get_option( self::EARLY_ACCESS_OPTION, 0 );
+        if ( ! empty( $early_access ) ) {
             return self::CANARY_DOWNLOAD_URI;
         }
 

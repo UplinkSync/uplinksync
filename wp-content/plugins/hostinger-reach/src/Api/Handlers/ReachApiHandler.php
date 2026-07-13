@@ -219,6 +219,53 @@ class ReachApiHandler extends ApiHandler {
         $this->api_key_manager->store_token( $token );
         $this->api_key_manager->clear_csrf();
 
+        if ( ! $this->get_connection_status_handler() ) {
+            $this->api_key_manager->clear_token();
+
+            return new WP_REST_Response( array( 'success' => false ) );
+        }
+
+        return new WP_REST_Response( array( 'success' => true ) );
+    }
+
+    public function post_connect_handler(): WP_REST_Response {
+        if ( ! $this->get_connection_status_handler() ) {
+            return new WP_REST_Response( array( 'success' => false ), 400 );
+        }
+
+        $domain = apply_filters( 'hostinger_reach_domain', parse_url( get_option( 'siteurl' ), PHP_URL_HOST ) );
+
+        $this->delete(
+            'websites/connect',
+            array(
+                'domain' => $domain,
+            )
+        );
+
+        $response = $this->post(
+            'websites/connect',
+            array(
+                'domain' => $domain,
+                'type'   => 'wordpress',
+            )
+        );
+
+        if ( is_wp_error( $response ) ) {
+            $this->api_key_manager->clear_token();
+            return $this->handle_wp_error( $response );
+        }
+
+        if ( ! isset( $response['response']['code'] ) || $response['response']['code'] >= 300 ) {
+            $this->api_key_manager->clear_token();
+            return new WP_REST_Response(
+                array(
+                    'success' => false,
+                    'data'    => $response['response']['message'] ?? __( 'Error connecting your site', 'hostinger-reach' ),
+                ),
+                $response['response']['code'] ?? 400,
+            );
+        }
+
         return new WP_REST_Response( array( 'success' => true ) );
     }
 
@@ -392,11 +439,11 @@ class ReachApiHandler extends ApiHandler {
         );
 
         if ( ! empty( $data['name'] ) ) {
-            $contact['name'] = $data['name'];
+            $contact['name'] = $this->ensure_utf8( (string) $data['name'] );
         }
 
         if ( ! empty( $data['surname'] ) ) {
-            $contact['surname'] = $data['surname'];
+            $contact['surname'] = $this->ensure_utf8( (string) $data['surname'] );
         }
 
         $metadata = $data['metadata'] ?? array();
@@ -414,6 +461,17 @@ class ReachApiHandler extends ApiHandler {
         $contact['metadata'] = $metadata;
 
         return $contact;
+    }
+
+    private function ensure_utf8( string $value ): string {
+        if ( $value === '' || ! function_exists( 'mb_check_encoding' ) || mb_check_encoding( $value, 'UTF-8' ) ) {
+            return $value;
+        }
+
+        $detected  = mb_detect_encoding( $value, array( 'UTF-8', 'Windows-1252', 'ISO-8859-1' ), true );
+        $converted = mb_convert_encoding( $value, 'UTF-8', $detected !== false ? $detected : 'ISO-8859-1' );
+
+        return is_string( $converted ) ? $converted : $value;
     }
 
     private function set_api_base_name(): void {

@@ -171,6 +171,10 @@ class HostingerPluginTools {
 
         $updated_settings = $plugin_settings->save_plugin_settings( $settings );
 
+        if ( isset( $input['maintenance_mode'] ) ) {
+            do_action( 'litespeed_purge_all' );
+        }
+
         return $updated_settings->to_array();
     }
 

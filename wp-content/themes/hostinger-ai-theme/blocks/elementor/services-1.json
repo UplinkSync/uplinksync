@@ -7,9 +7,9 @@
       "padding": {
         "unit": "rem",
         "top": "2.25",
-        "right": "0",
+        "right": "2.25",
         "bottom": "2.25",
-        "left": "0",
+        "left": "2.25",
         "isLinked": false
       },
       "padding_tablet": {
@@ -322,7 +322,7 @@
                     "elType": "widget",
                     "settings": {
                       "editor": "<p>Experience luxurious accommodation in the breathtaking Alps, perfect for your ski getaway.</p>",
-                      "_css_classes": "hostinger-ai-service-description hostinger-index-1",
+                      "_css_classes": "hostinger-ai-service-description hostinger-index-2",
                       "__globals__": {
                         "text_color": "globals/colors?id=09cc561",
                         "link_color": "globals/colors?id=09cc561",

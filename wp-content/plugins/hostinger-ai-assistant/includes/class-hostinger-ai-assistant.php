@@ -76,8 +76,8 @@ class Hostinger_Ai_Assistant {
      * @since    1.0.0
      */
     public function __construct() {
-        if ( defined( 'HOSTINGER_AI_ASSISTANT_VERSION' ) ) {
-            $this->version = HOSTINGER_AI_ASSISTANT_VERSION;
+        if ( defined( 'HOSTINGER_AI_PLUGIN_VERSION' ) ) {
+            $this->version = HOSTINGER_AI_PLUGIN_VERSION;
         } else {
             $this->version = '1.0.0';
         }
@@ -86,6 +86,7 @@ class Hostinger_Ai_Assistant {
         $this->load_dependencies();
         $this->set_locale();
         $this->define_admin_hooks();
+        $this->define_public_hooks();
     }
 
     /**
@@ -212,6 +213,14 @@ class Hostinger_Ai_Assistant {
         $amplitude_events  = new Hostinger_Ai_Assistant_Amplitude( $amplitude_manager );
 
         $this->loader->add_action( 'init', $this, 'initialize_updates' );
+    }
+
+    private function define_public_hooks() {
+        $plugin_admin = new Hostinger_Ai_Assistant_Admin( $this->get_plugin_name(), $this->get_version() );
+        $helper       = new Hostinger_Ai_Assistant_Helper();
+
+        $this->loader->add_action( 'wp_enqueue_scripts', $plugin_admin, 'enqueue_chatbot_on_frontend' );
+        $this->loader->add_action( 'wp_footer', $helper, 'add_vue_instance_on_frontend' );
     }
 
     public function initialize_updates(): void {

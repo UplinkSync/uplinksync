@@ -53,6 +53,11 @@ class Admin_Site_Enhancements {
         add_action( 'admin_print_footer_scripts', 'asenha_dequeue_scritps', PHP_INT_MAX );
         add_action( 'admin_enqueue_scripts-tools_page_admin-site-enhancements', 'asenha_dequeue_scritps', PHP_INT_MAX );
         add_action( 'admin_print_scripts-tools_page_admin-site-enhancements', 'asenha_dequeue_scritps', PHP_INT_MAX );
+        add_action( 'admin_enqueue_scripts-settings_page_admin-menu-organizer', 'asenha_dequeue_gravity_forms_assets_on_custom_admin_pages', PHP_INT_MAX );
+        add_action( 'admin_enqueue_scripts-settings_page_asenha-admin-bar', 'asenha_dequeue_gravity_forms_assets_on_custom_admin_pages', PHP_INT_MAX );
+        add_action( 'admin_print_scripts-settings_page_admin-menu-organizer', 'asenha_dequeue_gravity_forms_assets_on_custom_admin_pages', PHP_INT_MAX );
+        add_action( 'admin_print_scripts-settings_page_asenha-admin-bar', 'asenha_dequeue_gravity_forms_assets_on_custom_admin_pages', PHP_INT_MAX );
+        add_action( 'admin_print_footer_scripts', 'asenha_dequeue_gravity_forms_assets_on_custom_admin_pages', PHP_INT_MAX );
         // Add admin bar inline styles
         add_action( 'admin_head', 'asenha_admin_bar_item_js_css' );
         add_action( 'wp_head', 'asenha_admin_bar_item_js_css' );
@@ -138,12 +143,7 @@ class Admin_Site_Enhancements {
                 10,
                 2
             );
-            add_filter(
-                'attachment_fields_to_edit',
-                [$media_replacement, 'add_media_replacement_button'],
-                10,
-                2
-            );
+            add_action( 'admin_init', [$media_replacement, 'register_attachment_fields_filter'] );
             add_action( 'edit_attachment', [$media_replacement, 'replace_media'] );
             add_filter( 'post_updated_messages', [$media_replacement, 'attachment_updated_custom_message'] );
             // Mayve bust browser cache of old/replaced images by appending a time stamp URL parameter
@@ -592,6 +592,12 @@ class Admin_Site_Enhancements {
                     5,
                     2
                 );
+                add_filter(
+                    'login_redirect',
+                    [$redirect_after_login, 'filter_login_redirect'],
+                    10,
+                    3
+                );
             }
         }
         // Redirect After Logout
@@ -608,6 +614,11 @@ class Admin_Site_Enhancements {
                 // add_filter( 'logout_redirect', [ $redirect_after_logout, 'apply_custom_logout_redirect' ], PHP_INT_MAX, 3 );
                 // add_filter( 'logout_url', [ $redirect_after_logout, 'add_redirect_to_in_logout_url' ], PHP_INT_MAX, 2 );
             }
+        }
+        // Disable User Account
+        if ( array_key_exists( 'disable_user_account', $options ) && $options['disable_user_account'] ) {
+            $disable_user_account = new ASENHA\Classes\Disable_User_Account();
+            $disable_user_account->register_hooks();
         }
         // Enable Custom Admin / Frontend CSS
         if ( array_key_exists( 'enable_custom_admin_css', $options ) && $options['enable_custom_admin_css'] || array_key_exists( 'enable_custom_frontend_css', $options ) && $options['enable_custom_frontend_css'] ) {
@@ -737,7 +748,7 @@ class Admin_Site_Enhancements {
         if ( array_key_exists( 'disable_rest_api', $options ) && $options['disable_rest_api'] ) {
             if ( version_compare( get_bloginfo( 'version' ), '4.7', '>=' ) ) {
                 $disable_rest_api = new ASENHA\Classes\Disable_REST_API();
-                add_filter( 'rest_authentication_errors', [$disable_rest_api, 'disable_rest_api'] );
+                add_filter( 'rest_authentication_errors', [$disable_rest_api, 'disable_rest_api'], 200 );
             } else {
                 // REST API 1.x
                 add_filter( 'json_enabled', '__return_false' );
@@ -925,13 +936,20 @@ class Admin_Site_Enhancements {
                     add_action( 'admin_init', [$disable_smaller_components, 'enable_plugin_theme_editor'], PHP_INT_MAX );
                 }
             }
+            if ( array_key_exists( 'disable_user_email_notification_after_password_change', $options ) && $options['disable_user_email_notification_after_password_change'] ) {
+                add_filter( 'send_password_change_email', '__return_false' );
+            }
         }
         // =================================================================
         // SECURITY
         // =================================================================
-        // Limit Login Attempts
+        // Limit Login Attempts — failed-login log cleanup cron (always registered so orphans are cleared)
+        $limit_login_attempts = new ASENHA\Classes\Limit_Login_Attempts();
+        add_action( 'added_option', [$limit_login_attempts, 'trigger_clear_or_schedule_log_clean_up_by_amount'] );
+        add_action( 'updated_option', [$limit_login_attempts, 'trigger_clear_or_schedule_log_clean_up_by_amount'] );
+        add_action( 'plugins_loaded', [$limit_login_attempts, 'clear_or_schedule_log_clean_up_by_amount'] );
+        add_action( 'asenha_failed_login_attempts_log_cleanup_by_amount', [$limit_login_attempts, 'perform_failed_login_attempts_log_clean_up_by_amount'] );
         if ( array_key_exists( 'limit_login_attempts', $options ) && $options['limit_login_attempts'] ) {
-            $limit_login_attempts = new ASENHA\Classes\Limit_Login_Attempts();
             add_filter(
                 'authenticate',
                 [$limit_login_attempts, 'maybe_allow_login'],
@@ -950,11 +968,6 @@ class Admin_Site_Enhancements {
             add_action( 'wp_login_failed', [$limit_login_attempts, 'log_failed_login'], 5 );
             // Higher priority than one in Change Login URL
             add_action( 'wp_login', [$limit_login_attempts, 'clear_failed_login_log'] );
-            // Log table clean up
-            add_action( 'added_option', [$limit_login_attempts, 'trigger_clear_or_schedule_log_clean_up_by_amount'] );
-            add_action( 'updated_option', [$limit_login_attempts, 'trigger_clear_or_schedule_log_clean_up_by_amount'] );
-            add_action( 'plugins_loaded', [$limit_login_attempts, 'clear_or_schedule_log_clean_up_by_amount'] );
-            add_action( 'asenha_failed_login_attempts_log_cleanup_by_amount', [$limit_login_attempts, 'perform_failed_login_attempts_log_clean_up_by_amount'] );
         }
         // Obfuscate Author Slugs
         if ( array_key_exists( 'obfuscate_author_slugs', $options ) && $options['obfuscate_author_slugs'] ) {
@@ -1046,12 +1059,13 @@ class Admin_Site_Enhancements {
             add_action( 'admin_enqueue_scripts', [$heartbeat_control, 'maybe_disable_heartbeat'], 99 );
             add_action( 'wp_enqueue_scripts', [$heartbeat_control, 'maybe_disable_heartbeat'], 99 );
         }
-        // =================================================================
-        // UTILITIES
-        // =================================================================
         // SMTP Email Delivery
+        $email_delivery = new ASENHA\Classes\Email_Delivery();
+        ASENHA\Classes\Email_Delivery::set_runtime_instance( $email_delivery );
+        add_action( 'admin_notices', [$email_delivery, 'maybe_show_smtp_password_admin_notice'] );
+        add_action( 'admin_enqueue_scripts', [$email_delivery, 'enqueue_smtp_password_notice_script'] );
+        add_action( 'wp_ajax_asenha_dismiss_smtp_password_notice', [$email_delivery, 'dismiss_smtp_password_admin_notice'] );
         if ( array_key_exists( 'smtp_email_delivery', $options ) && $options['smtp_email_delivery'] ) {
-            $email_delivery = new ASENHA\Classes\Email_Delivery();
             add_action( 'phpmailer_init', [$email_delivery, 'deliver_email_via_smtp'], 99999 );
             add_action( 'wp_ajax_send_test_email', [$email_delivery, 'send_test_email'] );
         }
@@ -1085,8 +1099,17 @@ class Admin_Site_Enhancements {
             // Priority 8 so it is next to username section
             add_action( 'init', [$view_admin_as_role, 'role_switcher_to_view_admin_as'] );
             add_action( 'profile_update', [$view_admin_as_role, 'maybe_prevent_switchback_to_administrator'], 20 );
+            add_action(
+                'set_user_role',
+                [$view_admin_as_role, 'maybe_clear_view_admin_as_on_external_role_change'],
+                20,
+                3
+            );
             // add_action( 'wp_die_handler', [ $view_admin_as_role, 'custom_error_page_on_switch_failure' ] );
             add_action( 'admin_footer', [$view_admin_as_role, 'add_floating_reset_button'] );
+            add_action( 'admin_notices', [$view_admin_as_role, 'maybe_show_recovery_url_refreshed_notice'] );
+            add_action( 'admin_enqueue_scripts', [$view_admin_as_role, 'enqueue_recovery_url_refreshed_notice_script'] );
+            add_action( 'wp_ajax_asenha_dismiss_view_admin_as_recovery_notice', [$view_admin_as_role, 'dismiss_recovery_url_refreshed_notice'] );
         }
         // Password Protection
         if ( array_key_exists( 'enable_password_protection', $options ) && $options['enable_password_protection'] ) {
@@ -1104,6 +1127,7 @@ class Admin_Site_Enhancements {
         }
         // Maintenance Mode
         if ( array_key_exists( 'maintenance_mode', $options ) && $options['maintenance_mode'] ) {
+            add_action( 'plugins_loaded', ['ASENHA\\Classes\\Maintenance_Mode', 'ensure_bypass_key_on_load'], 1 );
             $maintenance_mode = new ASENHA\Classes\Maintenance_Mode();
             add_action( 'send_headers', [$maintenance_mode, 'maintenance_mode_redirect'] );
             add_action( 'plugins_loaded', [$maintenance_mode, 'show_maintenance_mode_admin_bar_icon'] );

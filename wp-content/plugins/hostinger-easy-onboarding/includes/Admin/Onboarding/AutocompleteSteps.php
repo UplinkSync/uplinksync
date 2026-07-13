@@ -45,15 +45,15 @@ class AutocompleteSteps {
             add_action( 'admin_init', array( $this, 'affiliate_plugin_connected' ) );
         }
 
-        if ( is_admin() && isset( $_GET['page'] ) && $_GET['page'] === 'hostinger' ) {
-            add_action( 'admin_init', array( $this, 'domain_is_connected' ) );
-        }
+        add_action( 'admin_init', array( $this, 'domain_is_connected' ) );
 
         if ( $this->helper->is_store_setup_completed() ) {
             add_action( 'admin_init', array( $this, 'website_setup_completed' ) );
         }
 
         add_action( 'astra_sites_import_complete', array( $this, 'astra_website_import_completed' ) );
+
+        add_action( 'admin_init', array( $this, 'check_ai_website_created' ) );
 
         add_action( 'admin_init', array( $this, 'check_ai_discovery_is_enabled' ) );
 
@@ -182,7 +182,7 @@ class AutocompleteSteps {
             return;
         }
 
-        if ( ! $this->helper->is_free_subdomain() && ! $this->helper->is_preview_domain() ) {
+        if ( ! $this->helper->is_free_subdomain() ) {
             if ( ! did_action( 'hostinger_domain_connected' ) ) {
                 $this->onboarding->complete_step( $category_id, $action );
 
@@ -341,6 +341,34 @@ class AutocompleteSteps {
         }
 
         update_option( 'hostinger_onboarding_steps_was_completed', ( $this->onboarding->is_onboarding_completed_without_reach() ? 1 : 0 ) );
+    }
+
+    public function check_ai_website_created(): void {
+        $ai_created_pages = get_option( 'hostinger_ai_created_pages', array() );
+
+        if ( empty( $ai_created_pages ) ) {
+            return;
+        }
+
+        $action      = Admin_Actions::AI_STEP;
+        $category_id = $this->find_category_from_actions( $action );
+
+        if ( empty( $category_id ) ) {
+            return;
+        }
+
+        if ( $this->onboarding->is_completed( $category_id, $action ) ) {
+            return;
+        }
+
+        $this->onboarding->complete_step( $category_id, $action );
+
+        $params = array(
+            'action'    => AmplitudeActions::ONBOARDING_ITEM_COMPLETED,
+            'step_type' => $action,
+        );
+
+        $this->amplitude->send_event( $params );
     }
 
     public function check_ai_discovery_is_enabled(): void {

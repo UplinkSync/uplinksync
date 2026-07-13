@@ -11,10 +11,10 @@ use WP_REST_Request;
 use WP_REST_Response;
 
 class JwtAuth {
-    public const JWT_ACCESS_EXP_MIN      = HOUR_IN_SECONDS;
-    public const JWT_ACCESS_EXP_MAX      = DAY_IN_SECONDS;
-    private const JWT_ACCESS_EXP_DEFAULT = HOUR_IN_SECONDS;
-    private const TOKEN_REGISTRY_OPTION  = 'hostinger_ai_assistant_mcp_jwt_token_registry';
+    public const JWT_ACCESS_EXP_MIN     = HOUR_IN_SECONDS;
+    public const JWT_ACCESS_EXP_MAX     = DAY_IN_SECONDS;
+    public const JWT_ACCESS_EXP_DEFAULT = HOUR_IN_SECONDS;
+    private const TOKEN_REGISTRY_OPTION = 'hostinger_ai_assistant_mcp_jwt_token_registry';
 
     public function init(): void {
         add_action( 'rest_api_init', array( $this, 'register_routes' ) );
@@ -68,7 +68,7 @@ class JwtAuth {
 
         $user_id = get_current_user_id();
 
-        return rest_ensure_response( $this->generate_token( $user_id, $expires_in ) );
+        return rest_ensure_response( $this->create_token( $user_id, $expires_in ) );
     }
 
     public function revoke_token( WP_REST_Request $request ): WP_REST_Response|WP_Error {
@@ -136,11 +136,20 @@ class JwtAuth {
         }
     }
 
-    protected function get_jwt_secret_key(): string {
-        return SECURE_AUTH_KEY;
+    protected function get_raw_secret_key(): string {
+        return defined( 'SECURE_AUTH_KEY' ) ? SECURE_AUTH_KEY : '';
     }
 
-    private function generate_token( int $user_id, int $expires_in = self::JWT_ACCESS_EXP_DEFAULT ): array {
+    protected function get_jwt_secret_key(): string {
+        $key = $this->get_raw_secret_key();
+        if ( strlen( $key ) < 32 ) {
+            $key = hash( 'sha256', wp_salt( 'secure_auth' ) );
+        }
+
+        return $key;
+    }
+
+    public function create_token( int $user_id, int $expires_in = self::JWT_ACCESS_EXP_DEFAULT ): array {
         $issued_at  = time();
         $expires_at = $issued_at + $expires_in;
         $jti        = wp_generate_password( 32, false );

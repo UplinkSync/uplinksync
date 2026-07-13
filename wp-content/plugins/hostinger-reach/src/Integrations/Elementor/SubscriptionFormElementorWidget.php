@@ -56,7 +56,7 @@ class SubscriptionFormElementorWidget extends Widget_Base {
             'formId',
             array(
                 'label'      => esc_html__( 'Form ID', 'hostinger-reach' ),
-                'type'       => Controls_Manager::TEXT,
+                'type'       => Controls_Manager::HIDDEN,
                 'input_type' => 'hidden',
                 'default'    => self::FORM_ID_PREFIX . random_int( 1, PHP_INT_MAX ),
             )

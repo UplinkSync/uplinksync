@@ -1,4 +1,4 @@
-@import 'global';
+@use 'global' as *;
 
 .hsr-plugin-rating {
 	display: flex;

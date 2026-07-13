@@ -42,10 +42,10 @@ class WooProductsTools extends RestEndpointTool {
                     'description' => __( 'Create a new WooCommerce product. Requires name and other product details.', 'hostinger-ai-assistant' ),
                     'meta'        => array(
                         'annotations' => array(
-                            'title'       => 'Add Product',
-                            'readonly'    => false,
-                            'destructive' => false,
-                            'idempotent'  => false,
+                            'title'           => 'Add Product',
+                            'readonly'        => false,
+                            'destructiveHint' => false,
+                            'idempotent'      => false,
                         ),
                     ),
                 ),
@@ -55,10 +55,10 @@ class WooProductsTools extends RestEndpointTool {
                     'description' => __( 'Update an existing WooCommerce product by ID. Only provided fields will be updated.', 'hostinger-ai-assistant' ),
                     'meta'        => array(
                         'annotations' => array(
-                            'title'       => 'Update Product',
-                            'readonly'    => false,
-                            'destructive' => false,
-                            'idempotent'  => true,
+                            'title'           => 'Update Product',
+                            'readonly'        => false,
+                            'destructiveHint' => false,
+                            'idempotent'      => true,
                         ),
                     ),
                 ),
@@ -68,10 +68,10 @@ class WooProductsTools extends RestEndpointTool {
                     'description' => __( 'Delete a WooCommerce product by ID. This action cannot be undone.', 'hostinger-ai-assistant' ),
                     'meta'        => array(
                         'annotations' => array(
-                            'title'       => 'Delete Product',
-                            'readonly'    => false,
-                            'destructive' => true,
-                            'idempotent'  => true,
+                            'title'           => 'Delete Product',
+                            'readonly'        => false,
+                            'destructiveHint' => true,
+                            'idempotent'      => true,
                         ),
                     ),
                 ),
@@ -100,10 +100,10 @@ class WooProductsTools extends RestEndpointTool {
                     'description' => __( 'Create a new WooCommerce product category. Requires name.', 'hostinger-ai-assistant' ),
                     'meta'        => array(
                         'annotations' => array(
-                            'title'       => 'Add Product Category',
-                            'readonly'    => false,
-                            'destructive' => false,
-                            'idempotent'  => false,
+                            'title'           => 'Add Product Category',
+                            'readonly'        => false,
+                            'destructiveHint' => false,
+                            'idempotent'      => false,
                         ),
                     ),
                 ),
@@ -113,10 +113,10 @@ class WooProductsTools extends RestEndpointTool {
                     'description' => __( 'Update an existing WooCommerce product category by ID.', 'hostinger-ai-assistant' ),
                     'meta'        => array(
                         'annotations' => array(
-                            'title'       => 'Update Product Category',
-                            'readonly'    => false,
-                            'destructive' => false,
-                            'idempotent'  => true,
+                            'title'           => 'Update Product Category',
+                            'readonly'        => false,
+                            'destructiveHint' => false,
+                            'idempotent'      => true,
                         ),
                     ),
                 ),
@@ -135,10 +135,10 @@ class WooProductsTools extends RestEndpointTool {
                     ),
                     'meta'                       => array(
                         'annotations' => array(
-                            'title'       => 'Delete Product Category',
-                            'readonly'    => false,
-                            'destructive' => true,
-                            'idempotent'  => true,
+                            'title'           => 'Delete Product Category',
+                            'readonly'        => false,
+                            'destructiveHint' => true,
+                            'idempotent'      => true,
                         ),
                     ),
                 ),
@@ -167,10 +167,10 @@ class WooProductsTools extends RestEndpointTool {
                     'description' => __( 'Create a new WooCommerce product tag. Requires name.', 'hostinger-ai-assistant' ),
                     'meta'        => array(
                         'annotations' => array(
-                            'title'       => 'Add Product Tag',
-                            'readonly'    => false,
-                            'destructive' => false,
-                            'idempotent'  => false,
+                            'title'           => 'Add Product Tag',
+                            'readonly'        => false,
+                            'destructiveHint' => false,
+                            'idempotent'      => false,
                         ),
                     ),
                 ),
@@ -180,10 +180,10 @@ class WooProductsTools extends RestEndpointTool {
                     'description' => __( 'Update an existing WooCommerce product tag by ID.', 'hostinger-ai-assistant' ),
                     'meta'        => array(
                         'annotations' => array(
-                            'title'       => 'Update Product Tag',
-                            'readonly'    => false,
-                            'destructive' => false,
-                            'idempotent'  => true,
+                            'title'           => 'Update Product Tag',
+                            'readonly'        => false,
+                            'destructiveHint' => false,
+                            'idempotent'      => true,
                         ),
                     ),
                 ),
@@ -204,7 +204,6 @@ class WooProductsTools extends RestEndpointTool {
                         'annotations' => array(
                             'title'           => 'Delete Product Tag',
                             'readonly'        => false,
-                            'destructive'     => true,
                             'destructiveHint' => true,
                             'idempotent'      => true,
                         ),
@@ -235,10 +234,10 @@ class WooProductsTools extends RestEndpointTool {
                     'description' => __( 'Create a new WooCommerce product brand. Requires name.', 'hostinger-ai-assistant' ),
                     'meta'        => array(
                         'annotations' => array(
-                            'title'       => 'Add Product Brand',
-                            'readonly'    => false,
-                            'destructive' => false,
-                            'idempotent'  => false,
+                            'title'           => 'Add Product Brand',
+                            'readonly'        => false,
+                            'destructiveHint' => false,
+                            'idempotent'      => false,
                         ),
                     ),
                 ),
@@ -248,10 +247,10 @@ class WooProductsTools extends RestEndpointTool {
                     'description' => __( 'Update an existing WooCommerce product brand by ID.', 'hostinger-ai-assistant' ),
                     'meta'        => array(
                         'annotations' => array(
-                            'title'       => 'Update Product Brand',
-                            'readonly'    => false,
-                            'destructive' => false,
-                            'idempotent'  => true,
+                            'title'           => 'Update Product Brand',
+                            'readonly'        => false,
+                            'destructiveHint' => false,
+                            'idempotent'      => true,
                         ),
                     ),
                 ),
@@ -272,7 +271,6 @@ class WooProductsTools extends RestEndpointTool {
                         'annotations' => array(
                             'title'           => 'Delete Product Brand',
                             'readonly'        => false,
-                            'destructive'     => true,
                             'destructiveHint' => true,
                             'idempotent'      => true,
                         ),

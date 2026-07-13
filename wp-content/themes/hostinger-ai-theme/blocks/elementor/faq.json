@@ -65,6 +65,18 @@
     "type": "Answer",
     "max_words": 20,
     "index": "4"
+  },
+  {
+    "class": "hostinger-ai-question",
+    "type": "Question",
+    "max_words": 8,
+    "index": "5"
+  },
+  {
+    "class": "hostinger-ai-answer",
+    "type": "Answer",
+    "max_words": 20,
+    "index": "5"
   }
 ]
 

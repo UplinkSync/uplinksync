@@ -26,6 +26,7 @@ class VideoHandler extends BaseElementHandler {
         if ( $videos->length > 0 ) {
             $video = $videos->item( 0 );
             $video->setAttribute( 'src', $video_data['url'] );
+            $video->setAttribute( 'preload', 'metadata' );
 
             if ( ! empty( $video_data['thumbnail'] ) ) {
                 $video->setAttribute( 'poster', $video_data['thumbnail'] );
@@ -36,7 +37,7 @@ class VideoHandler extends BaseElementHandler {
             }
         }
 
-        $this->update_cover_block_video_url( $node, $video_data['url'], $video_data['thumbnail'] ?? '' );
+        $this->update_cover_block_video_url( $node, $video_data['url'] );
     }
 
     /**
@@ -129,10 +130,9 @@ class VideoHandler extends BaseElementHandler {
      *
      * @param DOMElement $node
      * @param string $video_url
-     * @param string $thumbnail_url
      * @return void
      */
-    private function update_cover_block_video_url( DOMElement $node, string $video_url, string $thumbnail_url = '' ): void {
+    private function update_cover_block_video_url( DOMElement $node, string $video_url ): void {
         $previousElement = $node->previousSibling;
 
         if ( ! $previousElement || $previousElement->nodeType !== XML_COMMENT_NODE ) {
@@ -161,10 +161,7 @@ class VideoHandler extends BaseElementHandler {
 
         if ( isset( $block['backgroundType'] ) && $block['backgroundType'] === 'video' ) {
             $block['url'] = $video_url;
-
-            if ( ! empty( $thumbnail_url ) ) {
-                $block['backgroundImageUrl'] = $thumbnail_url;
-            }
+            unset( $block['backgroundImageUrl'] );
 
             $prefix       = substr( $comment_value, 0, $json_start );
             $previousElement->nodeValue = $prefix . json_encode( $block ) . ' ';

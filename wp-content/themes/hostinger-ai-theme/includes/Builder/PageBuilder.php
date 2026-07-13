@@ -5,6 +5,7 @@ namespace Hostinger\AiTheme\Builder;
 defined( 'ABSPATH' ) || exit;
 
 use Hostinger\AiTheme\Builder\ImageManager;
+use Hostinger\AiTheme\Constants\GenerationConstant;
 
 class PageBuilder {
     /**
@@ -26,56 +27,110 @@ class PageBuilder {
      */
     public function build_pages(): array {
         $pages          = array();
-        $all_pages      = array();
-        $shop_page_info = null;
-
         $pages_to_build = $this->content_data['pages'];
 
         unset( $pages_to_build['ecommercePagesGroup'] );
 
-        if ( get_option( 'hostinger_ai_woo', false ) ) {
-            foreach ( $pages_to_build as $page => $page_data ) {
-                if ( strtolower( trim( $page ) ) === 'shop' ) {
-                    ImageManager::set_current_page_key( 'shop' );
-                    $shop_page_info = $this->create_page( $page, $page_data );
-                    break;
-                }
-            }
-        }
-
+        $stubs = array();
         foreach ( $pages_to_build as $page => $page_data ) {
-            $page_info = null;
-
-            ImageManager::set_current_page_key( sanitize_title( $page ) );
-
-            if ( strtolower( trim( $page ) ) === 'shop' && $shop_page_info !== null ) {
-                $page_info = $shop_page_info;
-            } else {
-                $page_info = $this->create_page( $page, $page_data );
+            $stub = $this->create_page_stub( $page );
+            if ( empty( $stub ) ) {
+                continue;
             }
 
-            $exclude_from_menu = ! empty( $page_data['exclude_from_menu'] );
-
-            $all_pages[ $page ] = $page_info;
-
-            if ( ! $exclude_from_menu ) {
-                $pages[ $page ] = $page_info;
-            }
+            $stubs[ $page ] = array(
+                'page_id'   => $stub['page_id'],
+                'title'     => $stub['title'],
+                'page_data' => $page_data,
+            );
         }
 
-        update_option( 'hostinger_ai_created_pages', $all_pages );
+        foreach ( $this->order_shop_first( array_keys( $stubs ) ) as $page ) {
+            ImageManager::set_current_page_key( sanitize_title( $page ) );
+            $this->populate_page( $page, $stubs[ $page ]['page_id'], $stubs[ $page ]['page_data'] );
+        }
+
+        foreach ( $stubs as $page => $stub ) {
+            $pages[ $page ] = array(
+                'title'   => $stub['title'],
+                'page_id' => $stub['page_id'],
+            );
+        }
+
+        update_option( 'hostinger_ai_created_pages', $pages );
 
         return $pages;
     }
 
-    private function create_page( string $page, array $page_data ): array {
+    private function order_shop_first( array $page_keys ): array {
+        if ( ! get_option( 'hostinger_ai_woo', false ) ) {
+            return $page_keys;
+        }
+
+        usort(
+            $page_keys,
+            static function ( $a, $b ): int {
+                $a_rank = strtolower( trim( (string) $a ) ) === 'shop' ? 0 : 1;
+                $b_rank = strtolower( trim( (string) $b ) ) === 'shop' ? 0 : 1;
+
+                return $a_rank <=> $b_rank;
+            }
+        );
+
+        return $page_keys;
+    }
+
+    private function create_page_stub( string $page ): array {
         return match ( $this->type ) {
-            'elementor' => $this->create_elementor_page( $page, $page_data ),
-            default => $this->create_gutenberg_page( $page, $page_data ),
+            'elementor' => $this->create_elementor_stub( $page ),
+            default => $this->create_gutenberg_stub( $page ),
         };
     }
 
-    private function create_gutenberg_page( string $page, array $page_data ): array {
+    private function populate_page( string $page, int $page_id, array $page_data ): void {
+        if ( $this->type === 'elementor' ) {
+            $this->populate_elementor_page( $page, $page_id, $page_data );
+            return;
+        }
+
+        $this->populate_gutenberg_page( $page, $page_id, $page_data );
+    }
+
+    private function create_gutenberg_stub( string $page ): array {
+        $page_clean = trim( $page );
+        $page_title = mb_convert_case( $page_clean, MB_CASE_TITLE, 'UTF-8' );
+
+        $new_page = array(
+            'post_title'   => $page_title,
+            'post_content' => '',
+            'post_status'  => 'publish',
+            'post_type'    => 'page',
+            'meta_input'   => array(
+                GenerationConstant::META_KEY => '1',
+            ),
+        );
+
+        if ( $this->is_shop_page( $page_clean ) ) {
+            $new_page['post_name'] = $this->get_shop_page_slug( $page_clean );
+        }
+
+        $page_id = wp_insert_post( $new_page );
+
+        if ( empty( $page_id ) ) {
+            return array();
+        }
+
+        update_post_meta( $page_id, '_wp_page_template', 'no-title' );
+
+        $this->register_shop_page( $page_id, $page_clean );
+
+        return array(
+            'page_id' => (int) $page_id,
+            'title'   => $page_title,
+        );
+    }
+
+    private function populate_gutenberg_page( string $page, int $page_id, array $page_data ): void {
         $page_clean   = trim( $page );
         $page_content = '';
         $seo_section  = array();
@@ -93,13 +148,30 @@ class PageBuilder {
             }
         }
 
+        wp_update_post(
+            array(
+                'ID'           => $page_id,
+                'post_content' => $page_content,
+            )
+        );
+
+        $seo = new Seo();
+        $seo->load_seo_from_sections( $page_id, $seo_section );
+        $seo->add_seo_meta_tags( $page_id );
+    }
+
+    private function create_elementor_stub( string $page ): array {
+        $page_clean = trim( $page );
         $page_title = mb_convert_case( $page_clean, MB_CASE_TITLE, 'UTF-8' );
 
         $new_page = array(
             'post_title'   => $page_title,
-            'post_content' => $page_content,
+            'post_content' => '',
             'post_status'  => 'publish',
             'post_type'    => 'page',
+            'meta_input'   => array(
+                GenerationConstant::META_KEY => '1',
+            ),
         );
 
         if ( $this->is_shop_page( $page_clean ) ) {
@@ -112,27 +184,25 @@ class PageBuilder {
             return array();
         }
 
-        $seo = new Seo();
-        $seo->load_seo_from_sections( $page_id, $seo_section );
-        $seo->add_seo_meta_tags( $page_id );
+        $elementor_version = Helper::get_elementor_version();
 
-        $page_info = array(
-            'title'   => $page_title,
-            'page_id' => $page_id,
-        );
-
-        update_post_meta( $page_id, '_wp_page_template', 'no-title' );
-        update_post_meta( $page_id, '_hostinger_ai_generated', '1' );
+        update_post_meta( $page_id, '_elementor_edit_mode', 'builder' );
+        update_post_meta( $page_id, '_elementor_template_type', 'wp-page' );
+        update_post_meta( $page_id, '_elementor_version', $elementor_version );
+        update_post_meta( $page_id, '_elementor_page_settings', array( 'hide_title' => 'yes' ) );
 
         $this->register_shop_page( $page_id, $page_clean );
 
-        return $page_info;
+        return array(
+            'page_id' => (int) $page_id,
+            'title'   => $page_title,
+        );
     }
 
-    private function create_elementor_page( string $page, array $page_data ): array {
+    private function populate_elementor_page( string $page, int $page_id, array $page_data ): void {
+        $page_clean     = trim( $page );
         $elementor_data = array();
         $elementor_json = '';
-        $page_clean     = trim( $page );
         $seo_section    = array();
 
         if ( strtolower( $page_clean ) === 'shop' && get_option( 'hostinger_ai_woo', false ) ) {
@@ -160,46 +230,11 @@ class PageBuilder {
             $elementor_json = wp_slash( json_encode( $elementor_data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) );
         }
 
-        $page_title = mb_convert_case( $page_clean, MB_CASE_TITLE, 'UTF-8' );
-
-        $new_page = array(
-            'post_title'   => $page_title,
-            'post_content' => '',
-            'post_status'  => 'publish',
-            'post_type'    => 'page',
-        );
-
-        if ( $this->is_shop_page( $page_clean ) ) {
-            $new_page['post_name'] = $this->get_shop_page_slug( $page_clean );
-        }
-
-        $page_id = wp_insert_post( $new_page );
-
-        if ( empty( $page_id ) ) {
-            return array();
-        }
+        update_post_meta( $page_id, '_elementor_data', $elementor_json );
 
         $seo = new Seo();
         $seo->load_seo_from_sections( $page_id, $seo_section );
         $seo->add_seo_meta_tags( $page_id );
-
-        $page_info = array(
-            'title'   => $page_title,
-            'page_id' => $page_id,
-        );
-
-        $elementor_version = Helper::get_elementor_version();
-
-        update_post_meta( $page_id, '_elementor_edit_mode', 'builder' );
-        update_post_meta( $page_id, '_elementor_template_type', 'wp-page' );
-        update_post_meta( $page_id, '_elementor_version', $elementor_version );
-        update_post_meta( $page_id, '_elementor_data', $elementor_json );
-        update_post_meta( $page_id, '_elementor_page_settings', array( 'hide_title' => 'yes' ) );
-        update_post_meta( $page_id, '_hostinger_ai_generated', '1' );
-
-        $this->register_shop_page( $page_id, $page_clean );
-
-        return $page_info;
     }
 
     private function register_shop_page( int $page_id, string $page_clean ): void {

@@ -1,4 +1,4 @@
- [
+[
   {
     "class": "hostinger-ai-title",
     "type": "Title",
@@ -208,6 +208,40 @@
     "max_words": 5,
     "image_size": {
       "width": 410,
+      "height": 335,
+      "crop": true
+    }
+  },
+  {
+    "class": "hostinger-ai-cta-button",
+    "type": "Secondary CTA Button",
+    "max_words": 2,
+    "index": "4"
+  },
+  {
+    "class": "hostinger-ai-cta-button",
+    "type": "Secondary CTA Button",
+    "max_words": 2,
+    "index": "5"
+  },
+  {
+    "class": "hostinger-ai-project-image",
+    "type": "Image",
+    "index": "14",
+    "max_words": 5,
+    "image_size": {
+      "width": 625,
+      "height": 335,
+      "crop": true
+    }
+  },
+  {
+    "class": "hostinger-ai-project-image",
+    "type": "Image",
+    "index": "15",
+    "max_words": 5,
+    "image_size": {
+      "width": 625,
       "height": 335,
       "crop": true
     }

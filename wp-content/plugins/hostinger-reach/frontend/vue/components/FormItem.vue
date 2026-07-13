@@ -22,6 +22,13 @@ const emit = defineEmits<{
 	editForm: [form: Form];
 }>();
 
+const TitleLinkAction = {
+	VIEW: 'view',
+	EDIT: 'edit'
+} as const;
+
+type TitleLinkActionType = (typeof TitleLinkAction)[keyof typeof TitleLinkAction];
+
 const handleSync = async (integration: Integration, form: Form) => {
 	await syncContacts({ [integration.id]: new Set([form.formId]) });
 };
@@ -33,10 +40,23 @@ const pluginTitle = computed(
 const supportsImport = computed(() => props.integration.type !== 'ecommerce' && props.integration.importEnabled);
 const hasActions = computed(() => !props.integration.isViewFormHidden || !props.integration.isEditFormHidden);
 const shouldHideToggle = computed(
-	() =>
-		!props.integration.canToggleForms ||
-		(props.integration.id === 'elementor' && !props.form.formId?.startsWith('elementor-hostinger-reach-form'))
+	() => !props.integration.canToggleForms || props.form.formId?.startsWith('elementor-hostinger-reach-form')
 );
+
+const titleLinkAction = computed<TitleLinkActionType | null>(() => {
+	if (!props.integration.isViewFormHidden) return TitleLinkAction.VIEW;
+	if (!props.integration.isEditFormHidden) return TitleLinkAction.EDIT;
+
+	return null;
+});
+
+const handleTitleClick = () => {
+	if (titleLinkAction.value === TitleLinkAction.VIEW) {
+		emit('viewForm', props.form);
+	} else if (titleLinkAction.value === TitleLinkAction.EDIT) {
+		emit('editForm', props.form);
+	}
+};
 </script>
 
 <template>
@@ -44,14 +64,27 @@ const shouldHideToggle = computed(
 		<div class="form-item__cell form-item__cell--plugin">
 			<div class="form-item__form-content">
 				<div class="form-item__form-info">
-					<span class="form-item__form-title">
+					<button
+						v-if="titleLinkAction"
+						type="button"
+						class="form-item__form-title form-item__form-title--link"
+						:aria-label="`${pluginTitle} (${translate('hostinger_reach_ui_opens_in_new_tab')})`"
+						@click="handleTitleClick"
+					>
+						<span>{{ pluginTitle }}</span>
+						<HIcon name="ic-arrow-up-right-square-16" class="form-item__form-title-icon" aria-hidden="true" />
+					</button>
+					<span v-else class="form-item__form-title">
 						{{ pluginTitle }}
 					</span>
 				</div>
 			</div>
 		</div>
 		<div class="form-item__cell form-item__cell--forms">
-			<span class="form-item__mobile-label">
+			<span
+				v-tooltip.top="translate('hostinger_reach_plugin_entries_table_syncing_tooltip')"
+				class="form-item__mobile-label"
+			>
 				{{ translate('hostinger_reach_plugin_entries_table_syncing_header') }}:
 			</span>
 			<Toggle
@@ -155,6 +188,38 @@ const shouldHideToggle = computed(
 		color: var(--neutral--600);
 	}
 
+	&__form-title--link {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		background: none;
+		border: none;
+		padding: 0;
+		text-align: left;
+		cursor: pointer;
+		font: inherit;
+		color: inherit;
+
+		&:hover {
+			color: var(--primary--500);
+
+			.form-item__form-title-icon {
+				color: var(--primary--500);
+			}
+
+			span {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	&__form-title-icon {
+		width: 16px;
+		height: 16px;
+		color: var(--neutral--500);
+		flex-shrink: 0;
+	}
+
 	&__status-label {
 		font-size: 12px;
 	}
@@ -165,6 +230,8 @@ const shouldHideToggle = computed(
 		color: var(--neutral--600);
 		margin-right: 8px;
 		display: none;
+		align-items: center;
+		cursor: help;
 	}
 
 	&__action-button {
@@ -242,7 +309,7 @@ const shouldHideToggle = computed(
 		}
 
 		&__mobile-label {
-			display: inline-block;
+			display: inline-flex;
 		}
 	}
 }

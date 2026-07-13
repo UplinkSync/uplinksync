@@ -153,6 +153,29 @@ class OnboardingRoutes {
         return $this->make_api_post_request( $endpoint, $params );
     }
 
+    public function get_email_providers( WP_REST_Request $request ): WP_REST_Response {
+        $software_id = $this->get_software_id_from_request( $request );
+
+        if ( empty( $software_id ) ) {
+            return $this->create_error_response( 'Software ID is required' );
+        }
+
+        if ( method_exists( $this->helper, 'getSiteUrlFromDb' ) ) {
+            $site_url = $this->helper->getSiteUrlFromDb();
+        } else {
+            $site_url = (string) get_option( 'siteurl' );
+        }
+
+        $domain = preg_replace( '#^https?://#', '', $site_url );
+
+        $endpoint = "/api/v1/installations/{$software_id}/emails/providers";
+        $params   = array(
+            'search' => $domain,
+        );
+
+        return $this->make_api_request( $endpoint, $params );
+    }
+
     public function save_onboarding_options( WP_REST_Request $request ): WP_REST_Response {
         $parameters = $request->get_json_params();
 
@@ -220,7 +243,7 @@ class OnboardingRoutes {
             $request = $this->proxy_client->get( $endpoint, $params );
             $data    = $this->process_api_response( $request, $error_prefix );
 
-            if ( 'error' === $data['status'] ) {
+            if ( $data['status'] === 'error' ) {
                 $response->set_status( \WP_Http::BAD_REQUEST );
             }
         } catch ( \Exception $exception ) {
@@ -246,7 +269,7 @@ class OnboardingRoutes {
             $request = $this->proxy_client->post( $endpoint, $params );
             $data    = $this->process_api_response( $request, $error_prefix );
 
-            if ( 'error' === $data['status'] ) {
+            if ( $data['status'] === 'error' ) {
                 $response->set_status( \WP_Http::BAD_REQUEST );
             }
         } catch ( \Exception $exception ) {
@@ -405,7 +428,7 @@ class OnboardingRoutes {
 
         $front_page_id   = get_option( 'page_on_front' );
         $show_on_front   = get_option( 'show_on_front' );
-        $has_static_page = 'page' === $show_on_front && $front_page_id;
+        $has_static_page = $show_on_front === 'page' && $front_page_id;
 
         if ( $has_static_page ) {
             $easy_onboarding_helper = new \Hostinger\EasyOnboarding\Helper();

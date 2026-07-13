@@ -18,9 +18,9 @@
       "padding": {
         "unit": "rem",
         "top": "2.25",
-        "right": "0",
+        "right": "2.25",
         "bottom": "2.25",
-        "left": "0",
+        "left": "2.25",
         "isLinked": false
       },
       "presetTitle": "Grid",
@@ -120,7 +120,7 @@
             "id": "d6f569c",
             "elType": "widget",
             "settings": {
-              "editor": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p><div id=\"simple-translate\" class=\"simple-translate-system-theme\"><div><div class=\"simple-translate-button isShow\" style=\"background-image: url('chrome-extension://ibplnjkanclpjokhdolnendpplpjiace/icons/512.png'); height: 22px; width: 22px; top: 73px; left: 126px;\"> </div><div class=\"simple-translate-panel \" style=\"width: 300px; height: 200px; top: 0px; left: 0px; font-size: 13px;\"><div class=\"simple-translate-result-wrapper\" style=\"overflow: hidden;\"><div class=\"simple-translate-move\" draggable=\"true\"> </div><div class=\"simple-translate-result-contents\"><p class=\"simple-translate-result\" dir=\"auto\"> </p><p class=\"simple-translate-candidate\" dir=\"auto\"> </p></div></div></div></div></div>",
+              "editor": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.",
               "align": "center",
               "text_color": "#FFFFFF",
               "_element_width": "initial",
@@ -151,6 +151,7 @@
               "email_placeholder": "trans-email_placeholder",
               "message_label": "trans-message_label",
               "message_placeholder": "trans-message_placeholder",
+              "recipient_email": "trans-contact_email",
               "_padding": {
                 "unit": "px",
                 "top": "60",
@@ -169,7 +170,6 @@
               "_flex_align_self": "center",
               "_flex_size": "none",
               "_background_background": "classic",
-              "_text_color": "#000000",
               "_background_color": "#FFFFFF",
               "_border_radius": {
                 "unit": "px",
@@ -178,7 +178,10 @@
                 "bottom": "20",
                 "left": "20",
                 "isLinked": true
-              }
+              },
+              "date_label": "trans-date_label",
+              "date_placeholder": "trans-date_placeholder",
+              "show_date": ""
             },
             "elements": [],
             "widgetType": "hostinger-contact-form"

@@ -79,7 +79,7 @@ class SiteSettingsResource {
         $front_page_id = 0;
         $posts_page_id = 0;
 
-        if ( 'page' === $show_on_front ) {
+        if ( $show_on_front === 'page' ) {
             $front_page    = 'page';
             $front_page_id = $page_on_front;
         }
@@ -183,19 +183,19 @@ class SiteSettingsResource {
             return 'Plain';
         }
 
-        if ( '%postname%' === $permalink_structure ) {
+        if ( $permalink_structure === '%postname%' ) {
             return 'Post name';
         }
 
-        if ( '%post_id%' === $permalink_structure ) {
+        if ( $permalink_structure === '%post_id%' ) {
             return 'Numeric';
         }
 
-        if ( '%category%' === $permalink_structure ) {
+        if ( $permalink_structure === '%category%' ) {
             return 'Category name';
         }
 
-        if ( '%author%' === $permalink_structure ) {
+        if ( $permalink_structure === '%author%' ) {
             return 'Author name';
         }
 

@@ -1,5 +1,12 @@
 {
-  "widgetKeys": {},
+  "widgetKeys": {
+    "e-form-submit-button": [
+      { "from": "label", "to": "text" }
+    ],
+    "e-form-textarea": [
+      { "from": "maxlength", "to": "length" }
+    ]
+  },
   "propTypes": {
     "string-to-html": {
       "fromType": "string",
@@ -10,6 +17,11 @@
       "fromType": "number",
       "toType": "size",
       "path": "operations/number-to-size.json"
+    },
+    "number-to-number-range": {
+      "fromType": "number",
+      "toType": "number-range",
+      "path": "operations/number-to-number-range.json"
     },
     "html-to-html-v2": {
       "fromType": "html",
@@ -25,6 +37,11 @@
       "fromType": "image-src",
       "toType": "svg-src",
       "path": "operations/image-src-to-svg-src.json"
+    },
+    "config-to-config-v2": {
+      "fromType": "config",
+      "toType": "config-v2",
+      "path": "operations/config-to-config-v2.json"
     }
   }
 }

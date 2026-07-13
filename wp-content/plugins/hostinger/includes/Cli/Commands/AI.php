@@ -111,8 +111,10 @@ class AI {
                 throw new Exception( 'Invalid setting' );
         }
 
-        $plugin_settings->save_plugin_settings( $plugin_options );
+        $saved_settings = $plugin_settings->save_plugin_settings( $plugin_options );
         $this->clear_lightspeed_cache();
+
+        do_action( 'hostinger_tools_settings_saved', $saved_settings->to_array() );
     }
 
     private function get_setting_status( PluginSettings $plugin_settings, string $setting ): bool {

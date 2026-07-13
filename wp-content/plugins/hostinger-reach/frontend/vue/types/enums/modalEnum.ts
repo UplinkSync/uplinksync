@@ -4,4 +4,5 @@ export enum ModalName {
 	SELECT_PAGE_MODAL = "SelectPageModal",
 	CONNECT_PLUGIN_MODAL = "ConnectPluginModal",
 	SYNC_CONTACTS_MODAL = "SyncContactsModal",
+	REACH_API_KEY_MODAL = "ReachApiKeyModal",
 }

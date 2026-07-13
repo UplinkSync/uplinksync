@@ -18,9 +18,9 @@
       "padding": {
         "unit": "rem",
         "top": "2.25",
-        "right": "0",
+        "right": "2.25",
         "bottom": "2.25",
-        "left": "0",
+        "left": "2.25",
         "isLinked": false
       },
       "presetTitle": "Grid",
@@ -112,7 +112,7 @@
                 "id": "1fbdde4",
                 "elType": "widget",
                 "settings": {
-                  "editor": "<p>email@email.com<br />(123) 123 123</p>",
+                  "editor": "<p><a href=\"mailto:trans-encoded_email\">trans-contact_email</a><br /><a href=\"tel:trans-encoded_phone\">trans-contact_phone</a><br />trans-contact_address</p>",
                   "_margin": {
                     "unit": "px",
                     "top": "35",
@@ -148,21 +148,39 @@
                         "value": "fab fa-facebook",
                         "library": "fa-brands"
                       },
-                      "_id": "d8d3e91"
+                      "_id": "d8d3e91",
+                      "link": {
+                        "url": "trans-social_facebook_url",
+                        "is_external": "true",
+                        "nofollow": "",
+                        "custom_attributes": ""
+                      }
                     },
                     {
                       "social_icon": {
-                        "value": "fab fa-twitter",
+                        "value": "fab fa-instagram",
                         "library": "fa-brands"
                       },
-                      "_id": "2d119b6"
+                      "_id": "7e2fa31",
+                      "link": {
+                        "url": "trans-social_instagram_url",
+                        "is_external": "true",
+                        "nofollow": "",
+                        "custom_attributes": ""
+                      }
                     },
                     {
+                      "_id": "babb7c2",
                       "social_icon": {
-                        "value": "fab fa-youtube",
+                        "value": "fab fa-tiktok",
                         "library": "fa-brands"
                       },
-                      "_id": "7e2fa31"
+                      "link": {
+                        "url": "trans-social_tiktok_url",
+                        "is_external": "true",
+                        "nofollow": "",
+                        "custom_attributes": ""
+                      }
                     }
                   ],
                   "shape": "circle",

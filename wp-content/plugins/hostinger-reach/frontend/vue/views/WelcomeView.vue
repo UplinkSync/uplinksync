@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 import FAQ from '@/components/FAQ.vue';
 import Hero from '@/components/Hero.vue';
+import { useHostingData } from '@/composables/useHostingData';
+import { useModal } from '@/composables/useModal';
 import { useToast } from '@/composables/useToast';
 import { connectFaqData } from '@/data/faq';
 import { reachRepo } from '@/data/repositories/reachRepo';
 import { useGeneralDataStore } from '@/stores';
+import { ModalName } from '@/types/enums/modalEnum';
 import { translate } from '@/utils/translate';
 
 const TRUSTED_AUTH_DOMAINS = /^https:\/\/auth\.hostinger\.(dev|com)/;
@@ -15,11 +18,21 @@ const PREVIEW_DOMAINS = /hostingersite\.com/i;
 const { showError } = useToast();
 
 const generalDataStore = useGeneralDataStore();
+const { domainDetails, loadDomainDetails, isLoading } = useHostingData();
 
 const isConnectedToAnotherSite = ref(false);
 const isButtonLoading = ref(false);
+const { openModal } = useModal();
 const domain = window.location.hostname;
 const rawDomain = generalDataStore.rawDomain;
+
+const isDomainActive = computed(
+	() =>
+		!generalDataStore.isHostingerUser ||
+		!domainDetails?.value?.status ||
+		domainDetails?.value?.status === 'active' ||
+		domainDetails?.value?.status === 'error'
+);
 
 const handleGetStarted = async () => {
 	isButtonLoading.value = true;
@@ -34,8 +47,8 @@ const handleGetStarted = async () => {
 		return;
 	}
 
-	if (PREVIEW_DOMAINS.test(domain)) {
-		window.location.href = `https://hpanel.hostinger.com/websites/${encodeURIComponent(rawDomain)}`;
+	if (PREVIEW_DOMAINS.test(domain) || !isDomainActive.value) {
+		window.open(`https://hpanel.hostinger.com/websites/${encodeURIComponent(rawDomain)}`, '_blank');
 
 		return;
 	}
@@ -46,16 +59,35 @@ const handleGetStarted = async () => {
 		showError(translate('hostinger_reach_error_message'));
 	}
 };
+
+const openApiKeyModal = (apiKey: string = '') => {
+	openModal(ModalName.REACH_API_KEY_MODAL, { apiKey }, { hasCloseButton: true, isXL: true });
+};
+
+onMounted(() => {
+	if (generalDataStore.isHostingerUser) {
+		loadDomainDetails();
+	}
+
+	const params = new URLSearchParams(window.location.search);
+	const key = params.get('api_key');
+
+	if (key !== null) {
+		openApiKeyModal();
+	}
+});
 </script>
 
 <template>
 	<div class="welcome-view">
 		<Hero
 			:is-connected-to-another-site="isConnectedToAnotherSite"
-			:is-button-loading="isButtonLoading"
+			:is-button-loading="isButtonLoading || isLoading"
 			:domain="domain"
 			:is-temporary="PREVIEW_DOMAINS.test(domain)"
+			:is-not-active="!isDomainActive"
 			:on-get-started="handleGetStarted"
+			:on-manual-api-key-click="() => openApiKeyModal()"
 		/>
 		<div class="faq-wrap">
 			<FAQ :faq-data="connectFaqData" />

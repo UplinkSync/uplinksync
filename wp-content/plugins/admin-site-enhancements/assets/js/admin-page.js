@@ -110,6 +110,34 @@
          }
 
       });
+
+      /**
+       * Update the SMTP password status label and inline warning from AJAX responses.
+       *
+       * @param {Object} response Test-email AJAX response payload.
+       */
+      function asenhaUpdateSmtpPasswordUiState( response ) {
+         if ( ! response || typeof response !== 'object' ) {
+            return;
+         }
+
+         if ( typeof response.smtp_password_description !== 'undefined' ) {
+            $('.asenha-smtp-password-description').text( response.smtp_password_description );
+         }
+
+         var $warning = $('.asenha-smtp-password-warning');
+         if ( typeof response.smtp_password_warning !== 'undefined' ) {
+            if ( response.smtp_password_warning ) {
+               $warning.empty().append(
+                  $('<div class="notice notice-warning inline"></div>').append(
+                     $('<p></p>').text( response.smtp_password_warning )
+                  )
+               ).show();
+            } else {
+               $warning.empty().hide();
+            }
+         }
+      }
       
       // Email Delivery >> Send test email
       $('#send-test-email').click(function(e) {
@@ -133,6 +161,7 @@
                },
                success:function(data) {
                   var response = data;
+                  asenhaUpdateSmtpPasswordUiState( response );
                   if ( response.status == 'success' ) {
                      setTimeout( function() {
                         $('.sending-test-email').hide();
@@ -328,7 +357,9 @@
       $('.enable-external-permalinks').appendTo('.fields-content-management > table > tbody');
       
       $('.enable-external-permalinks-for').appendTo('.fields-content-management .enable-external-permalinks .asenha-subfields');
+      
       $('.external-links-new-tab').appendTo('.fields-content-management > table > tbody');
+      
       $('.custom-nav-menu-items-new-tab').appendTo('.fields-content-management > table > tbody');
       $('.enable-missed-schedule-posts-auto-publish').appendTo('.fields-content-management > table > tbody');
 
@@ -407,6 +438,7 @@
       $('.redirect-after-logout-to-slug').appendTo('.fields-login-logout .redirect-after-logout .asenha-subfields');
       $('.redirect-after-logout-for').appendTo('.fields-login-logout .redirect-after-logout .asenha-subfields');
       
+      $('.disable-user-account').appendTo('.fields-login-logout > table > tbody');
 
       // Place fields into "Custom Code" tab
       
@@ -460,6 +492,8 @@
       $('.disable-lazy-load').appendTo('.fields-disable-components .disable-smaller-components .asenha-subfields');
       $('.disable-application-passwords').appendTo('.fields-disable-components .disable-smaller-components .asenha-subfields');
       $('.disable-site-admin-email-verification-screen').appendTo('.fields-disable-components .disable-smaller-components .asenha-subfields');
+      $('.disable-user-email-notification-after-password-change').appendTo('.fields-disable-components .disable-smaller-components .asenha-subfields');
+      $('.disable-admin-email-notification-after-password-change').appendTo('.fields-disable-components .disable-smaller-components .asenha-subfields');
       $('.disable-plugin-theme-editor').appendTo('.fields-disable-components .disable-smaller-components .asenha-subfields');
 
       // Place fields into "Security" tab
@@ -498,6 +532,7 @@
       $('.heartbeat-interval-for-frontend').appendTo('.fields-optimizations .enable-heartbeat-control .asenha-subfields');
 
       // Place fields into "Utilities" tab
+      
       $('.smtp-email-delivery').appendTo('.fields-utilities > table > tbody');
       $('.smtp-default-from-description').appendTo('.fields-utilities .smtp-email-delivery .asenha-subfields');
       $('.smtp-default-from-name').appendTo('.fields-utilities .smtp-email-delivery .asenha-subfields');
@@ -959,6 +994,8 @@
             $('.heartbeat-interval-for-frontend .asenha-subfield-select-inner').hide();            
          }
       });
+
+      
 
       subfieldsToggler( 'smtp_email_delivery', 'smtp-email-delivery' );
 

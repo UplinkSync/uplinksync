@@ -343,7 +343,7 @@ abstract class RestEndpointTool {
                 $property['properties'] = new stdClass();
             }
 
-            if ( isset( $arg['required'] ) && true === $arg['required'] ) {
+            if ( isset( $arg['required'] ) && $arg['required'] === true ) {
                 $required[] = $key;
             }
 
@@ -459,6 +459,27 @@ abstract class RestEndpointTool {
         $method    = $config->get_http_method_for_operation();
 
         $request_route = $route;
+
+        // Replace path placeholders like (?P<parent>\d+) with provided input params.
+        // This allows nested REST routes such as /wp/v2/posts/(?P<parent>\d+)/revisions.
+        if ( preg_match_all( '/\(\?P<([a-zA-Z_][a-zA-Z0-9_]*)>[^)]+\)/', $request_route, $matches ) ) {
+            $param_names = $matches[1] ?? array();
+            foreach ( $param_names as $param_name ) {
+                if ( ! array_key_exists( $param_name, $input ) ) {
+                    return new WP_Error(
+                        'route_param_missing',
+                        sprintf( /* translators: %s is a route parameter name */ __( 'Missing required route parameter: %s', 'hostinger-ai-assistant' ), $param_name ),
+                        array( 'status' => 400 )
+                    );
+                }
+
+                $value = $input[ $param_name ];
+                $value = is_scalar( $value ) ? (string) $value : '';
+
+                $request_route = preg_replace( '/\(\?P<' . preg_quote( $param_name, '/' ) . '>[^)]+\)/', rawurlencode( $value ), $request_route, 1 );
+                unset( $input[ $param_name ] );
+            }
+        }
         if ( isset( $input['id'] ) && in_array( $operation, array( 'get', 'update', 'delete' ), true ) ) {
             $request_route .= '/' . intval( $input['id'] );
             unset( $input['id'] );

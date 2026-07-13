@@ -451,5 +451,192 @@
       "height": 450,
       "crop": true
     }
+  },
+  {
+    "class": "hostinger-ai-image",
+    "type": "Image",
+    "index": "40",
+    "max_words": 5,
+    "image_size": {
+      "width": 700,
+      "height": 400,
+      "crop": true
+    }
+  },
+  {
+    "class": "hostinger-ai-image",
+    "type": "Image",
+    "index": "41",
+    "max_words": 5,
+    "image_size": {
+      "width": 700,
+      "height": 400,
+      "crop": true
+    }
+  },
+  {
+    "class": "hostinger-ai-image",
+    "type": "Image",
+    "index": "42",
+    "max_words": 5,
+    "image_size": {
+      "width": 700,
+      "height": 400,
+      "crop": true
+    }
+  },
+  {
+    "class": "hostinger-ai-image",
+    "type": "Image",
+    "index": "43",
+    "max_words": 5,
+    "image_size": {
+      "width": 700,
+      "height": 400,
+      "crop": true
+    }
+  },
+  {
+    "class": "hostinger-ai-image",
+    "type": "Image",
+    "index": "44",
+    "max_words": 5,
+    "image_size": {
+      "width": 700,
+      "height": 400,
+      "crop": true
+    }
+  },
+  {
+    "class": "hostinger-ai-image",
+    "type": "Image",
+    "index": "45",
+    "max_words": 5,
+    "image_size": {
+      "width": 700,
+      "height": 400,
+      "crop": true
+    }
+  },
+  {
+    "class": "hostinger-ai-image",
+    "type": "Image",
+    "index": "46",
+    "max_words": 5,
+    "image_size": {
+      "width": 500,
+      "height": 500,
+      "crop": true
+    }
+  },
+  {
+    "class": "hostinger-ai-image",
+    "type": "Image",
+    "index": "47",
+    "max_words": 5,
+    "image_size": {
+      "width": 500,
+      "height": 500,
+      "crop": true
+    }
+  },
+  {
+    "class": "hostinger-ai-image",
+    "type": "Image",
+    "index": "48",
+    "max_words": 5,
+    "image_size": {
+      "width": 500,
+      "height": 500,
+      "crop": true
+    }
+  },
+  {
+    "class": "hostinger-ai-image",
+    "type": "Image",
+    "index": "49",
+    "max_words": 5,
+    "image_size": {
+      "width": 500,
+      "height": 500,
+      "crop": true
+    }
+  },
+  {
+    "class": "hostinger-ai-image",
+    "type": "Image",
+    "index": "50",
+    "max_words": 5,
+    "image_size": {
+      "width": 700,
+      "height": 730,
+      "crop": true
+    }
+  },
+  {
+    "class": "hostinger-ai-image",
+    "type": "Image",
+    "index": "51",
+    "max_words": 5,
+    "image_size": {
+      "width": 500,
+      "height": 500,
+      "crop": true
+    }
+  },
+  {
+    "class": "hostinger-ai-image",
+    "type": "Image",
+    "index": "52",
+    "max_words": 5,
+    "image_size": {
+      "width": 1500,
+      "height": 700,
+      "crop": true
+    }
+  },
+  {
+    "class": "hostinger-ai-image",
+    "type": "Image",
+    "index": "53",
+    "max_words": 5,
+    "image_size": {
+      "width": 600,
+      "height": 600,
+      "crop": true
+    }
+  },
+  {
+    "class": "hostinger-ai-image",
+    "type": "Image",
+    "index": "54",
+    "max_words": 5,
+    "image_size": {
+      "width": 600,
+      "height": 600,
+      "crop": true
+    }
+  },
+  {
+    "class": "hostinger-ai-image",
+    "type": "Image",
+    "index": "55",
+    "max_words": 5,
+    "image_size": {
+      "width": 600,
+      "height": 600,
+      "crop": true
+    }
+  },
+  {
+    "class": "hostinger-ai-image",
+    "type": "Image",
+    "index": "56",
+    "max_words": 5,
+    "image_size": {
+      "width": 600,
+      "height": 600,
+      "crop": true
+    }
   }
 ]

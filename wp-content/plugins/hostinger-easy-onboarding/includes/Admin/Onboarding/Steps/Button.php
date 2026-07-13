@@ -26,6 +26,8 @@ class Button {
 
     private bool $is_completable = true;
 
+    private string $encoded_url = '';
+
     public function __construct( string $title = '', bool $is_skippable = false, string $url = '', bool $is_completable = true ) {
         $this->title          = $title;
         $this->is_skippable   = $is_skippable;
@@ -105,6 +107,14 @@ class Button {
         $this->is_completable = $is_completable;
     }
 
+    public function get_encoded_url(): string {
+        return $this->encoded_url;
+    }
+
+    public function set_encoded_url( string $encoded_url ): void {
+        $this->encoded_url = $encoded_url;
+    }
+
     /**
      * @return array
      */
@@ -114,6 +124,7 @@ class Button {
             'is_skippable'    => $this->get_is_skippable(),
             'is_astra_needed' => $this->get_is_astra_needed(),
             'url'             => $this->get_url(),
+            'encoded_url'     => $this->get_encoded_url(),
             'modal_name'      => $this->get_modal_name(),
             'is_completable'  => $this->get_is_completable(),
         );

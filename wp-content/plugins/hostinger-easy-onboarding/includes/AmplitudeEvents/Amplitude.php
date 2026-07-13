@@ -59,14 +59,28 @@ class Amplitude {
     }
 
     public function send_edit_amplitude_event(): void {
+        $edit_count = $this->increment_amplitude_edit_event_count();
+
         $params = array(
             'action'          => AmplitudeActions::WP_EDIT,
             'wp_builder_type' => $this->options['builder_type'],
             'website_id'      => $this->options['website_id'],
             'subscription_id' => $this->options['subscription_id'],
+            'edit_count'      => $edit_count,
         );
 
         $this->send_event( $params );
+    }
+
+    public function increment_amplitude_edit_event_count(): int {
+        $current    = (int) get_option( 'hostinger_amplitude_edit_count', 0 );
+        $edit_count = $current + 1;
+
+        if ( ! update_option( 'hostinger_amplitude_edit_count', $edit_count ) ) {
+            return $current;
+        }
+
+        return $edit_count;
     }
 
     public function can_send_edit_amplitude_event(): bool {

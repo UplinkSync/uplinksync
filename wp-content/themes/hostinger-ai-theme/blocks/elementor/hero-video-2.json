@@ -20,9 +20,9 @@
       "padding": {
         "unit": "rem",
         "top": "2.25",
-        "right": "0",
+        "right": "2.25",
         "bottom": "2.25",
-        "left": "0",
+        "left": "2.25",
         "isLinked": false
       },
       "__globals__": {
@@ -69,7 +69,7 @@
         "left": "0",
         "isLinked": false
       },
-      "background_video_link": "https://videos.pexels.com/video-files/3992590/3992590-uhd_4096_2160_25fps.mp4"
+      "background_video_link": "https://videos.pexels.com/video-files/30014429/12877565_1920_1080_30fps.mp4"
     },
     "elements": [
       {

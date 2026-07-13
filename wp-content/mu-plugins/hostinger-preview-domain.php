@@ -3,7 +3,7 @@
  * Plugin Name:       Hostinger Preview Domain
  * Plugin URI:        https://www.hostinger.com
  * Description:       Enable access to the website through a temporary domain while the main domain is not yet configured.
- * Version:           1.3.4
+ * Version:           1.4.0
  * Author:            Hostinger
  * Author URI:        https://www.hostinger.com
  * License:           GPL-2.0-or-later
@@ -17,9 +17,15 @@
 
 if ( ! class_exists( 'Hostinger_Temporary_Domain_Handler' ) ) {
     class Hostinger_Temporary_Domain_Handler {
+        const MAX_RECURSION_DEPTH      = 50;
+        const MAX_FILTER_CONTENT_BYTES = 5242880;  // 5 MB
+        const MAX_FILTER_QUERY_BYTES   = 1048576;  // 1 MB
+
         private $site_domain;
         private $current_domain;
         private $db_site_url;
+        private static $meta_filter_in_progress = array();
+        private static $query_filter_in_progress = false;
 
         public function __construct() {
             $this->initialize_domains();
@@ -92,22 +98,55 @@ if ( ! class_exists( 'Hostinger_Temporary_Domain_Handler' ) ) {
          * @return string The filtered content.
          */
         public function filter_content( $content ) {
+            // Bail on huge responses — keeps regex cost / memory blow-up bounded.
+            if ( strlen( $content ) > self::MAX_FILTER_CONTENT_BYTES ) {
+                return $content;
+            }
+
+            // Bail when the response declared a non-HTML content type by now —
+            // CSV exports, file downloads, JSON, XML, etc. don't need attribute rewriting.
+            if ( ! $this->response_is_html() ) {
+                return $content;
+            }
+
             $patterns = [
-                // HTML attributes and content URLs
                 '/(href|src|action|srcset|data-img-url)\s*=\s*[\'"]https?:\/\/' . preg_quote( $this->site_domain, '/' ) . '[^\s\'"<>]*/i',
-                // CSS imports and urls
                 '/(@import\s+["\']|url\(["\']?)https?:\/\/' . preg_quote( $this->site_domain, '/' ) . '[^\s\'"<>)]*/i',
             ];
 
             foreach ( $patterns as $pattern ) {
-                $content = preg_replace_callback( $pattern, function ( $matches ) {
+                $rewritten = preg_replace_callback( $pattern, function ( $matches ) {
                     $url = substr( $matches[0], strpos( $matches[0], 'http' ) );
 
                     return str_replace( $url, $this->filter_url( $url ), $matches[0] );
                 }, $content );
+
+                // PCRE error (backtrack limit etc.) — keep the unmodified content
+                // for this pattern so we never emit NULL into the response.
+                if ( is_string( $rewritten ) ) {
+                    $content = $rewritten;
+                }
             }
 
             return $content ?: '';
+        }
+
+        /**
+         * Whether the current response is (so far) declared as HTML/XHTML.
+         * If no Content-Type has been emitted yet, assume HTML — that's WP's
+         * default for template responses.
+         *
+         * @return bool
+         */
+        private function response_is_html() {
+            foreach ( headers_list() as $header ) {
+                if ( stripos( $header, 'content-type:' ) !== 0 ) {
+                    continue;
+                }
+                return stripos( $header, 'text/html' ) !== false
+                    || stripos( $header, 'application/xhtml' ) !== false;
+            }
+            return true;
         }
 
         /**
@@ -135,10 +174,48 @@ if ( ! class_exists( 'Hostinger_Temporary_Domain_Handler' ) ) {
         /**
          * Start output buffering if URL rewriting is needed.
          *
+         * Skips request contexts that cannot produce HTML or could cause
+         * unbounded memory growth: AJAX, cron, XML-RPC, sitemap/feed/file URIs.
+         * (REST_REQUEST is not yet defined at `init` time, so the second-pass
+         * content-type check inside filter_content() catches REST responses.)
+         *
          * @return void
          */
         public function start_output_buffer() {
+            if ( $this->should_skip_output_buffer() ) {
+                return;
+            }
             ob_start( [ $this, 'filter_content' ] );
+        }
+
+        /**
+         * Whether to skip output buffering entirely for this request.
+         *
+         * @return bool
+         */
+        private function should_skip_output_buffer() {
+            if ( ( defined( 'DOING_AJAX' ) && DOING_AJAX )
+                || ( defined( 'DOING_CRON' ) && DOING_CRON )
+                || ( defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST ) ) {
+                return true;
+            }
+
+            $uri  = isset( $_SERVER['REQUEST_URI'] ) ? (string) $_SERVER['REQUEST_URI'] : '';
+            $path = $uri === '' ? '' : (string) parse_url( $uri, PHP_URL_PATH );
+
+            if ( $path === '' ) {
+                return false;
+            }
+
+            if ( strpos( $path, 'wp-sitemap' ) !== false || strpos( $path, '/feed' ) !== false ) {
+                return true;
+            }
+
+            // Static / binary file extensions that WP or plugins may serve via PHP.
+            return (bool) preg_match(
+                '/\.(xml|json|csv|pdf|zip|tar|gz|jpe?g|png|gif|webp|svg|ico|woff2?|ttf|mp[34]|webm|wav|ogg|mov|avi)$/i',
+                $path
+            );
         }
 
         /**
@@ -183,36 +260,57 @@ if ( ! class_exists( 'Hostinger_Temporary_Domain_Handler' ) ) {
                 return;
             }
 
-            // Basic URL filters
             add_filter( 'home_url', [ $this, 'filter_url' ], 10, 4 );
             add_filter( 'site_url', [ $this, 'filter_url' ], 10, 4 );
             add_filter( 'wp_redirect', [ $this, 'filter_url' ], 10 );
 
-            // Site icon URL filter
             add_filter( 'get_site_icon_url', [ $this, 'filter_site_icon_url' ], 10, 1 );
 
-            // Content filters
             $content_filters = [ 'the_content', 'widget_text', 'wp_nav_menu_items' ];
             foreach ( $content_filters as $filter ) {
                 add_filter( $filter, [ $this, 'filter_content' ], 999 );
             }
 
-            // Media handling
             add_filter( 'wp_get_attachment_url', [ $this, 'filter_url' ] );
 
-            // Admin filters
             if ( is_admin() ) {
                 $this->setup_admin_filters();
             }
 
-            // Output buffering and CORS
             add_action( 'init', [ $this, 'start_output_buffer' ], 0 );
             add_action( 'init', [ $this, 'handle_cors' ], 0 );
 
-            // Content save hooks to replace domain in content
             add_filter( 'wp_insert_post_data', [ $this, 'replace_host_in_content' ], 10, 2 );
             add_filter( 'content_save_pre', [ $this, 'replace_host_in_content_simple' ], 10, 1 );
             add_filter( 'pre_update_option', [ $this, 'replace_host_in_option' ], 10, 3 );
+
+            foreach ( array( 'post', 'term', 'user', 'comment' ) as $meta_type ) {
+                add_filter(
+                    "update_{$meta_type}_metadata",
+                    function ( $check, $object_id, $meta_key, $meta_value, $prev_value ) use ( $meta_type ) {
+                        return $this->filter_meta_save( $check, $object_id, $meta_key, $meta_value, $prev_value, $meta_type, false );
+                    },
+                    10,
+                    5
+                );
+                add_filter(
+                    "add_{$meta_type}_metadata",
+                    function ( $check, $object_id, $meta_key, $meta_value, $unique ) use ( $meta_type ) {
+                        return $this->filter_meta_save( $check, $object_id, $meta_key, $meta_value, $unique, $meta_type, true );
+                    },
+                    10,
+                    5
+                );
+            }
+
+            add_filter( 'preprocess_comment', [ $this, 'replace_host_in_comment' ] );
+
+            if ( is_multisite() ) {
+                add_filter( 'pre_update_site_option', [ $this, 'replace_host_in_site_option' ], 10, 1 );
+                add_filter( 'pre_add_site_option',    [ $this, 'replace_host_in_site_option' ], 10, 1 );
+            }
+
+            add_filter( 'query', [ $this, 'filter_query' ], 999 );
         }
 
         /**
@@ -308,18 +406,15 @@ if ( ! class_exists( 'Hostinger_Temporary_Domain_Handler' ) ) {
          * @return array Modified post data
          */
         public function replace_host_in_content( $data, $postarr ) {
-            // Only proceed if current host and DB site URL are different
-            if ( $this->current_domain && $this->db_site_url && $this->current_domain !== $this->db_site_url ) {
-                if ( isset( $data['post_content'] ) ) {
-                    $data['post_content'] = str_replace( $this->current_domain, $this->db_site_url, $data['post_content'] );
-                }
+            if ( ! $this->current_domain || ! $this->db_site_url || $this->current_domain === $this->db_site_url ) {
+                return $data;
+            }
 
-                if ( isset( $data['post_title'] ) ) {
-                    $data['post_title'] = str_replace( $this->current_domain, $this->db_site_url, $data['post_title'] );
-                }
+            $fields = array( 'post_content', 'post_title', 'post_excerpt', 'guid' );
 
-                if ( isset( $data['post_excerpt'] ) ) {
-                    $data['post_excerpt'] = str_replace( $this->current_domain, $this->db_site_url, $data['post_excerpt'] );
+            foreach ( $fields as $field ) {
+                if ( isset( $data[ $field ] ) && is_string( $data[ $field ] ) ) {
+                    $data[ $field ] = str_replace( $this->current_domain, $this->db_site_url, $data[ $field ] );
                 }
             }
 
@@ -334,7 +429,6 @@ if ( ! class_exists( 'Hostinger_Temporary_Domain_Handler' ) ) {
          * @return string Modified content
          */
         public function replace_host_in_content_simple( $content ) {
-            // Only proceed if current host and DB site URL are different
             if ( $this->current_domain && $this->db_site_url && $this->current_domain !== $this->db_site_url ) {
                 $content = str_replace( $this->current_domain, $this->db_site_url, $content );
             }
@@ -352,12 +446,11 @@ if ( ! class_exists( 'Hostinger_Temporary_Domain_Handler' ) ) {
          * @return mixed Modified option value
          */
         public function replace_host_in_option( $value, $option, $old_value ) {
-            // Skip if it's the siteurl or home option to avoid conflicts
+            // Skip siteurl/home — they legitimately store the real domain.
             if ( in_array( $option, array( 'siteurl', 'home' ) ) ) {
                 return $value;
             }
 
-            // Only proceed if current host and DB site URL are different
             if ( $this->current_domain && $this->db_site_url && $this->current_domain !== $this->db_site_url ) {
                 if ( is_string( $value ) ) {
                     $value = str_replace( $this->current_domain, $this->db_site_url, $value );
@@ -370,24 +463,353 @@ if ( ! class_exists( 'Hostinger_Temporary_Domain_Handler' ) ) {
         }
 
         /**
-         * Recursively replace values in arrays
+         * Generic add/update meta filter callback.
          *
-         * @param array  $array   The array to process
-         * @param string $search  The search string
-         * @param string $replace The replacement string
+         * Re-entry guard is per meta_type so that, while we're processing
+         * post-meta, an unrelated user-meta save in the same request still
+         * gets cleaned.
          *
-         * @return array The processed array
+         * @param null|bool $check
+         * @param int       $object_id
+         * @param string    $meta_key
+         * @param mixed     $meta_value
+         * @param mixed     $extra      $prev_value for update, $unique for add
+         * @param string    $meta_type  'post'|'term'|'user'|'comment'
+         * @param bool      $is_add     true for add_metadata, false for update_metadata
+         *
+         * @return null|bool|int
          */
-        private function replace_in_array_recursive( $array, $search, $replace ) {
-            $result = array();
+        private function filter_meta_save( $check, $object_id, $meta_key, $meta_value, $extra, $meta_type, $is_add ) {
+            if ( ! $this->meta_value_needs_replacement( $meta_value ) ) {
+                return $check;
+            }
 
-            foreach ( $array as $key => $value ) {
-                if ( is_array( $value ) ) {
-                    $result[$key] = $this->replace_in_array_recursive( $value, $search, $replace );
-                } elseif ( is_string( $value ) ) {
-                    $result[$key] = str_replace( $search, $replace, $value );
+            if ( ! empty( self::$meta_filter_in_progress[ $meta_type ] ) ) {
+                return $check;
+            }
+
+            $cleaned = $this->replace_in_value( $meta_value, $this->current_domain, $this->db_site_url );
+
+            self::$meta_filter_in_progress[ $meta_type ] = true;
+            try {
+                if ( $is_add ) {
+                    $result = add_metadata( $meta_type, $object_id, $meta_key, $cleaned, (bool) $extra );
                 } else {
-                    $result[$key] = $value;
+                    $result = update_metadata( $meta_type, $object_id, $meta_key, $cleaned, $extra );
+                }
+            } finally {
+                self::$meta_filter_in_progress[ $meta_type ] = false;
+            }
+
+            return $result;
+        }
+
+        /**
+         * Replace current host in comment fields before insert.
+         *
+         * @param array $commentdata
+         *
+         * @return array
+         */
+        public function replace_host_in_comment( $commentdata ) {
+            if ( ! $this->current_domain || ! $this->db_site_url || $this->current_domain === $this->db_site_url ) {
+                return $commentdata;
+            }
+
+            if ( ! is_array( $commentdata ) ) {
+                return $commentdata;
+            }
+
+            $fields = array( 'comment_content', 'comment_author', 'comment_author_url' );
+
+            foreach ( $fields as $field ) {
+                if ( isset( $commentdata[ $field ] ) && is_string( $commentdata[ $field ] ) ) {
+                    $commentdata[ $field ] = str_replace( $this->current_domain, $this->db_site_url, $commentdata[ $field ] );
+                }
+            }
+
+            return $commentdata;
+        }
+
+        /**
+         * Replace current host inside a network (multisite) option value.
+         *
+         * @param mixed $value
+         *
+         * @return mixed
+         */
+        public function replace_host_in_site_option( $value ) {
+            if ( ! $this->current_domain || ! $this->db_site_url || $this->current_domain === $this->db_site_url ) {
+                return $value;
+            }
+
+            if ( is_string( $value ) ) {
+                return str_replace( $this->current_domain, $this->db_site_url, $value );
+            }
+
+            if ( is_array( $value ) || is_object( $value ) ) {
+                return $this->replace_in_array_recursive( $value, $this->current_domain, $this->db_site_url );
+            }
+
+            return $value;
+        }
+
+        /**
+         * Determine whether a meta value contains the preview domain and is
+         * worth walking. Fast path for the common no-leak case.
+         *
+         * @param mixed $value
+         *
+         * @return bool
+         */
+        private function meta_value_needs_replacement( $value ) {
+            if ( ! $this->current_domain || ! $this->db_site_url || $this->current_domain === $this->db_site_url ) {
+                return false;
+            }
+
+            if ( is_string( $value ) ) {
+                return strpos( $value, $this->current_domain ) !== false;
+            }
+
+            if ( is_array( $value ) || is_object( $value ) ) {
+                try {
+                    return strpos( serialize( $value ), $this->current_domain ) !== false;
+                } catch ( \Throwable $e ) {
+                    return false;
+                }
+            }
+
+            return false;
+        }
+
+        /**
+         * Recursively replace values inside arrays or objects.
+         *
+         * @param array|object $value   The structure to walk.
+         * @param string       $search  The search string.
+         * @param string       $replace The replacement string.
+         * @param int          $depth   Current recursion depth.
+         *
+         * @return array|object The processed structure.
+         */
+        private function replace_in_array_recursive( $value, $search, $replace, $depth = 0 ) {
+            if ( is_array( $value ) ) {
+                $result = array();
+                foreach ( $value as $key => $item ) {
+                    $result[ $key ] = $this->replace_in_value( $item, $search, $replace, $depth );
+                }
+                return $result;
+            }
+
+            if ( is_object( $value ) ) {
+                foreach ( get_object_vars( $value ) as $key => $item ) {
+                    $value->$key = $this->replace_in_value( $item, $search, $replace, $depth );
+                }
+                return $value;
+            }
+
+            return $value;
+        }
+
+        /**
+         * Replace inside a single value of any supported type.
+         *
+         * Stops descending after MAX_RECURSION_DEPTH to guard against circular
+         * references (e.g. arrays / objects with self-referential pointers)
+         * which would otherwise loop until stack/memory exhaustion.
+         *
+         * @param mixed  $value
+         * @param string $search
+         * @param string $replace
+         * @param int    $depth   Current recursion depth.
+         *
+         * @return mixed
+         */
+        private function replace_in_value( $value, $search, $replace, $depth = 0 ) {
+            if ( is_string( $value ) ) {
+                return str_replace( $search, $replace, $value );
+            }
+            if ( is_array( $value ) || is_object( $value ) ) {
+                if ( $depth >= self::MAX_RECURSION_DEPTH ) {
+                    return $value;
+                }
+                return $this->replace_in_array_recursive( $value, $search, $replace, $depth + 1 );
+            }
+            return $value;
+        }
+
+        /**
+         *
+         * Last-resort filter applied to every SQL statement before execution.
+         *
+         * @param string $query
+         *
+         * @return string
+         */
+        public function filter_query( $query ) {
+            if ( ! $this->current_domain || ! $this->db_site_url || $this->current_domain === $this->db_site_url ) {
+                return $query;
+            }
+
+            // Fast path: no preview domain anywhere in the query.
+            if ( strpos( $query, $this->current_domain ) === false ) {
+                return $query;
+            }
+
+            if ( self::$query_filter_in_progress ) {
+                return $query;
+            }
+
+            if ( ! preg_match( '/^\s*(?:INSERT|UPDATE|REPLACE)\s/i', $query ) ) {
+                return $query;
+            }
+
+            // Never touch siteurl/home option writes — those legitimately store a domain.
+            if ( preg_match( "/option_name\s*=\s*'(?:siteurl|home)'/i", $query ) ) {
+                return $query;
+            }
+
+            self::$query_filter_in_progress = true;
+            try {
+                $rewritten = $this->rewrite_query_string_literals( $query );
+            } catch ( \Throwable $e ) {
+                // Failsafe — any parsing error returns the original query so we never break a save.
+                $rewritten = $query;
+            } finally {
+                self::$query_filter_in_progress = false;
+            }
+
+            return $rewritten;
+        }
+
+        /**
+         * Walk every single-quoted string literal in the SQL and clean each one.
+         *
+         * @param string $query
+         *
+         * @return string
+         */
+        private function rewrite_query_string_literals( $query ) {
+            // Skip pathological-size queries — keeps PCRE under its backtrack
+            // limit and avoids extra memory pressure on huge multi-row INSERTs.
+            if ( strlen( $query ) > self::MAX_FILTER_QUERY_BYTES ) {
+                return $query;
+            }
+
+            $pattern = "/'((?:[^'\\\\]|\\\\.)*)'/s";
+
+            $rewritten = preg_replace_callback(
+                $pattern,
+                function ( $matches ) {
+                    $escaped = $matches[1];
+
+                    if ( strpos( $escaped, $this->current_domain ) === false ) {
+                        return $matches[0];
+                    }
+
+                    $unescaped = $this->mysql_unescape( $escaped );
+                    $cleaned   = $this->clean_query_string_value( $unescaped );
+
+                    if ( $cleaned === $unescaped ) {
+                        return $matches[0];
+                    }
+
+                    global $wpdb;
+                    return "'" . $wpdb->_real_escape( $cleaned ) . "'";
+                },
+                $query
+            );
+
+            // PCRE error (backtrack/recursion limit, bad UTF-8 etc.) returns
+            // null — fall back to the original query so we never hand mysqli a
+            // NULL and trigger a fatal.
+            if ( ! is_string( $rewritten ) ) {
+                return $query;
+            }
+
+            return $rewritten;
+        }
+
+        /**
+         *
+         * Clean a single decoded SQL string value.
+         *
+         *
+         * @param string $value
+         *
+         * @return string
+         */
+        private function clean_query_string_value( $value ) {
+            if ( $this->looks_serialized( $value ) ) {
+                // Refuse C: (any class) and O: that names anything other than stdClass.
+                if ( preg_match( '/(?:C:\d+:"|O:\d+:"(?!stdClass":))/', $value ) ) {
+                    return $value;
+                }
+
+                $unserialized = @unserialize( $value, array( 'allowed_classes' => array( 'stdClass' ) ) );
+                if ( $unserialized !== false || $value === 'b:0;' || $value === 'N;' ) {
+                    $cleaned = $this->replace_in_value( $unserialized, $this->current_domain, $this->db_site_url );
+                    return serialize( $cleaned );
+                }
+            }
+
+            // Skip values that aren't valid UTF-8 — likely binary / BLOB content.
+            if ( @preg_match( '//u', $value ) !== 1 ) {
+                return $value;
+            }
+
+            return str_replace( $this->current_domain, $this->db_site_url, $value );
+        }
+
+        /**
+         * Cheap check whether a string looks like PHP-serialized data.
+         *
+         * @param string $value
+         *
+         * @return bool
+         */
+        private function looks_serialized( $value ) {
+            if ( ! is_string( $value ) ) {
+                return false;
+            }
+            if ( $value === 'N;' ) {
+                return true;
+            }
+            if ( strlen( $value ) < 4 || $value[1] !== ':' ) {
+                return false;
+            }
+            return in_array( $value[0], array( 'a', 's', 'b', 'i', 'd', 'O', 'C' ), true );
+        }
+
+        /**
+         * Inverse of mysqli_real_escape_string for the escape sequences WordPress
+         * actually produces (\0, \n, \r, \Z, \\, \', \").
+         *
+         * @param string $str
+         *
+         * @return string
+         */
+        private function mysql_unescape( $str ) {
+            $result = '';
+            $len    = strlen( $str );
+
+            for ( $i = 0; $i < $len; $i++ ) {
+                $c = $str[ $i ];
+                if ( $c === '\\' && $i + 1 < $len ) {
+                    $next = $str[ $i + 1 ];
+                    switch ( $next ) {
+                        case '0':  $result .= "\0";   break;
+                        case 'n':  $result .= "\n";   break;
+                        case 'r':  $result .= "\r";   break;
+                        case 'Z':  $result .= "\x1A"; break;
+                        case '\\': $result .= '\\';   break;
+                        case '\'': $result .= '\'';   break;
+                        case '"':  $result .= '"';    break;
+                        default:   $result .= $next;  break;
+                    }
+                    $i++;
+                } else {
+                    $result .= $c;
                 }
             }
 

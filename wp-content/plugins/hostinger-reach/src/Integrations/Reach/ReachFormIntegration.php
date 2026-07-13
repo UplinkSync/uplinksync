@@ -71,7 +71,7 @@ class ReachFormIntegration extends IntegrationWithForms implements IntegrationIn
                 'title'               => __( 'Hostinger Reach', 'hostinger-reach' ),
                 'admin_url'           => 'admin.php?page=hostinger-reach',
                 'add_form_url'        => 'post-new.php?post_type=page&hostinger_reach_add_block=1',
-                'edit_url'            => 'post.php?post={post_id}&action=edit',
+                'edit_url'            => 'post.php?post={post_id}&action=edit#block-{form_id}',
                 'url'                 => 'https://wordpress.org/plugins/hostinger-reach',
                 'is_view_form_hidden' => false,
                 'can_toggle_forms'    => false,

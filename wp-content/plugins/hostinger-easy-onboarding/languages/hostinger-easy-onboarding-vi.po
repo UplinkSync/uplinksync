@@ -11,14 +11,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-08-19T08:23:05+00:00\n"
-"PO-Revision-Date: 2026-02-02 12:25+0000\n"
+"PO-Revision-Date: 2026-06-10 11:20+0000\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Domain: hostinger-easy-onboarding\n"
 "Language: vi\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Loco-Version: 2.8.0; wp-6.8.2; php-8.2.29"
+"X-Loco-Version: 2.8.4; wp-7.0; php-8.2.30"
 
-#: includes/Admin/Assets.php:216
+#: includes/Admin/Assets.php:208
 msgid ""
 " Learn how to connect your domain to Hostinger by watching this tutorial on "
 "YouTube for a step-by-step guide:"
@@ -28,31 +28,29 @@ msgstr ""
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/DeletePageButton.js:66
-#, fuzzy
 msgid " Please refresh the page and try again."
 msgstr " Vui lòng làm mới trang và thử lại."
 
 #. translators: %s plugin slug
-#: includes/Rest/StepRoutes.php:161
+#: includes/Rest/StepRoutes.php:179
 #, php-format
 msgid "%s is already active"
 msgstr "%s đã kích hoạt"
 
 #. translators: %s field name that is missing
-#. translators: %s missing field slug
-#: includes/Rest/StepRoutes.php:67 includes/Rest/StepRoutes.php:72
-#: includes/Rest/StepRoutes.php:153 includes/Rest/StepRoutes.php:215
+#: includes/Rest/StepRoutes.php:85 includes/Rest/StepRoutes.php:90
+#: includes/Rest/StepRoutes.php:171 includes/Rest/StepRoutes.php:233
 #: includes/Rest/WooRoutes.php:39 includes/WooCommerce/SetupHandler.php:34
 #: includes/WooCommerce/SetupHandler.php:44
 #, php-format
 msgid "%s missing or empty"
 msgstr "%s thiếu hoặc trống"
 
-#: includes/Admin/Assets.php:303
+#: includes/Admin/Assets.php:295
 msgid "(Credit/Debit card)"
 msgstr "(Thẻ Tín dụng/Ghi nợ)"
 
-#: includes/Admin/Assets.php:248
+#: includes/Admin/Assets.php:240
 msgid ""
 "<strong>Almost there!</strong> Just a few more steps to get your site ready "
 "for online success."
@@ -60,49 +58,43 @@ msgstr ""
 "<strong>Gần xong rồi!</strong> Chỉ cần vài bước nữa để đưa trang web sẵn "
 "sàng để thành công trực tuyến."
 
-#: includes/Admin/Assets.php:342
+#: includes/Admin/Assets.php:334
 msgid ""
 "<strong>Use built-in payment methods</strong> - no extra plugins needed."
 msgstr ""
 "<strong>Sử dụng phương thức thanh toán có sẵn</strong> - không cần thêm "
 "plugin."
 
-#: includes/Admin/Assets.php:341
+#: includes/Admin/Assets.php:333
 msgid ""
 "<strong>Use built-in shipping methods</strong> - no extra plugins needed."
 msgstr ""
 "<strong>Sử dụng phương thức vận chuyển có sẵn</strong> - không cần thêm "
 "plugin."
 
-#: includes/Admin/Assets.php:326
-#, fuzzy
+#: includes/Admin/Assets.php:318
 msgid "A minimum order amount"
 msgstr "Số lượng đơn hàng tối thiểu"
 
-#: includes/Admin/Assets.php:329
-#, fuzzy
+#: includes/Admin/Assets.php:321
 msgid "A minimum order amount AND coupon"
 msgstr "Số lượng đơn hàng tối thiểu VÀ mã giảm giá"
 
-#: includes/Admin/Assets.php:328
-#, fuzzy
+#: includes/Admin/Assets.php:320
 msgid "A minimum order amount OR coupon"
 msgstr "Số lượng đơn hàng tối thiểu HOẶC mã giảm giá"
 
-#: includes/Admin/Assets.php:465
-#, fuzzy
+#: includes/Admin/Assets.php:461
 msgid ""
 "A theme controls your WordPress site’s appearance and layout, including "
 "colors and fonts. You’ll need to build and customize the pages yourself."
 msgstr ""
-"Một chủ đề (theme) kiểm soát giao diện và bố cục của trang web WordPress của "
-"bạn, bao gồm màu sắc và phông chữ. Bạn sẽ cần tự xây dựng và tùy chỉnh các "
-"trang."
+"Một chủ đề kiểm soát giao diện và bố cục của trang web WordPress, bao gồm "
+"màu sắc và phông chữ. Bạn sẽ cần tự xây dựng và tùy chỉnh các trang."
 
-#: includes/Admin/Assets.php:327
-#, fuzzy
+#: includes/Admin/Assets.php:319
 msgid "A valid free shipping coupon"
-msgstr "Một phiếu giảm giá vận chuyển miễn phí hợp lệ"
+msgstr "Một mã giảm giá vận chuyển miễn phí hợp lệ"
 
 #: includes/Admin/Onboarding/PluginManager.php:30
 msgid "Accept payments via credit card. Manage transactions within WordPress."
@@ -110,7 +102,7 @@ msgstr ""
 "Chấp nhận thanh toán thông qua thẻ tín dụng. Quản lý giao dịch trong "
 "WordPress."
 
-#: includes/Admin/Assets.php:277
+#: includes/Admin/Assets.php:269
 msgid "Access site identity and edit title"
 msgstr "Truy cập định danh trang và chỉnh sửa tiêu đề"
 
@@ -120,68 +112,70 @@ msgstr "Hành động thất bại. Vui lòng thử lại hoặc liên hệ hỗ
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/PagesList.js:44
-#, fuzzy
 msgid "Actions"
 msgstr "Các hành động"
 
-#: includes/Admin/Assets.php:292
+#: includes/Admin/Assets.php:284
 msgid "Activate"
 msgstr "Kích hoạt"
 
-#: includes/Admin/Assets.php:175
+#: includes/Admin/Assets.php:167
 msgid "Activate plugin"
 msgstr "Kích hoạt plugin"
 
-#: includes/Admin/Assets.php:387
+#: includes/Admin/Assets.php:379
 msgid "Active"
 msgstr "Hoạt động"
 
-#: includes/Admin/Assets.php:281
+#: includes/Admin/Assets.php:273
 msgid "Add"
 msgstr "Thêm"
 
-#: includes/Admin/Onboarding/Onboarding.php:470
+#: includes/Admin/Onboarding/Onboarding.php:425
 msgid "Add a domain"
 msgstr "Thêm tên miền"
 
-#: includes/Admin/Assets.php:232 includes/Admin/Assets.php:279
+#: includes/Admin/Assets.php:224 includes/Admin/Assets.php:271
 msgid "Add a new page"
 msgstr "Thêm trang mới"
 
-#: includes/Admin/Assets.php:294
+#: includes/Admin/Assets.php:286
 msgid "Add a title"
 msgstr "Thêm tiêu đề"
 
-#: includes/Admin/Assets.php:344
+#: includes/Admin/Assets.php:471
+msgid "Add and manage WooCommerce products"
+msgstr "Thêm và quản lý sản phẩm WooCommerce"
+
+#: includes/Admin/Assets.php:336
 msgid "Add content"
 msgstr "Thêm nội dung"
 
-#: includes/Admin/Onboarding/Onboarding.php:472
+#: includes/Admin/Onboarding/Onboarding.php:427
 msgid "Add domain"
 msgstr "Thêm tên miền"
 
-#: includes/Admin/Assets.php:280
+#: includes/Admin/Assets.php:272
 msgid "Add plugin"
 msgstr "Thêm plugin"
 
-#: includes/Admin/Assets.php:435
-#, fuzzy
+#: includes/Admin/Assets.php:429
 msgid "Add plugins to your site"
 msgstr "Thêm plugin vào trang web của bạn"
 
-#: includes/Admin/Onboarding/Onboarding.php:634
+#: includes/Admin/Onboarding/Onboarding.php:568
 msgid "Add product"
 msgstr "Thêm sản phẩm"
 
-#: includes/Admin/Assets.php:335
+#: includes/Admin/Assets.php:327
 msgid "Add shipping method"
 msgstr "Thêm phương thức vận chuyển"
 
-#: includes/Admin/Onboarding/Onboarding.php:606
+#: includes/Admin/Onboarding/Onboarding.php:540
 msgid "Add store details"
 msgstr "Thêm thông tin cửa hàng"
 
-#: includes/Admin/Assets.php:343
+#: includes/Admin/Assets.php:335
 msgid ""
 "Add the title of the page, for example, About. Click the Add Title text to "
 "open the text box where you will add your title. The title of your page "
@@ -191,19 +185,19 @@ msgstr ""
 "hộp văn bản, nơi mà bạn sẽ thêm tiêu đề vào. Tiêu đề trang phải mô tả thông "
 "tin mà trang đó chứa."
 
-#: includes/Admin/Assets.php:205
+#: includes/Admin/Assets.php:197
 msgid "Add your first product"
 msgstr "Thêm sản phẩm đầu tiên"
 
-#: includes/Admin/Assets.php:206 includes/Admin/Onboarding/Onboarding.php:630
+#: includes/Admin/Assets.php:198 includes/Admin/Onboarding/Onboarding.php:564
 msgid "Add your first product or service"
 msgstr "Thêm sản phẩm hoặc dịch vụ đầu tiên"
 
-#: includes/Admin/Assets.php:282
+#: includes/Admin/Assets.php:274
 msgid "Added"
 msgstr "Đã thêm"
 
-#: includes/Admin/Assets.php:221
+#: includes/Admin/Assets.php:213
 msgid ""
 "Adding a logo is a great way to personalize a website or add branding "
 "information. You can use your existing logo or create a new one using the <a "
@@ -225,20 +219,17 @@ msgid ""
 msgstr ""
 "Thêm phương thức thanh toán PagSegure (có chiết khấu theo tỷ giá chính thức)."
 
-#: includes/Admin/Assets.php:472
-#, fuzzy
+#: includes/Admin/Assets.php:477
 msgid "Affiliate marketing"
 msgstr "Tiếp thị liên kết"
 
-#: includes/Admin/Assets.php:431 includes/Admin/Assets.php:469
-#, fuzzy
+#: includes/Admin/Assets.php:425 includes/Admin/Assets.php:474
 msgid "All"
 msgstr "Tất cả"
 
-#: includes/Admin/Assets.php:316
-#, fuzzy
+#: includes/Admin/Assets.php:308
 msgid "Allow customers to pick up orders themselves."
-msgstr "Cho phép khách hàng tự lấy hàng."
+msgstr "Cho phép khách hàng tự lấy đơn hàng."
 
 #: includes/Admin/Onboarding/PluginManager.php:39
 msgid ""
@@ -253,7 +244,6 @@ msgstr ""
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/DeletePageButton.js:106
-#, fuzzy
 msgid "An error occurred while deleting the page."
 msgstr "Đã xảy ra lỗi trong quá trình xóa trang."
 
@@ -263,7 +253,6 @@ msgstr "Đã xảy ra lỗi không mong muốn. Vui lòng thử lại hoặc li�
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/DeletePageButton.js:76
-#, fuzzy
 msgid "An unexpected error occurred. Please try again."
 msgstr "Đã xảy ra lỗi không mong muốn. Vui lòng thử lại."
 
@@ -273,27 +262,25 @@ msgid ""
 msgstr ""
 "Anteraja Plugin là một plugin WordPress cho WooCommerce để tích hợp Anteraja"
 
-#: includes/Admin/Assets.php:422
-#, fuzzy
+#: includes/Admin/Assets.php:414
 msgid "Apply minimum order rule before discount"
-msgstr "Áp dụng quy tắc đơn hàng tối thiểu trước khi áp dụng khuyến mãi"
+msgstr "Áp dụng quy tắc đơn hàng tối thiểu trước khi giảm giá"
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/DeletePageButton.js:31
-#, fuzzy
 msgid "Are you sure you want to delete this page?"
 msgstr "Bạn có chắc chắn muốn xóa trang này không?"
 
-#: includes/Admin/Assets.php:352
+#: includes/Admin/Assets.php:344
 msgid "Are you sure?"
 msgstr "Bạn chắc không?"
 
 #. translators: %s php version
-#: hostinger-easy-onboarding.php:77
+#: hostinger-easy-onboarding.php:81
 msgid "Attention:"
 msgstr "Chú ý:"
 
-#: includes/Admin/Assets.php:171
+#: includes/Admin/Assets.php:163
 msgid ""
 "Automated reports, monitoring tools, site presets, and 1-click ownership "
 "transfers – manage all of your projects quickly and easily."
@@ -302,11 +289,11 @@ msgstr ""
 "quyền sở hữu với 1 nhấp chuột - quản lý tất cả dự án một cách nhanh chóng và "
 "dễ dàng."
 
-#: includes/Admin/Assets.php:295
+#: includes/Admin/Assets.php:287
 msgid "Back"
 msgstr "Quay lại"
 
-#: includes/Admin/Assets.php:354
+#: includes/Admin/Assets.php:346
 msgid ""
 "Before publishing, you can preview your created page by clicking on the "
 "Preview button. If you are happy with the result, click the Publish button."
@@ -314,78 +301,49 @@ msgstr ""
 "Trước khi xuất bản, bạn có thể xem trước trang mà bạn tạo bằng cách nhấp vào "
 "nút Xem trước. Nếu bạn hài lòng với nó, nhấp nút Xuất bản."
 
-#: includes/Admin/Assets.php:404
+#: includes/Admin/Assets.php:396
 msgid "Being reviewed"
 msgstr "Đang được xem xét"
 
-#: includes/Admin/Assets.php:473
-#, fuzzy
+#: includes/Admin/Assets.php:478
 msgid "Blog"
 msgstr "Blog"
 
-#: includes/Admin/Onboarding/Onboarding.php:271
-msgid ""
-"Build a custom-designed site in minutes with professional templates. You’ll "
-"be ready to go live in a few clicks."
+#: includes/Admin/Assets.php:422
+msgid "Browse our vast library of handpicked pre built websites and themes."
 msgstr ""
-"Xây dựng trang web thiết kế tùy chỉnh trong vài phút với mẫu chuyên nghiệp. "
-"Bạn sẽ sẵn sàng đưa lên mạng chỉ với vài nhấp chuột."
+"Khám phá thư viện phong phú các mẫu trang web và giao diện được thiết kế sẵn "
+"và lựa chọn kỹ lưỡng của chúng tôi."
 
-#: includes/Admin/Onboarding/Onboarding.php:263
-msgid ""
-"Build a professional, custom-designed site in moments. Choose from 140+ "
-"templates or use AI."
-msgstr ""
-"Xây dựng trang chuyên nghiệp, thiết kế tùy chỉnh trong chốc lát. Chọn từ hơn "
-"140 mẫu hoặc dùng AI."
-
-#: includes/Admin/Onboarding/Onboarding.php:166
-msgid ""
-"Build a professional, custom-designed site in moments. Just a few clicks and "
-"AI handles the rest."
-msgstr ""
-"Xây dựng trang web tự thiết kế, chuyên nghiệp chỉ trong chốc lát. Chỉ cần "
-"vài nhấp chuột và AI lo phần còn lại."
-
-#: includes/Admin/Assets.php:428
-#, fuzzy
+#: includes/Admin/Assets.php:421
 msgid ""
 "Build a website from scratch, with the help of pre-built websites or themes."
 msgstr ""
-"Xây dựng một trang web từ đầu, với sự hỗ trợ của các trang web hoặc giao "
-"diện đã được thiết kế sẵn."
+"Xây dựng một trang web từ đầu với sự hỗ trợ của các trang web hoặc giao diện "
+"đã được thiết kế sẵn."
 
-#: includes/Admin/Assets.php:470
-#, fuzzy
+#: includes/Admin/Assets.php:475
 msgid "Business"
 msgstr "Kinh doanh"
 
-#: includes/Admin/Assets.php:411
+#: includes/Admin/Assets.php:403
 msgid "Buy domain"
 msgstr "Mua tên miền"
 
-#: includes/Admin/Assets.php:231 gutenberg/edit-pages-panel/build/index.js:1
+#: includes/Admin/Assets.php:223 gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/PageForm.js:70
 msgid "Cancel"
 msgstr "Hủy"
 
-#: includes/Admin/Assets.php:307
+#: includes/Admin/Assets.php:299
 msgid "Cash on delivery"
 msgstr "Trả tiền khi nhận hàng"
 
-#: includes/Admin/Assets.php:410
-#: includes/Admin/Onboarding/Onboarding.php:476
-#: includes/Admin/Onboarding/Onboarding.php:489
-msgid "Connect domain"
-msgstr "Thay đổi tên miền"
-
-#: includes/Admin/Assets.php:314
-#, fuzzy
+#: includes/Admin/Assets.php:306
 msgid "Charge a fixed rate for shipping regardless of the order."
-msgstr ""
-"Áp dụng mức phí vận chuyển cố định cho mọi đơn hàng, bất kể giá trị đơn hàng."
+msgstr "Áp dụng mức phí vận chuyển cố định cho mọi đơn hàng."
 
-#: includes/Admin/Assets.php:409
+#: includes/Admin/Assets.php:401
 msgid "Check guide"
 msgstr "Kiểm tra hướng dẫn"
 
@@ -397,34 +355,19 @@ msgstr "Tham số lựa chọn thiếu hoặc trồng"
 msgid "Choice parameter missing or invalid"
 msgstr "Tham số lựa chọn bị thiếu hoặc không hợp lệ"
 
-#: includes/Admin/Assets.php:429
-#, fuzzy
+#: includes/Admin/Assets.php:423
 msgid "Choose a pre-built website"
 msgstr "Chọn một trang web đã được xây dựng sẵn"
 
-#: includes/Admin/Onboarding/Onboarding.php:243
-msgid "Choose a template"
-msgstr "Chọn mẫu"
-
-#: includes/Admin/Assets.php:432
-#, fuzzy
+#: includes/Admin/Assets.php:426
 msgid "Choose a theme"
 msgstr "Chọn một chủ đề"
 
-#: includes/Admin/Onboarding/Onboarding.php:208
-msgid "Choose another template"
-msgstr "Chọn mẫu khác"
-
-#: includes/Admin/Assets.php:426
-#, fuzzy
+#: includes/Admin/Assets.php:418
 msgid "Choose how you’d like to build your website"
 msgstr "Chọn cách bạn muốn xây dựng trang web của mình"
 
-#: includes/Admin/Onboarding/Onboarding.php:272
-msgid "Choose template"
-msgstr "Chọn mẫu"
-
-#: includes/Admin/Assets.php:198 includes/Admin/Onboarding/Onboarding.php:679
+#: includes/Admin/Assets.php:190 includes/Admin/Onboarding/Onboarding.php:613
 msgid ""
 "Choose the ways you'd like to ship orders to customers. You can always add "
 "others later."
@@ -432,12 +375,21 @@ msgstr ""
 "Chọn cách bạn vận chuyển đơn hàng đến khách hàng. Bạn có thể thêm những cách "
 "khác sau."
 
-#: includes/Admin/Assets.php:460
+#: includes/Admin/Onboarding/Onboarding.php:638
 #, fuzzy
+msgid "Claim a free business email"
+msgstr "Nhận ngay một địa chỉ email doanh nghiệp miễn phí"
+
+#: includes/Admin/Onboarding/Onboarding.php:654
+#, fuzzy
+msgid "Claim now"
+msgstr "Đăng ký ngay"
+
+#: includes/Admin/Assets.php:456
 msgid "Close"
 msgstr "Đóng"
 
-#: includes/Admin/Onboarding/Onboarding.php:439
+#: includes/Admin/Onboarding/Onboarding.php:394
 msgid ""
 "Collect emails from forms on your site and start sending on-brand email "
 "campaigns with Hostinger Reach – all powered by AI."
@@ -446,7 +398,7 @@ msgstr ""
 "các chiến dịch email chuyên nghiệp với Hostinger Reach – tất cả được hỗ trợ "
 "bởi AI."
 
-#: includes/Admin/Assets.php:173
+#: includes/Admin/Assets.php:165
 msgid ""
 "Collect emails from forms on your site and start sending on-brand email "
 "campaigns, powered by AI. Start free."
@@ -454,20 +406,19 @@ msgstr ""
 "Thu thập địa chỉ email từ các biểu mẫu trên trang web của bạn và bắt đầu gửi "
 "các chiến dịch email theo thương hiệu, được hỗ trợ bởi AI. Bắt đầu miễn phí."
 
-#: includes/Admin/Assets.php:244
+#: includes/Admin/Assets.php:236
 msgid "Complete"
 msgstr "Hoàn thành"
 
-#: includes/Admin/Assets.php:249
+#: includes/Admin/Assets.php:241
 msgid "Completed steps"
 msgstr "Hoàn thành các bước"
 
-#: includes/Admin/Assets.php:456
-#, fuzzy
+#: includes/Admin/Assets.php:452
 msgid "Completed!"
 msgstr "Hoàn thành!"
 
-#: includes/Admin/Assets.php:283
+#: includes/Admin/Assets.php:275
 msgid "Configure"
 msgstr "Cấu hình"
 
@@ -479,71 +430,85 @@ msgstr ""
 "Cấu hình lựa chọn thanh toán và chấp nhận thanh toán bằng thẻ, vé và tiền "
 "của tài khoản Mercado Pago."
 
-#: includes/Admin/Assets.php:440
+#: includes/Admin/Assets.php:481
 #, fuzzy
+msgid "Confirm"
+msgstr "Xác nhận"
+
+#: includes/Admin/Assets.php:434
 msgid "conflicts with"
 msgstr "xung đột với"
 
-#: includes/Admin/Hooks.php:517
+#: includes/Admin/Hooks.php:537
 msgid "Congrats, you have connected WooPayments!"
 msgstr "Chúc mừng, bạn đã kết nối WooPayments!"
 
-#: includes/Admin/Assets.php:245
+#: includes/Admin/Assets.php:237
 msgid "Congrats, you're ready to show off your site!"
 msgstr "Chúc mừng, bạn đã sẵn sàng để khoe trang web của mình!"
 
-#: includes/Admin/Hooks.php:510
+#: includes/Admin/Hooks.php:530
 msgid "Congrats, you’re ready to show off your site!"
 msgstr "Chúc mừng, bạn đã sẵn sàng đưa trang trực tuyến!"
 
-#: includes/Admin/Assets.php:284
+#: includes/Admin/Assets.php:276
 msgid "Connect"
 msgstr "Kết nối"
 
-#: includes/Admin/Onboarding/Onboarding.php:542
+#: includes/Admin/Onboarding/Onboarding.php:476
 msgid "Connect Amazon to site"
 msgstr "Kết nối Amazon đến trang web"
 
-#: includes/Admin/Assets.php:261
+#: includes/Admin/Assets.php:402
+msgid "Connect domain"
+msgstr "Kết nối tên miền"
+
+#: includes/Admin/Assets.php:253
 msgid "Connect domain now"
 msgstr "Kết nối tên miền ngay"
 
-#: includes/Admin/Assets.php:291 includes/Admin/Onboarding/WelcomeCards.php:29
+#: includes/Admin/Onboarding/Onboarding.php:396
+#, fuzzy
+msgid "Connect to Reach"
+msgstr "Kết nối để tiếp cận"
+
+#: includes/Admin/Assets.php:283 includes/Admin/Onboarding/WelcomeCards.php:29
 msgid ""
 "Connect your <strong>Amazon Associate</strong> account to fetch API details."
 msgstr ""
 "Kết nối tài khoản <strong>Amazon Associate</strong> để lấy thông tin API."
 
-#: includes/Admin/Onboarding/Onboarding.php:534
+#: includes/Admin/Onboarding/Onboarding.php:468
 msgid "Connect your Amazon account to the site"
 msgstr "Kết nối tài khoản Amazon đến trang web"
 
-#: includes/Admin/Assets.php:233
+#: includes/Admin/Assets.php:225
 msgid "Connect your domain"
 msgstr "Kết nối tên miền"
 
-#: includes/Admin/Assets.php:353 includes/Admin/Onboarding/Onboarding.php:723
+#: includes/Admin/Assets.php:345 includes/Admin/Onboarding/Onboarding.php:662
+#: includes/Admin/Onboarding/Onboarding.php:698
 msgid "Connect your domain first"
 msgstr "Kết nối tên miền trước"
 
-#: includes/Admin/Assets.php:211 includes/Admin/Assets.php:214
-#: includes/Admin/Assets.php:357
+#: includes/Admin/Assets.php:203 includes/Admin/Assets.php:206
+#: includes/Admin/Assets.php:349
 msgid "Connect your domain to Hostinger"
 msgstr "Kết nối tên miền với Hostinger"
 
-#: includes/Admin/Onboarding/Onboarding.php:494
+#: includes/Admin/Onboarding/Onboarding.php:430
 msgid "Connected a domain"
 msgstr "Đã kết nối tên miền"
 
-#: includes/Admin/Onboarding/Onboarding.php:537
+#: includes/Admin/Onboarding/Onboarding.php:471
 msgid "Connected your Amazon account"
 msgstr "Đã kết nối tài khoản Amazon"
 
-#: includes/Admin/Assets.php:398
+#: includes/Admin/Assets.php:390
 msgid "Connecting"
 msgstr "Đang kết nối"
 
-#: includes/Admin/Assets.php:345
+#: includes/Admin/Assets.php:337
 msgid ""
 "Content can be anything you wish, for example, text, images, videos, tables, "
 "and lots more. Click on a plus sign and choose any block you want to add to "
@@ -552,36 +517,30 @@ msgstr ""
 "Nội dung có thể là bất kỳ thứ gì bạn muốn, ví du: văn bản, hình ảnh, video, "
 "bảng ... Nhấp vào dấu cộng và chọn bất kỳ khối nào bạn muốn thêm vào trang."
 
-#: includes/Admin/Assets.php:186 includes/Admin/Assets.php:424
+#: includes/Admin/Assets.php:178 includes/Admin/Assets.php:416
 msgid "Continue"
 msgstr "Tiếp tục"
 
-#: includes/Admin/Assets.php:349 includes/Admin/Hooks.php:507
-#: includes/Admin/Hooks.php:520
+#: includes/Admin/Assets.php:341 includes/Admin/Hooks.php:527
+#: includes/Admin/Hooks.php:540
 msgid "Continue setup"
 msgstr "Tiếp tục thiết lập"
 
-#: includes/Admin/Assets.php:234
+#: includes/Admin/Assets.php:226
 msgid "Create a logo"
 msgstr "Tạo logo"
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/CreatePageButton.js:23
-#, fuzzy
 msgid "Create a new Page"
 msgstr "Tạo một trang mới"
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/CreatePageButton.js:26
-#, fuzzy
 msgid "Create a new page"
 msgstr "Tạo một trang mới"
 
-#: includes/Admin/Onboarding/Onboarding.php:165
-msgid "Create a site with AI"
-msgstr "Tạo trang web với AI"
-
-#: includes/Admin/Assets.php:300
+#: includes/Admin/Assets.php:292
 msgid "Create a website with AI"
 msgstr "Tạo trang web với AI"
 
@@ -593,90 +552,95 @@ msgstr ""
 "Tạo thêm phương thức vận chuyển trong WooCommerce và cho phép điều chỉnh giá "
 "vận chuyển tùy theo trọng lượng hoặc tổng số."
 
+#: includes/Admin/Onboarding/Onboarding.php:186
+#, fuzzy
+msgid "Create again"
+msgstr "Tạo lại"
+
+#: includes/Admin/Assets.php:468
+msgid "Create and edit pages or posts"
+msgstr "Tạo và chỉnh sửa trang hoặc bài đăng"
+
 #: includes/Admin/Onboarding/PluginManager.php:79
 msgid "Create Chronopost & Mondial relay shipping labels and send them easily."
 msgstr "Tạo nhãn vận chuyển Chronopost & Mondial và gửi chúng dễ dàng."
 
-#: includes/Admin/Onboarding/Onboarding.php:184
-#: includes/Admin/Onboarding/Onboarding.php:235
-msgid "Create new site"
-msgstr "Tạo trang web mới"
+#: includes/Admin/Onboarding/Onboarding.php:192
+#: includes/Admin/Onboarding/Onboarding.php:197
+#, fuzzy
+#| msgid "Create a site with AI"
+msgid "Create new site with AI"
+msgstr "Tạo trang web với AI"
 
-#: includes/Admin/Onboarding/Onboarding.php:264
-msgid "Create site"
-msgstr "Tạo trang"
-
-#: includes/Admin/Onboarding/Onboarding.php:169
+#: includes/Admin/Onboarding/Onboarding.php:181
 msgid "Create site with AI"
 msgstr "Tạo trang web với AI"
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/PagesList.js:59
-#, fuzzy
 msgid "Current page"
 msgstr "Trang hiện tại"
 
-#: includes/Admin/Assets.php:319
-#, fuzzy
+#: includes/Admin/Assets.php:311
 #| msgid "Current page"
 msgid "Current zone"
-msgstr "Trang hiện tại"
+msgstr "Khu vực hiện tại"
 
-#: includes/Admin/Assets.php:246
+#: includes/Admin/Assets.php:238
 msgid "Customize the way your site looks and start welcoming visitors."
 msgstr "Tùy chỉnh giao diện trang web và bắt đầu đón khách."
 
-#: includes/Admin/Assets.php:394
+#: includes/Admin/Assets.php:386
 msgid "Database limit almost reached"
 msgstr "Sắp đạt đến giới hạn cơ sở dữ liệu"
 
-#: includes/Admin/Assets.php:395
+#: includes/Admin/Assets.php:387
 msgid "Database limit reached"
 msgstr "Đã đạt đến giới hạn cơ sở dữ liệu"
 
-#: includes/Admin/Assets.php:434
-#, fuzzy
+#: includes/Admin/Assets.php:428
 msgid "Default"
 msgstr "Mặc định"
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/DeletePageButton.js:123
 #: gutenberg/edit-pages-panel/src/components/DeletePageButton.js:125
-#, fuzzy
 msgid "Delete page"
 msgstr "Xóa trang"
 
-#: includes/Admin/Assets.php:437
-#, fuzzy
+#: includes/Admin/Assets.php:420
+msgid "Describe your idea and watch AI build your site with custom content"
+msgstr "Mô tả ý tưởng của bạn và xem AI xây dựng trang web với nội dung riêng"
+
+#: includes/Admin/Assets.php:431
 msgid "Deselect all"
 msgstr "Bỏ chọn tất cả"
 
-#: includes/Admin/Assets.php:515
+#: includes/Admin/Assets.php:525
 msgid "Digital products"
 msgstr "Sản phẩm số"
 
-#: includes/Admin/Assets.php:309
+#: includes/Admin/Assets.php:301
 msgid "Direct bank transfer"
 msgstr "Chuyển khoản trực tiếp qua ngân hàng"
 
-#: includes/Admin/Assets.php:169
+#: includes/Admin/Assets.php:161
 msgid "Discover add-ons"
 msgstr "Khám khá tiện ích mở rộng"
 
-#: includes/Admin/Assets.php:390
+#: includes/Admin/Assets.php:382
 msgid "Disk usage limit almost reached"
 msgstr "Sắp đạt đến giới hạn giới hạn sử dụng đĩa"
 
-#: includes/Admin/Assets.php:391
+#: includes/Admin/Assets.php:383
 msgid "Disk usage limit reached"
 msgstr "Đã đạt đến giới hạn giới hạn sử dụng đĩa"
 
-#: includes/Admin/Assets.php:285
+#: includes/Admin/Assets.php:277
 msgid "Dismiss"
 msgstr "Từ chối"
 
-#: includes/Admin/Assets.php:475
-#, fuzzy
+#: includes/Admin/Assets.php:480
 msgid "Do not install plugins"
 msgstr "Không cài đặt các plugin"
 
@@ -702,15 +666,15 @@ msgstr ""
 "khách hàng lựa chọn từ nhiều phương thức thanh toán khác nhau và hoàn tất "
 "giao dịch trực tiếp trên cửa hàng WooCommerce của bạn."
 
-#: includes/Admin/Assets.php:396
+#: includes/Admin/Assets.php:388
 msgid "Domain"
 msgstr "Tên miền"
 
-#: includes/Admin/Assets.php:414
+#: includes/Admin/Assets.php:406
 msgid "Domain needs setup"
 msgstr "Tên miền cần thiết lập"
 
-#: includes/Admin/Assets.php:359
+#: includes/Admin/Assets.php:351
 msgid ""
 "Domain propagation can take up to 24 hours. Your domain will propagate "
 "automatically, and you don't need to take any action during this time."
@@ -728,57 +692,59 @@ msgstr ""
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/PagesList.js:19
-#, fuzzy
 msgid "Edit"
 msgstr "Chỉnh sửa"
 
-#: includes/Admin/Assets.php:273
+#: includes/Admin/Assets.php:265
 msgid "Edit an image"
 msgstr "Chỉnh sửa hình ảnh"
 
-#: includes/Admin/Assets.php:267
+#: includes/Admin/Assets.php:259
 msgid "Edit description"
 msgstr "Chỉnh sửa mô tả"
 
-#: includes/Hooks.php:292
+#: includes/Hooks.php:319
 msgid "Edit Home Page"
 msgstr "Sửa Trang chủ"
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/PagesList.js:12
 #: gutenberg/edit-pages-panel/src/components/PagesList.js:14
-#, fuzzy
 msgid "Edit Page"
 msgstr "Chỉnh sửa trang"
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/index.js:139
 #: gutenberg/edit-pages-panel/src/index.js:145
-#, fuzzy
 msgid "Edit Pages"
 msgstr "Chỉnh sửa trang"
 
-#: includes/Admin/Assets.php:265
+#: includes/Admin/Assets.php:257
 msgid "Edit post"
 msgstr "Chỉnh sửa bài đăng"
 
-#: includes/Admin/Assets.php:228
+#: includes/Admin/Assets.php:220
 msgid "Edit post description"
 msgstr "Chỉnh sửa mô tả bài đăng"
 
-#: includes/Admin/Assets.php:254 includes/Admin/Assets.php:381
+#: includes/Admin/Assets.php:246 includes/Admin/Assets.php:373
 msgid "Edit site"
 msgstr "Sửa trang web"
 
-#: includes/Admin/Assets.php:230
+#: includes/Admin/Assets.php:222
 msgid "Edit site title"
 msgstr "Chỉnh sửa tiêu đề trang"
 
-#: includes/Admin/Assets.php:170
+#: includes/Admin/Assets.php:162
 msgid "Efficient site management with WordPress add-ons"
 msgstr "Quản lý trang hiệu quả với tiện ích mở rộng WordPress"
 
-#: includes/Admin/Assets.php:242
+#: includes/Admin/Onboarding/Onboarding.php:368
+#, fuzzy
+msgid "Enhance your website with plugins"
+msgstr "Nâng cao chức năng trang web của bạn bằng các tiện ích mở rộng"
+
+#: includes/Admin/Assets.php:234
 msgid ""
 "Enter your store details so we can help you set up your online store faster."
 msgstr ""
@@ -801,11 +767,10 @@ msgstr ""
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/PageForm.js:46
-#, fuzzy
 msgid "Error:"
 msgstr "Lỗi:"
 
-#: includes/Admin/Onboarding/Onboarding.php:498
+#: includes/Admin/Onboarding/Onboarding.php:434
 #| msgid ""
 #| "Every website needs a domain that makes it easy to access and remember. "
 #| "Get ours in just a few clicks."
@@ -816,7 +781,7 @@ msgstr ""
 "Mọi trang web đều cần tên miền để giúp dễ nhớ và truy cập. Nhận ngay chỉ với "
 "vài nhấp chuột."
 
-#: includes/Admin/Assets.php:190
+#: includes/Admin/Assets.php:182
 msgid ""
 "Expand your audience with the help of Omnisend. Create email campaigns that "
 "drive sales."
@@ -824,11 +789,11 @@ msgstr ""
 "Mở rộng khách hàng với sự trợ giúp của Omnisend. Tạo chiến dịch email giúp "
 "tăng doanh số."
 
-#: includes/Admin/Assets.php:386
+#: includes/Admin/Assets.php:378
 msgid "Expired"
 msgstr "Hết hạn"
 
-#: includes/Admin/Assets.php:385
+#: includes/Admin/Assets.php:377
 msgid "Expires on"
 msgstr "Hết hạn vào"
 
@@ -836,103 +801,92 @@ msgstr "Hết hạn vào"
 msgid "Extends WooCommerce with a RedSys gateway."
 msgstr "Mở rộng WooCommerce với cổng RedSys."
 
-#: includes/Rest/StepRoutes.php:305
-#, fuzzy
+#: includes/Rest/StepRoutes.php:375
 msgid "Failed to download theme."
 msgstr "Không thể tải xuống chủ đề."
 
-#: includes/Rest/StepRoutes.php:321
-#, fuzzy
+#: includes/Rest/StepRoutes.php:391
 msgid "Failed to install theme."
 msgstr "Không thể cài đặt chủ đề."
 
-#: includes/Admin/Assets.php:458
-#, fuzzy
+#: includes/Admin/Assets.php:454
 msgid "Failed!"
 msgstr "Thất bại!"
 
-#: includes/Admin/Assets.php:454
-#, fuzzy
+#: includes/Admin/Assets.php:450
 msgid "Finalizing..."
 msgstr "Đang hoàn tất..."
 
-#: includes/Admin/Assets.php:368
+#: includes/Admin/Assets.php:360
 msgid "Find the answers you need in our Knowledge Base"
 msgstr "Tìm câu trả lời bạn cần trong Cơ sở Kiến thức của chúng tôi"
 
-#: includes/Admin/Assets.php:269
+#: includes/Admin/Assets.php:261
 msgid "Find the Media page"
 msgstr "Tìm trang Truyền thông"
 
-#: includes/Admin/Assets.php:332
-#, fuzzy
+#: includes/Admin/Assets.php:324
 msgid "Finish"
 msgstr "Hoàn thành"
 
-#: includes/Admin/Assets.php:407
+#: includes/Admin/Assets.php:399
 msgid "Finish registration"
 msgstr "Hoàn tất đăng ký"
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/StoreSetupButton.js:26
-#, fuzzy
 msgid "Finish Setup"
 msgstr "Hoàn tất cài đặt"
 
-#: includes/Admin/Assets.php:313
-#, fuzzy
+#: includes/Admin/Assets.php:305
 msgid "Flat rate"
 msgstr "Giá cố định"
 
-#: includes/Admin/Assets.php:378
+#: includes/Admin/Assets.php:370
 msgid "Follow these steps to complete your setup"
 msgstr "Làm theo các bước để hoàn tất cài đặt"
 
-#: includes/Admin/Assets.php:311
-#, fuzzy
+#: includes/Admin/Assets.php:303
 msgid "Free shipping"
 msgstr "Miễn phí vận chuyển"
 
-#: includes/Admin/Assets.php:312
-#, fuzzy
+#: includes/Admin/Assets.php:304
 msgid "Free shipping is a great way to increase conversions."
 msgstr "Giao hàng miễn phí là một cách tuyệt vời để tăng tỷ lệ chuyển đổi."
 
-#: includes/Admin/Assets.php:321
-#, fuzzy
+#: includes/Admin/Assets.php:313
 msgid "Free shipping requires"
-msgstr "Miễn phí vận chuyển yêu cầu"
+msgstr "Yêu cầu vận chuyển miễn phí"
 
 #: includes/Admin/Menu.php:109 includes/Admin/Menu.php:110
-#, fuzzy
 msgid "Full Screen Onboarding"
 msgstr "Hướng dẫn sử dụng toàn màn hình"
 
-#: includes/Admin/Assets.php:286
+#: includes/Admin/Assets.php:278
 msgid "Generate content"
 msgstr "Tạo nội dung"
 
-#: includes/Admin/Assets.php:288 includes/Admin/Onboarding/WelcomeCards.php:37
+#: includes/Admin/Assets.php:280 includes/Admin/Onboarding/WelcomeCards.php:37
 msgid "Generate content with AI"
 msgstr "Tạo nội dung với AI"
 
-#: includes/Admin/Assets.php:355
+#: includes/Admin/Assets.php:347
 msgid "Get a domain"
 msgstr "Nhận tên miền"
 
-#: includes/Admin/Assets.php:168
+#: includes/Admin/Assets.php:160
 msgid "Get deal"
 msgstr "Nhận ưu đãi"
 
-#: includes/Admin/Hooks.php:362
+#: includes/Admin/Hooks.php:382
 msgid "Get Discount"
 msgstr "Nhận giảm giá"
 
-#: includes/Admin/Onboarding/Onboarding.php:704
+#: includes/Admin/Onboarding/Onboarding.php:679
 msgid "Get found on Google"
 msgstr "Để được tìm thấy trên Google"
 
-#: includes/Admin/Assets.php:289
+#: includes/Admin/Assets.php:281
 msgid ""
 "Get images, text, and SEO keywords created for you instantly – try <strong>"
 "AI Content Creator</strong>."
@@ -944,11 +898,11 @@ msgstr ""
 msgid "Get images, text, and SEO keywords created for you instantly."
 msgstr "Nhận hình ảnh, văn bản và từ khóa SEO tạo riêng cho bạn ngay lập tức."
 
-#: includes/Admin/Assets.php:376
+#: includes/Admin/Assets.php:368
 msgid "Get in touch with our live specialists"
 msgstr "Liên hệ trực tiếp với chuyên gia của chúng tôi"
 
-#: includes/Admin/Assets.php:204
+#: includes/Admin/Assets.php:196
 msgid ""
 "Get ready to accept customer payments. Let them pay for your products and "
 "services with ease."
@@ -956,7 +910,7 @@ msgstr ""
 "Sẵn sàng chấp nhận thanh toán của khách hàng. Giúp khách hàng thanh toán sản "
 "phẩm và dịch vụ dễ dàng."
 
-#: includes/Admin/Onboarding/Onboarding.php:657
+#: includes/Admin/Onboarding/Onboarding.php:591
 msgid ""
 "Get ready to sell online. Add your first product, then set up payments and "
 "shipping."
@@ -964,7 +918,7 @@ msgstr ""
 "Sẵn sàng bán hàng trực tuyến. Thêm sản phẩm đầu tiên, sau đó thiết lập thanh "
 "toán và vận chuyển."
 
-#: includes/Admin/Onboarding/Onboarding.php:561
+#: includes/Admin/Onboarding/Onboarding.php:495
 msgid ""
 "Get ready to sell online. Add your first product, then set up shipping and "
 "payments."
@@ -972,34 +926,33 @@ msgstr ""
 "Sẵn sàng bán hàng trực tuyến. Thêm sản phẩm đầu tiên, sau đó thiết lập "
 "phương thức thanh toán và vận chuyển."
 
-#: includes/Admin/Onboarding/Onboarding.php:563
-#: includes/Admin/Onboarding/Onboarding.php:610
+#: includes/Admin/Onboarding/Onboarding.php:497
+#: includes/Admin/Onboarding/Onboarding.php:544
 #| msgid "Get Started"
 msgid "Get started"
 msgstr "Bắt đầu"
 
-#: includes/Admin/Assets.php:239
+#: includes/Admin/Assets.php:231
 msgid "Get started!"
 msgstr "Bắt đầu!"
 
-#: includes/Admin/Assets.php:199
+#: includes/Admin/Assets.php:191
 msgid "Getting your features ready"
 msgstr "Đưa các tính năng sẵn sàng"
 
-#: includes/Admin/Assets.php:263
+#: includes/Admin/Assets.php:255
 msgid "Go to Posts"
 msgstr "Đi đến Bài đăng"
 
-#: includes/Admin/Assets.php:235 includes/Admin/Assets.php:275
+#: includes/Admin/Assets.php:227 includes/Admin/Assets.php:267
 msgid "Go to the Customize page"
 msgstr "Đi đến Trang tùy chỉnh"
 
-#: includes/Admin/Assets.php:425
-#, fuzzy
+#: includes/Admin/Assets.php:417
 msgid "Go to WordPress"
 msgstr "Đi đến WordPress"
 
-#: includes/Admin/Assets.php:351
+#: includes/Admin/Assets.php:343
 msgid ""
 "Google Site Kit is an essential plugin that makes sure that potential "
 "visitors can find your site on Google."
@@ -1007,19 +960,23 @@ msgstr ""
 "Google Site Kit là plugin không thể thiếu để đảm bảo khách hàng tiềm năng có "
 "thể tìm thấy trang web của bạn trên Google."
 
-#: includes/Admin/Assets.php:262
+#: includes/Admin/Assets.php:254
 msgid "Got it!"
 msgstr "Đã hiểu!"
 
-#: includes/Admin/Assets.php:369
+#: includes/Admin/Assets.php:361
 msgid "Help Center"
 msgstr "Trung tâm trợ giúp"
 
-#: includes/Admin/Assets.php:260
+#: includes/Admin/Assets.php:465
+msgid "Hey,"
+msgstr "Xin chào,"
+
+#: includes/Admin/Assets.php:252
 msgid "Hide completed"
 msgstr "Ản đã hoàn thành"
 
-#: includes/Admin/Assets.php:253
+#: includes/Admin/Assets.php:245
 msgid "Hide list"
 msgstr "Ẩn danh sách"
 
@@ -1031,11 +988,11 @@ msgstr ""
 "Dịch vụ lưu trữ cho WooCommerce: tự động tính thuế, in nhãn vận chuyển và "
 "thiết lập thanh toán thuận lợi."
 
-#: includes/Admin/Assets.php:383
+#: includes/Admin/Assets.php:375
 msgid "Hosting"
 msgstr "Hosting"
 
-#: includes/Admin/Assets.php:384
+#: includes/Admin/Assets.php:376
 msgid "Hosting plan"
 msgstr "Gói hosting"
 
@@ -1044,9 +1001,13 @@ msgstr "Gói hosting"
 msgid "Hostinger"
 msgstr "Hostinger"
 
-#: includes/Admin/Assets.php:372
+#: includes/Admin/Assets.php:364
 msgid "Hostinger Academy"
 msgstr "Học viện Hostinger"
+
+#: includes/Rest/StepRoutes.php:263
+msgid "Hostinger AI theme is not currently active."
+msgstr "Chủ đề Hostinger AI hiện không đang hoạt động."
 
 #. Plugin Name of the plugin
 #: hostinger-easy-onboarding.php
@@ -1058,7 +1019,7 @@ msgstr "Hostinger Nhập môn Dễ dàng"
 msgid "Hostinger Easy Onboarding WordPress plugin."
 msgstr "Plugin Hostinger Nhập môn WordPress Dễ dàng."
 
-#: includes/Admin/Assets.php:266
+#: includes/Admin/Assets.php:258
 msgid ""
 "Hover over the chosen post to see the options menu. Click on the Edit button "
 "to open the post editor."
@@ -1070,41 +1031,41 @@ msgstr ""
 msgid "How could we make it easier to create a new WordPress website?"
 msgstr "Làm cách nào để dễ dàng tạo mới trang web WordPress?"
 
-#: includes/Admin/Assets.php:364
+#: includes/Admin/Assets.php:356
 msgid "How to Back Up a WordPress Site"
 msgstr "Làm thế nào để sao lưu trang web WordPress"
 
-#: includes/Admin/Assets.php:356
+#: includes/Admin/Assets.php:348
 msgid "How to Build an EFFECTIVE Landing Page with WordPress (2024)"
 msgstr "Làm thế nào để xây dựng trang đích hiệu quả với WordPress (2024)"
 
-#: includes/Admin/Assets.php:360
+#: includes/Admin/Assets.php:352
 msgid "How to Create a WordPress Contact Us Page"
 msgstr "Làm thế nào để tạo trang WordPress \"Liên hệ\""
 
-#: includes/Admin/Assets.php:152
+#: includes/Admin/Assets.php:144
 msgid "How to Create a WordPress Website in 10 Minutes Using Hostinger"
 msgstr "Cách tạo trang web WordPress trong 10 phút bằng Hostinger"
 
-#: includes/Admin/Assets.php:362
+#: includes/Admin/Assets.php:354
 msgid "How to Create Your Coming Soon Page in WordPress (2024)"
 msgstr "Làm thế nào để tạo trang Sắp ra mắt trong WordPress (2024)"
 
-#: includes/Admin/Assets.php:365
+#: includes/Admin/Assets.php:357
 msgid "How to Import Images Into WordPress Website"
 msgstr "Làm thế nào để nhập hình ảnh vào trang web WordPress"
 
-#: includes/Admin/Assets.php:358 includes/Admin/Assets.php:382
+#: includes/Admin/Assets.php:350 includes/Admin/Assets.php:374
 msgid "How to Make a Website (2024): Simple, Quick, & Easy Tutorial"
 msgstr ""
 "Làm thế nào để tạo trang web (2024): Hướng dẫn đơn giản, nhanh chóng và dễ "
 "dàng"
 
-#: includes/Admin/Assets.php:217
+#: includes/Admin/Assets.php:209
 msgid "How to Point Domain Name to Web Hosting"
 msgstr "Làm thế nào để trỏ tên miền đến web hosting"
 
-#: includes/Admin/Assets.php:366
+#: includes/Admin/Assets.php:358
 msgid "How to Set Up WordPress SMTP"
 msgstr "Làm thế nào để thiết lập SMTP WordPress"
 
@@ -1154,11 +1115,11 @@ msgstr "https://hostinger.vn"
 msgid "https://www.hostinger.com"
 msgstr "https://www.hostinger.vn"
 
-#: includes/Admin/Assets.php:361
+#: includes/Admin/Assets.php:353
 msgid "I Bought a Domain, Now What?"
 msgstr "Tôi đã mua tên miền, bây giờ làm gì tiếp theo?"
 
-#: includes/Admin/Assets.php:274
+#: includes/Admin/Assets.php:266
 msgid ""
 "If you wish to edit the image, click on the chosen image and click the Edit "
 "Image button. You can now crop, rotate, flip or scale the selected image."
@@ -1166,12 +1127,11 @@ msgstr ""
 "Nếu bạn muốn sữa hình ảnh, nhấp vào hình ảnh được chọn và nhấp nút Chỉnh sửa "
 "ảnh. Bạn có thể cắt, xoay, lật hay kéo hình ảnh đó."
 
-#: includes/Admin/Assets.php:441
-#, fuzzy
+#: includes/Admin/Assets.php:435
 msgid "in terms of functionality."
 msgstr "về mặt chức năng."
 
-#: includes/Admin/Assets.php:227 includes/Admin/Assets.php:276
+#: includes/Admin/Assets.php:219 includes/Admin/Assets.php:268
 msgid ""
 "In the left sidebar, click Appearance to expand the menu. In the Appearance "
 "section, click Customize. The Customize page will open."
@@ -1179,11 +1139,11 @@ msgstr ""
 "Trên thanh bên trái, nhấp Giao diện để mở rộng menu. Trong phần Giao diện, "
 "nhấp Tùy chỉnh để mở trang Tùy chỉnh."
 
-#: includes/Admin/Assets.php:278
+#: includes/Admin/Assets.php:270
 msgid "In the left sidebar, click Site Identity and edit your site title."
 msgstr "Trên thanh bên trái, nhấp Nhận diện trang và chỉnh sửa tiêu đề trang."
 
-#: includes/Admin/Assets.php:237
+#: includes/Admin/Assets.php:229
 msgid ""
 "In the left sidebar, click Site Identity, then click on the Select Site Icon "
 "button. Here, you can upload your brand logo."
@@ -1191,7 +1151,7 @@ msgstr ""
 "Trên thanh bên trái, nhấp Nhận diện trang, sau đó nhấp vào nút biểu tượng "
 "Chọn trang. Bạn có thể tải lên logo thương hiệu ở đây."
 
-#: includes/Admin/Assets.php:270
+#: includes/Admin/Assets.php:262
 msgid ""
 "In the left sidebar, find the Media button. Click on the Library button to "
 "see all the images you have uploaded to your website."
@@ -1199,7 +1159,7 @@ msgstr ""
 "Trên thanh bên trái, tìm nút Phương tiện. Nhấp vào nút Thư viện để xem tất "
 "cả hình ảnh bạn đã tải lên trang web."
 
-#: includes/Admin/Assets.php:293
+#: includes/Admin/Assets.php:285
 #| msgid ""
 #| "In the left sidebar, find the Pages menu and click on Add New button. You "
 #| "will see the WordPress page editor. Each paragraph, image, or video in "
@@ -1213,7 +1173,7 @@ msgstr ""
 "trình chỉnh sửa trang WordPress. Mỗi đoạn văn, hình ảnh hoặc video trong "
 "trình chỉnh sửa WordPress đại diện cho một khối nội dung."
 
-#: includes/Admin/Assets.php:264
+#: includes/Admin/Assets.php:256
 msgid ""
 "In the left sidebar, find the Posts button. Click on the All Posts button "
 "and find the post for which you want to change the description."
@@ -1221,7 +1181,7 @@ msgstr ""
 "Trên thanh bên trái, tìm nút Bài đăng. Nhấp vào nút Tất cả bài đăng và tìm "
 "bài đăng mà bạn muốn thay đổi mô tả."
 
-#: includes/Admin/Assets.php:209
+#: includes/Admin/Assets.php:201
 msgid ""
 "Increase your sites visibility by enabling its discoverability in the Google "
 "search engine."
@@ -1229,47 +1189,64 @@ msgstr ""
 "Tăng cường hiển thị trang bằng cách bật cho phép tìm kiếm trong công cụ tìm "
 "kiếm Google."
 
-#: includes/Admin/Assets.php:392
+#: includes/Admin/Assets.php:384
 msgid "Inodes limit almost reached"
 msgstr "Sắp đạt đến giới hạn inodes"
 
-#: includes/Admin/Assets.php:393
+#: includes/Admin/Assets.php:385
 msgid "Inodes limit reached"
 msgstr "Đã đạt đến giới hạn inodes"
 
-#: includes/Admin/Assets.php:174
+#: includes/Admin/Assets.php:472
+msgid "Install Kodee"
+msgstr "Cài đặt Kodee"
+
+#: includes/Admin/Assets.php:467
+msgid "Install me, so I can help you:"
+msgstr "Hãy cài đặt tôi để tôi có thể giúp bạn:"
+
+#: includes/Admin/Assets.php:166
 msgid "Install plugin"
 msgstr "Cài đặt plugin"
 
-#: includes/Admin/Assets.php:153
+#: includes/Admin/Onboarding/Onboarding.php:372
+#, fuzzy
+msgid "Install plugins"
+msgstr "Cài đặt tiện ích mở rộng"
+
+#: includes/Admin/Onboarding/Onboarding.php:370
+#, fuzzy
+msgid ""
+"Install recommended plugins to add powerful features to your WordPress site."
+msgstr ""
+"Hãy cài đặt các plugin được đề xuất để bổ sung các tính năng mạnh mẽ cho "
+"trang WordPress của bạn."
+
+#: includes/Admin/Assets.php:145
 msgid "Installation failed"
 msgstr "Cài đặt thất bại"
 
-#: includes/Admin/Assets.php:255 includes/Admin/Assets.php:287
+#: includes/Admin/Assets.php:247 includes/Admin/Assets.php:279
 msgid "Installed"
 msgstr "Đã cài đặt"
 
-#: includes/Admin/Assets.php:451
-#, fuzzy
+#: includes/Admin/Assets.php:447
 msgid "Installing plugins..."
 msgstr "Đang cài đặt plugin..."
 
-#: includes/Admin/Assets.php:452
-#, fuzzy
+#: includes/Admin/Assets.php:448
 msgid "Installing template..."
 msgstr "Đang cài đặt mẫu..."
 
-#: includes/Admin/Assets.php:453
-#, fuzzy
+#: includes/Admin/Assets.php:449
 msgid "Installing theme..."
 msgstr "Đang cài đặt chủ đề..."
 
-#: includes/Admin/Assets.php:220
+#: includes/Admin/Assets.php:212
 msgid "Invite a Friend, Earn Up to $100"
 msgstr "Mời bạn bè, kiếm lên đến 100$"
 
-#: includes/Admin/Assets.php:323
-#, fuzzy
+#: includes/Admin/Assets.php:315
 msgid "Is shipping cost taxable?"
 msgstr "Chi phí vận chuyển có phải chịu thuế không?"
 
@@ -1283,42 +1260,36 @@ msgstr ""
 "như BHIM, Google Pay, Paytm, PhonePe hoặc các ứng dụng UPI Ngân hàng. Tránh "
 "được các cổng thanh toán thu phí."
 
-#: includes/Admin/Hooks.php:504
+#: includes/Admin/Assets.php:466
+msgid "I’m Kodee – your AI WordPress assistant"
+msgstr "Tôi là Kodee – trợ lý WordPress AI của bạn"
+
+#: includes/Admin/Hooks.php:524
 msgid "Just a few more steps to launch your online store"
 msgstr "Chỉ còn vài bước để xuất bản cửa hàng trực tuyến của bạn"
 
-#: includes/Admin/Onboarding/Onboarding.php:180
-#: includes/Admin/Onboarding/Onboarding.php:203
-#: includes/Admin/Onboarding/Onboarding.php:233
-#: includes/Admin/Onboarding/Onboarding.php:241
-msgid "Keep current site"
-msgstr "Giữ lại trang hiện tại"
-
-#: includes/Admin/Assets.php:367
+#: includes/Admin/Assets.php:359
 msgid "Knowledge Base"
 msgstr "Kiến thức Cơ bản"
 
-#: includes/Admin/Assets.php:447
-#, fuzzy
+#: includes/Admin/Assets.php:441
 msgid "Laptop"
 msgstr "Máy tính xách tay"
 
-#: includes/Admin/Assets.php:400
+#: includes/Admin/Assets.php:392
 msgid "Learn more"
 msgstr "Tìm hiểu thêm"
 
-#: includes/Admin/Assets.php:371
+#: includes/Admin/Assets.php:363
 msgid "Learn WordPress"
 msgstr "Học WordPress"
 
-#: includes/Admin/Assets.php:427
-#, fuzzy
+#: includes/Admin/Assets.php:419
 msgid "Let AI build a website that fit your business needs."
 msgstr ""
-"Hãy để Trí tuệ nhân tạo (AI) xây dựng một trang web phù hợp với nhu cầu kinh "
-"doanh của bạn."
+"Hãy để AI xây dựng một trang web phù hợp với nhu cầu kinh doanh của bạn."
 
-#: includes/Admin/Onboarding/Onboarding.php:585
+#: includes/Admin/Onboarding/Onboarding.php:519
 msgid ""
 "Let AI explore, understand, and interact with your site. All content updates "
 "are auto-tracked so AI tools stay in sync with your site’s latest version."
@@ -1327,7 +1298,7 @@ msgstr ""
 "nhật nội dung đều được theo dõi tự động để các công cụ AI luôn đồng bộ với "
 "phiên bản mới nhất của trang web."
 
-#: includes/Admin/Onboarding/Onboarding.php:540
+#: includes/Admin/Onboarding/Onboarding.php:474
 msgid ""
 "Link your Amazon Associates account to your website, start promoting "
 "products, and earn rewards. No API key required."
@@ -1335,26 +1306,24 @@ msgstr ""
 "Liên kết tài khoản Amazon Associates với trang web, bắt đầu quảng bá sản "
 "phẩm và kiếm tiền. Không cần khóa API."
 
-#: includes/Admin/Assets.php:363
+#: includes/Admin/Assets.php:355
 msgid "LiteSpeed Cache: How to Get 100% WordPress Optimization"
 msgstr "LiteSpeed Cache: Các để tối ưu hóa WordPress 100%"
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/PagesList.js:27
-#, fuzzy
 msgid "Loading..."
 msgstr "Đang tải..."
 
-#: includes/Admin/Assets.php:408
+#: includes/Admin/Assets.php:400
 msgid "Loading…"
 msgstr "Đang tải…"
 
-#: includes/Admin/Assets.php:315
-#, fuzzy
+#: includes/Admin/Assets.php:307
 msgid "Local pickup"
 msgstr "Nhận hàng tại cửa hàng"
 
-#: includes/Admin/Onboarding/Onboarding.php:706
+#: includes/Admin/Onboarding/Onboarding.php:681
 msgid ""
 "Make sure that your website shows up when visitors are looking for your "
 "business on Google."
@@ -1362,20 +1331,24 @@ msgstr ""
 "Đảm bảo trang web hiển thị khi khách hàng đang tìm kiếm doanh nghiệp của bạn "
 "trên Google."
 
-#: includes/Admin/Onboarding/Onboarding.php:583
+#: includes/Admin/Onboarding/Onboarding.php:517
 msgid "Make your site discoverable by AI"
 msgstr "Giúp trang web của bạn dễ dàng được tìm thấy bởi AI"
 
-#: includes/Admin/Assets.php:389 includes/Admin/Onboarding/Onboarding.php:713
+#: includes/Admin/Assets.php:381 includes/Admin/Onboarding/Onboarding.php:688
 msgid "Manage"
 msgstr "Quản lý"
 
-#: includes/Admin/Assets.php:188 includes/Admin/Assets.php:318
-#: includes/Admin/Onboarding/Onboarding.php:677
+#: includes/Admin/Assets.php:180 includes/Admin/Assets.php:310
+#: includes/Admin/Onboarding/Onboarding.php:611
 msgid "Manage shipping"
 msgstr "Quản lý vận chuyển"
 
-#: includes/Admin/Assets.php:187
+#: includes/Admin/Assets.php:469
+msgid "Manage users and permissions"
+msgstr "Quản lý người dùng và quyền"
+
+#: includes/Admin/Assets.php:179
 msgid "Market your business"
 msgstr "Tiếp thị doanh nghiệp"
 
@@ -1387,32 +1360,32 @@ msgstr ""
 "Midtrans-WooCommerce là plugin chính thức của Midtrans. Midtrans là cổng "
 "thanh toán trực tuyến."
 
-#: includes/Admin/Assets.php:324
-#, fuzzy
+#: includes/Admin/Assets.php:316
 msgid "Minimum spend for free shipping"
 msgstr "Số tiền tối thiểu để được miễn phí vận chuyển"
 
-#: includes/Admin/Assets.php:420
+#: includes/Admin/Assets.php:412
 msgid "More info"
 msgstr "Thông tin thêm"
 
-#: includes/Admin/Assets.php:322
-#, fuzzy
+#: includes/Admin/Assets.php:314
 msgid "Most popular"
 msgstr "Phổ biến nhất"
 
-#: includes/Admin/Assets.php:213
+#: includes/Admin/Assets.php:205
 msgid "Nameserver"
 msgstr "Máy chủ tên miền"
 
-#: includes/Admin/Assets.php:423
-#, fuzzy
+#: includes/Admin/Assets.php:415
 msgid "Next"
-msgstr "Tiếp theo"
+msgstr "Tiếp"
+
+#: includes/Rest/StepRoutes.php:295
+msgid "No default theme available to switch to."
+msgstr "Không có chủ đề mặc định nào để chuyển sang."
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/PagesList.js:33
-#, fuzzy
 msgid "No pages found."
 msgstr "Không tìm thấy trang nào."
 
@@ -1420,82 +1393,76 @@ msgstr "Không tìm thấy trang nào."
 msgid "No PHP files found in plugin directory"
 msgstr "Không tìm thấy tệp PHP nào trong thư mục plugin"
 
-#: includes/Admin/Assets.php:446
-#, fuzzy
+#: includes/Admin/Assets.php:440
 msgid "No plugin image"
 msgstr "Không có hình ảnh plugin"
 
-#: includes/Admin/Assets.php:444
-#, fuzzy
+#: includes/Admin/Assets.php:438
 msgid "No plugins found"
 msgstr "Không tìm thấy plugin nào"
 
-#: includes/Admin/Assets.php:325
-#, fuzzy
+#: includes/Admin/Assets.php:317
 msgid "No requirement"
 msgstr "Không có yêu cầu"
 
-#: includes/Admin/Assets.php:399
+#: includes/Admin/Assets.php:391
 msgid "Not connected"
 msgstr "Không kết nối"
 
-#: includes/Admin/Assets.php:167 includes/Admin/Assets.php:176
+#: includes/Admin/Assets.php:159 includes/Admin/Assets.php:168
 msgid "Not interested"
 msgstr "Không thích"
 
-#: includes/Admin/Onboarding/Onboarding.php:445
-#: includes/Admin/Onboarding/Onboarding.php:590
-#: includes/Admin/Onboarding/Onboarding.php:687
-#: includes/Admin/Onboarding/Onboarding.php:718
+#: includes/Admin/Onboarding/Onboarding.php:201
+#: includes/Admin/Onboarding/Onboarding.php:378
+#: includes/Admin/Onboarding/Onboarding.php:400
+#: includes/Admin/Onboarding/Onboarding.php:524
+#: includes/Admin/Onboarding/Onboarding.php:621
+#: includes/Admin/Onboarding/Onboarding.php:658
+#: includes/Admin/Onboarding/Onboarding.php:693
 msgid "Not needed"
 msgstr "Không cần thiết"
 
-#: includes/Admin/Onboarding/Onboarding.php:173
-#: includes/Admin/Onboarding/Onboarding.php:266
-#: includes/Admin/Onboarding/Onboarding.php:275
-#: includes/Admin/Onboarding/Onboarding.php:638
+#: includes/Admin/Onboarding/Onboarding.php:572
 msgid "Not now"
 msgstr "Không phải bây giờ"
 
-#: includes/Admin/Assets.php:402
+#: includes/Admin/Assets.php:394
 msgid "Not purchased"
 msgstr "Chưa mua"
 
-#: includes/Admin/Assets.php:412
+#: includes/Admin/Assets.php:404
 msgid "Not registered"
 msgstr "Chưa đăng ký"
 
-#: includes/Admin/Assets.php:443
-#, fuzzy
+#: includes/Admin/Assets.php:437
 msgid "Nothing found"
 msgstr "Không tìm thấy gì"
 
-#: includes/Admin/Assets.php:256
+#: includes/Admin/Assets.php:248
 #| msgid "Now <strong>finish setting up</strong> the plugins you’ve installed."
 msgid "Now <strong>finish setting up</strong> the plugins you've installed."
 msgstr ""
 "Bây giờ hãy <strong>hoàn tất thiết lập</strong> plugin mà bạn đã cài đặt."
 
-#: includes/Admin/Assets.php:250 includes/Admin/Menu.php:29
+#: includes/Admin/Assets.php:242 includes/Admin/Menu.php:29
 #: includes/Admin/Menu.php:87 includes/Admin/Menu.php:88
 msgid "Onboarding"
 msgstr "Nhập môn"
 
-#: includes/Admin/Assets.php:455
-#, fuzzy
+#: includes/Admin/Assets.php:451
 msgid "Onboarding Wordpress being built"
-msgstr "Quá trình triển khai WordPress đang được thực hiện"
+msgstr "Đang tạo hướng dẫn sử dụng WordPress"
 
-#: includes/Admin/Assets.php:471
-#, fuzzy
+#: includes/Admin/Assets.php:476
 msgid "Online store"
-msgstr "Cửa hàng trực tuyến"
+msgstr "Website bán hàng"
 
-#: includes/Admin/Assets.php:184 includes/Admin/Onboarding/Onboarding.php:369
+#: includes/Admin/Assets.php:176 includes/Admin/Onboarding/Onboarding.php:295
 msgid "Online store setup"
 msgstr "Thiết lập cửa hàng trực tuyến"
 
-#: includes/Admin/Assets.php:373
+#: includes/Admin/Assets.php:365
 msgid ""
 "Opt-in to receive tips, discounts, and recommendations from the WooCommerce "
 "team directly in your inbox."
@@ -1503,33 +1470,32 @@ msgstr ""
 "Chọn tham gia để nhận các mẹo, giảm giá và đề xuất trực tiếp đến hộp thư từ "
 "đội ngũ WooCommerce."
 
-#: includes/Admin/Assets.php:339
+#: includes/Admin/Assets.php:331
 msgid "Or use payment plugins"
 msgstr "Hoặc dùng các plugin thanh toán"
 
-#: includes/Admin/Assets.php:340
+#: includes/Admin/Assets.php:332
 msgid "Or use shipping plugins"
 msgstr "Hoặc dùng các plugin vận chuyển"
 
-#: includes/Admin/Assets.php:305 includes/Admin/Assets.php:474
+#: includes/Admin/Assets.php:297 includes/Admin/Assets.php:479
 msgid "Other"
 msgstr "Khác"
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/PageForm.js:41
-#, fuzzy
 msgid "Page title:"
 msgstr "Tiêu đề trang:"
 
-#: includes/Admin/Assets.php:296
+#: includes/Admin/Assets.php:288
 msgid "Payment methods"
 msgstr "Phương thức thanh toán"
 
-#: includes/Admin/Assets.php:297
+#: includes/Admin/Assets.php:289
 msgid "Payment plugins"
 msgstr "Plugin thanh toán"
 
-#: includes/Admin/Assets.php:301
+#: includes/Admin/Assets.php:293
 msgid "Payment settings"
 msgstr "Thiết lập thanh toán"
 
@@ -1543,24 +1509,23 @@ msgstr ""
 "Pay Later, thẻ tín dụng/ghi nợ, các loại thanh toán ví điện tử tại địa "
 "phương và tài khoản ngân hàng."
 
-#: includes/Admin/Assets.php:417
+#: includes/Admin/Assets.php:409
 msgid "Pending email verification"
 msgstr "Đang chờ xác minh email"
 
-#: includes/Admin/Assets.php:418
+#: includes/Admin/Assets.php:410
 msgid "Pending phone verification"
 msgstr "Đang chờ xác minh số điện thoại"
 
-#: includes/Admin/Assets.php:331
-#, fuzzy
+#: includes/Admin/Assets.php:323
 msgid "Pickup cost"
-msgstr "Chi phí vận chuyển"
+msgstr "Chi phí nhận hàng"
 
-#: includes/Admin/Assets.php:218
+#: includes/Admin/Assets.php:210
 msgid "Play on YouTube"
 msgstr "Xem trên YouTube"
 
-#: includes/Admin/Assets.php:166
+#: includes/Admin/Assets.php:158
 msgid "Plugin activation failed"
 msgstr "Kích hoạt plugin thất bại"
 
@@ -1568,11 +1533,11 @@ msgstr "Kích hoạt plugin thất bại"
 msgid "Plugin directory not found"
 msgstr "Không tìm thấy thư mục plugin"
 
-#: includes/Admin/Assets.php:162
+#: includes/Admin/Assets.php:154
 msgid "Plugin has been succesfully installed and activated"
 msgstr "Plugin đã cài đặt và kích hoạt thành công"
 
-#: includes/Admin/Assets.php:164
+#: includes/Admin/Assets.php:156
 msgid "Plugin installation failed"
 msgstr "Cài đặt plugin thất bại"
 
@@ -1580,16 +1545,20 @@ msgstr "Cài đặt plugin thất bại"
 msgid "Plugin main file not found"
 msgstr "Không tìm thấy tệp chính plugin"
 
-#: includes/Admin/Assets.php:161
+#: includes/Admin/Assets.php:445
+#, fuzzy
+msgid "plugin selected"
+msgstr "đã chọn plugin"
+
+#: includes/Admin/Assets.php:153
 msgid "Plugin sucessfully activated"
 msgstr "Plugin đã kích hoạt thành công"
 
-#: includes/Admin/Assets.php:159
+#: includes/Admin/Assets.php:151
 msgid "Plugin sucessfully installed"
 msgstr "Plugin đã cài đặt thành công"
 
-#: includes/Admin/Assets.php:467
-#, fuzzy
+#: includes/Admin/Assets.php:463
 msgid ""
 "Plugins are apps that can be installed on your WordPress website. Each "
 "plugin lets you add a new feature, such as forms, SEO tools, or social media "
@@ -1599,95 +1568,97 @@ msgstr ""
 "plugin cho phép bạn thêm một tính năng mới, chẳng hạn như biểu mẫu, công cụ "
 "SEO hoặc nút chia sẻ mạng xã hội. Tất cả các plugin này đều miễn phí."
 
-#: includes/Admin/Assets.php:306
+#: includes/Admin/Assets.php:446
+#, fuzzy
+msgid "plugins selected"
+msgstr "các plugin đã chọn"
+
+#: includes/Admin/Assets.php:298
 msgid "Pre-built websites and themes"
 msgstr "Trang web và chủ đề xây dựng sẵn"
 
-#: includes/Admin/Assets.php:468
-#, fuzzy
+#: includes/Admin/Assets.php:464
 msgid "Premium template"
 msgstr "Mẫu cao cấp"
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/PreviewPageButton.js:37
-#, fuzzy
 msgid "Preview"
 msgstr "Xem trước"
 
-#: includes/Admin/Assets.php:380
+#: includes/Admin/Assets.php:372
 msgid "Preview site"
 msgstr "Xem trước trang"
 
-#: includes/Admin/Assets.php:185
+#: includes/Admin/Assets.php:177
 msgid "Preview website"
 msgstr "Xem trước trang web"
 
-#: includes/Admin/Onboarding/Onboarding.php:528
+#: includes/Admin/Onboarding/Onboarding.php:462
 msgid "Promote products on your site"
 msgstr "Quảng bá sản phẩm trên trang của bạn"
 
-#: includes/Admin/Assets.php:346
+#: includes/Admin/Assets.php:338
 msgid "Publish the page"
 msgstr "Xuất bản trang"
 
-#: includes/Admin/Assets.php:304
+#: includes/Admin/Assets.php:296
 msgid "Recommended for you"
 msgstr "Đề xuất dành cho bạn"
 
-#: includes/Admin/Assets.php:436
-#, fuzzy
+#: includes/Admin/Assets.php:430
 msgid "Recommended plugins"
-msgstr "Các plugin được khuyến nghị"
+msgstr "Các plugin được đề xuất"
 
-#: includes/Admin/Assets.php:403
+#: includes/Admin/Assets.php:395
 msgid "Registered at another provider"
 msgstr "Đã đăng ký tại nhà cung cấp khác"
 
-#: includes/Admin/Assets.php:406
+#: includes/Admin/Assets.php:398
 msgid "Registering"
 msgstr "Đang đăng ký"
 
-#: includes/Admin/Assets.php:405
+#: includes/Admin/Assets.php:397
 msgid "Registration didn't work"
 msgstr "Đăng ký không thành công"
 
-#: includes/Admin/Assets.php:388
+#: includes/Admin/Assets.php:473
+msgid "Remind me later"
+msgstr "Nhắc tôi sau nhé"
+
+#: includes/Admin/Assets.php:380
 msgid "Renew"
 msgstr "Làm mới"
 
-#: includes/Admin/Assets.php:413
+#: includes/Admin/Assets.php:405
 msgid "Restore"
 msgstr "Khôi phục"
 
-#: includes/Admin/Assets.php:290 includes/Admin/Onboarding/WelcomeCards.php:27
+#: includes/Admin/Assets.php:282 includes/Admin/Onboarding/WelcomeCards.php:27
 msgid "Run an Amazon Affiliate site"
 msgstr "Chạy một trang Amazon Affiliate"
 
-#: includes/Admin/Assets.php:189
+#: includes/Admin/Assets.php:181
 msgid "Run email marketing campaigns"
 msgstr "Chạy chiến dịch tiếp thị email"
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/PageForm.js:62
-#, fuzzy
 msgid "Save"
 msgstr "Lưu"
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/PageForm.js:59
-#, fuzzy
 msgid "Saving"
-msgstr "Lưu trữ"
+msgstr "Đang lưu"
 
-#: includes/Admin/Assets.php:450
-#, fuzzy
+#: includes/Admin/Assets.php:444
 msgid "Search for a plugin"
 msgstr "Tìm kiếm plugin"
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/SearchBar.js:7
 #: gutenberg/edit-pages-panel/src/components/SearchBar.js:8
-#, fuzzy
 msgid "Search pages"
 msgstr "Trang tìm kiếm"
 
@@ -1699,22 +1670,19 @@ msgstr ""
 "Chấp nhận thanh toán bảo mật, đồng bộ hóa doanh số, dễ dàng quản lý dữ liệu "
 "sản phẩm và kho giữa WooCommerce và Square POS."
 
-#: includes/Admin/Assets.php:438
-#, fuzzy
+#: includes/Admin/Assets.php:432
 msgid "Select all"
 msgstr "Chọn tất cả"
 
-#: includes/Admin/Assets.php:442
-#, fuzzy
+#: includes/Admin/Assets.php:436
 msgid "Select one for best experience"
 msgstr "Chọn một tùy chọn để có trải nghiệm tốt nhất"
 
-#: includes/Admin/Assets.php:439
-#, fuzzy
+#: includes/Admin/Assets.php:433
 msgid "Selected plugins conflict with each other"
 msgstr "Các plugin được chọn xung đột với nhau"
 
-#: includes/Admin/Onboarding/Onboarding.php:632
+#: includes/Admin/Onboarding/Onboarding.php:566
 msgid ""
 "Sell products, services and digital downloads. Set up and customize each "
 "item to fit your business needs."
@@ -1722,7 +1690,7 @@ msgstr ""
 "Bán sản phẩm, dịch vụ và sản phẩm số tải về. Thiết lập và tùy chỉnh mỗi vật "
 "phẩm để phù hợp nhu cầu kinh doanh."
 
-#: includes/Admin/Assets.php:207
+#: includes/Admin/Assets.php:199
 msgid ""
 "Sell products, services, and digital downloads. Set up and customize each "
 "item to fit your business needs."
@@ -1730,7 +1698,7 @@ msgstr ""
 "Bán sản phẩm, dịch vụ và sản phẩm số tải về. Thiết lập và tùy chỉnh mỗi vật "
 "phẩm để phù hợp nhu cầu kinh doanh."
 
-#: includes/Admin/Assets.php:202
+#: includes/Admin/Assets.php:194
 msgid "Set up a payment method"
 msgstr "Thiết lập phương thức thanh toán"
 
@@ -1738,39 +1706,45 @@ msgstr "Thiết lập phương thức thanh toán"
 msgid "Set up an online store"
 msgstr "Thiết lập cửa hàng trực tuyến"
 
-#: includes/Admin/Onboarding/Onboarding.php:708
+#: includes/Admin/Onboarding/Onboarding.php:683
 msgid "Set up Google Site Kit"
 msgstr "Thiết lập Google Site Kit"
 
-#: includes/Admin/Assets.php:203 includes/Admin/Onboarding/Onboarding.php:659
+#: includes/Admin/Assets.php:195 includes/Admin/Onboarding/Onboarding.php:593
 msgid "Set up payment method"
 msgstr "Thiết lập phương thức thanh toán"
 
-#: includes/Admin/Assets.php:302 includes/Admin/Onboarding/Onboarding.php:655
+#: includes/Admin/Assets.php:294 includes/Admin/Onboarding/Onboarding.php:589
 msgid "Set up payments"
 msgstr "Thiết lập thanh toán"
 
-#: includes/Admin/Assets.php:348
+#: includes/Admin/Onboarding/Onboarding.php:640
+#, fuzzy
+msgid "Set up professional email to build trust with your customers."
+msgstr ""
+"Thiết lập địa chỉ email chuyên nghiệp để xây dựng lòng tin với khách hàng."
+
+#: includes/Admin/Assets.php:340
 msgid "Set up shipping"
 msgstr "Thiết lập vận chuyển"
 
-#: includes/Admin/Onboarding/Onboarding.php:681
+#: includes/Admin/Onboarding/Onboarding.php:615
 msgid "Set up shipping method"
 msgstr "Thiết lập phương thức vận chuyển"
 
-#: includes/Admin/Assets.php:347
+#: includes/Admin/Assets.php:339
 msgid "Set up Site Kit"
 msgstr "Thiết lập Site Kit"
 
-#: includes/Admin/Onboarding/Onboarding.php:559
+#: includes/Admin/Onboarding/Onboarding.php:493
 msgid "Set up your online store"
 msgstr "Thiết lập website bán hàng"
 
-#: includes/Admin/Assets.php:337
+#: includes/Admin/Assets.php:329
 msgid "Set up your site"
 msgstr "Thiết lập trang web"
 
-#: includes/Admin/Assets.php:157
+#: includes/Admin/Assets.php:149
 msgid "Setting up..."
 msgstr "Cài đặt..."
 
@@ -1782,19 +1756,19 @@ msgstr ""
 "Thiết lập WooCommerce, thêm sản phẩn hoặc dịch vụ và bắt đầu bán hàng ngay "
 "hôm nay."
 
-#: includes/Admin/Assets.php:208
+#: includes/Admin/Assets.php:200
 msgid "Setup Google Site Kit"
 msgstr "Thiết lập Google Site Kit"
 
-#: includes/Admin/Assets.php:201 includes/Admin/Assets.php:241
+#: includes/Admin/Assets.php:193 includes/Admin/Assets.php:233
 msgid "Setup my online store"
 msgstr "Thiết lập website bán hàng"
 
-#: includes/Admin/Assets.php:247
+#: includes/Admin/Assets.php:239
 msgid "Setup website"
 msgstr "Thiết lập trang web"
 
-#: includes/Admin/Assets.php:219
+#: includes/Admin/Assets.php:211
 msgid ""
 "Share your referral link with friends and family and <strong>receive 20% "
 "commission</strong> for every successful referral."
@@ -1802,34 +1776,31 @@ msgstr ""
 "Chia sẻ đường dẫn giới thiệu với bạn bè, gia đình và <strong>nhận 20% hoa "
 "hồng</strong> cho mỗi giới thiệu thành công."
 
-#: includes/Admin/Assets.php:191
+#: includes/Admin/Assets.php:183
 msgid "Ship products with ease"
 msgstr "Vận chuyển sản phẩm dễ dàng"
 
-#: includes/Admin/Assets.php:330
-#, fuzzy
+#: includes/Admin/Assets.php:322
 msgid "Shipping cost"
 msgstr "Phí vận chuyển"
 
-#: includes/Admin/Assets.php:336
-#, fuzzy
+#: includes/Admin/Assets.php:328
 msgid "Shipping method saved successfully!"
-msgstr "Phương thức vận chuyển đã được lưu thành công!"
+msgstr "Đã lưu thành công phương thức vận chuyển!"
 
-#: includes/Admin/Assets.php:192
+#: includes/Admin/Assets.php:184
 msgid "Shipping methods"
 msgstr "Phương thức vận chuyển"
 
-#: includes/Admin/Assets.php:320
-#, fuzzy
+#: includes/Admin/Assets.php:312
 msgid "Shipping option"
 msgstr "Tùy chọn vận chuyển"
 
-#: includes/Admin/Assets.php:298
+#: includes/Admin/Assets.php:290
 msgid "Shipping plugins"
 msgstr "Plugin vận chuyển"
 
-#: includes/Admin/Assets.php:317
+#: includes/Admin/Assets.php:309
 msgid "Shipping settings"
 msgstr "Thiết lập vận chuyển"
 
@@ -1837,7 +1808,7 @@ msgstr "Thiết lập vận chuyển"
 msgid "Shop locale is empty, please setup store first"
 msgstr "Cửa hàng địa phương hiện đang trống, vui lòng thiết lập cửa hàng trước"
 
-#: includes/Admin/Assets.php:251
+#: includes/Admin/Assets.php:243
 msgid "Show list"
 msgstr "Hiển thị danh sách"
 
@@ -1849,45 +1820,47 @@ msgstr ""
 "Simpaisa cung cấp dịch vụ thanh toán kỹ thuật số Jazzcash & Easypaisa dễ "
 "dàng tích hợp."
 
-#: includes/Admin/Assets.php:240
+#: includes/Admin/Assets.php:232
 msgid "Skip"
 msgstr "Bỏ qua"
 
-#: includes/Admin/Assets.php:449
-#, fuzzy
+#: includes/Admin/Assets.php:443
 msgid "Smartphone"
 msgstr "Điện thoại thông minh"
 
-#: includes/Admin/Assets.php:421
+#: includes/Admin/Assets.php:413
 msgid "Something went wrong"
 msgstr "Có sự cố đã xảy ra"
 
-#: includes/Rest/StepRoutes.php:184
+#: includes/Rest/StepRoutes.php:202
 msgid "Sorry, there are activation errors."
 msgstr "Xin lỗi, đã có lỗi kích hoạt."
 
-#: includes/Rest/StepRoutes.php:78 includes/Rest/StepRoutes.php:171
-#: includes/Rest/StepRoutes.php:221 includes/Rest/StepRoutes.php:260
-#: includes/Rest/StepRoutes.php:276 includes/Rest/WooRoutes.php:51
+#: includes/Rest/StepRoutes.php:96 includes/Rest/StepRoutes.php:189
+#: includes/Rest/StepRoutes.php:239 includes/Rest/StepRoutes.php:330
+#: includes/Rest/StepRoutes.php:346 includes/Rest/WooRoutes.php:51
 #: includes/Rest/WooRoutes.php:94
 msgid "Sorry, there are validation errors."
 msgstr "Xin lỗi, đã có lỗi xác thực."
 
-#: includes/Admin/Assets.php:299 includes/Admin/Onboarding/Onboarding.php:262
-#: includes/Admin/Onboarding/Onboarding.php:270
+#: includes/Admin/Assets.php:291
 #| msgid "Started creating your site"
 msgid "Start creating your site"
 msgstr "Bắt đầu tạo trang web"
 
-#: includes/Admin/Assets.php:210
+#: includes/Admin/Assets.php:202
 msgid "Start earning"
 msgstr "Bắt đầu kiếm tiền"
 
-#: includes/Admin/Onboarding/Onboarding.php:532
+#: includes/Admin/Assets.php:424
+msgid "Start from a theme (advanced users)"
+msgstr "Bắt đầu từ một chủ đề (dành cho người dùng nâng cao)"
+
+#: includes/Admin/Onboarding/Onboarding.php:466
 msgid "Start promoting"
 msgstr "Bắt đầu quảng bá"
 
-#: includes/Admin/Onboarding/Onboarding.php:530
+#: includes/Admin/Onboarding/Onboarding.php:464
 msgid ""
 "Start promoting affiliate products and earn rewards. It’s quick and easy to "
 "get started."
@@ -1895,7 +1868,7 @@ msgstr ""
 "Bắt đầu quảng bá sản phẩm liên kết và kiếm thưởng. Bắt đầu nhanh chóng và dễ "
 "dàng."
 
-#: includes/Rest/StepRoutes.php:97
+#: includes/Rest/StepRoutes.php:115
 msgid "Step category and/or step does not exist."
 msgstr "Danh mục bước và/hoặc bước không tồn tại"
 
@@ -1903,12 +1876,15 @@ msgstr "Danh mục bước và/hoặc bước không tồn tại"
 msgid "Store location locale not found"
 msgstr "Không tìm thấy vị trí cửa hàng địa phương"
 
-#: includes/Admin/Assets.php:397
+#: includes/Admin/Assets.php:470
+msgid "Summarize your store or site performance"
+msgstr "Tóm tắt hiệu suất của cửa hàng hoặc trang web của bạn"
+
+#: includes/Admin/Assets.php:389
 msgid "Suspended"
 msgstr "Đã tạm ngưng"
 
-#: includes/Admin/Assets.php:448
-#, fuzzy
+#: includes/Admin/Assets.php:442
 msgid "Tablet"
 msgstr "Máy tính bảng"
 
@@ -1916,62 +1892,60 @@ msgstr "Máy tính bảng"
 msgid "Take credit card payments on your store using Stripe."
 msgstr "Chấp nhận thanh toán thẻ tín dụng trên cửa hàng bằng Stripe"
 
-#: includes/Admin/Assets.php:238
+#: includes/Admin/Assets.php:230
 msgid "Take me there"
 msgstr "Đưa tôi đến đó"
 
-#: includes/Admin/Assets.php:308
-#, fuzzy
+#: includes/Admin/Assets.php:300
 msgid "Take payments in cash upon delivery."
-msgstr "Thu tiền mặt khi giao hàng."
+msgstr "Thanh toán tiền mặt khi giao hàng."
 
-#: includes/Admin/Assets.php:310
-#, fuzzy
+#: includes/Admin/Assets.php:302
 msgid "Take payments via bank transfer."
-msgstr "Thực hiện thanh toán qua chuyển khoản ngân hàng."
+msgstr "Thanh toán qua chuyển khoản ngân hàng."
 
-#: includes/Admin/Assets.php:374
+#: includes/Admin/Assets.php:366
 msgid "Tell us a bit about your business"
 msgstr "Nói cho chúng tôi biết một ít về doanh nghiệp của bạn"
 
-#: includes/Admin/Assets.php:401
+#: includes/Admin/Assets.php:393
 msgid "Temporary"
 msgstr "Tạm thời"
 
-#: includes/Admin/Assets.php:181
+#: includes/Admin/Assets.php:173
 msgid ""
 "The biggest ever <span style=\"color: #8C85FF\">Amazing Friday</span> sale!"
 msgstr ""
 "Giảm giá <span style=\"color: #8C85FF\">Amazing Friday</span> lớn chưa từng "
 "có!"
 
-#: includes/Admin/Assets.php:179
+#: includes/Admin/Assets.php:171
 msgid ""
 "The biggest ever <span style=\"color: #8C85FF\">Black Friday</span> sale!"
 msgstr ""
 "Giảm giá <span style=\"color: #8C85FF\">Thứ Sáu Đen</span> lớn chưa từng có!"
 
-#: includes/Admin/Assets.php:182
+#: includes/Admin/Assets.php:174
 msgid ""
 "The biggest ever <span style=\"color: #8C85FF\">Blessed Friday</span> sale!"
 msgstr ""
 "Giảm giá <span style=\"color: #8C85FF\">Thứ Sáu May Mắn</span> lớn chưa từng "
 "có!"
 
-#: includes/Admin/Assets.php:178
+#: includes/Admin/Assets.php:170
 msgid ""
 "The biggest ever <span style=\"color: #8C85FF\">Cyber Monday</span> sale!"
 msgstr ""
 "Giảm giá <span style=\"color: #8C85FF\">Thứ Hai Điện Tử</span> lớn chưa từng "
 "có!"
 
-#: includes/Admin/Assets.php:183
+#: includes/Admin/Assets.php:175
 msgid ""
 "The biggest ever <span style=\"color: #8C85FF\">End of the year</span> sale!"
 msgstr ""
 "Giảm giá <span style=\"color: #8C85FF\">Cuối năm</span> lớn chưa từng có!"
 
-#: includes/Admin/Assets.php:180
+#: includes/Admin/Assets.php:172
 msgid ""
 "The biggest ever <span style=\"color: #8C85FF\">White Friday</span> sale!"
 msgstr ""
@@ -1979,7 +1953,7 @@ msgstr ""
 "có!"
 
 #. translators: %s php version
-#: hostinger-easy-onboarding.php:77
+#: hostinger-easy-onboarding.php:81
 #, php-format
 msgid ""
 "The Hostinger Easy Onboarding plugin requires minimum PHP version of <b>"
@@ -1989,7 +1963,6 @@ msgstr ""
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/DeletePageButton.js:49
-#, fuzzy
 msgid "The page was deleted!"
 msgstr "Trang đã bị xóa!"
 
@@ -2007,42 +1980,40 @@ msgstr ""
 "Plugin USPS Simple tính toán chi phí linh động cho vận chuyển nội địa bằng "
 "API USPS trong khi thanh toán."
 
-#: includes/Admin/Assets.php:165
+#: includes/Admin/Assets.php:157
 msgid "Theme activation failed"
 msgstr "Kích hoạt chủ đề thất bại"
 
-#: includes/Admin/Assets.php:154
+#: includes/Admin/Assets.php:146
 msgid "Theme has been succesfully activated"
 msgstr "Chủ đề đã kích hoạt thành công"
 
-#: includes/Admin/Assets.php:155
+#: includes/Admin/Assets.php:147
 msgid "Theme has been succesfully installed"
 msgstr "Chủ đề đã cài đặt thành công"
 
-#: includes/Admin/Assets.php:156
+#: includes/Admin/Assets.php:148
 msgid "Theme has been succesfully installed and activated"
 msgstr "Chủ đề đã cài đặt và kích hoạt thành công"
 
-#: includes/Admin/Assets.php:163
+#: includes/Admin/Assets.php:155
 msgid "Theme installation failed"
 msgstr "Cài đặt chủ đề thất bại"
 
-#: includes/Admin/Assets.php:160
+#: includes/Admin/Assets.php:152
 msgid "Theme sucessfully activated"
 msgstr "Kích hoạt chủ đề thành công"
 
-#: includes/Admin/Assets.php:158
+#: includes/Admin/Assets.php:150
 msgid "Theme sucessfully installed"
 msgstr "Cài đặt chủ đề thành công"
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/DeletePageButton.js:62
-#, fuzzy
 msgid "There was an error."
 msgstr "Đã xảy ra lỗi."
 
-#: includes/Admin/Assets.php:463
-#, fuzzy
+#: includes/Admin/Assets.php:459
 msgid ""
 "These are ready-to-go sites that you can quickly customize to fit your brand "
 "and needs. You won’t have to build from scratch."
@@ -2067,22 +2038,20 @@ msgstr ""
 "Bản mở rộng này giúp bạn có thể sử dụng phương thức vận chuyển Colissimo "
 "trong WooCommerce"
 
-#: includes/Admin/Assets.php:379
+#: includes/Admin/Assets.php:371
 msgid "This field is required"
 msgstr "Trường này là bắt buộc"
 
-#: includes/Admin/Assets.php:461
-#, fuzzy
+#: includes/Admin/Assets.php:457
 msgid "This might take a few minutes"
 msgstr "Điều này có thể mất một vài phút"
 
 #: gutenberg/edit-pages-panel/build/index.js:1
 #: gutenberg/edit-pages-panel/src/components/PagesList.js:41
-#, fuzzy
 msgid "Title"
 msgstr "Tiêu đề"
 
-#: includes/Admin/Assets.php:272
+#: includes/Admin/Assets.php:264
 msgid ""
 "To upload a new image, click on Add New button on the Media Library page and "
 "select files."
@@ -2090,40 +2059,35 @@ msgstr ""
 "Để tải ảnh mới lên, nhấp vào nút Thêm mới trên trang Thư viên Phương tiện và "
 "chọn tệp."
 
-#: includes/Admin/Assets.php:415
+#: includes/Admin/Assets.php:407
 msgid "Transfer"
 msgstr "Chuyển nhượng"
 
-#: includes/Admin/Assets.php:416
+#: includes/Admin/Assets.php:408
 msgid "Try again"
 msgstr "Thử lại"
 
-#: includes/Admin/Assets.php:445
-#, fuzzy
+#: includes/Admin/Assets.php:439
 msgid "Try another search term."
-msgstr "Hãy thử một từ khóa khác."
+msgstr "Hãy thử cụm từ tìm kiếm khác."
 
-#: includes/Admin/Onboarding/Onboarding.php:441
-msgid "Try free for 1 year"
-msgstr "Thử miễn phí trong 1 năm"
-
-#: includes/Admin/Assets.php:193
+#: includes/Admin/Assets.php:185
 msgid "Try Omnisend"
 msgstr "Thử Omnisend"
 
-#: includes/Admin/Onboarding/Onboarding.php:587
+#: includes/Admin/Onboarding/Onboarding.php:521
 msgid "Turn on"
 msgstr "Bật"
 
-#: includes/Admin/Assets.php:172
+#: includes/Admin/Assets.php:164
 msgid "Turn site visitors into loyal customers"
 msgstr "Biến khách truy cập trang web thành khách hàng trung thành"
 
-#: includes/Admin/Onboarding/Onboarding.php:437
+#: includes/Admin/Onboarding/Onboarding.php:392
 msgid "Turn site visitors into subscribers"
 msgstr "Biến khách truy cập trang web thành người đăng ký"
 
-#: includes/Admin/Assets.php:252
+#: includes/Admin/Assets.php:244
 msgid "Tutorials"
 msgstr "Hướng dẫn"
 
@@ -2131,31 +2095,35 @@ msgstr "Hướng dẫn"
 msgid "Unknown error code."
 msgstr "Mã lỗi không rõ."
 
-#: includes/Admin/Assets.php:229 includes/Admin/Assets.php:271
+#: includes/Admin/Assets.php:221 includes/Admin/Assets.php:263
 msgid "Upload an image"
 msgstr "Tải ảnh lên"
 
-#: includes/Admin/Assets.php:222 includes/Admin/Assets.php:236
+#: includes/Admin/Assets.php:214 includes/Admin/Assets.php:228
 msgid "Upload your logo"
 msgstr "Tải logo lên"
 
-#: includes/Admin/Assets.php:433
-#, fuzzy
+#: includes/Admin/Assets.php:427
 #| msgid ""
 #| "Use a black site or apply a starter from one of our vendors to get "
 #| "started."
 msgid ""
 "Use a blank site or apply a starter from one of our vendors to get started."
 msgstr ""
-"Sử dụng một trang web đen hoặc áp dụng một bộ khởi động từ một trong các nhà "
+"Sử dụng một trang web trống hoặc áp dụng mẫu khởi đầu từ một trong các nhà "
 "cung cấp của chúng tôi để bắt đầu."
 
-#: includes/Admin/Assets.php:430
+#: includes/Admin/Onboarding/Onboarding.php:182
 #, fuzzy
-msgid "Use a theme instead"
-msgstr "Sử dụng một chủ đề thay thế"
+msgid ""
+"Use AI to build your website in minutes — just answer a few questions and "
+"we'll generate a site tailored to your needs."
+msgstr ""
+"Sử dụng trí tuệ nhân tạo (AI) để tạo trang web của bạn chỉ trong vài phút — "
+"chỉ cần trả lời một vài câu hỏi và chúng tôi sẽ tạo ra một trang web phù hợp "
+"với nhu cầu của bạn."
 
-#: includes/Admin/Hooks.php:358
+#: includes/Admin/Hooks.php:378
 msgid ""
 "Use the special discount code <b>ONLYHOSTINGER30</b> to get 30% off on "
 "Omnisend for 6 months when you upgrade."
@@ -2163,61 +2131,37 @@ msgstr ""
 "Sử dụng mã giảm giá đặc biệt <b>ONLYHOSTINGER30</b> để nhận giảm giá 30% "
 "trên Omnisend cho 6 tháng khi bạn nâng cấp."
 
-#: includes/Admin/Assets.php:419
+#: includes/Admin/Assets.php:411
 msgid "Verify phone"
 msgstr "Xác minh số điện thoại"
 
-#: includes/Admin/Hooks.php:513
+#: includes/Admin/Hooks.php:533
 msgid "View checklist"
 msgstr "Xem danh sách kiểm tra"
 
-#: includes/Admin/Assets.php:259
+#: includes/Admin/Assets.php:251
 msgid "View completed"
 msgstr "Xem đã hoàn thành"
 
-#: includes/Admin/Assets.php:334
+#: includes/Admin/Assets.php:326
 msgid "View less"
 msgstr "Thu gọn"
 
-#: includes/Admin/Onboarding/Onboarding.php:568
+#: includes/Admin/Onboarding/Onboarding.php:502
 msgid "View list"
 msgstr "Xem danh sách"
 
-#: includes/Admin/Assets.php:333
+#: includes/Admin/Assets.php:325
 msgid "View more"
 msgstr "Xem thêm"
 
-#: includes/Admin/Assets.php:257
+#: includes/Admin/Assets.php:249
 msgid "View plugins"
 msgstr "Xem plugin"
 
-#: includes/Admin/Onboarding/Onboarding.php:480
-msgid ""
-"Visit hPanel and connect a real domain. If you already did this, please wait "
-"up to 24h until the domain fully connects"
-msgstr ""
-"Đến hPanel và kết nối tên miền thực. Nếu bạn đã làm điều này, vui lòng chờ "
-"(có thể đến 24 giờ) đến khi tên miền được kết nối hoàn toàn."
-
-#: includes/Admin/Assets.php:212
+#: includes/Admin/Assets.php:204
 msgid "Wait for domain propagation"
 msgstr "Chờ tên miền lan truyền"
-
-#: includes/Admin/Onboarding/Onboarding.php:176
-msgid "Want to create a new AI site?"
-msgstr "Bạn muốn tạo một trang AI mới?"
-
-#: includes/Admin/Onboarding/Onboarding.php:198
-msgid "Want to create a new site on a different template?"
-msgstr "Bạn muốn tạo trang mới trên mẫu khác?"
-
-#: includes/Admin/Onboarding/Onboarding.php:239
-msgid "Want to create a new site on a pre-built template?"
-msgstr "Bạn muốn tạo trang mới trên mẫu xây dựng trước?"
-
-#: includes/Admin/Onboarding/Onboarding.php:231
-msgid "Want to create a new site?"
-msgstr "Bạn muốn tạo trang mới?"
 
 #: includes/Errors.php:20
 msgid ""
@@ -2229,68 +2173,65 @@ msgstr ""
 "chủ. Vui lòng thử lại sau, và nếu vấn đề vẫn tiếp tục xảy ra, hãy liên hệ "
 "đội hỗ trợ của chúng tôi để được giúp đỡ."
 
-#: includes/Admin/Assets.php:375 includes/Admin/Onboarding/Onboarding.php:608
+#: includes/Admin/Assets.php:367 includes/Admin/Onboarding/Onboarding.php:542
 msgid "We'll use this information to help you set up your store faster."
 msgstr ""
 "Chúng tôi sẽ dùng thông tin này để hỗ trợ bạn thiết lập cửa hàng nhanh hơn."
 
-#: includes/Admin/Onboarding/Onboarding.php:332
+#: includes/Admin/Onboarding/Onboarding.php:254
 msgid "Website setup"
 msgstr "Thiết lập trang web"
 
-#: includes/Admin/Assets.php:224
+#: includes/Admin/Assets.php:216
 msgid "Website URL"
 msgstr "URL trang web"
 
-#: includes/Admin/Assets.php:377
+#: includes/Admin/Assets.php:369
 msgid "Welcome to WordPress!"
 msgstr "Chào mừng đến WordPress!"
 
-#: includes/Admin/Assets.php:197
+#: includes/Admin/Assets.php:189
 msgid "What type of products or services will you sell?"
 msgstr "Bạn sẽ bán loại sản phẩm hoặc dịch vụ gì?"
 
-#: includes/Admin/Assets.php:466
-#, fuzzy
+#: includes/Admin/Assets.php:462
 msgid "What’s a plugin?"
 msgstr "Plugin là gì?"
 
-#: includes/Admin/Assets.php:462
-#, fuzzy
+#: includes/Admin/Assets.php:458
 msgid "What’s a pre-built website?"
 msgstr "Trang web đã được xây dựng sẵn là gì?"
 
-#: includes/Admin/Assets.php:464
-#, fuzzy
+#: includes/Admin/Assets.php:460
 msgid "What’s a theme?"
-msgstr "Thème là gì?"
+msgstr "Chủ đề là gì?"
 
-#: includes/Admin/Assets.php:196
+#: includes/Admin/Assets.php:188
 msgid "Where is your store located?"
 msgstr "Cửa hàng của bạn ở đâu?"
 
-#: includes/Admin/Assets.php:370
+#: includes/Admin/Assets.php:362
 msgid "WordPress tutorials"
 msgstr "Hướng dẫn WordPress"
 
-#: includes/Admin/Assets.php:350
+#: includes/Admin/Assets.php:342
 msgid "Yes, skip step"
 msgstr "Có, bỏ qua bước"
 
 #. translators: %s php version
-#: hostinger-easy-onboarding.php:81
+#: hostinger-easy-onboarding.php:85
 #, php-format
 msgid "You are running <b>%s</b> PHP version."
 msgstr "Bạn đang chạy phiên bản PHP <b>%s</b>"
 
-#: includes/Admin/Assets.php:338
+#: includes/Admin/Assets.php:330
 msgid ""
 "You can also set up a shipping method without installing additional plugins."
 msgstr ""
 "Bạn cũng có thể thiết lập phương thức vận chuyển mà không cần cài thêm "
 "plugin."
 
-#: includes/Admin/Assets.php:215
+#: includes/Admin/Assets.php:207
 #| msgid ""
 #| "You can connect domain to Hostinger by changing the nameservers. "
 #| "Different domain providers are have unique procedures for changing "
@@ -2304,7 +2245,7 @@ msgstr ""
 "miền. Các nhà cung cấp tên miền khác nhau sẽ có các thủ tục riêng biệt để "
 "thay đổi máy chủ tên miền. Đây là máy chủ tên miền của Hostinger:"
 
-#: includes/Admin/Assets.php:268
+#: includes/Admin/Assets.php:260
 msgid ""
 "You can see the whole post in the editor. Find the description part and "
 "change it to your preferences."
@@ -2312,7 +2253,7 @@ msgstr ""
 "Bạn có thể xem toàn bộ bài đăng trong trình chỉnh sửa. Tìm phần mô tả và "
 "thay đổi nó theo ý thích."
 
-#: includes/Admin/Assets.php:226
+#: includes/Admin/Assets.php:218
 msgid ""
 "You need to purchase a domain for your website before the preview domain "
 "becomes inaccessible. Find a desired website name using a <a style=\"text-"
@@ -2326,60 +2267,34 @@ msgstr ""
 "href=\"https://hpanel.hostinger.com/domains/domain-checker\" >công cụ tìm "
 "kiếm tên miền</a >."
 
-#: includes/Admin/Assets.php:177
+#: includes/Admin/Assets.php:169
 #| msgid "You’ll love these great deals that were handpicked just for you."
 msgid "You'll love these great deals that were handpicked just for you."
 msgstr ""
 "Bạn chắc chắn sẽ thích các ưu đãi đặc biệt được chọn riêng dành cho bạn."
 
-#: includes/Admin/Assets.php:258
+#: includes/Admin/Assets.php:250
 #| msgid "You’re done setting up your online store!"
 msgid "You're done setting up your online store!"
 msgstr "Bạn đã hoàn tất thiết lập website bán hàng!"
 
-#: includes/Admin/Assets.php:195
+#: includes/Admin/Assets.php:187
 msgid "Your business email"
 msgstr "Email doanh nghiệp của bạn"
 
-#: includes/Admin/Onboarding/Onboarding.php:232
-msgid ""
-"Your new site will replace the current one. Choose from 140+ professional "
-"templates or use AI."
-msgstr ""
-"Trang mới của bạn sẽ thay thế trang hiện tại. Chọn từ hơn 140 mẫu chuyên "
-"nghiệp hoặc dùng AI."
-
-#: includes/Admin/Onboarding/Onboarding.php:199
-#: includes/Admin/Onboarding/Onboarding.php:240
-msgid ""
-"Your new site will replace the current one. Choose from 140+ professional "
-"templates."
-msgstr ""
-"Trang mới của bạn sẽ thay thế trang hiện tại. Chọn từ hơn 140 mẫu chuyên "
-"nghiệp."
-
-#: includes/Admin/Onboarding/Onboarding.php:177
-msgid ""
-"Your new site will replace the current one. Use the same description or "
-"change it."
-msgstr ""
-"Trang web mới sẽ thay thế trang hiện tại. Sử dụng chung mô tả hoặc thay đổi "
-"nó."
-
-#: includes/Admin/Assets.php:200 includes/Admin/Assets.php:243
+#: includes/Admin/Assets.php:192 includes/Admin/Assets.php:235
 msgid "Your progress"
 msgstr "Tiến trình"
 
-#: includes/Admin/Assets.php:194
+#: includes/Admin/Assets.php:186
 msgid "Your store name"
 msgstr "Tên cửa hàng"
 
-#: includes/Admin/Assets.php:459
-#, fuzzy
+#: includes/Admin/Assets.php:455
 msgid "Your website failed to build. Please try again."
-msgstr "Trang web của bạn không thể được xây dựng. Vui lòng thử lại."
+msgstr "Trang web của bạn không thể xây dựng. Vui lòng thử lại."
 
-#: includes/Admin/Assets.php:225
+#: includes/Admin/Assets.php:217
 msgid ""
 "Your website is already published and can be accessed using Hostinger free "
 "temporary subdomain right now. Here is the current URL of your website:"
@@ -2387,11 +2302,10 @@ msgstr ""
 "Trang web của bạn đã xuất bản và có thể truy cập bằng tên miền phụ tạm thời "
 "của Hostinger ngay bây giờ. Đây là URL hiện tại của trang web:"
 
-#: includes/Admin/Assets.php:457
-#, fuzzy
+#: includes/Admin/Assets.php:453
 msgid "Your website is ready"
 msgstr "Trang web của bạn đã sẵn sàng"
 
-#: includes/Admin/Assets.php:223
+#: includes/Admin/Assets.php:215
 msgid "👋 Welcome to WordPress"
 msgstr "👋 Chào mừng đến với WordPress"

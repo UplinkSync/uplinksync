@@ -4,6 +4,7 @@ namespace Hostinger\AiTheme\Builder;
 
 use Hostinger\AiTheme\Builder\Dto\ColorPaletteDto;
 use Hostinger\AiTheme\Builder\Elementor\KitManager;
+use Hostinger\AiTheme\Constants\ApiRoutes;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -47,17 +48,22 @@ class Colors {
     }
 
     public function generate_colors(): bool {
-        $colors = $this->fetch_colors_from_api( 1 );
+        if ( Helper::should_render_india_version() ) {
+	        $colors = $this->get_india_palette();
+        } else {
+            $colors = $this->fetch_colors_from_api( 1 );
+        }
+
         if ( empty( $colors ) ) {
             return false;
         }
 
-        $first_color = array_shift( $colors );
-        if ( empty( $first_color['color1'] ) ) {
+        $first_palette = array_shift( $colors );
+        if ( empty( $first_palette['color1'] ) ) {
             return false;
         }
 
-        return $this->set_colors( $first_color );
+        return $this->set_colors( $first_palette );
     }
 
     public function generate_color_options(): array {
@@ -65,6 +71,11 @@ class Colors {
 
         if ( ! empty( $color_options ) ) {
             update_option( 'hostinger_ai_color_options', $color_options, true );
+
+            $first_color = $color_options[0] ?? null;
+            if ( ! empty( $first_color['color1'] ) ) {
+                $this->set_colors( $first_color );
+            }
         }
 
         return $color_options ?? array();
@@ -77,16 +88,16 @@ class Colors {
         }
 
         $params = array(
-            'description'        => $this->description,
-            'gradients'          => array(
+            'description'      => $this->description,
+            'gradients'        => array(
                 'z48lj' => 1,
             ),
             'numberOfPalettes' => $number_of_palettes,
         );
 
-        $colors = $this->wh_api_client->post( '/api/v1/installations/' . $software_id . '/content/colors', $params );
-        if( ! empty( $colors ) ) {
-            foreach( $colors as &$color ) {
+        $colors = $this->wh_api_client->post( ApiRoutes::INSTALLATIONS_BASE . $software_id . '/content/colors', $params );
+        if ( ! empty( $colors ) ) {
+            foreach ( $colors as &$color ) {
                 if ( empty( $color['color1'] ) ) {
                     continue;
                 }
@@ -105,7 +116,6 @@ class Colors {
             return false;
         }
 
-        update_option( 'hostinger_ai_version', time(), true );
         update_option( 'hostinger_ai_colors', $colors, true );
 
         $builder_type = get_option( 'hostinger_ai_builder_type', 'gutenberg' );

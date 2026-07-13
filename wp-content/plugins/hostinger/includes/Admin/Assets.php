@@ -57,7 +57,7 @@ class Assets {
             'hostinger_tools_styles',
             HOSTINGER_VUE_ASSETS_URL . '/main.css',
             array(),
-            HOSTINGER_VERSION
+            HOSTINGER_WORDPRESS_PLUGIN_VERSION
         );
 
         // Plugin rating styles.
@@ -65,7 +65,7 @@ class Assets {
             'hostinger_rating_styles',
             HOSTINGER_ASSETS_URL . '/css/plugin-rating.min.css',
             array(),
-            HOSTINGER_VERSION
+            HOSTINGER_WORDPRESS_PLUGIN_VERSION
         );
     }
 
@@ -74,7 +74,7 @@ class Assets {
             'hostinger_tools_global_styles',
             HOSTINGER_ASSETS_URL . 'css/hostinger-global.min.css',
             array(),
-            HOSTINGER_VERSION
+            HOSTINGER_WORDPRESS_PLUGIN_VERSION
         );
     }
 
@@ -93,7 +93,7 @@ class Assets {
                 'jquery',
                 'wp-i18n',
             ),
-            HOSTINGER_VERSION,
+            HOSTINGER_WORDPRESS_PLUGIN_VERSION,
             false
         );
 

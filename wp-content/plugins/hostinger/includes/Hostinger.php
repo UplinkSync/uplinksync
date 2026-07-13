@@ -42,8 +42,8 @@ class Hostinger {
      * @return string
      */
     private function get_plugin_version(): string {
-        if ( defined( 'HOSTINGER_VERSION' ) ) {
-            return HOSTINGER_VERSION;
+        if ( defined( 'HOSTINGER_WORDPRESS_PLUGIN_VERSION' ) ) {
+            return HOSTINGER_WORDPRESS_PLUGIN_VERSION;
         }
 
         return '1.0.0';

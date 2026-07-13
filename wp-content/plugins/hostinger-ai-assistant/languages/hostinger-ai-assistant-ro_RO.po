@@ -11,15 +11,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-08-19T12:02:35+00:00\n"
-"PO-Revision-Date: 2026-02-24 07:57+0000\n"
+"PO-Revision-Date: 2026-06-30 07:26+0000\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Domain: hostinger-ai-assistant\n"
 "Language: ro_RO\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 :(((n%100>19)||(( n%100==0)&&(n!"
 "=0)))? 2 : 1));\n"
-"X-Loco-Version: 2.8.1; wp-6.9.1; php-8.2.29"
+"X-Loco-Version: 2.8.5; wp-7.0; php-8.2.30"
 
-#: includes-psr4/Mcp/Abilities/AbilitiesRegistry.php:78
+#: includes-psr4/Mcp/Abilities/AbilitiesRegistry.php:94
 msgid "Abilities that provide a way of interacting with WordPress site."
 msgstr ""
 "Abilități care oferă o modalitate de interacțiune cu site-ul WordPress."
@@ -29,6 +29,26 @@ msgid "Action Failed. Try again or contact support. Apologies."
 msgstr ""
 "Acțiunea a eșuat. Încearcă din nou sau contactează echipa de asistență. Ne "
 "cerem scuze."
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:118
+#, fuzzy
+msgid "Activate an installed plugin by plugin file path."
+msgstr "Activați un plugin instalat prin calea fișierului plugin."
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:118
+#, fuzzy
+msgid "Activate an installed theme by stylesheet directory name."
+msgstr "Activați o temă instalată după numele directorului foii de stil."
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:117
+#, fuzzy
+msgid "Activate Plugin"
+msgstr "Activați Plugin-ul"
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:117
+#, fuzzy
+msgid "Activate Theme"
+msgstr "Activați tema"
 
 #: admin/class-hostinger-ai-assistant-translations.php:60
 msgid "Active"
@@ -61,7 +81,7 @@ msgstr "Adaugă o categorie de produse"
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:448
 #, fuzzy
 msgid "Add an image inside my content"
-msgstr "Adăugați o imagine în conținutul meu"
+msgstr "Să adaug o imagine în conținutul meu"
 
 #: admin/class-hostinger-ai-assistant-translations.php:75
 #, fuzzy
@@ -97,9 +117,9 @@ msgstr ""
 "După ce începi o nouă discuție, vei putea accesa discuțiile anterioare din "
 "istoric."
 
-#: admin/class-hostinger-ai-assistant-admin.php:166
-#: admin/class-hostinger-ai-assistant-admin.php:167
-#: admin/class-hostinger-ai-assistant-admin.php:184
+#: admin/class-hostinger-ai-assistant-admin.php:171
+#: admin/class-hostinger-ai-assistant-admin.php:172
+#: admin/class-hostinger-ai-assistant-admin.php:189
 #: admin/partials/hostinger-ai-assistant-tab-view.php:24
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/index.js:10
 msgid "AI Content Creator"
@@ -129,7 +149,7 @@ msgstr ""
 "A intervenit o eroare neașteptată. Te rugăm să încerci din nou sau să "
 "contactezi echipa de asistență."
 
-#: includes-psr4/Mcp/McpServer.php:64
+#: includes-psr4/Mcp/McpServer.php:65
 msgid "API key required"
 msgstr "Cheie API necesară"
 
@@ -164,13 +184,42 @@ msgstr ""
 "\"titlu\", \"imagine\"])"
 
 #: admin/class-hostinger-ai-assistant-translations.php:53
-msgid "Ask Kodee"
-msgstr "Întreabă-l pe Kodee"
+#, fuzzy
+msgid "Ask AI"
+msgstr "Întreabă IA"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:168
+#, fuzzy
+msgid ""
+"Assign a menu to a given theme location (e.g., primary). Provide location "
+"and menu ID."
+msgstr ""
+"Atribuiți un meniu unei anumite poziții din temă (de exemplu, „primary”). "
+"Specificați poziția și ID-ul meniului."
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:73
+#, fuzzy
+msgid ""
+"Assign a navigation to a template part by providing template_part_id and "
+"navigation_id."
+msgstr ""
+"Atribuiți o navigație unei părți de șablon, specificând template_part_id și "
+"navigation_id."
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/AssignGlobalColor.php:14
 #, fuzzy
 msgid "Assign Elementor Global Color"
 msgstr "Atribuiți culoarea globală Elementor"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:167
+#, fuzzy
+msgid "Assign Menu To Location"
+msgstr "Atribuire meniu unei locații"
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:72
+#, fuzzy
+msgid "Assign Navigation To Template Part"
+msgstr "Atribuirea navigării către o parte a șablonului"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/AssignGlobalColor.php:15
 #, fuzzy
@@ -215,6 +264,19 @@ msgstr ""
 "Echilibrează profunzimea și lizibilitatea, atrăgând audiența și conducând la "
 "vânzări."
 
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:90
+#, fuzzy
+msgid ""
+"Batch create, update, and delete WooCommerce coupons in a single request."
+msgstr ""
+"Creați, actualizați și ștergeți în lot cupoane WooCommerce într-o singură "
+"cerere."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:89
+#, fuzzy
+msgid "Batch Update WooCommerce Coupons"
+msgstr "Batch Update WooCommerce Cupoane"
+
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:50
 #, fuzzy
 msgid "Border color"
@@ -225,10 +287,22 @@ msgstr "Culoarea marginii"
 msgid "Border color (hex, rgb, rgba)"
 msgstr "Culoarea marginii (hex, rgb, rgba)"
 
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:124
+#, fuzzy
+msgid "Border radius (number for all corners) or object with corners and unit"
+msgstr ""
+"Raza de rotunjire a muchiilor (valoare valabilă pentru toate colțurile) sau "
+"obiect cu colțuri și unitate de măsură"
+
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:291
 #, fuzzy
 msgid "Border radius for corners"
 msgstr "Raza frontierei pentru colțuri"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:168
+#, fuzzy
+msgid "Border style"
+msgstr "Stilul „Border”"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:242
 #, fuzzy
@@ -239,6 +313,13 @@ msgstr "Tipul stilului de frontieră"
 #, fuzzy
 msgid "Border styling"
 msgstr "Stilizarea frontierelor"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:159
+#, fuzzy
+msgid "Border width (number for all sides) or object with sides and unit"
+msgstr ""
+"Lățimea marginii (o singură valoare pentru toate laturile) sau obiect cu "
+"laturi și unitate de măsură"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:254
 #, fuzzy
@@ -292,7 +373,7 @@ msgstr "Culoarea textului butonului"
 msgid "Bypass code for maintenance mode"
 msgstr "Cod de acces pentru modul de mentenanță"
 
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:187
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:191
 msgid ""
 "Bypass code for maintenance mode. Needed only when maintenance mode is "
 "enabled."
@@ -304,6 +385,21 @@ msgstr ""
 #: admin/partials/hostinger-ai-assistant-tab-view.php:251
 msgid "Cancel"
 msgstr "Anulează"
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:324
+#, fuzzy
+msgid "Cannot delete an active plugin."
+msgstr "Nu se poate șterge un plugin activ."
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:313
+#, fuzzy
+msgid "Cannot delete the active parent theme."
+msgstr "Nu se poate șterge tema părinte activă."
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:305
+#, fuzzy
+msgid "Cannot delete the active theme."
+msgstr "Nu se poate șterge tema activă."
 
 #: admin/class-hostinger-ai-assistant-translations.php:58
 msgid "Cannot restart the chat when Kodee is responding"
@@ -361,6 +457,43 @@ msgstr ""
 "Proprietăți de culoare. Valorile trebuie să fie culori CSS valide (hex, rgb, "
 "rgba). Exemplu: \"#FF0000\" sau \"rgb(255,0,0)\""
 
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:105
+#, fuzzy
+msgid "Column gap for grid or flex (px)"
+msgstr "Spațiu între coloane pentru grid sau flex (px)"
+
+#: includes-psr4/Nudges/WooCommerceSetupNudge.php:61
+#, fuzzy
+msgid "Complete WooCommerce setup"
+msgstr "Configurarea completă a WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/DeleteContainer.php:30
+#, fuzzy
+msgid ""
+"Confirm deletion when the subtree is complex (many descendants) and children "
+"will be removed."
+msgstr ""
+"Confirmați ștergerea atunci când subarborele este complex (are mulți "
+"descendenți) și vor fi eliminați copiii."
+
+#: includes-psr4/Nudges/DomainNudge.php:99
+#, fuzzy
+msgid "Connect my domain"
+msgstr "Conectează-mi domeniul"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:61
+#, fuzzy
+msgid "Container layout type"
+msgstr "Tipul de dispunere a containerelor"
+
+#. translators: %s: container id
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/DeleteContainer.php:92
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:367
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateContainer.php:207
+#, fuzzy, php-format
+msgid "Container with ID '%s' not found"
+msgstr "Nu s-a găsit containerul cu ID-ul „%s”"
+
 #: admin/partials/hostinger-ai-assistant-tab-view.php:121
 #: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:77
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:431
@@ -375,6 +508,11 @@ msgstr "Ideea principală a conținutului"
 msgid "Content Type"
 msgstr "Tipul de conținut"
 
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:71
+#, fuzzy
+msgid "Content width behavior for the container"
+msgstr "Comportamentul lățimii conținutului pentru container"
+
 #: admin/class-hostinger-ai-assistant-translations.php:79
 msgid "Conversation was closed"
 msgstr "Conversația a fost închisă"
@@ -388,20 +526,61 @@ msgstr "Transformă emoticoanelor în grafică"
 msgid "Could not determine content field for widget type"
 msgstr "Nu s-a putut determina câmpul de conținut pentru tipul de widget"
 
-#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:283
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:282
 msgid "Could not determine file type"
 msgstr "Nu s-a putut determina tipul de fișier"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/CreateContainer.php:103
+#, fuzzy
+msgid "Could not insert the new container at requested position"
+msgstr "Nu s-a putut insera noul container în poziția solicitată"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/BaseElementorTool.php:48
 #, fuzzy
 msgid "Could not parse Elementor data: "
 msgstr "Nu s-a putut analiza datele Elementor:"
 
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:108
+#, fuzzy
+msgid ""
+"Create a new menu item. Provide title, url or object_id/object, and menu "
+"(menu_id)."
+msgstr ""
+"Creați un element nou de meniu. Introduceți titlul, adresa URL sau "
+"object_id/object și meniul (menu_id)."
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:38
+#, fuzzy
+msgid "Create a new navigation menu."
+msgstr "Creați un nou meniu de navigare."
+
 #: admin/class-hostinger-ai-assistant-translations.php:171
 msgid "Create a new product category in WooCommerce"
 msgstr "Creează o nouă categorie de produse în WooCommerce"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:235
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:43
+#, fuzzy
+msgid "Create a new Site Editor navigation."
+msgstr "Creați o nouă bară de navigare pentru Editorul de site."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:42
+#, fuzzy
+msgid ""
+"Create a new WooCommerce coupon. Requires a coupon code and discount details."
+msgstr ""
+"Creați un nou cupon WooCommerce. Necesită un cod de cupon și detalii de "
+"reducere."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:42
+#, fuzzy
+msgid ""
+"Create a new WooCommerce order. Provide customer and line items data as "
+"needed."
+msgstr ""
+"Creați o nouă comandă WooCommerce. Introduceți datele referitoare la client "
+"și la articolele din comandă, după cum este necesar."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:234
 msgid "Create a new WooCommerce product brand. Requires name."
 msgstr "Creează o nouă marcă de produs WooCommerce. Necesită nume."
 
@@ -479,6 +658,26 @@ msgstr "Creează conținut"
 msgid "Create Custom Post Type Post"
 msgstr "Creează o postare tip postare personalizată"
 
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/CreateContainer.php:14
+#, fuzzy
+msgid "Create Elementor Container"
+msgstr "Creare container Elementor"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:37
+#, fuzzy
+msgid "Create Menu"
+msgstr "Creează meniu"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:107
+#, fuzzy
+msgid "Create Menu Item"
+msgstr "Creare element de meniu"
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:42
+#, fuzzy
+msgid "Create Navigation"
+msgstr "Creează meniul de navigare"
+
 #: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:39
 msgid "Create Page"
 msgstr "Creează pagină"
@@ -503,11 +702,21 @@ msgstr "Creează etichetă"
 msgid "Create User"
 msgstr "Creează utilizator"
 
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:41
+#, fuzzy
+msgid "Create WooCommerce Coupon"
+msgstr "Creați cupon WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:41
+#, fuzzy
+msgid "Create WooCommerce Order"
+msgstr "Creare comandă WooCommerce"
+
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:41
 msgid "Create WooCommerce Product"
 msgstr "Creează produs WooCommerce"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:234
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:233
 msgid "Create WooCommerce Product Brand"
 msgstr "Creează brand de produs WooCommerce"
 
@@ -519,21 +728,78 @@ msgstr "Creează o categorie de produse WooCommerce"
 msgid "Create WooCommerce Product Tag"
 msgstr "Creează o etichetă de produs WooCommerce"
 
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/CreateContainer.php:15
+#, fuzzy
+msgid ""
+"Creates a new Elementor container (section) at root or inside a parent "
+"container. Can optionally create multiple inner columns."
+msgstr ""
+"Creează un nou container Elementor (secțiune) la nivelul rădăcinii sau în "
+"interiorul unui container părinte. Opțional, poate crea mai multe coloane "
+"interioare."
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:85
+#, fuzzy
+msgid "Cross‑axis alignment for flex containers"
+msgstr "Alinierea pe axe încrucișate pentru containerele flexibile"
+
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:292
 msgid "CSS & JS Combine"
 msgstr "CSS & JS Combine"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:34
+#, fuzzy
+msgid "CSS color value for background (e.g., #1e90ff, rgba(...), color name)"
+msgstr ""
+"Valoarea culorii CSS pentru fundal (de exemplu, #1e90ff, rgba(...), "
+"denumirea culorii)"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:163
+#, fuzzy
+msgid "CSS color value for border"
+msgstr "Valoarea culorii CSS pentru chenar"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:273
 msgid "CSS, JS and HTML Minification"
 msgstr "Minificarea fișierelor CSS, JS și HTML"
 
-#: includes-psr4/Mcp/McpServer.php:42
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:33
+#, fuzzy
+msgid "Custom global color _id to update (optional)"
+msgstr "Culoare globală personalizată _id pentru actualizare (opțional)"
+
+#: includes-psr4/Mcp/McpServer.php:43
 msgid "Custom MCP Server for Hostinger AI Assistant."
 msgstr "Server MCP personalizat pentru asistentul AI Hostinger."
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:60
+#, fuzzy
+msgid "Custom typography preset _id to update (optional)"
+msgstr "Presetare tipografică personalizată _id de actualizat (opțional)"
 
 #: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:49
 msgid "Date format"
 msgstr "Formatul datei"
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:163
+#, fuzzy
+msgid "Deactivate an active plugin by plugin file path."
+msgstr "Dezactivați un plugin activ prin calea fișierului plugin."
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:162
+#, fuzzy
+msgid "Deactivate Plugin"
+msgstr "Dezactivați Plugin-ul"
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:163
+#, fuzzy
+msgid "Deactivate the currently active theme by switching to a fallback theme."
+msgstr "Dezactivați tema activă curentă prin trecerea la o temă de rezervă."
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:162
+#, fuzzy
+msgid "Deactivate Theme"
+msgstr "Dezactivați tema"
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:245
 msgid "Default Cache"
@@ -555,7 +821,48 @@ msgstr "Categoria de postare implicită"
 msgid "Default post format"
 msgstr "Formatul implicit al postării"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:261
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:134
+#, fuzzy
+msgid "Delete a menu item by ID."
+msgstr "Șterge un element de meniu după ID."
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:64
+#, fuzzy
+msgid "Delete a navigation menu by ID."
+msgstr "Șterge un meniu de navigare după ID."
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:69
+#, fuzzy
+msgid "Delete a Site Editor navigation by ID."
+msgstr "Ștergeți o bară de navigare din Site Editor după ID."
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:70
+#, fuzzy
+msgid ""
+"Delete a specific revision for an item. Provide REST API base and parent ID, "
+"plus the revision ID."
+msgstr ""
+"Ștergeți o revizie specifică pentru un element. Specificați ID-ul de bază și "
+"ID-ul părintelui din API-ul REST, precum și ID-ul reviziei."
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:51
+#, fuzzy
+msgid "Delete a template part by ID."
+msgstr "Șterge o parte a șablonului după ID."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:68
+#, fuzzy
+msgid "Delete a WooCommerce coupon by ID. This action cannot be undone."
+msgstr ""
+"Ștergeți un cupon WooCommerce după ID. Această acțiune nu poate fi anulată."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:68
+#, fuzzy
+msgid "Delete a WooCommerce order by ID. This action cannot be undone."
+msgstr ""
+"Ștergeți o comandă WooCommerce după ID. Această acțiune nu poate fi anulată."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:260
 msgid "Delete a WooCommerce product brand by ID."
 msgstr "Șterge un brand de produs WooCommerce după ID."
 
@@ -611,6 +918,24 @@ msgid "Delete a WordPress user by ID. This action cannot be undone."
 msgstr ""
 "Șterge un utilizator WordPress după ID. Această acțiune nu poate fi anulată."
 
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:73
+#, fuzzy
+msgid ""
+"Delete an installed plugin by plugin file path. Cannot delete an active "
+"plugin."
+msgstr ""
+"Ștergeți un plugin instalat după calea fișierului plugin. Nu se poate șterge "
+"un plugin activ."
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:73
+#, fuzzy
+msgid ""
+"Delete an installed theme by stylesheet directory name. Cannot delete the "
+"active or parent theme."
+msgstr ""
+"Ștergeți o temă instalată după numele directorului de foi de stil. Nu se "
+"poate șterge tema activă sau tema părinte."
+
 #: includes-psr4/Mcp/Abilities/Tools/CategoriesTools.php:65
 msgid "Delete Category"
 msgstr "Șterge categoria"
@@ -619,31 +944,81 @@ msgstr "Șterge categoria"
 msgid "Delete Custom Post Type Post"
 msgstr "Șterge postarea tip postare personalizată"
 
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/DeleteContainer.php:14
+#, fuzzy
+msgid "Delete Elementor Container"
+msgstr "Șterge containerul Elementor"
+
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:55
 msgid "Delete Media"
 msgstr "Șterge media"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:63
+#, fuzzy
+msgid "Delete Menu"
+msgstr "Meniul „Ștergere”"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:133
+#, fuzzy
+msgid "Delete Menu Item"
+msgstr "Ștergere element din meniu"
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:68
+#, fuzzy
+msgid "Delete Navigation"
+msgstr "Șterge navigarea"
 
 #: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:65
 msgid "Delete Page"
 msgstr "Șterge pagina"
 
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:72
+#, fuzzy
+msgid "Delete Plugin"
+msgstr "Ștergeți pluginul"
+
 #: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:65
 msgid "Delete Post"
 msgstr "Șterge postarea"
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:69
+#, fuzzy
+msgid "Delete Revision"
+msgstr "Șterge revizia"
 
 #: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:65
 msgid "Delete Tag"
 msgstr "Șterge eticheta"
 
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:50
+#, fuzzy
+msgid "Delete Template Part"
+msgstr "Șterge partea de șablon"
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:72
+#, fuzzy
+msgid "Delete Theme"
+msgstr "Ștergeți tema"
+
 #: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:89
 msgid "Delete User"
 msgstr "Șterge utilizatorul"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:67
+#, fuzzy
+msgid "Delete WooCommerce Coupon"
+msgstr "Ștergeți cuponul WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:67
+#, fuzzy
+msgid "Delete WooCommerce Order"
+msgstr "Ștergere comandă WooCommerce"
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:67
 msgid "Delete WooCommerce Product"
 msgstr "Șterge produsul WooCommerce"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:260
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:259
 msgid "Delete WooCommerce Product Brand"
 msgstr "Șterge brandul produsului WooCommerce"
 
@@ -671,11 +1046,11 @@ msgstr "Descrierea este goală. Te rugăm să ne oferi o descriere validă."
 msgid "Disable authentication password"
 msgstr "Dezactivează parola de autentificare"
 
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:203
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:207
 msgid "Disable authentication password status"
 msgstr "Dezactivează starea parolei de autentificare"
 
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:191
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:195
 msgid "Disable XML-RPC status"
 msgstr "Dezactivează statusul XML-RPC"
 
@@ -713,14 +1088,26 @@ msgstr "Editează o postare WordPress existentă după ID"
 msgid "Edit as a draft"
 msgstr "Editează o ciornă"
 
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:17
+#, fuzzy
+msgid "Edit Elementor Container Styles"
+msgstr "Editare stiluri container Elementor"
+
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:371
 #, fuzzy
 msgid "Edit prompt"
-msgstr "Editare prompt"
+msgstr "Editează mesajul de solicitare"
 
 #: admin/partials/hostinger-ai-assistant-tab-view.php:48
 msgid "Edit site"
 msgstr "Editează site-ul"
+
+#. translators: %s: element id
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:229
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateContainer.php:92
+#, fuzzy, php-format
+msgid "Element '%s' is not a container"
+msgstr "Elementul „%s” nu este un container"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:326
 #, fuzzy
@@ -731,7 +1118,7 @@ msgstr "Setări de aliniere a elementelor"
 msgid "Enable llms.txt generation"
 msgstr "Activează generarea llms.txt"
 
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:207
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:211
 msgid "Enable llms.txt status"
 msgstr "Activează starea llms.txt"
 
@@ -798,9 +1185,21 @@ msgstr "Imagine externă prezentată"
 msgid "Failed to apply preset: %s"
 msgstr "A eșuat aplicarea preselecției: %s"
 
+#. translators: %s: plugin file path.
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:353
+#, fuzzy, php-format
+msgid "Failed to delete plugin \"%s\"."
+msgstr "Nu s-a reușit ștergerea pluginului \"%s\"."
+
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:536
 msgid "Failed to delete post"
 msgstr "Ștergerea mesajului a eșuat"
+
+#. translators: %s: theme stylesheet directory name.
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:340
+#, fuzzy, php-format
+msgid "Failed to delete theme \"%s\"."
+msgstr "Nu s-a reușit ștergerea temei \"%s\"."
 
 #. translators: %s: Error message
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:223
@@ -813,6 +1212,47 @@ msgstr "A eșuat golirea cache-ului: %s"
 #, php-format
 msgid "Failed to get settings: %s"
 msgstr "Nu s-a reușit obținerea setărilor: %s"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/CreateContainer.php:84
+#, fuzzy
+msgid "Failed to insert container into parent elements"
+msgstr "Nu s-a putut insera containerul în elementele părinte"
+
+#. translators: %s: plugin slug.
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:282
+#, fuzzy, php-format
+msgid "Failed to install plugin \"%s\"."
+msgstr "A eșuat instalarea pluginului \"%s\"."
+
+#. translators: %s: theme slug.
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:284
+#, fuzzy, php-format
+msgid "Failed to install theme \"%s\"."
+msgstr "A eșuat instalarea temei \"%s\"."
+
+#. translators: %s: plugin slug.
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:303
+#, fuzzy, php-format
+msgid "Failed to locate installed plugin \"%s\"."
+msgstr "Nu s-a reușit localizarea pluginului instalat \"%s\"."
+
+#. translators: %s: plugin file path.
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:474
+#, fuzzy, php-format
+msgid "Failed to update plugin \"%s\"."
+msgstr "A eșuat actualizarea pluginului \"%s\"."
+
+#. translators: %s: theme stylesheet directory name.
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:459
+#, fuzzy, php-format
+msgid "Failed to update theme \"%s\"."
+msgstr "A eșuat actualizarea temei \"%s\"."
+
+#. translators: %s: theme slug name.
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:482
+#, fuzzy, php-format
+msgid "Fallback theme \"%s\" not found."
+msgstr "Tema de rezervă \"%s\" nu a fost găsită."
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:265
 msgid "File is required"
@@ -840,6 +1280,7 @@ msgid "Filter by parent post ID"
 msgstr "Filtrează după ID-ul postării principale"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/ListPages.php:28
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ListTemplates.php:22
 #, fuzzy
 msgid "Filter by post status (publish, draft, any). Default: any"
 msgstr "Filtrează după starea postării (publish, draft, any). Implicit: orice"
@@ -862,6 +1303,11 @@ msgstr "Găsește și filtrează postările cu opțiuni de paginare"
 #, fuzzy
 msgid "Find Elementor Widgets"
 msgstr "Găsiți Widget-uri Elementor"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:66
+#, fuzzy
+msgid "Flex direction (row or column). Applies to flex layout."
+msgstr "Direcția flex (rând sau coloană). Se aplică la dispunerea flex."
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:58
 msgid "Flush LiteSpeed Cache"
@@ -901,11 +1347,11 @@ msgstr "Forțează ștergerea categoriei"
 msgid "Force HTTPS redirects"
 msgstr "Forțează redirecționările HTTPS"
 
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:195
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:199
 msgid "Force HTTPS status"
 msgstr "Forțează statusul HTTPS"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:267
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:266
 msgid "Force Product Brand deletion"
 msgstr "Forțează ștergerea brandului de produs"
 
@@ -917,7 +1363,7 @@ msgstr "Forțează ștergerea etichetei"
 msgid "Force WWW in URLs"
 msgstr "Forțează WWW în URL-uri"
 
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:199
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:203
 msgid "Force WWW status"
 msgstr "Forțează statutul WWW"
 
@@ -961,9 +1407,36 @@ msgstr ""
 "disponibile cu descrierile, caracteristicile, nivelurile de risc și "
 "cerințele acestora."
 
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:86
+#, fuzzy
+msgid "Get a list of menu items with filtering options."
+msgstr "Obțineți o listă cu elementele din meniu, cu opțiuni de filtrare."
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:16
+#, fuzzy
+msgid "Get a list of navigation menus."
+msgstr "Obțineți o listă cu meniurile de navigare."
+
 #: admin/class-hostinger-ai-assistant-translations.php:175
 msgid "Get a list of orders"
 msgstr "Obține o listă de comenzi"
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:21
+#, fuzzy
+msgid "Get a list of Site Editor navigations."
+msgstr "Obțineți o listă cu opțiunile de navigare din Editorul de site."
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:16
+#, fuzzy
+msgid "Get a list of template parts."
+msgstr "Obțineți o listă cu componentele șablonului."
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:156
+#, fuzzy
+msgid "Get a list of theme menu locations and their assigned menus."
+msgstr ""
+"Obțineți o listă cu locațiile meniurilor tematice și meniurile asociate "
+"acestora."
 
 #: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:20
 msgid ""
@@ -972,6 +1445,44 @@ msgid ""
 msgstr ""
 "Obține o listă de comenzi WooCommerce cu funcții de căutare și filtrare. "
 "Returnează o listă de comenzi care corespund criteriilor."
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:97
+#, fuzzy
+msgid "Get a single menu item by ID."
+msgstr "Preia un singur element din meniu după ID."
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:32
+#, fuzzy
+msgid "Get a single navigation by ID."
+msgstr "Obține un singur element de navigare după ID."
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:27
+#, fuzzy
+msgid "Get a single navigation menu by ID."
+msgstr "Obține un singur meniu de navigare după ID."
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:27
+#, fuzzy
+msgid "Get a single template part by ID."
+msgstr "Preia o singură piesă din șablon după ID."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:31
+#, fuzzy
+msgid ""
+"Get a single WooCommerce coupon by ID. Returns the full coupon object with "
+"all fields."
+msgstr ""
+"Obține un singur cupon WooCommerce după ID. Returnează obiectul cupon "
+"complet cu toate câmpurile."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:31
+#, fuzzy
+msgid ""
+"Get a single WooCommerce order by ID. Returns the full order object with all "
+"fields."
+msgstr ""
+"Preia o singură comandă WooCommerce după ID. Returnează obiectul complet al "
+"comenzii cu toate câmpurile."
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:31
 msgid ""
@@ -1020,6 +1531,15 @@ msgid ""
 msgstr ""
 "Obține un singur utilizator WordPress după ID. Returnează obiectul "
 "utilizator complet cu toate câmpurile."
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:46
+#, fuzzy
+msgid ""
+"Get a specific revision for an item. Provide REST API base and parent ID, "
+"plus the revision ID."
+msgstr ""
+"Obțineți o revizie specifică pentru un element. Furnizați ID-ul de bază și "
+"ID-ul părintelui din API-ul REST, precum și ID-ul reviziei."
 
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:145
 msgid "Get a WordPress custom post type post by ID"
@@ -1101,6 +1621,21 @@ msgstr "Obține media"
 msgid "Get Media File"
 msgstr "Obține fișierul media"
 
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:26
+#, fuzzy
+msgid "Get Menu"
+msgstr "Afișează meniul"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:96
+#, fuzzy
+msgid "Get Menu Item"
+msgstr "Afișează elementul din meniu"
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:31
+#, fuzzy
+msgid "Get Navigation"
+msgstr "Accesează funcția de navigare"
+
 #: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:28
 msgid "Get Page"
 msgstr "Obține pagina"
@@ -1109,6 +1644,11 @@ msgstr "Obține pagina"
 msgid "Get Post"
 msgstr "Obține postarea"
 
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:45
+#, fuzzy
+msgid "Get Revision"
+msgstr "Obține revizuirea"
+
 #: includes-psr4/Mcp/Abilities/Tools/SiteInfoTools.php:16
 msgid "Get Site Info"
 msgstr "Obține informații despre site"
@@ -1116,6 +1656,11 @@ msgstr "Obține informații despre site"
 #: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:28
 msgid "Get Tag"
 msgstr "Obține eticheta"
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:26
+#, fuzzy
+msgid "Get Template Part"
+msgstr "Descărcați partea de șablon"
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:143
 msgid "Get the actual file content (blob) of a WordPress media item."
@@ -1130,11 +1675,16 @@ msgstr "Obține informațiile utilizatorului conectat acum."
 msgid "Get User"
 msgstr "Obține utilizatorul"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:37
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:30
+#, fuzzy
+msgid "Get WooCommerce Coupon"
+msgstr "Obțineți cupon WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:87
 msgid "Get WooCommerce Coupons Report"
 msgstr "Obține raportul cupoanelor WooCommerce"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:38
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:88
 msgid ""
 "Get WooCommerce coupons totals report. Returns count of coupons by coupon "
 "type."
@@ -1142,22 +1692,27 @@ msgstr ""
 "Obține raportul total al cupoanelor WooCommerce. Returnează numărul de "
 "cupoane după tipul de cupon."
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:44
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:94
 msgid "Get WooCommerce Customers Report"
 msgstr "Obține raportul clienților WooCommerce"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:45
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:95
 msgid ""
 "Get WooCommerce customers totals report. Returns statistics about customers."
 msgstr ""
 "Obține raportul total al clienților WooCommerce. Returnează statistici "
 "despre clienți."
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:51
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:30
+#, fuzzy
+msgid "Get WooCommerce Order"
+msgstr "Preluare comandă WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:101
 msgid "Get WooCommerce Orders Report"
 msgstr "Obține raportul comenzilor WooCommerce"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:52
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:102
 msgid "Get WooCommerce orders totals report. Returns statistics about orders."
 msgstr ""
 "Obține raportul total al comenzilor WooCommerce. Returnează statistici "
@@ -1167,22 +1722,22 @@ msgstr ""
 msgid "Get WooCommerce Product"
 msgstr "Obține produsul WooCommerce"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:58
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:108
 msgid "Get WooCommerce Products Report"
 msgstr "Obține raportul produselor WooCommerce "
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:59
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:109
 msgid ""
 "Get WooCommerce products totals report. Returns statistics about products."
 msgstr ""
 "Obține raportul total al produselor WooCommerce. Returnează statistici "
 "despre produse."
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:65
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:115
 msgid "Get WooCommerce Reviews Report"
 msgstr "Obține raportul recenziilor WooCommerce"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:66
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:116
 msgid ""
 "Get WooCommerce reviews totals report. Returns statistics about product "
 "reviews."
@@ -1190,11 +1745,11 @@ msgstr ""
 "Obține raportul total al recenziilor WooCommerce. Returnează statistici "
 "despre recenziile produselor."
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:72
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:122
 msgid "Get WooCommerce Sales Report"
 msgstr "Obține raportul de vânzări WooCommerce"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:73
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:123
 msgid ""
 "Get WooCommerce sales report. Returns detailed sales statistics and revenue "
 "data."
@@ -1235,6 +1790,47 @@ msgstr "Modul Guest și optimizare Guest"
 #: admin/class-hostinger-ai-assistant-translations.php:64
 msgid "Hello 👋"
 msgstr "Salut 👋"
+
+#: includes-psr4/Nudges/WooCommerceSetupNudge.php:49
+#, fuzzy
+msgid ""
+"Hey! It looks like your WooCommerce store isn't fully set up yet. Complete "
+"the remaining steps to make sure your store is ready to sell."
+msgstr ""
+"Hei! Se pare că magazinul tău WooCommerce nu este încă configurat complet. "
+"Parcurge pașii rămași pentru a te asigura că magazinul tău este gata să "
+"vândă."
+
+#. translators: %s: domain expiration date.
+#: includes-psr4/Nudges/DomainRenewalNudge.php:77
+#, fuzzy, php-format
+msgid ""
+"Hey! Just a heads-up — your domain is expiring on %s. Renew it now to keep "
+"your website running without interruption."
+msgstr ""
+"Salut! Doar o informare — domeniul tău expiră pe %s. Reînnoiește-l acum "
+"pentru ca site-ul tău să funcționeze fără întreruperi."
+
+#. translators: %s: hosting plan expiration date.
+#: includes-psr4/Nudges/RenewalNudge.php:81
+#, fuzzy, php-format
+msgid ""
+"Hey! Just a heads-up — your hosting plan is expiring on %s. Renew it now to "
+"keep your website running without interruption."
+msgstr ""
+"Salut! Vă anunțăm că planul dvs. de găzduire expiră pe %s. Reînnoiți-l acum "
+"pentru ca site-ul dvs. să funcționeze fără întreruperi."
+
+#: includes-psr4/Nudges/DomainNudge.php:87
+#, fuzzy
+msgid ""
+"Hey! Your site is still running on a temporary domain. Connecting a custom "
+"domain makes your site look more professional and helps visitors find you. "
+"It only takes a few minutes!"
+msgstr ""
+"Hei! Site-ul tău rulează încă pe un domeniu temporar. Conectarea unui "
+"domeniu personalizat conferă site-ului tău un aspect mai profesional și îi "
+"ajută pe vizitatori să te găsească. Nu durează decât câteva minute!"
 
 #: admin/class-hostinger-ai-assistant-translations.php:68
 #, fuzzy
@@ -1278,7 +1874,7 @@ msgstr "Hostinger"
 msgid "Hostinger AI"
 msgstr "Hostinger AI"
 
-#: includes-psr4/Mcp/Abilities/AbilitiesRegistry.php:77
+#: includes-psr4/Mcp/Abilities/AbilitiesRegistry.php:93
 msgid "Hostinger AI Abilities"
 msgstr "Abilități AI Hostinger"
 
@@ -1336,6 +1932,30 @@ msgstr ""
 #, fuzzy
 msgid "Icon color"
 msgstr "Culoarea pictogramei"
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:121
+#, fuzzy
+msgid "ID of the parent item to restore into."
+msgstr "ID-ul elementului părinte în care se va efectua restaurarea."
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:125
+#, fuzzy
+msgid "ID of the revision to restore from."
+msgstr "ID-ul reviziei din care se va efectua restaurarea."
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:138
+#, fuzzy
+msgid "If preserving children, where to place them into remaining columns"
+msgstr "Dacă se păstrează copiii, unde trebuie plasați în coloanele rămase"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/DeleteContainer.php:25
+#, fuzzy
+msgid ""
+"If true, move the container's children into the parent at the same position "
+"instead of deleting them."
+msgstr ""
+"Dacă este adevărat, mută elementele secundare ale containerului în elementul "
+"părinte, în aceeași poziție, în loc să le șteargi."
 
 #: admin/partials/hostinger-ai-assistant-tab-view.php:182
 msgid ""
@@ -1405,9 +2025,43 @@ msgstr "Inline JS adăugat la Combine"
 msgid "Insert this image inside content"
 msgstr "Inserează această imagine în interiorul conținutului"
 
-#: includes-psr4/Mcp/McpServer.php:72
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:42
+#, fuzzy
+msgid ""
+"Insertion position relative to list (start/end), a sibling (before/after) or "
+"a specific index."
+msgstr ""
+"Poziția de inserare în raport cu lista (început/sfârșit), un element de "
+"același nivel (înainte/după) sau un indice specific."
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:27
+#, fuzzy
+msgid "Install a plugin from WordPress.org by slug."
+msgstr "Instalează un plugin de pe WordPress.org după slug."
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:27
+#, fuzzy
+msgid "Install a theme from WordPress.org by slug."
+msgstr "Instalați o temă de pe WordPress.org prin slug."
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:26
+#, fuzzy
+msgid "Install Plugin"
+msgstr "Instalarea pluginului"
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:26
+#, fuzzy
+msgid "Install Theme"
+msgstr "Instalați tema"
+
+#: includes-psr4/Mcp/McpServer.php:73
 msgid "Invalid API key"
 msgstr "Cheie API nevalidă"
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:171
+#, fuzzy
+msgid "Invalid base API, parent, or revision ID."
+msgstr "API de bază, element părinte sau ID de revizie nevalid(ă)."
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:275
 msgid "Invalid base64 data"
@@ -1430,6 +2084,11 @@ msgstr "Tip post nevalid"
 #, php-format
 msgid "Invalid preset. Allowed presets: %s"
 msgstr "Presetare nevalidă. Presetări permise: %s"
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:222
+#, fuzzy
+msgid "It was an error processing the request."
+msgstr "A apărut o eroare la procesarea cererii."
 
 #: admin/class-hostinger-ai-assistant-translations.php:70
 #, fuzzy
@@ -1525,7 +2184,7 @@ msgstr ""
 "Listează toate tipurile de postări personalizate WordPress disponibile, "
 "inclusiv %s"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:224
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:223
 msgid "List all WooCommerce product brands. Returns a list of product brands."
 msgstr ""
 "Listează toate brandurile de produse WooCommerce. Returnează o listă de "
@@ -1564,6 +2223,11 @@ msgstr "Listează categoriile"
 msgid "List Elementor Pages"
 msgstr "Listați paginile Elementor"
 
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ListTemplates.php:14
+#, fuzzy
+msgid "List Elementor Templates"
+msgstr "Listă de șabloane Elementor"
+
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:90
 msgid "List LiteSpeed Cache Presets"
 msgstr "Listează setările prestabilite ale cache-ului LiteSpeed"
@@ -1572,19 +2236,86 @@ msgstr "Listează setările prestabilite ale cache-ului LiteSpeed"
 msgid "List Media"
 msgstr "Listează media"
 
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:85
+#, fuzzy
+msgid "List Menu Items"
+msgstr "Afișează elementele din meniu"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:155
+#, fuzzy
+msgid "List Menu Locations"
+msgstr "Lista locațiilor din meniu"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:15
+#, fuzzy
+msgid "List Menus"
+msgstr "Meniuri listă"
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:20
+#, fuzzy
+msgid "List Navigations"
+msgstr "Navigare în listă"
+
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:166
+#, fuzzy
+msgid "List of coupon IDs to delete"
+msgstr "Lista ID-urilor de cupoane care urmează să fie șterse"
+
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:156
+#, fuzzy
+msgid "List of coupon objects to create"
+msgstr "Lista obiectelor cupon care urmează să fie create"
+
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:161
+#, fuzzy
+msgid "List of coupon objects to update (must include id)"
+msgstr ""
+"Lista obiectelor cupon care urmează să fie actualizate (trebuie să includă "
+"id-ul)"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:22
+#, fuzzy
+msgid "List of global color updates"
+msgstr "Lista actualizărilor globale privind culorile"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:49
+#, fuzzy
+msgid "List of typography preset updates"
+msgstr "Lista actualizărilor presetărilor tipografice"
+
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:39
 msgid "List Post Types"
 msgstr "Listează tipurile de postări"
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:20
+#, fuzzy
+msgid "List Revisions"
+msgstr "Revizuiri ale listei"
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:21
+#, fuzzy
+msgid ""
+"List revisions for a specific item. Provide its REST API base (e.g., posts, "
+"pages, templates) and the parent ID."
+msgstr ""
+"Afișează modificările aduse unui element specific. Precizează baza API-ului "
+"REST al acestuia (de exemplu, postări, pagini, șabloane) și ID-ul "
+"elementului părinte."
 
 #: includes-psr4/Mcp/Abilities/Tools/TagsTools.php:17
 msgid "List Tags"
 msgstr "Listează etichetele "
 
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:15
+#, fuzzy
+msgid "List Template Parts"
+msgstr "Lista componentelor șablonului"
+
 #: admin/class-hostinger-ai-assistant-translations.php:135
 msgid "List users with their roles"
 msgstr "Listează utilizatorii cu rolurile lor"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:223
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:222
 msgid "List WooCommerce Product Brands"
 msgstr "Listează brandurile produselor WooCommerce"
 
@@ -1626,16 +2357,28 @@ msgstr "Lung"
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:398
 #, fuzzy
 msgid "Main topic"
-msgstr "Subiect principal"
+msgstr "Subiectul principal"
 
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:183
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:187
 msgid "Maintenance mode status"
 msgstr "Statusul modului de mentenanță"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:90
+#, fuzzy
+msgid "Main‑axis alignment for flex containers"
+msgstr "Alinierea pe axa principală pentru containerele flexibile"
 
 #: admin/class-hostinger-ai-assistant-translations.php:73
 #, fuzzy
 msgid "Manage users and permissions"
 msgstr "Gestionați utilizatorii și permisiunile"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:89
+#, fuzzy
+msgid "Margin in px (number for all sides) or object with sides and unit"
+msgstr ""
+"Margine în px (o singură valoare pentru toate laturile) sau obiect cu laturi "
+"și unitate de măsură"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:200
 #, fuzzy
@@ -1664,6 +2407,11 @@ msgstr "Adâncimea maximă de căutare. Implicit: 10"
 msgid "Medium"
 msgstr "Mediu"
 
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:177
+#, fuzzy
+msgid "Menu ID to assign to the location."
+msgstr "ID-ul meniului care trebuie atribuit locației."
+
 #: admin/partials/hostinger-ai-assistant-seo-meta-view.php:29
 msgid "Meta description"
 msgstr "Descriere meta"
@@ -1677,6 +2425,12 @@ msgstr ""
 "căutărilor, ajutând utilizatorul să înțeleagă despre ce este pagina înainte "
 "să dea click."
 
+#. translators: %s is a route parameter name
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:471
+#, fuzzy, php-format
+msgid "Missing required route parameter: %s"
+msgstr "Lipsește un parametru obligatoriu al traseului: %s"
+
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:259
 msgid "Mobile Cache"
 msgstr "Cache mobil"
@@ -1685,6 +2439,11 @@ msgstr "Cache mobil"
 msgid "Most websites"
 msgstr "Majoritatea site-urilor web"
 
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:83
+#, fuzzy
+msgid "Navigation (wp_navigation) post ID."
+msgstr "ID-ul articolului din secțiunea de navigare (wp_navigation)."
+
 #: admin/class-hostinger-ai-assistant-translations.php:23
 #: admin/partials/hostinger-ai-assistant-tab-view.php:105
 #: includes/woocommerce/class-hostinger-ai-assistant-product-ai-metabox.php:88
@@ -1692,16 +2451,45 @@ msgstr "Majoritatea site-urilor web"
 msgid "Neutral"
 msgstr "Neutru"
 
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:41
+#, fuzzy
+msgid "New color value (e.g. #FF0000 or rgba(255,0,0,1))"
+msgstr "Noua valoare a culorii (de exemplu, #FF0000 sau rgba(255,0,0,1))"
+
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/AssignGlobalColor.php:155
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetActiveKit.php:66
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:117
 #, fuzzy
 msgid "No active Elementor kit found"
 msgstr "Nu a fost găsit niciun kit Elementor activ"
+
+#: includes-psr4/Cli/JwtCommand.php:97
+#, fuzzy
+msgid ""
+"No administrator found to issue a token for. Pass --user=<id|login|email>."
+msgstr ""
+"Nu s-a găsit niciun administrator pentru care să se emită un token. Treceți "
+"parametrul --user=<id|login|email>."
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/BaseElementorTool.php:38
 #, fuzzy
 msgid "No Elementor data found for this post"
 msgstr "Nu s-au găsit date Elementor pentru acest post"
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:504
+#, fuzzy
+msgid "No fallback theme available to switch to."
+msgstr "Nu există nicio temă de rezervă disponibilă pentru a trece la ea."
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:208
+#, fuzzy
+msgid "Nothing was updated"
+msgstr "Nu s-a actualizat nimic"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:116
+#, fuzzy
+msgid "Number of inner columns (containers)"
+msgstr "Numărul de coloane interioare (containere)"
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:114
 msgid "Number of items per page"
@@ -1725,6 +2513,23 @@ msgstr "Numărul de postări pe pagină"
 msgid "Number of posts to show per page"
 msgstr "Numărul de mesaje care urmează să fie afișate pe pagină"
 
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ListTemplates.php:28
+#, fuzzy
+msgid "Number of templates to return. Default: 50"
+msgstr ""
+"Numărul de șabloane care urmează să fie returnate. Valoare implicită: 50"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ListTemplates.php:35
+#, fuzzy
+msgid "Number of templates to skip for pagination. Default: 0"
+msgstr ""
+"Numărul de șabloane care trebuie omise pentru paginare. Valoare implicită: 0"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:174
+#, fuzzy
+msgid "Opacity (0..1)"
+msgstr "Opacitate (0..1)"
+
 #: admin/partials/hostinger-ai-assistant-tab-view.php:29
 msgid "Open guide"
 msgstr "Deschide ghidul"
@@ -1733,7 +2538,7 @@ msgstr "Deschide ghidul"
 msgid "Opt-in to MCP"
 msgstr "Optează pentru MCP"
 
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:211
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:215
 msgid "Opt-in Web2Agent MCP status"
 msgstr "Optează pentru status Web2Agent MCP"
 
@@ -1741,10 +2546,43 @@ msgstr "Optează pentru status Web2Agent MCP"
 msgid "Optional"
 msgstr "Opțional"
 
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:75
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:182
+#, fuzzy
+msgid "Optional CSS class to assign/update on the container"
+msgstr "Clasă CSS opțională care poate fi atribuită/actualizată pe container"
+
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/FindWidgets.php:47
 #, fuzzy
 msgid "Optional CSS class to filter by (e.g., \"hostinger-ai-*\")"
 msgstr "Clasă CSS opțională pentru filtrare (de exemplu, \"hostinger-ai-*\")"
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:133
+#, fuzzy
+msgid ""
+"Optional list of fields to restore. Defaults to title, content, and excerpt."
+msgstr ""
+"Listă opțională de câmpuri care urmează să fie restaurate. Implicit sunt "
+"selectate titlul, conținutul și rezumatul."
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:64
+#, fuzzy
+msgid "Optional new title/label"
+msgstr "Titlu/etichetă nouă (opțională)"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:37
+#, fuzzy
+msgid "Optional new title/label for the color"
+msgstr "Un nou titlu/etichetă opțional(ă) pentru culoare"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:36
+#, fuzzy
+msgid ""
+"Optional parent container ID. If omitted, operations happen at the root "
+"level."
+msgstr ""
+"ID-ul opțional al containerului părinte. Dacă este omis, operațiunile se "
+"efectuează la nivelul rădăcinii."
 
 #: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:154
 msgid ""
@@ -1775,6 +2613,18 @@ msgstr "Opțional: Deschideți link-ul în fila nouă"
 msgid "Optional: WordPress media library ID"
 msgstr "Opțional: ID-ul bibliotecii media WordPress"
 
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:95
+#, fuzzy
+msgid "Overall gap between child items (px)"
+msgstr "Distanța totală dintre elementele secundare (px)"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:69
+#, fuzzy
+msgid "Padding in px (number for all sides) or object with sides and unit"
+msgstr ""
+"Umplere în px (o singură valoare pentru toate laturile) sau obiect cu laturi "
+"și unitate de măsură"
+
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:162
 #, fuzzy
 msgid ""
@@ -1792,10 +2642,60 @@ msgstr "Numărul paginii pentru paginare"
 msgid "Page number for pagination (starts from 1)"
 msgstr "Numărul paginii pentru paginare (începe de la 1)"
 
+#. translators: %s: parent id
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/CreateContainer.php:94
+#, fuzzy, php-format
+msgid "Parent container with ID '%s' not found"
+msgstr "Nu s-a găsit containerul părinte cu ID-ul „%s”"
+
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:411
 #, fuzzy
 msgid "Personalize your content"
-msgstr "Personalizați-vă conținutul"
+msgstr "Personalizează-ți conținutul"
+
+#. translators: %s: plugin slug.
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:260
+#, fuzzy, php-format
+msgid "Plugin \"%s\" is already installed."
+msgstr "Plugin-ul \"%s\" este deja instalat."
+
+#. translators: %s: plugin file path.
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:335
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:372
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:406
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:436
+#, fuzzy, php-format
+msgid "Plugin \"%s\" not found."
+msgstr "Plugin-ul \"%s\" nu a fost găsit."
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:81
+#, fuzzy
+msgid ""
+"Plugin file path relative to the plugins directory (e.g. "
+"'woocommerce/woocommerce.php')"
+msgstr ""
+"Calea fișierului pluginului referitoare la directorul pluginurilor (de "
+"exemplu, \"woocommerce/woocommerce.php\")"
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:126
+#, fuzzy
+msgid "Plugin file path relative to the plugins directory to activate"
+msgstr ""
+"Calea fișierului plugin relativ la directorul pluginurilor care urmează să "
+"fie activate"
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:171
+#, fuzzy
+msgid "Plugin file path relative to the plugins directory to deactivate"
+msgstr ""
+"Calea fișierului plugin relativ la directorul pluginurilor pentru dezactivare"
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:216
+#, fuzzy
+msgid "Plugin file path relative to the plugins directory to update"
+msgstr ""
+"Calea fișierului plugin relativ la directorul pluginurilor care urmează să "
+"fie actualizate"
 
 #: includes-psr4/Mcp/Abilities/Resources/PluginsInfoResource.php:16
 msgid "Plugins Information"
@@ -1832,6 +2732,12 @@ msgstr "Apasă Enter pentru a finaliza cu un cuvânt cheie"
 #: admin/partials/hostinger-ai-assistant-tab-view.php:39
 msgid "Preview site"
 msgstr "Previzualizare site"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:108
+#, fuzzy
+msgid "Provide colors and/or typography updates to apply."
+msgstr ""
+"Furnizați modificările de culori și/sau tipografie care trebuie aplicate."
 
 #: includes-psr4/Mcp/Abilities/Resources/PluginsInfoResource.php:17
 msgid ""
@@ -1914,7 +2820,17 @@ msgstr "Elimină emoji-ul WordPress"
 msgid "Removed Unused CSS for Users"
 msgstr "CSS-uri neutilizate pentru utilizatori îndepărtate"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:80
+#: includes-psr4/Nudges/DomainRenewalNudge.php:88
+#, fuzzy
+msgid "Renew my domain"
+msgstr "Reînnoiește-mi domeniul"
+
+#: includes-psr4/Nudges/RenewalNudge.php:100
+#, fuzzy
+msgid "Renew my plan"
+msgstr "Reînnoiește-mi abonamentul"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:130
 msgid "Report period. Options: week, month, last_month, year."
 msgstr "Perioada de raportare. Opțiuni: săptămână, lună, ultima_lună, an."
 
@@ -1922,9 +2838,43 @@ msgstr "Perioada de raportare. Opțiuni: săptămână, lună, ultima_lună, an.
 msgid "Requested size not found"
 msgstr "Dimensiunea solicitată nu a fost găsită"
 
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:46
+#, fuzzy
+msgid "Required when position is before/after. The sibling element ID."
+msgstr ""
+"Obligatoriu atunci când poziția este „înainte” sau „după”. ID-ul elementului "
+"înrudit."
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:32
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:57
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:84
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:117
+#, fuzzy
+msgid ""
+"REST API base for the post type (e.g., posts, pages, templates, product, etc."
+")."
+msgstr ""
+"Baza API REST pentru tipul de postare (de exemplu, postări, pagini, șabloane,"
+" produse etc.)."
+
 #: admin/class-hostinger-ai-assistant-translations.php:46
 msgid "Restart chatbot"
 msgstr "Repornește chatbot-ul"
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:110
+#, fuzzy
+msgid ""
+"Restore a specific revision for an item by copying its content back to the "
+"parent. Works for any post type using its REST base."
+msgstr ""
+"Restaurați o revizie specifică pentru un element prin copierea conținutului "
+"acestuia înapoi în elementul părinte. Funcționează pentru orice tip de "
+"postare care utilizează interfața REST de bază."
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:109
+#, fuzzy
+msgid "Restore Revision"
+msgstr "Restaurare revizie"
 
 #: admin/class-hostinger-ai-assistant-translations.php:176
 msgid "Retrieve a list of WooCommerce orders with filters"
@@ -1963,6 +2913,15 @@ msgstr ""
 "Recuperează informații complete despre un anumit widget Elementor după ID-ul "
 "său unic, inclusiv toate setările, poziția și informațiile despre părinte."
 
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ListTemplates.php:15
+#, fuzzy
+msgid ""
+"Retrieves Elementor templates from the elementor_library post type. Results "
+"include the template type and support pagination."
+msgstr ""
+"Preia șabloanele Elementor din tipul de postare „elementor_library”. "
+"Rezultatele includ tipul șablonului și acceptă paginarea."
+
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetActiveKit.php:15
 #, fuzzy
 msgid ""
@@ -1973,11 +2932,11 @@ msgstr ""
 "globale, presetările tipografice, CSS personalizat și setările de stil ale "
 "temei."
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:89
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:139
 msgid "Return sales for a specific end date. Format: YYYY-MM-DD."
 msgstr "Returnează vânzările de până la o anumită dată. Format: AAAA-LL-ZZ."
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:85
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:135
 msgid "Return sales for a specific start date. Format: YYYY-MM-DD."
 msgstr ""
 "Returnează vânzările începând de la o anumită dată. Format: AAAA-LL-ZZ."
@@ -1991,6 +2950,12 @@ msgstr ""
 "Returnează un rezumat lizibil, ierarhic al structurii paginii Elementor fără "
 "JSON brut. Afișează containerele și widget-urile într-o vizualizare "
 "arborescentă."
+
+#. translators: %s: revision id
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:189
+#, fuzzy, php-format
+msgid "Revision with ID '%s' not found"
+msgstr "Nu s-a găsit revizia cu ID-ul „%s”"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:262
 #, fuzzy
@@ -2007,6 +2972,24 @@ msgstr "Valoarea marginii drepte (ca șir de caractere)"
 msgid "Right padding value (as string)"
 msgstr "Valoarea umpluturii drepte (ca șir de caractere)"
 
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:100
+#, fuzzy
+msgid "Row gap for grid or multi‑row flex (px)"
+msgstr ""
+"Distanța între rânduri pentru grilă sau element flex cu mai multe rânduri "
+"(px)"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/DeleteContainer.php:15
+#, fuzzy
+msgid ""
+"Safely removes a container. Optionally preserves children by moving them to "
+"the parent at the same position. Can require confirmation for complex "
+"structures."
+msgstr ""
+"Elimină în siguranță un container. Opțional, păstrează elementele secundare "
+"mutându-le în elementul părinte, în aceeași poziție. Poate necesita "
+"confirmare în cazul structurilor complexe."
+
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetContent.php:15
 #, fuzzy
 msgid ""
@@ -2017,6 +3000,15 @@ msgstr ""
 "Actualizează în siguranță conținutul text al widget-urilor Elementor (titlu, "
 "buton, editor de text). Actualizează câmpurile text/titlu/editor păstrând "
 "toate celelalte setări."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:20
+#, fuzzy
+msgid ""
+"Search and filter WooCommerce coupons with pagination. Returns a list of "
+"coupons matching the search criteria."
+msgstr ""
+"Căutați și filtrați cupoane WooCommerce cu paginare. Returnează o listă de "
+"cupoane care corespund criteriilor de căutare."
 
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:20
 msgid ""
@@ -2099,6 +3091,11 @@ msgstr "Caută un termen în titlurile și conținutul postărilor"
 #: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:17
 msgid "Search Users"
 msgstr "Caută utilizatori"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:19
+#, fuzzy
+msgid "Search WooCommerce Coupons"
+msgstr "Căutare cupoane WooCommerce"
 
 #: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:19
 msgid "Search WooCommerce Orders"
@@ -2231,16 +3228,61 @@ msgstr ""
 "sunt opționale. Furnizați numai proprietățile pe care doriți să le "
 "modificați."
 
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:175
+#, fuzzy
+msgid ""
+"Stylesheet of the theme to activate as a replacement. Defaults to "
+"'twentytwentyfour'."
+msgstr ""
+"Fișa de stil a temei de activat ca înlocuitor. Valoarea implicită este "
+"\"twentytwentyfour\"."
+
 #: admin/class-hostinger-ai-assistant-translations.php:74
 #, fuzzy
 msgid "Summarize your store or site performance"
 msgstr "Rezumați performanța magazinului sau a site-ului dvs"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:28
+#, fuzzy
+msgid "System color key to update (optional)"
+msgstr "Legenda culorilor sistemului de actualizat (opțional)"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:55
+#, fuzzy
+msgid "System typography preset key to update (optional)"
+msgstr ""
+"Cheie de presetare a tipografiei sistemului pentru actualizare (opțional)"
 
 #: admin/class-hostinger-ai-assistant-translations.php:110
 msgid "Talking to Kodee is in the works, we'll keep you posted once it's out!"
 msgstr ""
 "Funcția Talking to Kodee este în lucru, te vom ține la curent odată ce va fi "
 "lansată!"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:30
+#, fuzzy
+msgid "Target device for responsive settings"
+msgstr "Dispozitiv țintă pentru setări adaptabile"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:189
+#, fuzzy
+msgid "Target global color not found in the active kit"
+msgstr "Culoarea globală țintă nu se regăsește în kitul activ"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:127
+#, fuzzy
+msgid "Target number of inner columns (containers)"
+msgstr "Numărul țintă de coloane interioare (containere)"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:250
+#, fuzzy
+msgid "Target typography preset not found in the active kit"
+msgstr "Presetarea tipografică țintă nu a fost găsită în kitul activ"
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:79
+#, fuzzy
+msgid "Template part ID."
+msgstr "ID-ul piesei din șablon."
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:335
 #, fuzzy
@@ -2369,10 +3411,20 @@ msgstr "ID-ul postului/paginii care conține widget-ul"
 msgid "The ID of the post/page to get structure for"
 msgstr "ID-ul postului/paginii pentru care se obține structura"
 
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:18
+#, fuzzy
+msgid "The ID of the post/page to modify"
+msgstr "ID-ul articolului/paginii care urmează să fie modificat(ă)"
+
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/FindWidgets.php:24
 #, fuzzy
 msgid "The ID of the post/page to search in"
 msgstr "ID-ul postului/paginii în care se efectuează căutarea"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:27
+#, fuzzy
+msgid "The ID of the target container"
+msgstr "ID-ul containerului țintă"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetContent.php:30
 #, fuzzy
@@ -2388,6 +3440,17 @@ msgstr "URL-ul noii imagini"
 #, fuzzy
 msgid "The new link URL"
 msgstr "URL-ul noului link"
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:36
+#, fuzzy
+msgid "The parent item ID to list revisions for."
+msgstr "ID-ul elementului părinte pentru care se afișează reviziile."
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:61
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:88
+#, fuzzy
+msgid "The parent item ID."
+msgstr "ID-ul elementului părinte."
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetKitById.php:22
 #, fuzzy
@@ -2426,14 +3489,66 @@ msgstr "ID-ul unic al widget-ului de recuperat"
 msgid "The unique ID of the widget to update"
 msgstr "ID-ul unic al widget-ului care urmează să fie actualizat"
 
+#. translators: %s: theme slug.
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:263
+#, fuzzy, php-format
+msgid "Theme \"%s\" is already installed."
+msgstr "Tema \"%s\" este deja instalată."
+
+#. translators: %s: theme stylesheet directory name.
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:391
+#, fuzzy, php-format
+msgid "Theme \"%s\" is not the active theme."
+msgstr "Tema \"%s\" nu este tema activă."
+
+#. translators: %s: theme stylesheet directory name.
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:322
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:358
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:421
+#, fuzzy, php-format
+msgid "Theme \"%s\" not found."
+msgstr "Tema \"%s\" nu a fost găsită."
+
 #: includes-psr4/Mcp/Abilities/Resources/ThemeInfoResource.php:16
 msgid "Theme Information"
 msgstr "Informații despre temă"
 
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:173
+#, fuzzy
+msgid "Theme location slug (e.g., primary, header, footer)."
+msgstr "Slug-ul locației temei (de exemplu, principal, antet, subsol)."
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:81
+#, fuzzy
+msgid "Theme stylesheet directory name (e.g. 'twentytwentyfour')"
+msgstr ""
+"Numele directorului foii de stil a temei (de exemplu, \"twentytwentyfour\")"
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:126
+#, fuzzy
+msgid "Theme stylesheet directory name to activate"
+msgstr "Numele directorului foii de stil a temei pentru activare"
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:171
+#, fuzzy
+msgid ""
+"Theme stylesheet directory name to deactivate (will switch to the default "
+"theme)"
+msgstr ""
+"Numele directorului foii de stil a temei de dezactivat (va trece la tema "
+"implicită)"
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:221
+#, fuzzy
+msgid "Theme stylesheet directory name to update"
+msgstr "Numele directorului foii de stil a temei de actualizat"
+
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:248
 #, fuzzy
 msgid "There was an error with your request. Please try again."
-msgstr "S-a produs o eroare cu solicitarea dvs. Vă rugăm să încercați din nou."
+msgstr ""
+"A apărut o eroare la solicitarea dumneavoastră. Vă rugăm să încercați din "
+"nou."
 
 #: admin/partials/hostinger-ai-assistant-seo-meta-view.php:20
 msgid ""
@@ -2446,6 +3561,16 @@ msgstr ""
 #: admin/class-hostinger-ai-assistant-translations.php:61
 msgid "Thinking"
 msgstr "Mă gândesc"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/DeleteContainer.php:80
+#, fuzzy
+msgid ""
+"This deletion will remove a complex subtree. Set confirm=true to proceed or "
+"enable preserve_children to keep children."
+msgstr ""
+"Această ștergere va elimina un subarbore complex. Setați confirm=true pentru "
+"a continua sau activați preserve_children pentru a păstra elementele "
+"secundare."
 
 #: includes-psr4/Mcp/Abilities/Tools/LiteSpeedCacheTools.php:254
 msgid ""
@@ -2518,6 +3643,21 @@ msgid ""
 msgstr ""
 "Pentru a debloca caracteristicile exclusive ale <b>Hostinger AI</b>, trebuie "
 "să deții un token API unic, care este furnizat exclusiv clienților Hostinger"
+
+#: includes-psr4/Cli/JwtCommand.php:130
+#, fuzzy
+msgid "Token expiration (--expires-in) must be an integer number of seconds."
+msgstr ""
+"Expirarea tokenului (--expires-in) trebuie să fie un număr întreg exprimat "
+"în secunde."
+
+#. translators: 1: minimum expiration in seconds, 2: maximum expiration in seconds
+#: includes-psr4/Cli/JwtCommand.php:140
+#, fuzzy, php-format
+msgid "Token expiration must be between %1$d and %2$d seconds."
+msgstr ""
+"Perioada de valabilitate a tokenului trebuie să fie cuprinsă între %1$d și "
+"%2$d secunde."
 
 #. translators: 1: minimum expiration time in seconds, 2: maximum expiration time in seconds
 #: includes-psr4/Mcp/Rest/JwtAuth.php:66
@@ -2659,6 +3799,11 @@ msgstr "Actualizează o categorie de postări pe site-ul meu WordPress"
 msgid "Update a post tag on my WordPress website"
 msgstr "Actualizează o etichetă de postare pe site-ul meu WordPress"
 
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:38
+#, fuzzy
+msgid "Update a template part content or title."
+msgstr "Actualizați conținutul sau titlul unei părți a șablonului."
+
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:239
 msgid "Update a WordPress custom post type post by ID"
 msgstr "Actualizează o postare de tip postare personalizată WordPress după ID"
@@ -2670,6 +3815,18 @@ msgstr ""
 "Actualizează metadatele unui element media WordPress. Doar câmpurile "
 "furnizate vor fi actualizate."
 
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:121
+#, fuzzy
+msgid "Update an existing menu item, including label, URL, parent, and order."
+msgstr ""
+"Actualizează un element de meniu existent, inclusiv eticheta, adresa URL, "
+"elementul părinte și ordinea."
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:51
+#, fuzzy
+msgid "Update an existing navigation menu by ID."
+msgstr "Actualizează un meniu de navigare existent după ID."
+
 #: admin/class-hostinger-ai-assistant-translations.php:127
 msgid "Update an existing page on my WordPress website"
 msgstr "Actualizează o pagină existentă pe site-ul meu WordPress"
@@ -2678,7 +3835,31 @@ msgstr "Actualizează o pagină existentă pe site-ul meu WordPress"
 msgid "Update an existing post on my WordPress site"
 msgstr "Actualizează o postare existentă pe site-ul meu WordPress"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:248
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:56
+#, fuzzy
+msgid "Update an existing Site Editor navigation."
+msgstr "Actualizează o bară de navigare existentă din Site Editor."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:55
+#, fuzzy
+msgid ""
+"Update an existing WooCommerce coupon by ID. Only provided fields will be "
+"updated."
+msgstr ""
+"Actualizați un cupon WooCommerce existent prin ID. Numai câmpurile furnizate "
+"vor fi actualizate."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:55
+#, fuzzy
+msgid ""
+"Update an existing WooCommerce order by ID. Use this to change status (e.g., "
+"pending, processing, completed, refunded) and other editable fields."
+msgstr ""
+"Actualizează o comandă WooCommerce existentă după ID. Folosește această "
+"funcție pentru a modifica starea (de exemplu: în așteptare, în curs de "
+"procesare, finalizată, rambursată) și alte câmpuri editabile."
+
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:247
 msgid "Update an existing WooCommerce product brand by ID."
 msgstr "Actualizează un brand existent de produs WooCommerce prin ID."
 
@@ -2737,6 +3918,19 @@ msgstr ""
 "Actualizează un utilizator WordPress existent prin ID. Doar câmpurile "
 "furnizate vor fi actualizate."
 
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:208
+#, fuzzy
+msgid "Update an installed plugin to the latest version from WordPress.org."
+msgstr ""
+"Actualizați un plugin instalat la cea mai recentă versiune de pe WordPress."
+"org."
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:213
+#, fuzzy
+msgid "Update an installed theme to the latest version from WordPress.org."
+msgstr ""
+"Actualizați o temă instalată la cea mai recentă versiune de pe WordPress.org."
+
 #: admin/class-hostinger-ai-assistant-translations.php:145
 msgid "Update blog post"
 msgstr "Actualizează postarea de blog"
@@ -2752,6 +3946,16 @@ msgstr "Actualizează utilizatorul curent"
 #: includes-psr4/Mcp/Abilities/Tools/CustomPostTypesTools.php:238
 msgid "Update Custom Post Type Post"
 msgstr "Actualizează postarea tip postare personalizată "
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateContainer.php:14
+#, fuzzy
+msgid "Update Elementor Container"
+msgstr "Actualizare container Elementor"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:14
+#, fuzzy
+msgid "Update Elementor Global Styles"
+msgstr "Actualizare stiluri globale Elementor"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetContent.php:14
 #, fuzzy
@@ -2797,9 +4001,29 @@ msgstr ""
 msgid "Update Media"
 msgstr "Actualizează media"
 
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:50
+#, fuzzy
+msgid "Update Menu"
+msgstr "Meniul de actualizare"
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:120
+#, fuzzy
+msgid "Update Menu Item"
+msgstr "Actualizare element de meniu"
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:55
+#, fuzzy
+msgid "Update Navigation"
+msgstr "Actualizare navigare"
+
 #: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:52
 msgid "Update Page"
 msgstr "Actualizează pagina"
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:207
+#, fuzzy
+msgid "Update Plugin"
+msgstr "Plugin de actualizare"
 
 #: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:52
 msgid "Update Post"
@@ -2817,19 +4041,39 @@ msgstr "Actualizează eticheta postării"
 msgid "Update Tag"
 msgstr "Actualizează eticheta"
 
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:37
+#, fuzzy
+msgid "Update Template Part"
+msgstr "Actualizare parte șablon"
+
 #: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:133
 msgid "Update the current logged-in user information."
 msgstr "Actualizează informațiile utilizatorului conectat acum."
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:212
+#, fuzzy
+msgid "Update Theme"
+msgstr "Actualizare temă"
 
 #: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:73
 msgid "Update User"
 msgstr "Actualizează utilizatorul"
 
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:54
+#, fuzzy
+msgid "Update WooCommerce Coupon"
+msgstr "Actualizați cuponul WooCommerce"
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:54
+#, fuzzy
+msgid "Update WooCommerce Order"
+msgstr "Actualizare comandă WooCommerce"
+
 #: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:54
 msgid "Update WooCommerce Product"
 msgstr "Actualizează produsul WooCommerce"
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:247
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:246
 msgid "Update WooCommerce Product Brand"
 msgstr "Actualizează brandul produsului WooCommerce"
 
@@ -2851,6 +4095,41 @@ msgstr ""
 #: admin/class-hostinger-ai-assistant-translations.php:125
 msgid "Update WordPress page"
 msgstr "Actualizează pagina WordPress"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateContainer.php:15
+#, fuzzy
+msgid ""
+"Updates container layout and structure settings like layout, direction, "
+"content width, alignment, spacing, and number of inner columns."
+msgstr ""
+"Actualizează setările de aspect și structură ale containerului, precum "
+"dispunerea, direcția, lățimea conținutului, alinierea, spațierea și numărul "
+"de coloane interioare."
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:18
+#, fuzzy
+msgid ""
+"Updates container styling: background color, padding/margin, border "
+"(radius/width/color/style), opacity, z-index. Supports responsive device "
+"targeting."
+msgstr ""
+"Actualizează stilul containerului: culoarea de fundal, spațierea "
+"interioară/marginea, chenarul (raza/lățimea/culoarea/stilul), opacitatea, z-"
+"index. Suportă adaptarea la diferite tipuri de dispozitive."
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:15
+#, fuzzy
+msgid ""
+"Updates Elementor global colors and/or typography presets in the active kit "
+"in a single call. Intended for intents like \"Change primary color to red\" "
+"and \"Change heading font to Arial\" with one request. Triggers site-wide "
+"CSS regeneration."
+msgstr ""
+"Actualizează culorile globale și/sau presetările tipografice din Elementor "
+"ale kitului activ printr-o singură solicitare. Destinat pentru acțiuni "
+"precum „Schimbă culoarea principală în roșu” și „Schimbă fontul titlurilor "
+"în Arial” printr-o singură solicitare. Declanșează regenerarea CSS la "
+"nivelul întregului site."
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetImage.php:15
 #, fuzzy
@@ -2884,11 +4163,19 @@ msgstr ""
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:377
 #, fuzzy
 msgid "Use this content"
-msgstr "Utilizați acest conținut"
+msgstr "Folosiți acest conținut"
 
 #: admin/class-hostinger-ai-assistant-translations.php:35
 msgid "Use this image as:"
 msgstr "Folosește această imagine ca:"
+
+#. translators: %d: WordPress user ID
+#: includes-psr4/Cli/JwtCommand.php:105
+#, fuzzy, php-format
+msgid "User %d lacks the manage_options capability required to issue a token."
+msgstr ""
+"Utilizatorul %d nu dispune de dreptul „manage_options” necesar pentru a "
+"genera un token."
 
 #: includes-psr4/Mcp/Rest/JwtAuth.php:125
 msgid "User associated with token no longer exists."
@@ -2943,7 +4230,7 @@ msgstr "Care sunt cuvintele cheie pentru conținutul tău?"
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:394
 #, fuzzy
 msgid "What content do you want AI to create today?"
-msgstr "Ce conținut doriți ca AI să creeze astăzi?"
+msgstr "Ce conținut doriți ca IA să creeze astăzi?"
 
 #: admin/partials/hostinger-ai-assistant-tab-view.php:56
 msgid "What do you want to make today?"
@@ -2952,6 +4239,15 @@ msgstr "Ce vrei să creezi astăzi?"
 #: admin/partials/hostinger-ai-assistant-tab-view.php:157
 msgid "What is your content about?"
 msgstr "Despre ce este conținutul tău?"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:132
+#, fuzzy
+msgid ""
+"When reducing columns, keep removed columns’ children by moving them into a "
+"remaining column"
+msgstr ""
+"Atunci când reduceți numărul de coloane, păstrați elementele secundare ale "
+"coloanelor eliminate mutându-le într-o coloană rămasă"
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetStyles.php:317
 #, fuzzy
@@ -3006,6 +4302,16 @@ msgstr "Widget-ul cu ID-ul \"%s\" nu a fost găsit"
 msgid "Witty"
 msgstr "Ingenios"
 
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:35
+#, fuzzy
+msgid "WordPress.org plugin slug (e.g. 'woocommerce')"
+msgstr "WordPress.org slug-ul pluginului (de exemplu, \"woocommerce\")"
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:35
+#, fuzzy
+msgid "WordPress.org theme slug (e.g. 'twentytwentyfour')"
+msgstr "WordPress.org theme slug (de exemplu, \"twentytwentyfour\")"
+
 #: admin/partials/hostinger-ai-assistant-tab-view.php:220
 msgid "words"
 msgstr "cuvinte"
@@ -3018,23 +4324,23 @@ msgstr "Scrie o postare motivațională despre..."
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:153
 #, fuzzy
 msgid "Write a recommendation list of..."
-msgstr "Scrieți o listă de recomandări de..."
+msgstr "Elaborați o listă cu recomandări pentru..."
 
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:152
 #, fuzzy
 msgid "Write a step-by-step tutorial about..."
-msgstr "Scrieți un tutorial pas cu pas despre..."
+msgstr "Scrie un ghid pas cu pas despre..."
 
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:157
 #, fuzzy
 msgid "Write a summary of..."
-msgstr "Scrieți un rezumat al..."
+msgstr "Scrie un rezumat al..."
 
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:156
 #: gutenberg-block/src/edit.js:399
 #, fuzzy
 msgid "Write an article about ..."
-msgstr "Scrieți un articol despre ..."
+msgstr "Scrie un articol despre..."
 
 #: gutenberg-block/dist/index.js:1 gutenberg-block/src/edit.js:155
 #, fuzzy
@@ -3068,3 +4374,15 @@ msgid "You're good to go, but you can share more details for better results"
 msgstr ""
 "Ești gata, dar ai putea să ne oferi mai multe detalii pentru rezultate și "
 "mai bune"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:178
+#, fuzzy
+msgid "Z-index"
+msgstr "Z-index"
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:51
+#, fuzzy
+msgid "Zero-based index to insert at when position is index."
+msgstr ""
+"Index de bază zero la care se va efectua inserarea atunci când poziția este "
+"egală cu indexul."

@@ -2,6 +2,7 @@
 
 namespace Hostinger\AiTheme\Builder;
 
+use Hostinger\AiTheme\Constants\GenerationConstant;
 use Hostinger\AiTheme\Constants\PreviewImageConstant;
 use Hostinger\AiTheme\Builder\Helper;
 use Hostinger\WpHelper\Config;
@@ -133,6 +134,9 @@ class BlogBuilder {
             'post_content' => $content,
             'post_status'  => $post_status,
             'post_type'    => 'post',
+            'meta_input'   => array(
+                GenerationConstant::META_KEY => '1',
+            ),
         );
 
         $post_id = wp_insert_post( $post_data );

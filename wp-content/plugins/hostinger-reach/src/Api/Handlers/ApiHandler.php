@@ -52,6 +52,18 @@ class ApiHandler {
         return wp_remote_get( $url, $request_args );
     }
 
+    public function delete( string $endpoint, array $params = array(), array $headers = array(), int $timeout = 120 ): mixed {
+        $url          = $this->get_api_basename() . $endpoint;
+        $request_args = array(
+            'method'  => 'DELETE',
+            'timeout' => $timeout,
+            'headers' => array_merge( $this->get_default_headers(), $headers ),
+            'body'    => $params,
+        );
+
+        return wp_remote_post( $url, $request_args );
+    }
+
     public function post( string $endpoint, array $params = array(), array $headers = array(), int $timeout = 120 ): mixed {
         $url          = $this->get_api_basename() . $endpoint;
         $request_args = array(

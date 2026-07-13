@@ -15,17 +15,16 @@ class Actions {
     public const ADD_PAYMENT         = 'add_payment_method';
     public const ADD_SHIPPING        = 'add_shipping_method';
     public const DOMAIN_IS_CONNECTED = 'connect_domain';
-
-    public const AMAZON_AFFILIATE = 'amazon_affiliate';
-
+    public const PLUGINS             = 'plugins';
+    public const AMAZON_AFFILIATE    = 'amazon_affiliate';
     public const GOOGLE_KIT          = 'google_kit';
     public const REACH               = 'hostinger_reach';
     public const ENABLE_AI_DISCOVERY = 'enable_ai_discovery';
+    public const CLAIM_EMAIL         = 'claim_email';
     public const ACTIONS_LIST        = array(
         self::DOMAIN_IS_CONNECTED,
     );
-
-    public const STORE_ACTIONS_LIST = array(
+    public const STORE_ACTIONS_LIST  = array(
         self::SETUP_STORE,
         self::ADD_PRODUCT,
         self::ADD_PAYMENT,
@@ -50,6 +49,8 @@ class Actions {
             $list[] = self::AI_STEP;
         }
 
+        $list[] = self::PLUGINS;
+
         if ( \is_plugin_active( 'hostinger-affiliate-plugin/hostinger-affiliate-plugin.php' ) ) {
             $list[] = self::AMAZON_AFFILIATE;
         }
@@ -57,6 +58,8 @@ class Actions {
         if ( \is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
             $list[] = self::STORE_TASKS;
         }
+
+        $list[] = self::CLAIM_EMAIL;
 
         $list[] = self::GOOGLE_KIT;
 
@@ -99,7 +102,7 @@ class Actions {
         $free_domains      = '/hostingersite\.com|hostinger\.dev/';
         $is_active         = is_plugin_active( 'hostinger/hostinger.php' );
         $is_hostinger_user = ! empty( $_SERVER['H_PLATFORM'] );
-        $is_free_domain    = preg_match( $free_domains, get_site_url() );
+        $is_free_domain    = preg_match( $free_domains, (string) get_option( 'siteurl' ) );
 
         return $is_active && $is_hostinger_user && ! $is_free_domain;
     }

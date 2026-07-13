@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 @mixin hostinger-fonts-style {
     color: $dark;
     font-family: DMSans, serif;

@@ -3,6 +3,7 @@
 namespace Hostinger\AiTheme\Builder;
 
 use Hostinger\AiTheme\Admin\Hooks;
+use Hostinger\AiTheme\Constants\GenerationConstant;
 use Hostinger\AiTheme\Constants\PreviewImageConstant;
 use stdClass;
 use Hostinger\WpHelper\Config;
@@ -36,18 +37,23 @@ class ImageManager {
      * @var Client
      */
     private Client $client;
+    /**
+     * @var DomainResolver
+     */
+    private DomainResolver $domain_resolver;
 
     /**
      * @param string $keyword
      */
-    public function __construct( string $keyword = '' )
+    public function __construct( string $keyword = '', ?DomainResolver $domain_resolver = null )
     {
         $this->keyword        = $keyword;
         if(!empty($this->keyword)) {
             $this->keyword_slug = sanitize_title($this->keyword);
         }
-        $this->helper         = new Helper();
-        $config_handler       = new Config();
+        $this->helper          = new Helper();
+        $this->domain_resolver = $domain_resolver ?? new DomainResolver( $this->helper );
+        $config_handler        = new Config();
         $this->client         = new Client( $config_handler->getConfigValue( 'base_rest_uri', HOSTINGER_AI_WEBSITES_REST_URI ), [
             Config::TOKEN_HEADER  => $this->helper::getApiToken(),
             Config::DOMAIN_HEADER => $this->helper->getHostInfo(),
@@ -141,8 +147,7 @@ class ImageManager {
      */
     public function fetch_image_list(): array {
         try {
-            $site_url = get_option( 'siteurl' );
-            $host     = parse_url( $site_url, PHP_URL_HOST );
+            $host = $this->domain_resolver->get_current_domain();
 
             $response = $this->client->post( self::GENERATE_CONTENT_IMAGES_ACTION, json_encode( [
                 'domain'      => $host,
@@ -233,7 +238,10 @@ class ImageManager {
         $attachment = array(
             'post_title' => 'External Image For post: ' . $post_id,
             'post_content' => '',
-            'post_status' => 'inherit'
+            'post_status' => 'inherit',
+            'meta_input' => array(
+                GenerationConstant::META_KEY => '1',
+            ),
         );
 
         $attach_id = wp_insert_attachment( $attachment, false, $post_id );

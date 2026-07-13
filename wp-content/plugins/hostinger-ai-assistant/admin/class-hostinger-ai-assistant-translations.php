@@ -50,7 +50,7 @@ class Hostinger_Frontend_Translations {
                 'tooltip_history'                             => __( 'History', 'hostinger-ai-assistant' ),
                 'question_input_placeholder'                  => __( 'Write your question', 'hostinger-ai-assistant' ),
                 'disclaimer'                                  => __( 'AI may produce inaccurate information', 'hostinger-ai-assistant' ),
-                'button'                                      => __( 'Ask Kodee', 'hostinger-ai-assistant' ),
+                'button'                                      => __( 'Ask AI', 'hostinger-ai-assistant' ),
                 'drag_over_overlay_text'                      => __( 'Drop files here', 'hostinger-ai-assistant' ),
                 'unsupported_format_kodee'                    => __( 'Kodee only supports JPEG, JPG, PNG, GIF, HEIC, and DNG files', 'hostinger-ai-assistant' ),
                 'unsupported_format_agent'                    => __( 'Selected file type is not supported', 'hostinger-ai-assistant' ),

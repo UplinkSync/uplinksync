@@ -5,6 +5,7 @@ namespace Hostinger\AiTheme\Builder;
 use Exception;
 use Hostinger\AiTheme\Builder\Elementor\KitManager;
 use Hostinger\AiTheme\Constants\BuilderType;
+use Hostinger\AiTheme\Constants\GenerationConstant;
 use Hostinger\AiTheme\Constants\PreviewImageConstant;
 use Hostinger\AiTheme\Data\WebsiteTypeHelper;
 
@@ -173,6 +174,12 @@ class WebsiteBuilder {
         return $colors->generate_color_options();
     }
 
+    public function generate_font_options(): array {
+        $this->fonts->setWhApiClient( $this->wh_api_client );
+
+        return $this->fonts->generate_font_options();
+    }
+
     public function set_colors( string $description, array $colors_palette): bool {
         $colors = new Colors( $description );
         $colors->setRequestClient( $this->request_client );
@@ -181,11 +188,11 @@ class WebsiteBuilder {
         return $colors->set_colors( $colors_palette );
     }
 
-    public function generate_structure( string $brand_name, array $website_type, string $description ): bool {
+    public function generate_structure( string $brand_name, array $website_type, string $description, array $pages = [] ): bool {
         $structure = new Structure( $brand_name, $website_type, $description );
         $structure->set_request_client( $this->request_client );
 
-        $website_structure = $structure->generate_structure( $website_type );
+        $website_structure = $structure->generate_structure( $pages );
 
         if ( empty( $website_structure ) ) {
             return false;
@@ -196,6 +203,20 @@ class WebsiteBuilder {
         update_option( 'hostinger_ai_website_structure', $website_structure );
 
         return true;
+    }
+
+    public function get_pages_list( string $brand_name, array $website_type, string $description ): array {
+        $structure = new Structure( $brand_name, $website_type, $description );
+        $structure->set_request_client( $this->request_client );
+
+        $website_structure = $structure->generate_structure();
+
+        return array_map( function ( $page_data ) {
+            return array(
+                'id'   => $page_data['page'],
+                'name' => mb_convert_case( $page_data['page'], MB_CASE_TITLE, 'UTF-8' ),
+            );
+        }, $website_structure );
     }
 
     public function enable_plugins(): array {
@@ -242,6 +263,14 @@ class WebsiteBuilder {
     }
 
     public function generate_content( string $brand_name, array $website_type, string $description ): bool {
+        if ( class_exists( '\LiteSpeed\Conf' ) ){
+            $conf = new \LiteSpeed\Conf();
+            $conf->update_confs( array( 'object-admin' => 0, 'cache-priv' => 0 ) );
+
+            $purge = new \LiteSpeed\Purge();
+            $purge::purge_all('Hostinger AI Theme Generation');
+        }
+
         $blog_content_needed = get_option( 'hostinger_ai_blog_needed', false );
         $woocommerce         = get_option( 'hostinger_ai_woo', false );
 
@@ -270,6 +299,8 @@ class WebsiteBuilder {
         if ( ! empty( $woocommerce ) ) {
             $this->woo_builder->generate_products( $content );
         }
+
+		$this->hostinger_reach_builder->generate_form();
 
         $language = get_option( 'hostinger_ai_selected_language', 'en_US' );
         Helper::install_and_set_language( $language );
@@ -312,47 +343,29 @@ class WebsiteBuilder {
 
         $this->clear_elementor_cache();
 
+        // Delete temporary saved website structure pages.
+        delete_option( 'hostinger_ai_website_structure' );
+
         return true;
     }
 
     public function clear_ai_data( array $new_website_type, string $new_builder_type = '' ): void {
         // Prompt.
         delete_option('hostinger_ai_brand_name');
-        delete_option('hostinger_ai_website_type');
         delete_option('hostinger_ai_description');
-        delete_option('hostinger_ai_selected_language');
 
-        // Deactivate Elementor if switching to Gutenberg.
         $current_builder_type = get_option( 'hostinger_ai_builder_type', '' );
 
-        if ( $current_builder_type === BuilderType::ELEMENTOR && $new_builder_type === BuilderType::GUTENBERG ) {
-            deactivate_plugins( 'elementor/elementor.php' );
-        }
+        $this->reconcile_plugins( $new_website_type, $current_builder_type, $new_builder_type );
 
-        // Deactivate Affiliate plugin if switching away from affiliate-marketing.
-        $is_affiliate = get_option( 'hostinger_ai_affiliate', false );
-
-        if ( $is_affiliate && ! in_array( 'affiliate-marketing', $new_website_type, true ) ) {
-            deactivate_plugins( 'hostinger-affiliate-plugin/hostinger-affiliate-plugin.php' );
-        }
-
-        // Affiliate flag.
-        delete_option('hostinger_ai_affiliate');
-
-        // Disable WooCommerce only if the new website type does NOT include 'online store'.
-        $hostinger_ai_woo = get_option('hostinger_ai_woo', false);
-
-        if ( $hostinger_ai_woo && ! in_array( 'online store', $new_website_type, true ) ) {
-            deactivate_plugins( 'woocommerce/woocommerce.php' );
-        }
-
-        // Woo flag.
-        delete_option('hostinger_ai_woo');
+        delete_option( 'hostinger_ai_affiliate' );
+        delete_option( 'hostinger_ai_woo' );
 
         // Colors & selected font.
         delete_option('hostinger_ai_version');
         delete_option('hostinger_ai_colors');
         delete_option('hostinger_ai_font');
+        delete_option('hostinger_ai_font_options');
         delete_option('hostinger_ai_body_font');
         delete_option('hostinger_ai_body_font_override');
         delete_option('hostinger_elementor_typography_set');
@@ -367,49 +380,29 @@ class WebsiteBuilder {
         delete_option('hostinger_ai_website_content');
     }
 
+    public function reconcile_plugins( array $new_website_type, string $current_builder_type, string $new_builder_type ): void {
+        $plugins = $this->get_plugins_to_deactivate( $new_website_type, $current_builder_type, $new_builder_type );
+
+        foreach ( $plugins as $plugin_file ) {
+            $this->deactivate_plugin( $plugin_file );
+        }
+    }
+
     /**
      * @return bool
      */
     public function clear_ai_content(): bool {
-        try {
-            remove_theme_mod( 'custom_logo' );
+        remove_theme_mod( 'custom_logo' );
 
-            $pages = get_option('hostinger_ai_created_pages', array());
+        ( new GenerationCleaner() )->sweep();
+        ( new ProductCategoryManager() )->clear_created_categories();
 
-            if ( empty( $pages ) ) {
-                return false;
-            }
+        delete_option( 'hostinger_ai_created_pages' );
+        delete_option( 'hostinger_ai_created_blog_posts' );
+        delete_option( 'hostinger_ai_created_products' );
+        delete_option( 'hostinger_ai_blog_needed' );
 
-            foreach ( $pages as $page ) {
-                wp_delete_post( $page['page_id'], true );
-            }
-
-            delete_option('hostinger_ai_created_pages');
-
-            // Blog flag
-            delete_option('hostinger_ai_blog_needed');
-
-            $this->clean_products();
-
-            // Blog posts
-            $created_blog_posts = get_option( 'hostinger_ai_created_blog_posts', array() );
-
-            if ( empty( $created_blog_posts ) ) {
-                return true;
-            }
-
-            foreach($created_blog_posts as $post_id) {
-                wp_delete_post( $post_id, true );
-
-                $this->image_manager->delete_attachments_by_meta_value( PreviewImageConstant::POST_ID, $post_id );
-            }
-
-            delete_option( 'hostinger_ai_created_blog_posts' );
-
-            return true;
-        } catch ( Exception $e ) {
-            return false;
-        }
+        return true;
     }
 
     public function mark_blog_section( array $structure ): void {
@@ -434,7 +427,7 @@ class WebsiteBuilder {
     private function update_header_visibility( array $content ): void {
         $options = get_option( 'hostinger_ai_theme_display_options', [] );
 
-        $is_landing_page = WebsiteTypeHelper::has_website_type( 'landing page' );
+        $is_landing_page = WebsiteTypeHelper::is_only_website_type( 'landing page' );
         $header_hidden   = isset( $options['hide_header'] );
 
         if ( $is_landing_page && ! $header_hidden ) {
@@ -446,17 +439,38 @@ class WebsiteBuilder {
         }
     }
 
-    private function clean_products(): bool {
-        $products = get_option( 'hostinger_ai_created_products', array() );
+    private function get_plugins_to_deactivate( array $new_website_type, string $current_builder_type, string $new_builder_type ): array {
+        $plugins = array();
 
-        foreach($products as $post_id) {
-            wp_delete_post( $post_id, true );
+        if ( $current_builder_type === BuilderType::ELEMENTOR && $new_builder_type === BuilderType::GUTENBERG ) {
+            $plugins[] = 'elementor/elementor.php';
         }
 
-        delete_option( 'hostinger_ai_created_products' );
-        ( new ProductCategoryManager() )->clear_created_categories();
+        if ( ! in_array( 'affiliate-marketing', $new_website_type, true ) ) {
+            $plugins[] = 'hostinger-affiliate-plugin/hostinger-affiliate-plugin.php';
+        }
 
-        return true;
+        if ( ! WebsiteTypeHelper::contains( $new_website_type, 'online store' ) ) {
+            $plugins[] = 'woocommerce/woocommerce.php';
+        }
+
+        return $plugins;
+    }
+
+    private function deactivate_plugin( string $plugin_file ): void {
+        if ( ! function_exists( 'is_plugin_active' ) ) {
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
+        }
+
+        if ( ! is_plugin_active( $plugin_file ) ) {
+            return;
+        }
+
+        deactivate_plugins( $plugin_file );
+
+        if ( is_plugin_active( $plugin_file ) ) {
+            error_log( 'Hostinger AI Theme: Failed to deactivate plugin ' . $plugin_file );
+        }
     }
 
     private function maybe_build_woo_pages(array $pages): array {
@@ -531,6 +545,9 @@ class WebsiteBuilder {
             'post_content' => $content,
             'post_status' => 'publish',
             'post_type' => 'page',
+            'meta_input' => array(
+                GenerationConstant::META_KEY => '1',
+            ),
         ]);
 
         if (!$page_id || is_wp_error($page_id)) {
@@ -563,6 +580,9 @@ class WebsiteBuilder {
             'post_content' => '',
             'post_status'  => 'publish',
             'post_type'    => 'page',
+            'meta_input'   => array(
+                GenerationConstant::META_KEY => '1',
+            ),
         ] );
 
         if ( ! $page_id || is_wp_error( $page_id ) ) {

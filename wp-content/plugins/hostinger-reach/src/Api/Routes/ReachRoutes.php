@@ -103,6 +103,16 @@ class ReachRoutes extends Routes {
 
         register_rest_route(
             HOSTINGER_REACH_PLUGIN_REST_API_BASE,
+            'connect',
+            array(
+                'methods'             => 'POST',
+                'callback'            => array( $this->handler, 'post_connect_handler' ),
+                'permission_callback' => array( $this, 'permission_check' ),
+            )
+        );
+
+        register_rest_route(
+            HOSTINGER_REACH_PLUGIN_REST_API_BASE,
             'generate-auth-url',
             array(
                 'methods'             => 'POST',

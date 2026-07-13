@@ -6,10 +6,13 @@ if ( ! defined( 'ABSPATH' ) ) {
     die;
 }
 
+use Hostinger\Reach\Providers\AmplitudeProvider;
 use Hostinger\Reach\Providers\AssetsProvider;
 use Hostinger\Reach\Providers\BlocksProvider;
+use Hostinger\Reach\Providers\ClientProvider;
 use Hostinger\Reach\Providers\ContainerProvider;
 use Hostinger\Reach\Providers\DatabaseProvider;
+use Hostinger\Reach\Providers\HostingRoutesProvider;
 use Hostinger\Reach\Providers\IntegrationsProvider;
 use Hostinger\Reach\Providers\JobsProvider;
 use Hostinger\Reach\Providers\MenusProvider;
@@ -44,7 +47,10 @@ class Boot {
     );
 
     private array $hostinger_providers = array(
+        ClientProvider::class,
         SurveysProvider::class,
+        AmplitudeProvider::class,
+        HostingRoutesProvider::class,
     );
 
     private static ?Boot $instance = null;

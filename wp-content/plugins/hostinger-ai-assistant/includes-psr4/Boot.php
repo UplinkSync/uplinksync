@@ -2,8 +2,10 @@
 
 namespace Hostinger\AiAssistant;
 
+use Hostinger\AiAssistant\Providers\CliProvider;
 use Hostinger\AiAssistant\Providers\ContainerProvider;
 use Hostinger\AiAssistant\Providers\McpProvider;
+use Hostinger\AiAssistant\Providers\NudgesProvider;
 use Hostinger\AiAssistant\Providers\ProviderInterface;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -15,6 +17,8 @@ class Boot {
     private array $providers = array(
         ContainerProvider::class,
         McpProvider::class,
+        CliProvider::class,
+        NudgesProvider::class,
     );
 
     private static ?Boot $instance = null;

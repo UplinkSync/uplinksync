@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Hostinger AI 3.0.28\n"
+"Project-Id-Version: Hostinger AI 3.0.46\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/hostinger-ai-assistant\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-24T07:49:18+00:00\n"
+"POT-Creation-Date: 2026-06-30T07:51:16+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: hostinger-ai-assistant\n"
@@ -35,9 +35,9 @@ msgstr ""
 msgid "Hostinger"
 msgstr ""
 
-#: admin/class-hostinger-ai-assistant-admin.php:166
-#: admin/class-hostinger-ai-assistant-admin.php:167
-#: admin/class-hostinger-ai-assistant-admin.php:184
+#: admin/class-hostinger-ai-assistant-admin.php:171
+#: admin/class-hostinger-ai-assistant-admin.php:172
+#: admin/class-hostinger-ai-assistant-admin.php:189
 #: admin/partials/hostinger-ai-assistant-tab-view.php:24
 #: gutenberg-block/dist/index.js:1
 #: gutenberg-block/src/index.js:10
@@ -180,7 +180,7 @@ msgid "AI may produce inaccurate information"
 msgstr ""
 
 #: admin/class-hostinger-ai-assistant-translations.php:53
-msgid "Ask Kodee"
+msgid "Ask AI"
 msgstr ""
 
 #: admin/class-hostinger-ai-assistant-translations.php:54
@@ -692,11 +692,31 @@ msgstr ""
 msgid "You are running <b>%s</b> PHP version."
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/AbilitiesRegistry.php:77
+#: includes-psr4/Cli/JwtCommand.php:97
+msgid "No administrator found to issue a token for. Pass --user=<id|login|email>."
+msgstr ""
+
+#. translators: %d: WordPress user ID
+#: includes-psr4/Cli/JwtCommand.php:105
+#, php-format
+msgid "User %d lacks the manage_options capability required to issue a token."
+msgstr ""
+
+#: includes-psr4/Cli/JwtCommand.php:130
+msgid "Token expiration (--expires-in) must be an integer number of seconds."
+msgstr ""
+
+#. translators: 1: minimum expiration in seconds, 2: maximum expiration in seconds
+#: includes-psr4/Cli/JwtCommand.php:140
+#, php-format
+msgid "Token expiration must be between %1$d and %2$d seconds."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/AbilitiesRegistry.php:93
 msgid "Hostinger AI Abilities"
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/AbilitiesRegistry.php:78
+#: includes-psr4/Mcp/Abilities/AbilitiesRegistry.php:94
 msgid "Abilities that provide a way of interacting with WordPress site."
 msgstr ""
 
@@ -977,6 +997,7 @@ msgstr ""
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/AssignGlobalColor.php:155
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/GetActiveKit.php:66
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:117
 msgid "No active Elementor kit found"
 msgstr ""
 
@@ -1002,6 +1023,188 @@ msgstr ""
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/BaseElementorTool.php:312
 #, php-format
 msgid "Post %1$s is not an Elementor kit (template type: %2$s)"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:18
+msgid "The ID of the post/page to modify"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:27
+msgid "The ID of the target container"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:36
+msgid "Optional parent container ID. If omitted, operations happen at the root level."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:42
+msgid "Insertion position relative to list (start/end), a sibling (before/after) or a specific index."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:46
+msgid "Required when position is before/after. The sibling element ID."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:51
+msgid "Zero-based index to insert at when position is index."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:61
+msgid "Container layout type"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:66
+msgid "Flex direction (row or column). Applies to flex layout."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:71
+msgid "Content width behavior for the container"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:75
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:182
+msgid "Optional CSS class to assign/update on the container"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:85
+msgid "Cross‑axis alignment for flex containers"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:90
+msgid "Main‑axis alignment for flex containers"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:95
+msgid "Overall gap between child items (px)"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:100
+msgid "Row gap for grid or multi‑row flex (px)"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:105
+msgid "Column gap for grid or flex (px)"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:116
+msgid "Number of inner columns (containers)"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:127
+msgid "Target number of inner columns (containers)"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:132
+msgid "When reducing columns, keep removed columns’ children by moving them into a remaining column"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ContainerTool.php:138
+msgid "If preserving children, where to place them into remaining columns"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/CreateContainer.php:14
+msgid "Create Elementor Container"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/CreateContainer.php:15
+msgid "Creates a new Elementor container (section) at root or inside a parent container. Can optionally create multiple inner columns."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/CreateContainer.php:84
+msgid "Failed to insert container into parent elements"
+msgstr ""
+
+#. translators: %s: parent id
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/CreateContainer.php:94
+#, php-format
+msgid "Parent container with ID '%s' not found"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/CreateContainer.php:103
+msgid "Could not insert the new container at requested position"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/DeleteContainer.php:14
+msgid "Delete Elementor Container"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/DeleteContainer.php:15
+msgid "Safely removes a container. Optionally preserves children by moving them to the parent at the same position. Can require confirmation for complex structures."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/DeleteContainer.php:25
+msgid "If true, move the container's children into the parent at the same position instead of deleting them."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/DeleteContainer.php:30
+msgid "Confirm deletion when the subtree is complex (many descendants) and children will be removed."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/DeleteContainer.php:80
+msgid "This deletion will remove a complex subtree. Set confirm=true to proceed or enable preserve_children to keep children."
+msgstr ""
+
+#. translators: %s: container id
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/DeleteContainer.php:92
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:367
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateContainer.php:207
+#, php-format
+msgid "Container with ID '%s' not found"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:17
+msgid "Edit Elementor Container Styles"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:18
+msgid "Updates container styling: background color, padding/margin, border (radius/width/color/style), opacity, z-index. Supports responsive device targeting."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:30
+msgid "Target device for responsive settings"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:34
+msgid "CSS color value for background (e.g., #1e90ff, rgba(...), color name)"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:69
+msgid "Padding in px (number for all sides) or object with sides and unit"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:89
+msgid "Margin in px (number for all sides) or object with sides and unit"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:124
+msgid "Border radius (number for all corners) or object with corners and unit"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:159
+msgid "Border width (number for all sides) or object with sides and unit"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:163
+msgid "CSS color value for border"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:168
+msgid "Border style"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:174
+msgid "Opacity (0..1)"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:178
+msgid "Z-index"
+msgstr ""
+
+#. translators: %s: element id
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/EditContainer.php:229
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateContainer.php:92
+#, php-format
+msgid "Element '%s' is not a container"
 msgstr ""
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/FindWidgets.php:16
@@ -1112,6 +1315,7 @@ msgid "Filter by post type (page, post, any). Default: any"
 msgstr ""
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/ListPages.php:28
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ListTemplates.php:22
 msgid "Filter by post status (publish, draft, any). Default: any"
 msgstr ""
 
@@ -1121,6 +1325,86 @@ msgstr ""
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/ListPages.php:41
 msgid "Number of pages to skip for pagination. Default: 0"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ListTemplates.php:14
+msgid "List Elementor Templates"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ListTemplates.php:15
+msgid "Retrieves Elementor templates from the elementor_library post type. Results include the template type and support pagination."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ListTemplates.php:28
+msgid "Number of templates to return. Default: 50"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/ListTemplates.php:35
+msgid "Number of templates to skip for pagination. Default: 0"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateContainer.php:14
+msgid "Update Elementor Container"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateContainer.php:15
+msgid "Updates container layout and structure settings like layout, direction, content width, alignment, spacing, and number of inner columns."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:14
+msgid "Update Elementor Global Styles"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:15
+msgid "Updates Elementor global colors and/or typography presets in the active kit in a single call. Intended for intents like \"Change primary color to red\" and \"Change heading font to Arial\" with one request. Triggers site-wide CSS regeneration."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:22
+msgid "List of global color updates"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:28
+msgid "System color key to update (optional)"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:33
+msgid "Custom global color _id to update (optional)"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:37
+msgid "Optional new title/label for the color"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:41
+msgid "New color value (e.g. #FF0000 or rgba(255,0,0,1))"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:49
+msgid "List of typography preset updates"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:55
+msgid "System typography preset key to update (optional)"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:60
+msgid "Custom typography preset _id to update (optional)"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:64
+msgid "Optional new title/label"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:108
+msgid "Provide colors and/or typography updates to apply."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:189
+msgid "Target global color not found in the active kit"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateGlobalStyles.php:250
+msgid "Target typography preset not found in the active kit"
 msgstr ""
 
 #: includes-psr4/Mcp/Abilities/Tools/Elementor/UpdateWidgetContent.php:14
@@ -1495,35 +1779,35 @@ msgstr ""
 msgid "Hostinger plugin settings option not defined"
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:183
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:187
 msgid "Maintenance mode status"
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:187
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:191
 msgid "Bypass code for maintenance mode. Needed only when maintenance mode is enabled."
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:191
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:195
 msgid "Disable XML-RPC status"
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:195
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:199
 msgid "Force HTTPS status"
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:199
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:203
 msgid "Force WWW status"
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:203
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:207
 msgid "Disable authentication password status"
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:207
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:211
 msgid "Enable llms.txt status"
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:211
+#: includes-psr4/Mcp/Abilities/Tools/HostingerPluginTools.php:215
 msgid "Opt-in Web2Agent MCP status"
 msgstr ""
 
@@ -1872,8 +2156,152 @@ msgstr ""
 msgid "Invalid base64 data"
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:283
+#: includes-psr4/Mcp/Abilities/Tools/MediaTools.php:282
 msgid "Could not determine file type"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:15
+msgid "List Menus"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:16
+msgid "Get a list of navigation menus."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:26
+msgid "Get Menu"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:27
+msgid "Get a single navigation menu by ID."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:37
+msgid "Create Menu"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:38
+msgid "Create a new navigation menu."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:50
+msgid "Update Menu"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:51
+msgid "Update an existing navigation menu by ID."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:63
+msgid "Delete Menu"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:64
+msgid "Delete a navigation menu by ID."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:85
+msgid "List Menu Items"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:86
+msgid "Get a list of menu items with filtering options."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:96
+msgid "Get Menu Item"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:97
+msgid "Get a single menu item by ID."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:107
+msgid "Create Menu Item"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:108
+msgid "Create a new menu item. Provide title, url or object_id/object, and menu (menu_id)."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:120
+msgid "Update Menu Item"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:121
+msgid "Update an existing menu item, including label, URL, parent, and order."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:133
+msgid "Delete Menu Item"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:134
+msgid "Delete a menu item by ID."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:155
+msgid "List Menu Locations"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:156
+msgid "Get a list of theme menu locations and their assigned menus."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:167
+msgid "Assign Menu To Location"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:168
+msgid "Assign a menu to a given theme location (e.g., primary). Provide location and menu ID."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:173
+msgid "Theme location slug (e.g., primary, header, footer)."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/MenusTools.php:177
+msgid "Menu ID to assign to the location."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:20
+msgid "List Navigations"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:21
+msgid "Get a list of Site Editor navigations."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:31
+msgid "Get Navigation"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:32
+msgid "Get a single navigation by ID."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:42
+msgid "Create Navigation"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:43
+msgid "Create a new Site Editor navigation."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:55
+msgid "Update Navigation"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:56
+msgid "Update an existing Site Editor navigation."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:68
+msgid "Delete Navigation"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/NavigationTools.php:69
+msgid "Delete a Site Editor navigation by ID."
 msgstr ""
 
 #: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:17
@@ -1914,6 +2342,109 @@ msgstr ""
 
 #: includes-psr4/Mcp/Abilities/Tools/PagesTools.php:66
 msgid "Delete a WordPress page by ID. This action cannot be undone."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:26
+msgid "Install Plugin"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:27
+msgid "Install a plugin from WordPress.org by slug."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:35
+msgid "WordPress.org plugin slug (e.g. 'woocommerce')"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:72
+msgid "Delete Plugin"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:73
+msgid "Delete an installed plugin by plugin file path. Cannot delete an active plugin."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:81
+msgid "Plugin file path relative to the plugins directory (e.g. 'woocommerce/woocommerce.php')"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:117
+msgid "Activate Plugin"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:118
+msgid "Activate an installed plugin by plugin file path."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:126
+msgid "Plugin file path relative to the plugins directory to activate"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:162
+msgid "Deactivate Plugin"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:163
+msgid "Deactivate an active plugin by plugin file path."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:171
+msgid "Plugin file path relative to the plugins directory to deactivate"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:207
+msgid "Update Plugin"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:208
+msgid "Update an installed plugin to the latest version from WordPress.org."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:216
+msgid "Plugin file path relative to the plugins directory to update"
+msgstr ""
+
+#. translators: %s: plugin slug.
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:260
+#, php-format
+msgid "Plugin \"%s\" is already installed."
+msgstr ""
+
+#. translators: %s: plugin slug.
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:282
+#, php-format
+msgid "Failed to install plugin \"%s\"."
+msgstr ""
+
+#. translators: %s: plugin slug.
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:303
+#, php-format
+msgid "Failed to locate installed plugin \"%s\"."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:324
+msgid "Cannot delete an active plugin."
+msgstr ""
+
+#. translators: %s: plugin file path.
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:335
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:372
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:406
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:436
+#, php-format
+msgid "Plugin \"%s\" not found."
+msgstr ""
+
+#. translators: %s: plugin file path.
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:353
+#, php-format
+msgid "Failed to delete plugin \"%s\"."
+msgstr ""
+
+#. translators: %s: plugin file path.
+#: includes-psr4/Mcp/Abilities/Tools/PluginTools.php:474
+#, php-format
+msgid "Failed to update plugin \"%s\"."
 msgstr ""
 
 #: includes-psr4/Mcp/Abilities/Tools/PostsTools.php:17
@@ -1960,6 +2491,102 @@ msgstr ""
 #: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:129
 #: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:140
 msgid "Unique identifier for the resource"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:156
+msgid "List of coupon objects to create"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:161
+msgid "List of coupon objects to update (must include id)"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:166
+msgid "List of coupon IDs to delete"
+msgstr ""
+
+#. translators: %s is a route parameter name
+#: includes-psr4/Mcp/Abilities/Tools/RestEndpointTool.php:471
+#, php-format
+msgid "Missing required route parameter: %s"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:20
+msgid "List Revisions"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:21
+msgid "List revisions for a specific item. Provide its REST API base (e.g., posts, pages, templates) and the parent ID."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:32
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:57
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:84
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:117
+msgid "REST API base for the post type (e.g., posts, pages, templates, product, etc.)."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:36
+msgid "The parent item ID to list revisions for."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:45
+msgid "Get Revision"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:46
+msgid "Get a specific revision for an item. Provide REST API base and parent ID, plus the revision ID."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:61
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:88
+msgid "The parent item ID."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:69
+msgid "Delete Revision"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:70
+msgid "Delete a specific revision for an item. Provide REST API base and parent ID, plus the revision ID."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:109
+msgid "Restore Revision"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:110
+msgid "Restore a specific revision for an item by copying its content back to the parent. Works for any post type using its REST base."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:121
+msgid "ID of the parent item to restore into."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:125
+msgid "ID of the revision to restore from."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:133
+msgid "Optional list of fields to restore. Defaults to title, content, and excerpt."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:171
+msgid "Invalid base API, parent, or revision ID."
+msgstr ""
+
+#. translators: %s: revision id
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:189
+#, php-format
+msgid "Revision with ID '%s' not found"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:208
+msgid "Nothing was updated"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/RevisionsTools.php:222
+msgid "It was an error processing the request."
 msgstr ""
 
 #: includes-psr4/Mcp/Abilities/Tools/SettingsTools.php:20
@@ -2078,6 +2705,174 @@ msgstr ""
 msgid "Delete a WordPress tag by ID. This action cannot be undone."
 msgstr ""
 
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:15
+msgid "List Template Parts"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:16
+msgid "Get a list of template parts."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:26
+msgid "Get Template Part"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:27
+msgid "Get a single template part by ID."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:37
+msgid "Update Template Part"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:38
+msgid "Update a template part content or title."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:50
+msgid "Delete Template Part"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:51
+msgid "Delete a template part by ID."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:72
+msgid "Assign Navigation To Template Part"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:73
+msgid "Assign a navigation to a template part by providing template_part_id and navigation_id."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:79
+msgid "Template part ID."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/TemplatePartsTools.php:83
+msgid "Navigation (wp_navigation) post ID."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:26
+msgid "Install Theme"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:27
+msgid "Install a theme from WordPress.org by slug."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:35
+msgid "WordPress.org theme slug (e.g. 'twentytwentyfour')"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:72
+msgid "Delete Theme"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:73
+msgid "Delete an installed theme by stylesheet directory name. Cannot delete the active or parent theme."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:81
+msgid "Theme stylesheet directory name (e.g. 'twentytwentyfour')"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:117
+msgid "Activate Theme"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:118
+msgid "Activate an installed theme by stylesheet directory name."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:126
+msgid "Theme stylesheet directory name to activate"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:162
+msgid "Deactivate Theme"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:163
+msgid "Deactivate the currently active theme by switching to a fallback theme."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:171
+msgid "Theme stylesheet directory name to deactivate (will switch to the default theme)"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:175
+msgid "Stylesheet of the theme to activate as a replacement. Defaults to 'twentytwentyfour'."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:212
+msgid "Update Theme"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:213
+msgid "Update an installed theme to the latest version from WordPress.org."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:221
+msgid "Theme stylesheet directory name to update"
+msgstr ""
+
+#. translators: %s: theme slug.
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:263
+#, php-format
+msgid "Theme \"%s\" is already installed."
+msgstr ""
+
+#. translators: %s: theme slug.
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:284
+#, php-format
+msgid "Failed to install theme \"%s\"."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:305
+msgid "Cannot delete the active theme."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:313
+msgid "Cannot delete the active parent theme."
+msgstr ""
+
+#. translators: %s: theme stylesheet directory name.
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:322
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:358
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:421
+#, php-format
+msgid "Theme \"%s\" not found."
+msgstr ""
+
+#. translators: %s: theme stylesheet directory name.
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:340
+#, php-format
+msgid "Failed to delete theme \"%s\"."
+msgstr ""
+
+#. translators: %s: theme stylesheet directory name.
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:391
+#, php-format
+msgid "Theme \"%s\" is not the active theme."
+msgstr ""
+
+#. translators: %s: theme stylesheet directory name.
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:459
+#, php-format
+msgid "Failed to update theme \"%s\"."
+msgstr ""
+
+#. translators: %s: theme slug name.
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:482
+#, php-format
+msgid "Fallback theme \"%s\" not found."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/ThemeTools.php:504
+msgid "No fallback theme available to switch to."
+msgstr ""
+
 #: includes-psr4/Mcp/Abilities/Tools/UsersTools.php:17
 msgid "Search Users"
 msgstr ""
@@ -2134,6 +2929,54 @@ msgstr ""
 msgid "Update the current logged-in user information."
 msgstr ""
 
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:19
+msgid "Search WooCommerce Coupons"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:20
+msgid "Search and filter WooCommerce coupons with pagination. Returns a list of coupons matching the search criteria."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:30
+msgid "Get WooCommerce Coupon"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:31
+msgid "Get a single WooCommerce coupon by ID. Returns the full coupon object with all fields."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:41
+msgid "Create WooCommerce Coupon"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:42
+msgid "Create a new WooCommerce coupon. Requires a coupon code and discount details."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:54
+msgid "Update WooCommerce Coupon"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:55
+msgid "Update an existing WooCommerce coupon by ID. Only provided fields will be updated."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:67
+msgid "Delete WooCommerce Coupon"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:68
+msgid "Delete a WooCommerce coupon by ID. This action cannot be undone."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:89
+msgid "Batch Update WooCommerce Coupons"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooCouponsTools.php:90
+msgid "Batch create, update, and delete WooCommerce coupons in a single request."
+msgstr ""
+
 #: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:19
 msgid "Search WooCommerce Orders"
 msgstr ""
@@ -2142,63 +2985,95 @@ msgstr ""
 msgid "Get a list of WooCommerce orders with search and filter capabilities. Returns a list of orders matching the criteria."
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:37
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:30
+msgid "Get WooCommerce Order"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:31
+msgid "Get a single WooCommerce order by ID. Returns the full order object with all fields."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:41
+msgid "Create WooCommerce Order"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:42
+msgid "Create a new WooCommerce order. Provide customer and line items data as needed."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:54
+msgid "Update WooCommerce Order"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:55
+msgid "Update an existing WooCommerce order by ID. Use this to change status (e.g., pending, processing, completed, refunded) and other editable fields."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:67
+msgid "Delete WooCommerce Order"
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:68
+msgid "Delete a WooCommerce order by ID. This action cannot be undone."
+msgstr ""
+
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:87
 msgid "Get WooCommerce Coupons Report"
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:38
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:88
 msgid "Get WooCommerce coupons totals report. Returns count of coupons by coupon type."
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:44
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:94
 msgid "Get WooCommerce Customers Report"
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:45
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:95
 msgid "Get WooCommerce customers totals report. Returns statistics about customers."
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:51
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:101
 msgid "Get WooCommerce Orders Report"
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:52
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:102
 msgid "Get WooCommerce orders totals report. Returns statistics about orders."
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:58
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:108
 msgid "Get WooCommerce Products Report"
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:59
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:109
 msgid "Get WooCommerce products totals report. Returns statistics about products."
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:65
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:115
 msgid "Get WooCommerce Reviews Report"
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:66
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:116
 msgid "Get WooCommerce reviews totals report. Returns statistics about product reviews."
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:72
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:122
 msgid "Get WooCommerce Sales Report"
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:73
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:123
 msgid "Get WooCommerce sales report. Returns detailed sales statistics and revenue data."
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:80
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:130
 msgid "Report period. Options: week, month, last_month, year."
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:85
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:135
 msgid "Return sales for a specific start date. Format: YYYY-MM-DD."
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:89
+#: includes-psr4/Mcp/Abilities/Tools/WooOrdersTools.php:139
 msgid "Return sales for a specific end date. Format: YYYY-MM-DD."
 msgstr ""
 
@@ -2310,51 +3185,51 @@ msgstr ""
 msgid "Force tag deletion"
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:223
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:222
 msgid "List WooCommerce Product Brands"
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:224
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:223
 msgid "List all WooCommerce product brands. Returns a list of product brands."
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:234
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:233
 msgid "Create WooCommerce Product Brand"
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:235
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:234
 msgid "Create a new WooCommerce product brand. Requires name."
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:247
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:246
 msgid "Update WooCommerce Product Brand"
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:248
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:247
 msgid "Update an existing WooCommerce product brand by ID."
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:260
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:259
 msgid "Delete WooCommerce Product Brand"
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:261
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:260
 msgid "Delete a WooCommerce product brand by ID."
 msgstr ""
 
-#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:267
+#: includes-psr4/Mcp/Abilities/Tools/WooProductsTools.php:266
 msgid "Force Product Brand deletion"
 msgstr ""
 
-#: includes-psr4/Mcp/McpServer.php:42
+#: includes-psr4/Mcp/McpServer.php:43
 msgid "Custom MCP Server for Hostinger AI Assistant."
 msgstr ""
 
-#: includes-psr4/Mcp/McpServer.php:64
+#: includes-psr4/Mcp/McpServer.php:65
 msgid "API key required"
 msgstr ""
 
-#: includes-psr4/Mcp/McpServer.php:72
+#: includes-psr4/Mcp/McpServer.php:73
 msgid "Invalid API key"
 msgstr ""
 
@@ -2396,6 +3271,42 @@ msgstr ""
 #: includes-psr4/Mcp/Rest/JwtAuth.php:135
 #, php-format
 msgid "Token validation failed: %s"
+msgstr ""
+
+#: includes-psr4/Nudges/DomainNudge.php:87
+msgid "Hey! Your site is still running on a temporary domain. Connecting a custom domain makes your site look more professional and helps visitors find you. It only takes a few minutes!"
+msgstr ""
+
+#: includes-psr4/Nudges/DomainNudge.php:99
+msgid "Connect my domain"
+msgstr ""
+
+#. translators: %s: domain expiration date.
+#: includes-psr4/Nudges/DomainRenewalNudge.php:77
+#, php-format
+msgid "Hey! Just a heads-up — your domain is expiring on %s. Renew it now to keep your website running without interruption."
+msgstr ""
+
+#: includes-psr4/Nudges/DomainRenewalNudge.php:88
+msgid "Renew my domain"
+msgstr ""
+
+#. translators: %s: hosting plan expiration date.
+#: includes-psr4/Nudges/RenewalNudge.php:81
+#, php-format
+msgid "Hey! Just a heads-up — your hosting plan is expiring on %s. Renew it now to keep your website running without interruption."
+msgstr ""
+
+#: includes-psr4/Nudges/RenewalNudge.php:100
+msgid "Renew my plan"
+msgstr ""
+
+#: includes-psr4/Nudges/WooCommerceSetupNudge.php:49
+msgid "Hey! It looks like your WooCommerce store isn't fully set up yet. Complete the remaining steps to make sure your store is ready to sell."
+msgstr ""
+
+#: includes-psr4/Nudges/WooCommerceSetupNudge.php:61
+msgid "Complete WooCommerce setup"
 msgstr ""
 
 #: includes/class-hostinger-ai-assistant-errors.php:14

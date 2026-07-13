@@ -9,7 +9,7 @@ defined( 'ABSPATH' ) || exit;
 class ElementorBuilder extends AbstractPluginBuilder {
     private const PLUGIN_FILE = 'elementor/elementor.php';
     private const PLUGIN_NAME = 'Elementor';
-    private const DOWNLOAD_URL = 'https://downloads.wordpress.org/plugin/elementor.3.28.4.zip';
+    private const DOWNLOAD_URL = 'https://downloads.wordpress.org/plugin/elementor.zip';
 
     protected function get_plugin_file(): string {
         return self::PLUGIN_FILE;

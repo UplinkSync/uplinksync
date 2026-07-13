@@ -2,30 +2,98 @@
 
 namespace Hostinger\AiTheme\Builder;
 
+use Hostinger\AiTheme\Data\WebsiteTypeHelper;
+use Hostinger\AiTheme\Constants\ApiRoutes;
+
 defined( 'ABSPATH' ) || exit;
 
 class Fonts {
 
-	// Heading -> Body
-	public const FONT_COMBINATION = array(
-		"Caudex" => "Roboto",
-		"Cormorant" => "Montserrat",
-		"DM Serif Display" => "Poppins",
-		"Fira Sans" => "Montserrat",
-		"Gruppo" => "Montserrat",
-		"Junge" => "Montserrat",
-		"Lato" => "Lato",
-		"Nunito Sans" => "Nunito Sans",
-		"Playfair Display" => "Montserrat",
-		"Poppins" => "Poppins",
-		"Prompt" => "Lato",
-		"Roboto" => "Lato",
-		"Montserrat" => "IBM Plex Mono",
-		"Prata" => "Montserrat",
-		"Prosto One" => "Catamaran",
-		"Titillium Web" => "Open Sans",
-		"Trirong" => "Manrope",
-	);
+	use SoftwareIdTrait;
+
+    // Heading -> Body
+    public const FONT_COMBINATION = array(
+        "Caudex" => "Roboto",
+        "Cormorant" => "Montserrat",
+        "DM Serif Display" => "Poppins",
+        "Fira Sans" => "Montserrat",
+        "Gruppo" => "Montserrat",
+        "Junge" => "Montserrat",
+        "Lato" => "Lato",
+        "Nunito Sans" => "Nunito Sans",
+        "Playfair Display" => "Montserrat",
+        "Poppins" => "Poppins",
+        "Prompt" => "Lato",
+        "Roboto" => "Lato",
+        "Montserrat" => "IBM Plex Mono",
+        "Prata" => "Montserrat",
+        "Prosto One" => "Catamaran",
+        "Titillium Web" => "Open Sans",
+        "Trirong" => "Manrope",
+    );
+
+	private RequestClient $wh_api_client;
+
+	public function setWhApiClient( RequestClient $wh_api_client ): void {
+		$this->wh_api_client = $wh_api_client;
+	}
+
+	public function generate_font_options(): array {
+		$software_id = $this->get_software_id();
+		if ( empty( $software_id ) ) {
+			return array();
+		}
+
+		$global_settings = wp_get_global_settings();
+		$theme_fonts     = $global_settings['typography']['fontFamilies']['theme'] ?? array();
+		$available_fonts = array_values( array_filter( array_column( $theme_fonts, 'name' ) ) );
+
+		$params = array(
+			'brandName'      => get_option( 'hostinger_ai_brand_name', '' ),
+			'websiteTypes'   => WebsiteTypeHelper::get_website_types(),
+			'description'    => get_option( 'hostinger_ai_description', '' ),
+			'availableFonts' => $available_fonts,
+            'count'          => 4,
+		);
+
+		$font_family_map = array();
+		foreach ( $theme_fonts as $font ) {
+			if ( ! empty( $font['name'] ) && ! empty( $font['fontFamily'] ) ) {
+				$font_family_map[ $font['name'] ] = $font['fontFamily'];
+			}
+		}
+
+		$font_pairs = $this->wh_api_client->post( ApiRoutes::INSTALLATIONS_BASE . $software_id . '/content/fonts', $params );
+
+		if ( ! empty( $font_pairs ) ) {
+			foreach ( $font_pairs as &$pair ) {
+				$heading_name = $pair['fonts']['heading']['family'] ?? '';
+				$body_name    = $pair['fonts']['body']['family'] ?? '';
+
+				$pair['fonts']['heading'] = array(
+					'family'     => $heading_name,
+					'fontFamily' => $font_family_map[ $heading_name ] ?? $heading_name,
+				);
+				$pair['fonts']['body'] = array(
+					'family'     => $body_name,
+					'fontFamily' => $font_family_map[ $body_name ] ?? $body_name,
+				);
+
+				unset( $pair['rationale'], $pair['cssVars'] );
+			}
+			unset( $pair );
+
+			update_option( 'hostinger_ai_font_options', $font_pairs, true );
+
+			$first_pair = $font_pairs[0];
+			update_option( 'hostinger_ai_font', $first_pair['fonts']['heading']['fontFamily'], true );
+			update_option( 'hostinger_ai_body_font_override', $first_pair['fonts']['body']['fontFamily'], true );
+
+			return $font_pairs;
+		}
+
+		return array();
+	}
 
 	public function get_body_font( array $theme_json_data, string $main_font_family ): string {
 		$override = get_option( 'hostinger_ai_body_font_override', false );

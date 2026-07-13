@@ -5,6 +5,7 @@ namespace Hostinger\Reach\Api\Handlers;
 use Hostinger\Reach\Api\ApiKeyManager;
 use Hostinger\Reach\Dto\PluginData;
 use Hostinger\Reach\Functions;
+use Hostinger\Reach\Integrations\Elementor\ElementorIntegration;
 use Hostinger\Reach\Integrations\ImportManager;
 use Hostinger\Reach\Integrations\Integration;
 use Hostinger\Reach\Integrations\PluginManager;
@@ -178,6 +179,7 @@ class IntegrationsApiHandler extends ApiHandler {
             }
 
             $is_hostinger_reach                = $integration_name === ReachFormIntegration::INTEGRATION_NAME;
+            $is_elementor                      = $integration_name === ElementorIntegration::INTEGRATION_NAME;
             $integrations[ $integration_name ] = $plugin->to_array();
             $is_active_by_default              = $integrations[ $integration_name ][ Integration::INTEGRATION_IS_ACTIVE ] ?? false;
             $is_plugin_active                  = $is_hostinger_reach || $this->plugin_manager->is_active( $integration_name );
@@ -190,8 +192,8 @@ class IntegrationsApiHandler extends ApiHandler {
                 array(
                     'is_plugin_active'                      => $is_plugin_active,
                     Integration::INTEGRATION_IMPORT_ENABLED => $import_enabled,
-                    Integration::INTEGRATION_IS_ACTIVE      => $is_hostinger_reach || $is_active,
-                    'can_deactivate'                        => ! $is_hostinger_reach,
+                    Integration::INTEGRATION_IS_ACTIVE      => $is_hostinger_reach || $is_elementor || $is_active,
+                    'can_deactivate'                        => ! $is_hostinger_reach && ! $is_elementor,
                     'is_go_to_plugin_visible'               => ! $is_hostinger_reach,
                     'import_status'                         => $this->import_manager->get_status( $integration_name ),
                     'is_installable'                        => $this->plugin_manager->is_installed( $integration_name ) || ! empty( $integrations[ $integration_name ]['download_url'] ),

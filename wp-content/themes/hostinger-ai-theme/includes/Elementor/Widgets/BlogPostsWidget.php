@@ -99,7 +99,7 @@ class BlogPostsWidget extends Widget_Base {
 
                         <?php if ( 'yes' === $settings['show_date'] ) { ?>
                             <div class="post-date">
-                                <?php echo esc_html( get_the_date( 'n/j/Y', $post->ID ) ); ?>
+                                <?php echo esc_html( get_the_date( '', $post->ID ) ); ?>
                             </div>
                         <?php } ?>
                     </article>

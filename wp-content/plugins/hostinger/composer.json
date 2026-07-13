@@ -3,11 +3,11 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "git@github.com:hostinger/hostinger-wp-menu-manager.git"
+      "url": "https://github.com/hostinger/hostinger-wp-menu-manager.git"
     },
     {
       "type": "vcs",
-      "url": "git@github.com:hostinger/hostinger-wp-helper.git"
+      "url": "https://github.com/hostinger/hostinger-wp-helper.git"
     }
   ],
   "require": {
@@ -37,10 +37,15 @@
     "phpunit/php-code-coverage": "^9.2"
   },
   "scripts": {
-    "phpunit": "phpunit"
+    "phpunit": "phpunit",
+    "post-install-cmd": "bash bin/cleanup-hostinger-vendor.sh",
+    "post-update-cmd": "bash bin/cleanup-hostinger-vendor.sh"
   },
   "config": {
     "platform-check": false,
+    "preferred-install": {
+      "*": "dist"
+    },
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true,
       "alleyinteractive/composer-wordpress-autoloader": true,

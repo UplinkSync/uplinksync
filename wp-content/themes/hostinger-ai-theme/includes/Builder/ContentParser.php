@@ -74,6 +74,10 @@ class ContentParser {
         // Dash fix.
         $serialized = str_replace( '\u002d', '-', $serialized );
 
+        // Replace trans-* tokens.
+        $translator = new Translator();
+        $serialized = $translator->translate_string( $serialized );
+
         return $serialized;
     }
 }

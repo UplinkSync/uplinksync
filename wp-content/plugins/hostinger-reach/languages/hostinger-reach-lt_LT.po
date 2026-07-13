@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-07-31T11:19:40+03:00\n"
-"PO-Revision-Date: 2026-04-02 06:37+0000\n"
+"PO-Revision-Date: 2026-06-30 07:01+0000\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Domain: hostinger-reach\n"
 "Language: lt_LT\n"
@@ -18,34 +18,39 @@ msgstr ""
 "&&(n%100<10||n%100 >= 20)? 1 : 2);\n"
 "X-Loco-Version: 2.8.1; wp-6.9; php-8.2.29"
 
-#: src/Setup/Assets.php:189
+#: src/Setup/Assets.php:208
 msgid "(no title)"
 msgstr "(be pavadinimo)"
 
-#: src/Setup/Assets.php:212
+#: src/Setup/Assets.php:231
 msgid "-"
 msgstr "-"
+
+#: src/Setup/Assets.php:108
+msgid ""
+"<strong>Copy</strong> your new API token and <strong>paste it below</strong>"
+msgstr ""
 
 #: src/Integrations/WooCommerce/WooCommerceIntegration.php:124
 #, fuzzy
 msgid "Abandoned Carts"
 msgstr "Palikti vežimėliai"
 
-#: src/Setup/Assets.php:232
+#: src/Setup/Assets.php:251
 #, fuzzy
 msgid "Abandoned carts"
 msgstr "Palikti vežimėliai"
 
-#: src/Setup/Assets.php:175 src/Setup/Assets.php:192
+#: src/Setup/Assets.php:194 src/Setup/Assets.php:211
 msgid "Active"
 msgstr "Aktyvus"
 
-#: src/Admin/Notices/AddFormNotice.php:83 src/Setup/Assets.php:132
-#: src/Setup/Assets.php:181 src/Setup/Assets.php:195
+#: src/Admin/Notices/AddFormNotice.php:83 src/Setup/Assets.php:150
+#: src/Setup/Assets.php:200 src/Setup/Assets.php:214
 msgid "Add form"
 msgstr "Pridėti formą"
 
-#: src/Setup/Assets.php:134 src/Setup/Assets.php:161
+#: src/Setup/Assets.php:152 src/Setup/Assets.php:179
 msgid "Add form or plugin"
 msgstr "Pridėti formą arba įskiepį"
 
@@ -55,7 +60,7 @@ msgid "Add form to start sending campaigns with Hostinger Reach"
 msgstr ""
 "Pridėkite formą, kad pradėtumėte siųsti kampanijas su \"Hostinger Reach"
 
-#: src/Setup/Assets.php:129
+#: src/Setup/Assets.php:147
 #, fuzzy
 msgid "Add new form"
 msgstr "Pridėti naują formą"
@@ -67,7 +72,7 @@ msgstr "Pridėti naują formą"
 msgid "Add New Tag"
 msgstr "Pridėti naują žymą"
 
-#: src/Setup/Assets.php:127
+#: src/Setup/Assets.php:145
 #, fuzzy
 msgid "Add or connect a form to start sending campaigns"
 msgstr ""
@@ -80,7 +85,7 @@ msgstr ""
 msgid "Add Tag"
 msgstr "Pridėti žymą"
 
-#: src/Setup/Assets.php:229
+#: src/Setup/Assets.php:248
 #, fuzzy
 msgid ""
 "Adds a marketing consent checkbox at checkout and syncs contacts to Reach."
@@ -93,7 +98,11 @@ msgid "Any ideas or feedback to help us improve Hostinger Reach?"
 msgstr ""
 "Turi idėjų ar atsiliepimų, kurie padėtų mums pagerinti Hostinger Reach?"
 
-#: src/Setup/Assets.php:210
+#: src/Setup/Assets.php:112
+msgid "API Token field is required"
+msgstr ""
+
+#: src/Setup/Assets.php:229
 #, fuzzy
 #| msgid ""
 #| "are ready to sync with Reach. Any new contacts you’ll collect with these "
@@ -109,29 +118,29 @@ msgstr ""
 msgid "Attention:"
 msgstr "Dėmesio:"
 
-#: src/Setup/Assets.php:213
+#: src/Setup/Assets.php:232
 #, fuzzy
 msgid "Auto-sync off"
 msgstr "Automatinė sinchronizacija išjungta"
 
-#: src/Setup/Assets.php:234
+#: src/Setup/Assets.php:253
 #, fuzzy
 msgid "Automation"
 msgstr "Automatizavimas"
 
-#: src/Setup/Assets.php:113
+#: src/Setup/Assets.php:131
 msgid "Average CTOR"
 msgstr "Vidutinis CTOR"
 
-#: src/Setup/Assets.php:89
+#: src/Setup/Assets.php:91
 msgid "Back"
 msgstr "Atgal"
 
-#: src/Setup/Assets.php:157
+#: src/Setup/Assets.php:175
 msgid "Background image for"
 msgstr "Fono paveikslėlis skirtas"
 
-#: src/Setup/Assets.php:156
+#: src/Setup/Assets.php:174
 msgid "Banner background image for"
 msgstr "Skelbimo fono vaizdas skirtas"
 
@@ -150,22 +159,26 @@ msgstr "Reach prenumeratos forma"
 msgid "Brave Popup Builder"
 msgstr "\"Brave Popup Builder"
 
-#: src/Setup/Assets.php:111
+#: src/Setup/Assets.php:129
 msgid "Campaigns"
 msgstr "Kampanijos"
 
-#: src/Setup/Assets.php:164
+#: src/Setup/Assets.php:114 src/Setup/Assets.php:182
 #, fuzzy
 #| msgid "Cancel "
 msgid "Cancel"
 msgstr "Atšaukti"
 
 #: src/Integrations/WooCommerce/WooCommerceIntegration.php:116
-#: src/Setup/Assets.php:228
+#: src/Setup/Assets.php:247
 msgid "Checkout"
 msgstr "Atsiskaitymas"
 
-#: src/Setup/Assets.php:159
+#: src/Setup/Assets.php:106
+msgid "Click <strong>Generate API Token</strong>"
+msgstr ""
+
+#: src/Setup/Assets.php:177
 msgid ""
 "Click-to-open rate tells you what percent of opens resulted in a click too. "
 "A good CTOR is 6-17%, depending on your industry."
@@ -174,11 +187,11 @@ msgstr ""
 "buvo ir spustelėta. Geras CTOR yra 6–17 %, priklausomai nuo tavo pramonės "
 "šakos."
 
-#: src/Setup/Assets.php:187
+#: src/Setup/Assets.php:206
 msgid "Collapse {pluginName} details"
 msgstr "Sutraukti {pluginName} informaciją"
 
-#: src/Setup/Assets.php:124
+#: src/Setup/Assets.php:142
 #, fuzzy
 msgid ""
 "Collect contacts at checkout, send automated emails after purchases, and "
@@ -187,16 +200,17 @@ msgstr ""
 "Rinkite kontaktus kasoje, siųskite automatinius el. laiškus po pirkimo ir "
 "atgaukite apleistus krepšelius, kad padidintumėte pardavimus su \"Reach\""
 
-#: src/Setup/Assets.php:223
+#: src/Setup/Assets.php:242
 #, fuzzy
 msgid "Coming soon"
 msgstr "Netrukus"
 
-#: src/Admin/Notices/ConnectionNotice.php:100 src/Setup/Assets.php:202
+#: src/Admin/Notices/ConnectionNotice.php:100 src/Setup/Assets.php:113
+#: src/Setup/Assets.php:221
 msgid "Connect"
 msgstr "Prisijungti"
 
-#: src/Setup/Assets.php:98
+#: src/Setup/Assets.php:115
 #, fuzzy
 msgid "Connect domain"
 msgstr "Prijungti domeną"
@@ -212,40 +226,54 @@ msgstr "Prijunk Hostinger Reach ir pradėk naudoti el. pašto rinkodarą"
 msgid "Connect Now"
 msgstr "Prisijunkite dabar"
 
-#: src/Setup/Assets.php:133
+#: src/Setup/Assets.php:151
 #, fuzzy
 msgid "Connect plugin"
 msgstr "Prisijungimo įskiepis"
 
-#: src/Setup/Assets.php:97
+#: src/Setup/Assets.php:100
 msgid "Connect site"
 msgstr "Prijungti svetainę"
 
-#: src/Setup/Assets.php:125
+#: src/Setup/Assets.php:101
+msgid "Connect with API token"
+msgstr ""
+
+#: src/Setup/Assets.php:143
 msgid "Connect WooCommerce"
 msgstr "Prijunk WooCommerce"
 
-#: src/Setup/Assets.php:123
+#: src/Setup/Assets.php:141
 #, fuzzy
 msgid "Connect WooCommerce to boost sales with email automations"
 msgstr ""
 "Prijunkite \"WooCommerce\", kad padidintumėte pardavimus naudodami el. pašto "
 "automatizavimą"
 
+#: src/Setup/Assets.php:102
+msgid "Connect your website to Hostinger Reach"
+msgstr ""
+
+#: src/Setup/Assets.php:111
+msgid ""
+"Connection failed. Check if your API Token is correct or contact Hostinger "
+"Reach support."
+msgstr ""
+
 #: src/Integrations/ContactForm7/ContactForm7Integration.php:111
-#: src/Setup/Assets.php:183
+#: src/Setup/Assets.php:202
 msgid "Contact Form 7"
 msgstr "Kontaktinė forma 7"
 
-#: src/Setup/Assets.php:105 src/Setup/Assets.php:171 src/Setup/Assets.php:204
+#: src/Setup/Assets.php:123 src/Setup/Assets.php:189 src/Setup/Assets.php:223
 msgid "Contacts"
 msgstr "Kontaktai"
 
-#: src/Setup/Assets.php:209
+#: src/Setup/Assets.php:228
 msgid "contacts"
 msgstr "kontaktai"
 
-#: src/Setup/Assets.php:208
+#: src/Setup/Assets.php:227
 #, fuzzy
 msgid "Contacts to Import"
 msgstr "Importuojami kontaktai"
@@ -254,7 +282,7 @@ msgstr "Importuojami kontaktai"
 msgid "Could not generate auth URL"
 msgstr "Nepavyko sukurti autentifikavimo URL adreso"
 
-#: src/Setup/Assets.php:128
+#: src/Setup/Assets.php:146
 #, fuzzy
 msgid ""
 "Create a new form or connect a plugin to grow your contact list and start "
@@ -263,21 +291,11 @@ msgstr ""
 "Sukurkite naują formą arba prijunkite įskiepį, kad padidintumėte savo "
 "kontaktų sąrašą ir pradėtumėte siųsti kampanijas su \"Reach\"."
 
-#: src/Setup/Assets.php:118
+#: src/Setup/Assets.php:136
 msgid "Create campaign"
 msgstr "Sukurti kampaniją"
 
-#: src/Setup/Assets.php:92
-msgid ""
-"Create email campaigns using AI-crafted templates that match your style. "
-"Instantly sync with your WordPress site and connect with your audience "
-"easily."
-msgstr ""
-"Kurk el. pašto kampanijas naudodamas tavo stilių atitinkančius dirbtinio "
-"intelekto sukurtus šablonus. Akimirksniu susinchronizuok su savo WordPress "
-"svetaine ir lengvai užmegzk ryšį su savo auditorija."
-
-#: src/Setup/Assets.php:225
+#: src/Setup/Assets.php:244
 #, fuzzy
 msgid ""
 "Create fully custom forms in Reach and easily embed them on your WordPress "
@@ -286,7 +304,7 @@ msgstr ""
 "Sukurkite visiškai pritaikytas formas \"Reach\" programoje ir lengvai "
 "įterpkite jas į \"WordPress\" svetainę naudodami šį įskiepį. Laikykitės!"
 
-#: src/Setup/Assets.php:119
+#: src/Setup/Assets.php:137
 msgid "Create template"
 msgstr "Sukurti šabloną"
 
@@ -297,23 +315,23 @@ msgstr "Sukurti šabloną"
 msgid "Default"
 msgstr "Numatytoji"
 
-#: src/Setup/Assets.php:165 src/Setup/Assets.php:201
+#: src/Setup/Assets.php:183 src/Setup/Assets.php:220
 msgid "Disconnect"
 msgstr "Atsijungti"
 
-#: src/Setup/Assets.php:95
+#: src/Setup/Assets.php:98
 msgid "Disconnect it to link this site instead."
 msgstr "Atjunk ir vietoj to susiek šią svetainę."
 
-#: src/Setup/Assets.php:180
+#: src/Setup/Assets.php:199
 msgid "Disconnect plugin"
 msgstr "Atjungti įskiepį"
 
-#: src/Setup/Assets.php:162
+#: src/Setup/Assets.php:180
 msgid "Disconnect plugin?"
 msgstr "Atjungti įskiepį?"
 
-#: src/Setup/Assets.php:163
+#: src/Setup/Assets.php:181
 msgid ""
 "Disconnecting will stop new contacts from being collected. You can reconnect "
 "or use a different form anytime."
@@ -321,12 +339,12 @@ msgstr ""
 "Atjungimas sustabdys naujų kontaktų rinkimą. Bet kuriuo metu galėsi vėl "
 "prisijungti arba panaudoti kitą formą."
 
-#: src/Setup/Assets.php:220
+#: src/Setup/Assets.php:239
 #, fuzzy
 msgid "Don't see your plugin?"
 msgstr "Nematote savo įskiepio?"
 
-#: src/Setup/Assets.php:122
+#: src/Setup/Assets.php:140
 msgid "E-Commerce"
 msgstr "E. prekyba"
 
@@ -340,31 +358,42 @@ msgstr ""
 "\"WooCommerce\" ir sinchronizuokite kontaktus, kad pradėtumėte kurti "
 "kampanijas ir plėsti verslą."
 
-#: src/Setup/Assets.php:178
+#: src/Setup/Assets.php:197
 msgid "Edit form"
 msgstr "Redaguoti formą"
 
-#: src/Integrations/Elementor/ElementorIntegration.php:113
-#: src/Setup/Assets.php:185
+#: src/Integrations/Elementor/ElementorIntegration.php:138
+#: src/Setup/Assets.php:204
 msgid "Elementor"
 msgstr "Elementor"
 
-#: src/Blocks/SubscriptionFormBlock.php:75
+#: src/Blocks/SubscriptionFormBlock.php:85
 #: src/Integrations/Elementor/SubscriptionFormElementorWidget.php:106
 msgid "Email"
 msgstr "El. paštas"
 
-#: src/Setup/Assets.php:101
+#: src/Setup/Assets.php:119
 msgid "Email marketing background with gradient design"
 msgstr "El. pašto rinkodaros fonas su gradientiniu dizainu"
 
-#: src/Setup/Assets.php:102
+#: src/Setup/Assets.php:120
 msgid ""
 "Email marketing illustration featuring envelopes and communication icons"
 msgstr ""
 "El. pašto rinkodaros iliustracija su vokais ir komunikacijos piktogramomis"
 
-#: src/Setup/Assets.php:108
+#: src/Setup/Assets.php:94
+#, fuzzy
+msgid ""
+"Email marketing that doesn't need an expert: Let AI write, design, and send "
+"your campaigns - your brand, your colors, applied automatically. No coding, "
+"no complexity."
+msgstr ""
+"El. pašto rinkodara, kuriai nereikia eksperto: leiskite dirbtiniam "
+"intelektui rašyti, kurti ir siųsti kampanijas - jūsų prekės ženklas, jūsų "
+"spalvos, taikomos automatiškai. Jokio kodavimo, jokio sudėtingumo."
+
+#: src/Setup/Assets.php:126
 msgid "Emails"
 msgstr "El. laiškai"
 
@@ -376,11 +405,11 @@ msgid "Enter tag name and press Enter or click Add Tag"
 msgstr ""
 "Įveskite žymės pavadinimą ir paspauskite Enter arba spustelėkite Pridėti žymę"
 
-#: src/Setup/Assets.php:186
+#: src/Setup/Assets.php:205
 msgid "Expand {pluginName} details"
 msgstr "Išskleisti {pluginName} informaciją"
 
-#: src/Setup/Assets.php:138
+#: src/Setup/Assets.php:156
 msgid "FAQ"
 msgstr "DUK"
 
@@ -388,7 +417,7 @@ msgstr "DUK"
 msgid "Form"
 msgstr "Forma"
 
-#: src/Setup/Assets.php:224
+#: src/Setup/Assets.php:243
 #, fuzzy
 msgid "Form Builder"
 msgstr "Formos kūrėjas"
@@ -404,20 +433,28 @@ msgstr "Formos ID"
 msgid "Forminator"
 msgstr "Forminatorius"
 
-#: src/Setup/Assets.php:126
+#: src/Setup/Assets.php:144
 msgid "Forms"
 msgstr "Formos"
 
-#: src/Setup/Assets.php:172
+#: src/Setup/Assets.php:190
 #, fuzzy
 msgid "Forms syncing with Reach"
 msgstr "Formų sinchronizavimas su \"Reach"
 
-#: src/Setup/Assets.php:179
+#: src/Setup/Assets.php:103
+msgid "Generate an API token"
+msgstr ""
+
+#: src/Setup/Assets.php:104
+msgid "Go to"
+msgstr ""
+
+#: src/Setup/Assets.php:198
 msgid "Go to plugin"
 msgstr "Eiti į įskiepį"
 
-#: src/Setup/Assets.php:99
+#: src/Setup/Assets.php:117
 #: frontend/blocks/subscription-block/src/Components/Dialog.js:42
 #: frontend/dist/blocks/subscription.js:1
 #: frontend/dist/blocks/subscription.js:87
@@ -430,16 +467,20 @@ msgid "Hostinger"
 msgstr "Hostinger"
 
 #. Plugin Name of the plugin
-#: hostinger-reach.php src/Admin/Menus.php:71
+#: hostinger-reach.php src/Admin/Menus.php:50 src/Admin/Menus.php:106
 #: src/Admin/Notices/AddFormNotice.php:90
 #: src/Admin/Notices/ConnectionNotice.php:110
 #: src/Integrations/Elementor/SubscriptionFormElementorWidget.php:20
-#: src/Integrations/Reach/ReachFormIntegration.php:71 src/Setup/Assets.php:100
-#: src/Setup/Assets.php:182
+#: src/Integrations/Reach/ReachFormIntegration.php:71 src/Setup/Assets.php:118
+#: src/Setup/Assets.php:201
 msgid "Hostinger Reach"
 msgstr "Hostinger Reach"
 
-#: src/Setup/Assets.php:146
+#: src/Setup/Assets.php:105
+msgid "Hostinger Reach Integrations → API Tokens"
+msgstr ""
+
+#: src/Setup/Assets.php:164
 #, fuzzy
 msgid ""
 "Hostinger Reach is a Hostinger service that helps you create and send "
@@ -452,7 +493,7 @@ msgstr ""
 "dirbtinio intelekto įrankius. Hostinger Reach WordPress įskiepis leidžia "
 "prijungti ir sinchronizuoti kontaktus iš mėgstamų WordPress įskiepių į Reach."
 
-#: src/Setup/Assets.php:140
+#: src/Setup/Assets.php:158
 msgid ""
 "Hostinger Reach is an AI-powered email marketing tool for small businesses "
 "and creators. It supports your entire email marketing journey—from building "
@@ -463,7 +504,7 @@ msgstr ""
 "rinkodaros kelią – nuo kontaktų sąrašų sudarymo iki kampanijų siuntimo ir "
 "rezultatų stebėjimo."
 
-#: src/Setup/Assets.php:142
+#: src/Setup/Assets.php:160
 msgid ""
 "Hostinger Reach is built for simplicity, speed, and results – no design or "
 "marketing experience needed. Unlike most email tools, at the core of Reach "
@@ -503,21 +544,21 @@ msgstr "Hostinger Reach logotipas"
 msgid "Hostinger Reach requires minimum PHP version of <b>%s</b>. "
 msgstr "Hostinger Reach reikalauja minimalios PHP <b>%s</b> versijos."
 
-#: src/Setup/Assets.php:151
+#: src/Setup/Assets.php:169
 #, fuzzy
 msgid "How are segments and tags created?"
 msgstr "Kaip kuriami segmentai ir žymos?"
 
-#: src/Setup/Assets.php:147
+#: src/Setup/Assets.php:165
 #, fuzzy
 msgid "How does contact syncing work?"
 msgstr "Kaip veikia kontaktų sinchronizavimas?"
 
-#: src/Setup/Assets.php:141
+#: src/Setup/Assets.php:159
 msgid "How is Hostinger Reach different from other email marketing apps?"
 msgstr "Kuo Hostinger Reach skiriasi nuo kitų el. pašto rinkodaros programų?"
 
-#: src/Setup/Assets.php:143
+#: src/Setup/Assets.php:161
 msgid "How much does it cost to use Hostinger Reach?"
 msgstr "Kiek kainuoja naudotis Hostinger Reach?"
 
@@ -535,7 +576,7 @@ msgstr "https://hostinger.com"
 msgid "https://www.hostinger.com/email-marketing"
 msgstr "https://www.hostinger.com/email-marketing"
 
-#: src/Setup/Assets.php:154
+#: src/Setup/Assets.php:172
 #, fuzzy
 msgid ""
 "If the integration is interrupted, syncing pauses automatically. Once the "
@@ -546,7 +587,7 @@ msgstr ""
 "Atnaujinus ryšį, sinchronizavimas atnaujinamas, todėl galite toliau rinkti "
 "kontaktus neprarasdami duomenų."
 
-#: src/Setup/Assets.php:239
+#: src/Setup/Assets.php:258
 #, fuzzy
 msgid ""
 "If your store isn’t ready yet, complete the setup to start selling and "
@@ -555,41 +596,41 @@ msgstr ""
 "Jei jūsų parduotuvė dar neparengta, atlikite sąranką, kad galėtumėte pradėti "
 "pardavinėti ir rinkti kontaktus"
 
-#: src/Setup/Assets.php:207
+#: src/Setup/Assets.php:226
 #, fuzzy
 msgid "Import"
 msgstr "Importas"
 
-#: src/Setup/Assets.php:203
+#: src/Setup/Assets.php:222
 #, fuzzy
 msgid "Import Contacts"
 msgstr "Importuoti kontaktus"
 
-#: src/Setup/Assets.php:166
+#: src/Setup/Assets.php:184
 #, fuzzy
 msgid "Import contacts"
 msgstr "Importuoti kontaktus"
 
-#: src/Setup/Assets.php:205
+#: src/Setup/Assets.php:224
 #, fuzzy
 msgid "Import your existing contacts to Reach"
 msgstr "Importuokite esamus adresatus į \"Reach"
 
-#: src/Setup/Assets.php:215
+#: src/Setup/Assets.php:234
 #, fuzzy
 msgid "Imported"
 msgstr "Importuota"
 
-#: src/Api/Handlers/IntegrationsApiHandler.php:122
+#: src/Api/Handlers/IntegrationsApiHandler.php:123
 msgid "Importing is not available for this integration"
 msgstr "Šioje integracijoje importavimas negalimas"
 
-#: src/Setup/Assets.php:217
+#: src/Setup/Assets.php:236
 #, fuzzy
 msgid "Importing..."
 msgstr "Importuoti..."
 
-#: src/Setup/Assets.php:176
+#: src/Setup/Assets.php:195
 msgid "Inactive"
 msgstr "Neaktyvus"
 
@@ -600,16 +641,16 @@ msgstr "Neaktyvus"
 msgid "Inline"
 msgstr "Inline"
 
-#: src/Setup/Assets.php:199
+#: src/Setup/Assets.php:218
 #, fuzzy
 msgid "Install"
 msgstr "Įdiekite"
 
-#: src/Setup/Assets.php:200
+#: src/Setup/Assets.php:219
 msgid "Install and connect"
 msgstr "Įdiek ir prijunk"
 
-#: src/Setup/Assets.php:198
+#: src/Setup/Assets.php:217
 msgid "Installed plugins"
 msgstr "Įdiegti įskiepiai"
 
@@ -618,11 +659,11 @@ msgstr "Įdiegti įskiepiai"
 msgid "Integrate your WordPress site with Hostinger Reach."
 msgstr "Integruok savo WordPress svetainę su Hostinger Reach."
 
-#: src/Setup/Assets.php:121
+#: src/Setup/Assets.php:139
 msgid "Integrations"
 msgstr "Integracijos"
 
-#: src/Setup/Assets.php:221
+#: src/Setup/Assets.php:240
 #, fuzzy
 msgid ""
 "It may not be supported yet. You can upload contacts as a CSV or use another "
@@ -631,7 +672,7 @@ msgstr ""
 "Gali būti, kad jis dar nepalaikomas. Galite įkelti kontaktus kaip CSV arba "
 "naudoti kitą įskiepį"
 
-#: src/Setup/Assets.php:219
+#: src/Setup/Assets.php:238
 #, fuzzy
 #| msgid "It was an error syncing your contacts to Reach."
 msgid "It was an error importing your contacts to Reach."
@@ -651,11 +692,11 @@ msgstr "Maketavimas"
 msgid "Layout Settings"
 msgstr "Išdėstymo nustatymai"
 
-#: src/Admin/Notices/ConnectionNotice.php:103 src/Setup/Assets.php:236
+#: src/Admin/Notices/ConnectionNotice.php:103 src/Setup/Assets.php:255
 msgid "Learn more"
 msgstr "Sužinoti daugiau"
 
-#: src/Setup/Assets.php:193
+#: src/Setup/Assets.php:212
 msgid ""
 "Make sure the people you contact expect your emails and are okay with "
 "receiving them."
@@ -663,39 +704,43 @@ msgstr ""
 "Įsitikink, kad žmonės, kuriems rašai, tikisi tavo el. laiškų ir sutinka juos "
 "gauti."
 
-#: src/Setup/Assets.php:96
+#: src/Setup/Assets.php:99
 msgid "Manage"
 msgstr "Tvarkyti"
 
-#: src/Setup/Assets.php:235
+#: src/Setup/Assets.php:254
 #, fuzzy
 msgid "Manage automations"
 msgstr "Tvarkykite automatizacijas"
 
-#: src/Setup/Assets.php:135 src/Setup/Assets.php:237
+#: src/Setup/Assets.php:153 src/Setup/Assets.php:256
 #, fuzzy
 msgid "Manage plugin"
 msgstr "Tvarkyti įskiepį"
 
-#: src/Setup/Assets.php:131
+#: src/Setup/Assets.php:149
 #, fuzzy
 msgid "More plugins"
 msgstr "Daugiau įskiepių"
 
-#: src/Blocks/SubscriptionFormBlock.php:83
+#: src/Blocks/SubscriptionFormBlock.php:93
 #: src/Integrations/Elementor/SubscriptionFormElementorWidget.php:114
 msgid "Name"
 msgstr "Pavadinimas"
 
-#: src/Setup/Assets.php:194
+#: src/Setup/Assets.php:107
+msgid "Name your token, then click <strong>Generate token</strong>"
+msgstr ""
+
+#: src/Setup/Assets.php:213
 msgid "New contact form"
 msgstr "Nauja kontaktinė forma"
 
-#: src/Setup/Assets.php:136
+#: src/Setup/Assets.php:154
 msgid "New page"
 msgstr "Naujas puslapis"
 
-#: src/Setup/Assets.php:115
+#: src/Setup/Assets.php:133
 msgid "New subscribers"
 msgstr "Nauji prenumeratoriai"
 
@@ -715,29 +760,29 @@ msgstr "Ninja formos"
 msgid "No"
 msgstr "Ne"
 
-#: src/Setup/Assets.php:188
+#: src/Setup/Assets.php:207
 msgid "No forms found for this integration."
 msgstr "Šiai integracijai formų nerasta."
 
-#: src/Setup/Assets.php:137
+#: src/Setup/Assets.php:155
 msgid "No pages available. Create a new page to get started."
 msgstr "Puslapių nėra. Norint pradėti, reikia sukurti naują puslapį."
 
-#: src/Setup/Assets.php:216
+#: src/Setup/Assets.php:235
 #, fuzzy
 msgid "Not imported"
 msgstr "Neimportuota"
 
-#: src/Setup/Assets.php:168
+#: src/Setup/Assets.php:186
 #, fuzzy
 msgid "Not needed"
 msgstr "Nereikia"
 
-#: src/Setup/Assets.php:173
+#: src/Setup/Assets.php:192
 msgid "of"
 msgstr "iš"
 
-#: src/Setup/Assets.php:148
+#: src/Setup/Assets.php:166
 #, fuzzy
 msgid ""
 "Once you connect a form plugin you use on WordPress (such as Elementor or "
@@ -751,7 +796,7 @@ msgstr ""
 "kontaktai renkami ir atnaujinami be rankinio eksporto po kiekvieno formos "
 "pateikimo"
 
-#: src/Setup/Assets.php:155
+#: src/Setup/Assets.php:173
 msgid "opens in new tab"
 msgstr "atsidaro naujame skirtuke"
 
@@ -760,45 +805,44 @@ msgstr "atsidaro naujame skirtuke"
 msgid "OptinMonster"
 msgstr "OptinMonster"
 
-#: src/Setup/Assets.php:130
+#: src/Setup/Assets.php:148
 #, fuzzy
 msgid "or connect a form plugin"
 msgstr "arba prijunkite formos įskiepį"
 
-#: src/Setup/Assets.php:214
+#: src/Setup/Assets.php:233
 #, fuzzy
 msgid "Partially imported"
 msgstr "Iš dalies importuota"
 
-#: src/Setup/Assets.php:104
+#: src/Setup/Assets.php:110
+msgid "Paste your API token here"
+msgstr ""
+
+#: src/Setup/Assets.php:122
 #, fuzzy
 msgid "Plan & Limits"
 msgstr "Planas ir ribos"
 
-#: src/Setup/Assets.php:170
+#: src/Setup/Assets.php:188
 msgid "Plugin"
 msgstr "Įskiepis"
 
-#: src/Setup/Assets.php:190
+#: src/Setup/Assets.php:209
 msgid "Plugin connected successfully"
 msgstr "Įskiepis prijungtas"
 
-#: src/Setup/Assets.php:191
+#: src/Setup/Assets.php:210
 msgid "Plugin disconnected successfully"
 msgstr "Įskiepis atjungtas"
 
 #: src/Integrations/WooCommerce/WooCommerceIntegration.php:123
-#: src/Setup/Assets.php:230
+#: src/Setup/Assets.php:249
 #, fuzzy
 msgid "Purchases"
 msgstr "Pirkimai"
 
-#: src/Admin/Menus.php:34
-#, fuzzy
-msgid "Reach"
-msgstr "Pasiekite"
-
-#: src/Setup/Assets.php:152
+#: src/Setup/Assets.php:170
 #, fuzzy
 msgid ""
 "Reach automatically tags synced contacts using the form name and also "
@@ -820,11 +864,11 @@ msgstr ""
 "lengva siųsti kampanijas konkrečioms auditorijoms - be to, bet kada "
 "\"Reach\" galite visiškai valdyti arba kurti papildomus segmentus."
 
-#: src/Setup/Assets.php:94
+#: src/Setup/Assets.php:97
 msgid "Reach is already connected to another site."
 msgstr "Reach jau yra prijungtas prie kitos svetainės."
 
-#: src/Setup/Assets.php:144
+#: src/Setup/Assets.php:162
 #| msgid ""
 #| "Reach offers a free plan for one year– perfect for getting started. Paid "
 #| "plans are based on how many unique contacts you aim to reach and how many "
@@ -853,16 +897,21 @@ msgstr ""
 msgid "Reach Subscription Form"
 msgstr "Pasiekti prenumeratos forma"
 
-#: src/Setup/Assets.php:110
+#: src/Setup/Assets.php:128
 msgid "Remaining"
 msgstr "Likę"
 
-#: src/Setup/Assets.php:106
+#: src/Setup/Assets.php:116
+#, fuzzy
+msgid "Review domain"
+msgstr "Apžvalgos sritis"
+
+#: src/Setup/Assets.php:124
 #, fuzzy
 msgid "Segments"
 msgstr "Segmentai"
 
-#: src/Setup/Assets.php:160
+#: src/Setup/Assets.php:178
 msgid "Select page"
 msgstr "Pasirink puslapį"
 
@@ -877,16 +926,16 @@ msgstr ""
 "automatizuokite kampanijas ir kurkite dirbtinio intelekto valdomus segmentus."
 " Su \"Hostinger Reach\" didinti auditoriją paprasta."
 
-#: src/Setup/Assets.php:109 src/Setup/Assets.php:112
+#: src/Setup/Assets.php:127 src/Setup/Assets.php:130
 msgid "Sent"
 msgstr "Išsiųsta"
 
-#: src/Setup/Assets.php:240
+#: src/Setup/Assets.php:259
 #, fuzzy
 msgid "Set up WooCommerce"
 msgstr "Nustatykite \"WooCommerce"
 
-#: src/Setup/Assets.php:120 frontend/blocks/subscription-block/src/edit.js:184
+#: src/Setup/Assets.php:138 frontend/blocks/subscription-block/src/edit.js:184
 #: frontend/dist/blocks/subscription.js:1
 #: frontend/dist/blocks/subscription.js:290
 msgid "Settings"
@@ -914,24 +963,24 @@ msgstr "Rodyti pavardę"
 msgid "Show Surname Field?"
 msgstr "Rodyti pavardės lauką?"
 
-#: src/Setup/Assets.php:90
+#: src/Setup/Assets.php:92
 msgid "Something went wrong"
 msgstr "Kažkas ne taip"
 
-#: src/Api/Handlers/ApiHandler.php:36 src/Blocks/SubscriptionFormBlock.php:21
+#: src/Api/Handlers/ApiHandler.php:36 src/Blocks/SubscriptionFormBlock.php:30
 msgid "Something went wrong. Please try again."
 msgstr "Kažkas ne taip. Pabandyk dar kartą."
 
-#: src/Setup/Assets.php:174 src/Setup/Assets.php:227
+#: src/Setup/Assets.php:193 src/Setup/Assets.php:246
 msgid "Status"
 msgstr "Būsena"
 
-#: src/Setup/Assets.php:226
+#: src/Setup/Assets.php:245
 #, fuzzy
 msgid "Store Events"
 msgstr "Parduotuvės įvykiai"
 
-#: src/Blocks/SubscriptionFormBlock.php:99
+#: src/Blocks/SubscriptionFormBlock.php:110
 #: src/Integrations/Elementor/SubscriptionFormElementorWidget.php:130
 msgid "Subscribe"
 msgstr "Prenumeruoti"
@@ -944,11 +993,16 @@ msgstr "Prenumeruok mūsų naujienlaiškį"
 msgid "Subscribe to our newsletter"
 msgstr "Prenumeruok mūsų naujienlaiškį"
 
-#: src/Setup/Assets.php:114
+#: src/Setup/Assets.php:132
 msgid "Subscribers"
 msgstr "Prenumeratoriai"
 
-#: src/Setup/Assets.php:196
+#: src/Blocks/SubscriptionFormBlock.php:125
+#, fuzzy
+msgid "Subscription form is not available at the moment"
+msgstr "Prenumeratos forma šiuo metu nepasiekiama"
+
+#: src/Setup/Assets.php:215
 #| msgid "View supported plugins"
 msgid "Supported plugins"
 msgstr "Peržiūrėti palaikomus įskiepius"
@@ -957,12 +1011,12 @@ msgstr "Peržiūrėti palaikomus įskiepius"
 msgid "Sure Forms"
 msgstr "Sure Forms"
 
-#: src/Blocks/SubscriptionFormBlock.php:91
+#: src/Blocks/SubscriptionFormBlock.php:101
 #: src/Integrations/Elementor/SubscriptionFormElementorWidget.php:122
 msgid "Surname"
 msgstr "Pavardė"
 
-#: src/Setup/Assets.php:169
+#: src/Setup/Assets.php:187
 msgid "Sync"
 msgstr "Sinchronizavimas"
 
@@ -973,11 +1027,11 @@ msgstr "Sinchronizavimas"
 msgid "Tags"
 msgstr "Žymos"
 
-#: src/Blocks/SubscriptionFormBlock.php:20
+#: src/Blocks/SubscriptionFormBlock.php:29
 msgid "Thanks for subscribing."
 msgstr "Ačiū už prenumeratą."
 
-#: src/Setup/Assets.php:218
+#: src/Setup/Assets.php:237
 #, fuzzy
 #| msgid "The selected contacts are being synced to Reach."
 msgid "The selected contacts are being imported to Reach."
@@ -991,7 +1045,7 @@ msgstr ""
 "Šioje formoje nėra el. pašto lauko. Sukurk el. pašto lauką formoje, kad ją "
 "būtų galima sinchronizuoti su Reach"
 
-#: src/Setup/Assets.php:241
+#: src/Setup/Assets.php:260
 #, fuzzy
 msgid ""
 "This form is a Reach native form inserted directly in your page. For "
@@ -1001,7 +1055,7 @@ msgstr ""
 "Norėdami ją išjungti, pašalinkite formą tiesiogiai iš puslapio naudodami "
 "redaktorių."
 
-#: src/Setup/Assets.php:93
+#: src/Setup/Assets.php:95
 #, fuzzy
 msgid ""
 "This is a temporary domain. In order to connect WordPress to Reach you need "
@@ -1010,7 +1064,7 @@ msgstr ""
 "Tai laikinas domenas. Norėdami prijungti WordPress prie Reach, turite "
 "prijungti savo domeną."
 
-#: src/Setup/Assets.php:103
+#: src/Setup/Assets.php:121
 msgid "This month"
 msgstr "Šį mėnesį"
 
@@ -1020,11 +1074,11 @@ msgstr "Šį mėnesį"
 msgid "Thrive Leads"
 msgstr "\"Thrive Leads"
 
-#: src/Setup/Assets.php:117
+#: src/Setup/Assets.php:135
 msgid "Total subscribers"
 msgstr "Viso prenumeratorių"
 
-#: src/Setup/Assets.php:233
+#: src/Setup/Assets.php:252
 #, fuzzy
 msgid ""
 "Tracks abandoned carts so you can trigger email automations in Reach when "
@@ -1033,7 +1087,7 @@ msgstr ""
 "Stebi apleistus krepšelius, kad galėtumėte įjungti el. pašto automatizavimą "
 "\"Reach\", kai tai įjungta."
 
-#: src/Setup/Assets.php:231
+#: src/Setup/Assets.php:250
 #, fuzzy
 msgid ""
 "Tracks purchases so you can trigger email automations in Reach when enabled."
@@ -1048,45 +1102,45 @@ msgstr ""
 msgid "Unique identifier for this form"
 msgstr "Unikalus šios formos identifikatorius"
 
-#: src/Setup/Assets.php:116
+#: src/Setup/Assets.php:134
 msgid "Unsubscribes"
 msgstr "Prenumeratos atsisakymai"
 
-#: src/Setup/Assets.php:107
+#: src/Setup/Assets.php:125
 msgid "Upgrade"
 msgstr "Pakeisti"
 
-#: src/Setup/Assets.php:222
+#: src/Setup/Assets.php:241
 #, fuzzy
 msgid "Upload as CSV"
 msgstr "Įkelti kaip CSV"
 
-#: src/Setup/Assets.php:158
+#: src/Setup/Assets.php:176
 msgid "usage statistics"
 msgstr "naudojimo statistika"
 
-#: src/Setup/Assets.php:177
+#: src/Setup/Assets.php:196
 msgid "View form"
 msgstr "Peržiūrėti formą"
 
-#: src/Setup/Assets.php:197
+#: src/Setup/Assets.php:216
 msgid "View more supported plugins"
 msgstr "Peržiūrėti daugiau palaikomų įskiepių"
 
-#: src/Setup/Assets.php:91
+#: src/Setup/Assets.php:93
 msgid "Welcome to Reach"
 msgstr "Prisijungei prie Reach"
 
-#: src/Setup/Assets.php:153
+#: src/Setup/Assets.php:171
 #, fuzzy
 msgid "What happens if the connection breaks?"
 msgstr "Kas nutinka, jei ryšys nutrūksta?"
 
-#: src/Setup/Assets.php:139
+#: src/Setup/Assets.php:157
 msgid "What is Hostinger Reach email marketing service?"
 msgstr "Kas yra Hostinger Reach el. pašto rinkodaros paslauga?"
 
-#: src/Setup/Assets.php:145
+#: src/Setup/Assets.php:163
 #, fuzzy
 msgid ""
 "What's the difference between Hostinger Reach and Hostinger Reach WordPress "
@@ -1094,7 +1148,14 @@ msgid ""
 msgstr ""
 "Kuo skiriasi \"Hostinger Reach\" ir \"Hostinger Reach\" WordPress įskiepis?"
 
-#: src/Setup/Assets.php:149
+#: src/Setup/Assets.php:191
+#, fuzzy
+msgid "When syncing is off, collected Contacts will not be sent to Reach."
+msgstr ""
+"Kai sinchronizavimas išjungtas, surinkti adresatai nebus siunčiami į "
+"\"Reach\"."
+
+#: src/Setup/Assets.php:167
 #, fuzzy
 msgid "Will contacts be added to my email list automatically?"
 msgstr "Ar kontaktai bus automatiškai įtraukti į mano el. pašto sąrašą?"
@@ -1107,12 +1168,12 @@ msgstr "WooCommerce"
 msgid "WooCommerce Customers"
 msgstr "WooCommerce klientai"
 
-#: src/Setup/Assets.php:238
+#: src/Setup/Assets.php:257
 #, fuzzy
 msgid "WooCommerce Plugin Connected"
 msgstr "\"WooCommerce\" įskiepis prijungtas"
 
-#: src/Setup/Assets.php:167
+#: src/Setup/Assets.php:185
 #, fuzzy
 #| msgid "Would you like to sync contacts collected while sync was disabled?"
 msgid "Would you like to import contacts collected while sync was disabled?"
@@ -1121,7 +1182,7 @@ msgstr ""
 "išjungtas?"
 
 #: src/Integrations/WPFormsLite/WpFormsLiteIntegration.php:29
-#: src/Setup/Assets.php:184
+#: src/Setup/Assets.php:203
 msgid "WP Forms Lite"
 msgstr "WP Forms Lite"
 
@@ -1140,7 +1201,7 @@ msgstr "WS forma"
 msgid "Yes"
 msgstr "Taip"
 
-#: src/Setup/Assets.php:150
+#: src/Setup/Assets.php:168
 #, fuzzy
 msgid ""
 "Yes — new subscribers are added automatically based on your setup. Some "
@@ -1181,7 +1242,7 @@ msgstr ""
 msgid "You are running <b>%s</b> PHP version."
 msgstr "Naudoji PHP <b>%s</b> versiją."
 
-#: src/Setup/Assets.php:206
+#: src/Setup/Assets.php:225
 #, fuzzy
 msgid ""
 "You can import existing contacts into Reach now to use them for your email "
@@ -1191,7 +1252,7 @@ msgstr ""
 "pašto kampanijoms. Nauji kontaktai bus automatiškai sinchronizuojami su "
 "\"Reach\"."
 
-#: src/Setup/Assets.php:211
+#: src/Setup/Assets.php:230
 #, fuzzy
 #| msgid ""
 #| "You have not selected any forms to sync. Select which forms you want to "
@@ -1203,6 +1264,19 @@ msgstr ""
 "Nepasirinkai jokių sinchronizuojamų formų. Pasirink, kurias formas nori "
 "sinchronizuoti, ir spustelėk toliau esantį mygtuką Sinchronizuoti."
 
+#: src/Setup/Assets.php:109
+msgid "Your API token"
+msgstr ""
+
+#: src/Setup/Assets.php:96
+#, fuzzy
+msgid ""
+"Your domain is not active. In order to connect WordPress to Reach you need "
+"to have an active domain."
+msgstr ""
+"Jūsų domenas nėra aktyvus. Norint prijungti WordPress prie \"Reach\", turite "
+"turėti aktyvų domeną."
+
 #: frontend/blocks/subscription-block/src/Components/Dialog.js:40
 #: frontend/dist/blocks/subscription.js:1
 #: frontend/dist/blocks/subscription.js:85
@@ -1213,6 +1287,7 @@ msgstr ""
 "sukurtumėte šablonus."
 
 #: src/Api/Handlers/ReachApiHandler.php:33
+#: src/Blocks/SubscriptionFormBlock.php:123
 #, fuzzy
 msgid "Your site is not connected to Reach. Connect to Reach and try again."
 msgstr ""

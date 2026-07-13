@@ -8,6 +8,9 @@ namespace Hostinger\AiTheme\Rest;
 
 use Hostinger\AiTheme\Admin\GutenbergPreferences;
 use Hostinger\AiTheme\Builder\ElementorBuilder;
+use Hostinger\AiTheme\Builder\Helper;
+use Hostinger\AiTheme\Builder\GenerationState;
+use Hostinger\AiTheme\Constants\ApiRoutes;
 use Hostinger\AiTheme\Constants\BuilderType;
 use Hostinger\AiTheme\Builder\Elementor\KitManager;
 use Hostinger\AiTheme\Builder\Fonts;
@@ -41,6 +44,12 @@ class BuilderRoutes {
     private const AMPLITUDE_EVENT_CREATE = 'wordpress.ai_builder.create';
     private const AMPLITUDE_EVENT_CREATED = 'wordpress.ai_builder.created';
     private const AMPLITUDE_EVENT_FAILURE = 'wordpress.ai_builder.failure';
+    private const SOFTWARE_ID_NOT_AVAILABLE = 'Software ID not available';
+    private const EXCLUDED_PAGE_IDS = array(
+        'terms & conditions',
+        'privacy policy',
+        'cookie policy',
+    );
 
     /**
      * @var WebsiteBuilder
@@ -181,13 +190,9 @@ class BuilderRoutes {
             return $validation_error;
         }
 
-        $detection_error = $this->ensure_brand_and_type( $parameters );
-        if ( $detection_error ) {
-            $this->send_failure_event( 'brand_detection', 'ai_endpoint', $detection_error->get_error_message() );
-            return $detection_error;
-        }
-
         $this->normalize_website_type( $parameters );
+
+        GenerationState::start();
 
         $this->clear_ai_data( $parameters['website_type'], $parameters['builder_type'] );
         $this->handle_affiliate_type( $parameters );
@@ -198,39 +203,14 @@ class BuilderRoutes {
             'action'       => self::AMPLITUDE_EVENT_CREATE,
             'builder_type' => $parameters['builder_type'],
             'website_type' => implode( ', ', $parameters['website_type'] ),
+            'language' => get_locale(),
         ) );
 
-        try {
-            $colors_generated = $this->website_builder->generate_colors( $parameters['description'] );
+        update_option( 'hostinger_ai_version', time(), true );
 
-            if ( ! $colors_generated ) {
-                $this->send_failure_event( 'colors', 'ai_endpoint', 'Colors generation failed' );
-
-                return new WP_Error(
-                    'colors_generation_failed',
-                    __( 'Failed to generate colors.', 'hostinger-ai-theme' ),
-                    array(
-                        'status' => WP_Http::SERVICE_UNAVAILABLE,
-                        'error'  => 'Colors generation failed',
-                    )
-                );
-            }
-
-            $data = array(
-                'colors_generated' => $colors_generated
-            );
-        } catch ( Exception $e ) {
-            $this->send_failure_event( 'colors', 'ai_endpoint', $e->getMessage() );
-
-            return new WP_Error(
-                'colors_generation_failed',
-                __( 'Failed to generate colors.', 'hostinger-ai-theme' ),
-                array(
-                    'status' => WP_Http::SERVICE_UNAVAILABLE,
-                    'error'  => $e->getMessage(),
-                )
-            );
-        }
+        $data = array(
+            'colors_generated' => true
+        );
 
         $response = new \WP_REST_Response( $data );
         $response->set_headers( array( 'Cache-Control' => 'no-cache' ) );
@@ -255,6 +235,20 @@ class BuilderRoutes {
         $data = array(
             'data' => array(
                 'color_options' => $this->website_builder->generate_color_options( $description ),
+            ),
+        );
+
+        $response = new WP_REST_Response( $data );
+        $response->set_headers( array( 'Cache-Control' => 'no-cache' ) );
+        $response->set_status( WP_Http::OK );
+
+        return $response;
+    }
+
+    public function generate_font_options( WP_REST_Request $request ): WP_REST_Response|WP_Error {
+        $data = array(
+            'data' => array(
+                'font_options' => $this->website_builder->generate_font_options(),
             ),
         );
 
@@ -307,85 +301,6 @@ class BuilderRoutes {
         }
     }
 
-    private function ensure_brand_and_type( array &$parameters ): ?\WP_Error {
-        $needs_detection = empty( $parameters['brand_name'] ) || empty( $parameters['website_type'] );
-
-        if ( ! $needs_detection ) {
-            $parameters['brand_name']   = sanitize_text_field( $parameters['brand_name'] );
-            $parameters['website_type'] = array_map( 'sanitize_text_field', $parameters['website_type'] );
-            return null;
-        }
-
-        $original_brand_name   = ! empty( $parameters['brand_name'] ) ? sanitize_text_field( $parameters['brand_name'] ) : null;
-        $original_website_type = ! empty( $parameters['website_type'] ) ? array_map( 'sanitize_text_field', $parameters['website_type'] ) : null;
-
-        $detection_error = $this->perform_brand_and_type_detection( $parameters );
-
-        if ( $detection_error ) {
-            return $detection_error;
-        }
-
-        // If brand name was provided by frontend, we need to use it instead of the one detected.
-        if ( $original_brand_name !== null ) {
-            $parameters['brand_name'] = $original_brand_name;
-        }
-
-        // If website type was provided by frontend, we need to use it instead of the one detected.
-        if ( $original_website_type !== null ) {
-            $parameters['website_type'] = $original_website_type;
-        }
-
-        return null;
-    }
-
-    private function perform_brand_and_type_detection( array &$parameters ): ?WP_Error {
-        try {
-            $is_multiple_types = true;
-
-            $detection_data = $this->call_detect_brand_and_type_service( $parameters['description'], $is_multiple_types );
-
-            if ( ! $this->is_valid_detection_data( $detection_data ) ) {
-                return new WP_Error(
-                    'ai_service_error',
-                    __( 'Failed to detect brand name and website type.', 'hostinger-ai-theme' ),
-                    array(
-                        'status' => WP_Http::SERVICE_UNAVAILABLE,
-                        'error'  => 'Brand detection failed - invalid detection data',
-                    )
-                );
-            }
-
-            $parameters['brand_name'] = sanitize_text_field( $detection_data['brandName'] );
-
-            if ( ! empty( $detection_data['websiteType'] ) && is_array( $detection_data['websiteType'] ) ) {
-                $parameters['website_type'] = array_map( function ( $t ) {
-                    return strtolower( sanitize_text_field( $t ) );
-                }, $detection_data['websiteType'] );
-            } else {
-                $parameters['website_type'] = [ strtolower( sanitize_text_field( $detection_data['websiteType'] ) ) ];
-            }
-
-            return null;
-        } catch ( Exception $e ) {
-            return new WP_Error(
-                'ai_service_error',
-                $e->getMessage(),
-                array(
-                    'status' => WP_Http::SERVICE_UNAVAILABLE,
-                    'error'  => $e->getMessage(),
-                )
-            );
-        }
-    }
-
-    private function is_valid_detection_data( array $detection_data ): bool {
-        if ( empty( $detection_data ) ) {
-            return false;
-        }
-
-        return isset( $detection_data['brandName'] ) && isset( $detection_data['websiteType'] );
-    }
-
     private function handle_affiliate_type( array $parameters ): void {
         if ( ! in_array( 'affiliate-marketing', $parameters['website_type'], true ) ) {
             return;
@@ -400,7 +315,7 @@ class BuilderRoutes {
     }
 
     private function handle_online_store_options( array $parameters ): void {
-        if ( ! in_array( 'online store', $parameters['website_type'], true ) ) {
+        if ( ! WebsiteTypeHelper::contains( $parameters['website_type'], 'online store' ) ) {
             return;
         }
 
@@ -408,12 +323,12 @@ class BuilderRoutes {
     }
 
     private function save_website_options( array $parameters ): void {
+        $website_type = array_map( 'strtolower', $parameters['website_type'] );
+        update_option( 'hostinger_ai_website_type', $website_type );
         update_option( 'blogname', $parameters['brand_name'] );
         update_option( 'hostinger_ai_brand_name', $parameters['brand_name'] );
-        update_option( 'hostinger_ai_website_type', $parameters['website_type'] );
         update_option( 'hostinger_ai_description', $parameters['description'] );
         update_option( 'hostinger_ai_builder_type', $parameters['builder_type'] );
-        update_option( 'hostinger_ai_selected_language', $parameters['language'] );
     }
 
     public function enable_plugins( WP_REST_Request $request ): WP_REST_Response|WP_Error {
@@ -468,23 +383,146 @@ class BuilderRoutes {
         return $response;
     }
 
+    public function generate_pages_list( WP_REST_Request $request ): WP_REST_Response|WP_Error {
+        $brand_name   = $request->get_param( 'brand_name' );
+        $description  = $request->get_param( 'description' );
+        $website_type = WebsiteTypeHelper::get_website_types();
+
+        if ( empty( $brand_name ) || empty( $description ) ) {
+            return new WP_Error(
+                'data_invalid',
+                __( 'Brand data not found.', 'hostinger-ai-theme' ),
+                array( 'status' => WP_Http::BAD_REQUEST )
+            );
+        }
+
+        try {
+            $pages = $this->website_builder->get_pages_list( $brand_name, $website_type, $description );
+            $pages = array_values( array_filter( $pages, function ( $page ) {
+                return ! in_array( $page['id'], self::EXCLUDED_PAGE_IDS, true );
+            } ) );
+        } catch ( Exception $e ) {
+            return new WP_Error(
+                'pages_generation_failed',
+                __( 'Failed to generate pages list.', 'hostinger-ai-theme' ),
+                array(
+                    'status' => WP_Http::SERVICE_UNAVAILABLE,
+                    'error'  => $e->getMessage(),
+                )
+            );
+        }
+
+        $response = new WP_REST_Response( array( 'data' => array( 'pages' => $pages ) ) );
+        $response->set_headers( array( 'Cache-Control' => 'no-cache' ) );
+        $response->set_status( WP_Http::OK );
+
+        return $response;
+    }
+
+    /**
+     * @param WP_REST_Request $request
+     *
+     * @return WP_REST_Response|WP_Error
+     */
+    public function save_pages_structure( WP_REST_Request $request ): WP_REST_Response|WP_Error {
+        $pages = $request->get_param( 'pages' );
+
+        if ( empty( $pages ) || ! is_array( $pages ) ) {
+            return new WP_Error(
+                'data_invalid',
+                __( 'Pages must be a non-empty array.', 'hostinger-ai-theme' ),
+                array( 'status' => WP_Http::BAD_REQUEST )
+            );
+        }
+
+        $sanitized_pages = array_values( array_filter(
+            array_map( function ( $page ) {
+                return array(
+                    'id'   => sanitize_text_field( $page['id'] ?? '' ),
+                    'name' => sanitize_text_field( $page['name'] ?? '' ),
+                );
+            }, $pages ),
+            function ( $page ) {
+                return ! empty( $page['id'] ) && ! empty( $page['name'] );
+            }
+        ) );
+
+        if ( empty( $sanitized_pages ) ) {
+            return new WP_Error(
+                'data_invalid',
+                __( 'Pages must be a non-empty array.', 'hostinger-ai-theme' ),
+                array( 'status' => WP_Http::BAD_REQUEST )
+            );
+        }
+
+        update_option( 'hostinger_ai_pages_structure', $sanitized_pages );
+
+        return new WP_REST_Response( array( 'success' => true ), WP_Http::OK );
+    }
+
+    public function save_contact_info( WP_REST_Request $request ): WP_REST_Response|WP_Error {
+        $contacts = $request->get_param( 'contacts' );
+
+        if ( ! is_array( $contacts ) ) {
+            $contacts = array();
+        }
+
+        $contact = array(
+            'email'              => sanitize_email( (string) ( $contacts['email'] ?? '' ) ),
+            'address'            => sanitize_textarea_field( (string) ( $contacts['address'] ?? '' ) ),
+            'phone'              => sanitize_text_field( (string) ( $contacts['phone_number'] ?? '' ) ),
+            'phone_country_code' => sanitize_text_field( (string) ( $contacts['phone_c_c'] ?? '' ) ),
+            'whatsapp'           => rest_sanitize_boolean( $contacts['is_whats_app_connected'] ?? false ),
+        );
+
+        update_option( 'hostinger_ai_contact', $contact );
+
+        $response = new WP_REST_Response( array( 'success' => true ) );
+        $response->set_headers( array( 'Cache-Control' => 'no-cache' ) );
+        $response->set_status( WP_Http::OK );
+
+        return $response;
+    }
+
+    public function save_socials( WP_REST_Request $request ): WP_REST_Response|WP_Error {
+        $socials = $request->get_param( 'socials' );
+
+        if ( ! is_array( $socials ) ) {
+            $socials = array();
+        }
+
+        $social = array(
+            'instagram' => sanitize_text_field( (string) ( $socials['instagram'] ?? '' ) ),
+            'facebook'  => sanitize_text_field( (string) ( $socials['facebook'] ?? '' ) ),
+            'tiktok'    => sanitize_text_field( (string) ( $socials['tiktok'] ?? '' ) ),
+        );
+
+        update_option( 'hostinger_ai_social_links', $social );
+
+        $response = new WP_REST_Response( array( 'success' => true ) );
+        $response->set_headers( array( 'Cache-Control' => 'no-cache' ) );
+        $response->set_status( WP_Http::OK );
+
+        return $response;
+    }
+
     /**
      * @param WP_REST_Request $request
      *
      * @return WP_REST_Response|WP_Error
      */
     public function generate_structure( WP_REST_Request $request ): WP_REST_Response|WP_Error {
-        $colors = get_option( 'hostinger_ai_colors', false );
+        $version = get_option( 'hostinger_ai_version', false );
 
-        if ( empty( $colors ) ) {
-            $this->send_failure_event( 'structure', 'validation', 'Wrong sequence of step execution - colors missing' );
+        if ( empty( $version ) ) {
+            $this->send_failure_event( 'structure', 'validation', 'Wrong sequence of step execution - version missing' );
 
             return new WP_Error(
                 'data_invalid',
                 __( 'Wrong sequence of step execution.', 'hostinger-ai-theme' ),
                 array(
                     'status' => WP_Http::BAD_REQUEST,
-                    'error'  => 'Wrong sequence of step execution - colors missing',
+                    'error'  => 'Wrong sequence of step execution - version missing',
                 )
             );
         }
@@ -493,8 +531,14 @@ class BuilderRoutes {
         $website_type = WebsiteTypeHelper::get_website_types();
         $description  = get_option( 'hostinger_ai_description' );
 
+        $saved_pages = get_option( 'hostinger_ai_pages_structure', false );
+        $pages       = array();
+        if ( ! empty( $saved_pages ) && is_array( $saved_pages ) ) {
+            $pages = array_column( $saved_pages, 'name' );
+        }
+
         try {
-            $structure_generated = $this->website_builder->generate_structure( $brand_name, $website_type, $description );
+            $structure_generated = $this->website_builder->generate_structure( $brand_name, $website_type, $description, $pages );
 
             if ( ! $structure_generated ) {
                 $this->send_failure_event( 'structure', 'ai_endpoint', 'Structure generation failed - empty response' );
@@ -659,7 +703,11 @@ class BuilderRoutes {
             'action'       => self::AMPLITUDE_EVENT_CREATED,
             'builder_type' => get_option( 'hostinger_ai_builder_type', '' ),
             'website_type' => implode( ', ', $website_type_for_amplitude ),
+            'language' => get_locale(),
         ) );
+
+		update_option( Helper::HOSTINGER_AI_THEME_GENERATED_ONCE_OPTION, true );
+        GenerationState::complete();
 
         $response = new WP_REST_Response( $data );
         $response->set_headers( array( 'Cache-Control' => 'no-cache' ) );
@@ -726,9 +774,103 @@ class BuilderRoutes {
                 $website_type = [ $response_data['websiteType'] ];
             }
 
+            $normalized_website_type = array_map( function ( $t ) {
+                return strtolower( sanitize_text_field( $t ) );
+            }, $website_type );
+
+            update_option( 'hostinger_ai_website_type', $normalized_website_type );
+
             $data = array(
                 'data' => array(
                     'brandName'   => $response_data['brandName'],
+                    'websiteType' => $website_type,
+                )
+            );
+
+            $response = new WP_REST_Response( $data );
+            $response->set_headers( array( 'Cache-Control' => 'no-cache' ) );
+            $response->set_status( WP_Http::OK );
+
+            return $response;
+
+        } catch ( Exception $e ) {
+            return new WP_Error(
+                'ai_service_error',
+                $e->getMessage(),
+                array(
+                    'status' => WP_Http::SERVICE_UNAVAILABLE,
+                )
+            );
+        }
+    }
+
+    public function set_website_language( WP_REST_Request $request ): WP_REST_Response|WP_Error {
+        $language = $request->get_param( 'language' );
+
+        update_option( 'hostinger_ai_selected_language', $language );
+
+        $response = new WP_REST_Response( array( 'success' => true ) );
+        $response->set_status( WP_Http::OK );
+
+        return $response;
+    }
+
+    public function detect_brand_name( WP_REST_Request $request ): WP_REST_Response|WP_Error {
+        $parameters  = $request->get_params();
+        $description = ! empty( $parameters['description'] ) ? $parameters['description'] : '';
+
+        try {
+            $response_data = $this->call_detect_brand_name_service( $description );
+
+            if ( empty( $response_data ) ) {
+                throw new Exception( 'Detect brand name service did not return brand names' );
+            }
+
+            $data = array(
+                'data' => $response_data
+            );
+
+            $response = new WP_REST_Response( $data );
+            $response->set_headers( array( 'Cache-Control' => 'no-cache' ) );
+            $response->set_status( WP_Http::OK );
+
+            return $response;
+
+        } catch ( Exception $e ) {
+            return new WP_Error(
+                'ai_service_error',
+                $e->getMessage(),
+                array(
+                    'status' => WP_Http::SERVICE_UNAVAILABLE,
+                )
+            );
+        }
+    }
+
+    public function detect_website_type( WP_REST_Request $request ): WP_REST_Response|WP_Error {
+        $parameters = $request->get_params();
+        $description = ! empty( $parameters['description'] ) ? $parameters['description'] : '';
+        $brand_name  = ! empty( $parameters['brand_name'] ) ? $parameters['brand_name'] : '';
+
+        try {
+            $response_data = $this->call_detect_website_type_service( $description, $brand_name );
+
+            if ( empty( $response_data['websiteTypes'] ) ) {
+                throw new Exception( 'Detect website type service did not return websiteTypes' );
+            }
+
+            $website_type = is_array( $response_data['websiteTypes'] )
+                ? $response_data['websiteTypes']
+                : [ $response_data['websiteTypes'] ];
+
+            $normalized_website_type = array_map( function ( $t ) {
+                return strtolower( sanitize_text_field( $t ) );
+            }, $website_type );
+
+            update_option( 'hostinger_ai_website_type', $normalized_website_type );
+
+            $data = array(
+                'data' => array(
                     'websiteType' => $website_type,
                 )
             );
@@ -800,6 +942,61 @@ class BuilderRoutes {
         }
     }
 
+    private function call_detect_brand_name_service( string $description ): array {
+        try {
+            $software_id = $this->get_software_id();
+            if ( empty( $software_id ) ) {
+                throw new Exception( self::SOFTWARE_ID_NOT_AVAILABLE );
+            }
+
+            $response_data = $this->wh_api_client->post(
+                ApiRoutes::INSTALLATIONS_BASE . $software_id . '/content/detect/brand-name',
+                [ 'description' => $description ]
+            );
+
+            if ( empty( $response_data ) ) {
+                throw new Exception( 'Detect brand name service returned empty response' );
+            }
+
+            return $response_data;
+
+        } catch ( Exception $exception ) {
+            if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+                error_log( 'Detect Brand Name API Error: ' . $exception->getMessage() );
+            }
+            throw new Exception( 'Detect brand name service temporarily unavailable: ' . $exception->getMessage() );
+        }
+    }
+
+    private function call_detect_website_type_service( string $description, string $brand_name ): array {
+        try {
+            $software_id = $this->get_software_id();
+            if ( empty( $software_id ) ) {
+                throw new Exception( self::SOFTWARE_ID_NOT_AVAILABLE );
+            }
+
+            $response_data = $this->wh_api_client->post(
+                ApiRoutes::INSTALLATIONS_BASE . $software_id . '/content/detect/website-type',
+                [
+                    'description' => $description,
+                    'brandName'   => $brand_name,
+                ]
+            );
+
+            if ( empty( $response_data ) ) {
+                throw new Exception( 'Detect website type service returned empty response' );
+            }
+
+            return $response_data;
+
+        } catch ( Exception $exception ) {
+            if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+                error_log( 'Detect Website Type API Error: ' . $exception->getMessage() );
+            }
+            throw new Exception( 'Detect website type service temporarily unavailable: ' . $exception->getMessage() );
+        }
+    }
+
     private function enhance_text_content( string $text ): string {
         return $this->call_ai_enhancement_service( $text );
     }
@@ -834,14 +1031,14 @@ class BuilderRoutes {
         try {
             $software_id = $this->get_software_id();
             if ( empty( $software_id ) ) {
-                throw new Exception( 'Software ID not available' );
+                throw new Exception( self::SOFTWARE_ID_NOT_AVAILABLE );
             }
 
             $request_params = [
                 'description' => $description,
                 'isMultipleTypes' => $is_multiple_types,
             ];
-            $response_data = $this->wh_api_client->post( '/api/v1/installations/' . $software_id . '/content/detect/brand-and-type', $request_params );
+            $response_data = $this->wh_api_client->post( ApiRoutes::INSTALLATIONS_BASE . $software_id . '/content/detect/brand-and-type', $request_params );
 
             if ( empty( $response_data ) ) {
                 throw new Exception( 'Detect brand and type service returned empty response' );
@@ -947,7 +1144,7 @@ class BuilderRoutes {
         try {
             $software_id = $this->get_software_id();
             if ( empty( $software_id ) ) {
-                throw new Exception( 'Software ID not available' );
+                throw new Exception( self::SOFTWARE_ID_NOT_AVAILABLE );
             }
 
             if ( empty( $language ) ) {
@@ -960,7 +1157,7 @@ class BuilderRoutes {
                 'description' => $description,
                 'language' => $language,
             ];
-            $response_data = $this->wh_api_client->post( '/api/v1/installations/' . $software_id . '/content/detect/scam', $request_params );
+            $response_data = $this->wh_api_client->post( ApiRoutes::INSTALLATIONS_BASE . $software_id . '/content/detect/scam', $request_params );
 
             if ( empty( $response_data ) ) {
                 throw new Exception( 'Scam detector service returned empty response' );

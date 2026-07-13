@@ -62,7 +62,10 @@ const pluginEntries = computed((): PluginEntryData[] => {
 					</span>
 				</div>
 				<div class="plugin-entries-table__header-cell plugin-entries-table__header-cell--forms">
-					<span class="plugin-entries-table__column-title">
+					<span
+						v-tooltip.top="translate('hostinger_reach_plugin_entries_table_syncing_tooltip')"
+						class="plugin-entries-table__column-title plugin-entries-table__column-title--with-tooltip"
+					>
 						{{ translate('hostinger_reach_plugin_entries_table_syncing_header') }}
 					</span>
 				</div>
@@ -106,7 +109,7 @@ const pluginEntries = computed((): PluginEntryData[] => {
 		border-radius: 20px;
 		padding: 24px;
 		border: 1px solid var(--neutral--200);
-		overflow: hidden;
+		overflow: visible;
 	}
 
 	&__header {
@@ -141,6 +144,10 @@ const pluginEntries = computed((): PluginEntryData[] => {
 		font-weight: 700;
 		font-size: 14px;
 		color: var(--neutral--600);
+	}
+
+	&__column-title--with-tooltip {
+		cursor: help;
 	}
 
 	&__row {

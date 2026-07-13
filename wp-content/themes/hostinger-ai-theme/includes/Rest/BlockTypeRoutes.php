@@ -4,6 +4,7 @@ namespace Hostinger\AiTheme\Rest;
 
 use Alley\WP\Block_Converter\Block_Converter;
 use Hostinger\AiTheme\Builder\BlockTypeDeterminer;
+use Hostinger\AiTheme\Builder\DomainResolver;
 use Hostinger\AiTheme\Builder\PageTypeDeterminer;
 use Hostinger\AiTheme\Builder\Structure;
 use Hostinger\AiTheme\Builder\ContentParser;
@@ -36,6 +37,7 @@ class BlockTypeRoutes {
     private RequestClient $request_client;
     private Client $client;
     private AmplitudeManager $amplitude_manager;
+    private DomainResolver $domain_resolver;
 
     public function __construct() {
         $this->initialize_services();
@@ -57,9 +59,10 @@ class BlockTypeRoutes {
 
         $amplitude_client = new Client( $base_uri, $base_headers );
 
+        $this->domain_resolver       = new DomainResolver( $helper );
         $this->amplitude_manager     = new AmplitudeManager( $helper, $config_handler, $amplitude_client );
-        $this->block_type_determiner = new BlockTypeDeterminer( $client );
-        $this->page_type_determiner  = new PageTypeDeterminer( $client );
+        $this->block_type_determiner = new BlockTypeDeterminer( $client, $this->domain_resolver, $helper );
+        $this->page_type_determiner  = new PageTypeDeterminer( $client, $this->domain_resolver, $helper );
 
         $this->client         = $client;
         $this->request_client = new RequestClient( $client );
@@ -293,7 +296,7 @@ class BlockTypeRoutes {
         }
 
         $image_data = [
-            'domain'      => wp_parse_url( home_url(), PHP_URL_HOST ),
+            'domain'      => $this->domain_resolver->get_current_domain(),
             'description' => $generated_content['tags'][0],
             'limit'       => count( $generated_content['tags'] ?? [] ),
         ];
@@ -412,7 +415,8 @@ class BlockTypeRoutes {
 
     private function generate_and_merge_content_with_description( array $structure_data, string $description ): string {
         // Create a new Structure instance with the description, forcing Gutenberg builder type for REST API
-        $structure_with_request_description = new Structure( get_bloginfo( 'name' ), WebsiteTypeHelper::get_website_types(), $description, BuilderType::GUTENBERG );
+        $brand_name = get_bloginfo( 'name' ) ? get_bloginfo( 'name' ) : 'Brand';
+        $structure_with_request_description = new Structure( $brand_name, WebsiteTypeHelper::get_website_types(), $description, BuilderType::GUTENBERG );
         $structure_with_request_description->set_request_client( $this->request_client );
 
         // Generate builder data using the provided structure_data

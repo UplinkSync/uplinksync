@@ -30,7 +30,7 @@ class SetupHandler {
             $getter          = 'get_' . $field;
 
             if ( ! method_exists( $this->woo_setup_parameters, $getter ) ) {
-                /* translators: %s missing field slug */
+                /* translators: %s field name that is missing */
                 $errors[ $field ] = sprintf( __( '%s missing or empty', 'hostinger-easy-onboarding' ), $formatted_field );
                 continue;
             }
@@ -40,7 +40,7 @@ class SetupHandler {
             $field_is_valid = ! empty( $value );
 
             if ( ! $field_is_valid ) {
-                /* translators: %s missing field slug */
+                /* translators: %s field name that is missing */
                 $errors[ $field ] = sprintf( __( '%s missing or empty', 'hostinger-easy-onboarding' ), $formatted_field );
             }
         }

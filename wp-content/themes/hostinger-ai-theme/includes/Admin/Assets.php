@@ -40,11 +40,8 @@ class Assets {
 	 * Enqueues styles for the Hostinger admin pages.
 	 */
 	public function admin_styles(): void {
-		wp_enqueue_style( 'hostinger_ai_websites_main_styles', HOSTINGER_AI_WEBSITES_ASSETS_URL . '/css/main.min.css', array(), wp_get_theme()->get( 'Version' ) );
-
-        $hide_menu_item = '.hsr-list__item a.' . Menu::AI_BUILDER_MENU_SLUG . ', .toplevel_page_hostinger a[href="admin.php?page=' . Menu::AI_BUILDER_MENU_SLUG . '"] { display: none !important; }';
-        wp_add_inline_style( 'hostinger_ai_websites_main_styles', $hide_menu_item );
-    }
+		wp_enqueue_style( 'hostinger_ai_websites_main_styles', HOSTINGER_AI_WEBSITES_ASSETS_URL . '/css/main.min.css', array(), filemtime( HOSTINGER_AI_WEBSITES_THEME_PATH . '/assets/css/main.min.css' ), );
+	}
 
 	/**
 	 * Enqueues scripts for the Hostinger admin pages.
@@ -57,7 +54,7 @@ class Assets {
                 'jquery',
                 'wp-i18n',
             ),
-            wp_get_theme()->get( 'Version' ),
+	        filemtime( HOSTINGER_AI_WEBSITES_THEME_PATH . '/assets/js/main.min.js'),
             false
         );
 
@@ -70,23 +67,29 @@ class Assets {
         }
 
         $localize_data = array(
-            'site_url'             => $site_url,
-            'plugin_url'           => get_stylesheet_directory_uri() . '/',
-            'hostinger_admin_url'  => admin_url( 'admin.php?page=hostinger' ),
-            'admin_url'            => admin_url( 'admin-ajax.php' ),
-            'website_type'         => WebsiteTypeHelper::get_website_types(),
-            'translations'         => AdminTranslations::getValues(),
-            'content_generated'    => (int) ! empty( get_option( 'hostinger_ai_version' ) ),
-            'rest_base_url'        => esc_url_raw( rest_url() ),
-            'nonce'                => wp_create_nonce( 'wp_rest' ),
-            'ajax_nonce'           => wp_create_nonce( 'updates' ),
-            'homepage_editor_url'  => $this->get_homepage_site_editor_url(),
-            'countries_and_states' => $this->get_countries_and_states(),
-            'is_survey_enabled'    => $this->rateAiSite && $this->rateAiSite->isSurveyEnabled(),
-            'site_locale' => $language_code,
-            'prefill_website_type' => $this->get_prefill_option( 'hostinger_login_website_type', true ),
-            'prefill_brand_name' => $this->get_prefill_option( 'hostinger_login_brand_name' ),
-            'prefill_website_description' => $this->get_prefill_option( 'hostinger_login_website_description' ),
+            'site_url'                      => $site_url,
+            'plugin_url'                    => get_stylesheet_directory_uri() . '/',
+            'hostinger_admin_url'           => admin_url( 'admin.php?page=hostinger' ),
+            'homepage_woocommerce_url'      => admin_url( 'admin.php?page=wc-admin' ),
+            'admin_url'                     => admin_url( 'admin-ajax.php' ),
+            'website_type'                  => WebsiteTypeHelper::get_website_types(),
+            'translations'                  => AdminTranslations::getValues(),
+            'content_generated'             => (int) ! empty( get_option( 'hostinger_ai_version' ) ),
+            'rest_base_url'                 => esc_url_raw( rest_url() ),
+            'nonce'                         => wp_create_nonce( 'wp_rest' ),
+            'ajax_nonce'                    => wp_create_nonce( 'updates' ),
+            'homepage_editor_url'           => $this->get_homepage_site_editor_url(),
+            'is_survey_enabled'             => $this->rateAiSite && $this->rateAiSite->isSurveyEnabled(),
+            'site_locale'                   => $language_code,
+            'prefill_website_type'          => $this->get_prefill_option( 'hostinger_login_website_type', true ),
+            'prefill_brand_name'            => $this->get_prefill_option( 'hostinger_login_brand_name' ),
+            'prefill_website_description'   => $this->get_prefill_option( 'hostinger_login_website_description' ),
+            'current_logo'                  => $this->get_current_logo(),
+            'current_colors'                => $this->get_current_colors(),
+            'current_heading_font'          => get_option( 'hostinger_ai_font', '' ),
+            'current_body_font'             => get_option( 'hostinger_ai_body_font', '' ),
+            'current_pages'                 => $this->get_current_pages(),
+            'theme_version'                 => wp_get_theme()->get( 'Version' ),
         );
 
         wp_localize_script(
@@ -102,7 +105,7 @@ class Assets {
                 'jquery',
                 'wp-i18n',
             ),
-            wp_get_theme()->get( 'Version' ),
+	        filemtime( HOSTINGER_AI_WEBSITES_THEME_PATH . '/assets/js/admin.min.js' ),
             false
         );
 	}
@@ -115,27 +118,25 @@ class Assets {
         return add_query_arg( $query_args, admin_url( 'index.php' ) );
     }
 
-    private function get_countries_and_states(): array {
-        $countries = include self::WOO_I18N_PATH . 'countries.php';
-        if ( ! $countries ) {
-            return array();
-        }
-        $output = array();
-        foreach ( $countries as $key => $value ) {
-            $states = include self::WOO_I18N_PATH . 'states.php';
-
-            if ( ! empty( $states[ $key ] ) ) {
-                $states = $states[ $key ];
-
-                foreach ( $states as $state_key => $state_value ) {
-                    $output[ $key . ':' . $state_key ] = $value . ' - ' . $state_value;
-                }
-            } else {
-                $output[ $key ] = $value;
-            }
+    private function get_current_logo(): string {
+        $logo_id = get_theme_mod( 'custom_logo', 0 );
+        if ( ! $logo_id ) {
+            return '';
         }
 
-        return $output;
+        return wp_get_attachment_image_url( $logo_id, 'full' ) ?: '';
+    }
+
+    private function get_current_colors(): array {
+        $colors = get_option( 'hostinger_ai_colors', array() );
+
+        return is_array( $colors ) ? $colors : array();
+    }
+
+    private function get_current_pages(): array {
+        $pages = get_option( 'hostinger_ai_pages_structure', array() );
+
+        return is_array( $pages ) ? $pages : array();
     }
 
     private function get_prefill_option( string $option_name, bool $validate_website_type = false ): string {
@@ -149,8 +150,19 @@ class Assets {
 
         $value = sanitize_text_field( $value );
 
-        if ( $validate_website_type && ! in_array( $value, self::VALID_WEBSITE_TYPES, true ) ) {
-            return '';
+        if ( $validate_website_type ) {
+            $normalized = WebsiteTypeHelper::normalize( $value );
+            $match      = null;
+            foreach ( self::VALID_WEBSITE_TYPES as $valid ) {
+                if ( WebsiteTypeHelper::normalize( $valid ) === $normalized ) {
+                    $match = $valid;
+                    break;
+                }
+            }
+            if ( $match === null ) {
+                return '';
+            }
+            return $match;
         }
 
         return $value;

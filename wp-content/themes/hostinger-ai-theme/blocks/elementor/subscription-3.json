@@ -1,0 +1,114 @@
+[
+  {
+    "id": "9479030",
+    "elType": "container",
+    "settings": {
+      "flex_direction": "column",
+      "margin": {
+        "unit": "px",
+        "top": "0",
+        "right": "0",
+        "bottom": "0",
+        "left": "0",
+        "isLinked": false
+      },
+      "padding": {
+        "unit": "px",
+        "top": "40",
+        "right": "40",
+        "bottom": "40",
+        "left": "40",
+        "isLinked": true
+      },
+      "background_background": "classic",
+      "__globals__": {
+        "background_color": "globals/colors?id=b5aeb33",
+        "background_overlay_color": "globals/colors?id=58be983"
+      },
+      "background_image": {
+        "url": "https://hostinger-wp-blocks.com/wp-content/uploads/2026/04/photo-1622547748225-3fc4abd2cca0-1.avif",
+        "id": 4338,
+        "size": "",
+        "alt": "",
+        "source": "library"
+      },
+      "background_position": "center center",
+      "background_repeat": "no-repeat",
+      "background_size": "cover",
+      "background_overlay_background": "classic",
+      "css_classes": "hostinger-ai-background-image"
+    },
+    "elements": [
+      {
+        "id": "8ffd61b",
+        "elType": "widget",
+        "settings": {
+          "title": "Subscribe to our Newsletter",
+          "align": "center",
+          "typography_typography": "custom",
+          "typography_font_family": "Roboto",
+          "typography_font_size": {
+            "unit": "px",
+            "size": 30,
+            "sizes": []
+          },
+          "typography_font_size_mobile": {
+            "unit": "rem",
+            "size": 1.9,
+            "sizes": []
+          },
+          "typography_font_weight": "bold",
+          "title_color": "#0D141A",
+          "_css_classes": "hostinger-ai-title",
+          "__globals__": {
+            "typography_typography": "",
+            "title_color": "globals/colors?id=09cc561"
+          }
+        },
+        "elements": [],
+        "widgetType": "heading"
+      },
+      {
+        "id": "f3c9011",
+        "elType": "widget",
+        "settings": {
+          "align": "center",
+          "paragraph_spacing": {
+            "unit": "px",
+            "size": 0,
+            "sizes": []
+          },
+          "_css_classes": "hostinger-ai-description",
+          "__globals__": {
+            "typography_typography": "globals/typography?id=887fca2",
+            "text_color": "globals/colors?id=09cc561"
+          }
+        },
+        "elements": [],
+        "widgetType": "text-editor"
+      },
+      {
+        "id": "7763be8",
+        "elType": "widget",
+        "settings": {
+          "formId": "ai-theme-footer-form",
+          "_element_width": "initial",
+          "_element_custom_width": {
+            "unit": "%",
+            "size": 60,
+            "sizes": []
+          },
+          "_flex_align_self": "center",
+          "_element_custom_width_mobile": {
+            "unit": "%",
+            "size": 100,
+            "sizes": []
+          }
+        },
+        "elements": [],
+        "widgetType": "hostinger-reach"
+      }
+    ],
+    "isInner": false
+  }
+]

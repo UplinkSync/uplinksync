@@ -14,7 +14,7 @@ class WooOrdersTools extends RestEndpointTool {
 
         $this->register_operations(
             array(
-                'list' => array(
+                'list'   => array(
                     'tool_name'   => 'hostinger-ai-assistant/wc-orders-search',
                     'label'       => __( 'Search WooCommerce Orders', 'hostinger-ai-assistant' ),
                     'description' => __( 'Get a list of WooCommerce orders with search and filter capabilities. Returns a list of orders matching the criteria.', 'hostinger-ai-assistant' ),
@@ -22,6 +22,56 @@ class WooOrdersTools extends RestEndpointTool {
                         'annotations' => array(
                             'title'    => 'Search Orders',
                             'readonly' => true,
+                        ),
+                    ),
+                ),
+                'get'    => array(
+                    'tool_name'   => 'hostinger-ai-assistant/wc-orders-get',
+                    'label'       => __( 'Get WooCommerce Order', 'hostinger-ai-assistant' ),
+                    'description' => __( 'Get a single WooCommerce order by ID. Returns the full order object with all fields.', 'hostinger-ai-assistant' ),
+                    'meta'        => array(
+                        'annotations' => array(
+                            'title'    => 'Get Order',
+                            'readonly' => true,
+                        ),
+                    ),
+                ),
+                'create' => array(
+                    'tool_name'   => 'hostinger-ai-assistant/wc-orders-create',
+                    'label'       => __( 'Create WooCommerce Order', 'hostinger-ai-assistant' ),
+                    'description' => __( 'Create a new WooCommerce order. Provide customer and line items data as needed.', 'hostinger-ai-assistant' ),
+                    'meta'        => array(
+                        'annotations' => array(
+                            'title'           => 'Add Order',
+                            'readonly'        => false,
+                            'destructiveHint' => false,
+                            'idempotent'      => false,
+                        ),
+                    ),
+                ),
+                'update' => array(
+                    'tool_name'   => 'hostinger-ai-assistant/wc-orders-update',
+                    'label'       => __( 'Update WooCommerce Order', 'hostinger-ai-assistant' ),
+                    'description' => __( 'Update an existing WooCommerce order by ID. Use this to change status (e.g., pending, processing, completed, refunded) and other editable fields.', 'hostinger-ai-assistant' ),
+                    'meta'        => array(
+                        'annotations' => array(
+                            'title'           => 'Update Order',
+                            'readonly'        => false,
+                            'destructiveHint' => false,
+                            'idempotent'      => true,
+                        ),
+                    ),
+                ),
+                'delete' => array(
+                    'tool_name'   => 'hostinger-ai-assistant/wc-orders-delete',
+                    'label'       => __( 'Delete WooCommerce Order', 'hostinger-ai-assistant' ),
+                    'description' => __( 'Delete a WooCommerce order by ID. This action cannot be undone.', 'hostinger-ai-assistant' ),
+                    'meta'        => array(
+                        'annotations' => array(
+                            'title'           => 'Delete Order',
+                            'readonly'        => false,
+                            'destructiveHint' => true,
+                            'idempotent'      => true,
                         ),
                     ),
                 ),

@@ -72,5 +72,8 @@ module.exports = {
 			"@": path.resolve(__dirname, "vue-frontend/src/"),
 			"@vue-frontend": path.resolve(__dirname, "vue-frontend/"),
 		},
+		fallback: {
+			punycode: require.resolve("punycode/"),
+		},
 	},
 };

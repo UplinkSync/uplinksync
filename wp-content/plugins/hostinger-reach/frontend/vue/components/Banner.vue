@@ -147,14 +147,6 @@ withDefaults(defineProps<Props>(), {
 		bottom: 0;
 		width: auto;
 		z-index: 1;
-
-		@media (max-width: 992px) {
-			display: none;
-		}
-
-		@media (max-width: 480px) {
-			display: none;
-		}
 	}
 
 	&__background-image {
@@ -163,10 +155,6 @@ withDefaults(defineProps<Props>(), {
 		object-fit: cover;
 		object-position: center;
 		border-radius: 0 20px 20px 0;
-
-		@media (max-width: 992px) {
-			display: none;
-		}
 	}
 }
 

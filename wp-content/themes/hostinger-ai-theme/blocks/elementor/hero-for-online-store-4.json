@@ -20,9 +20,9 @@
       "padding": {
         "unit": "rem",
         "top": "2.25",
-        "right": "0",
+        "right": "2.25",
         "bottom": "2.25",
-        "left": "0",
+        "left": "2.25",
         "isLinked": false
       },
       "padding_tablet": {
@@ -196,13 +196,6 @@
                     "elType": "widget",
                     "settings": {
                       "title": "Explore our sleek\nwebsite template",
-                      "typography_typography": "custom",
-                      "typography_font_size": {
-                        "unit": "px",
-                        "size": 38,
-                        "sizes": []
-                      },
-                      "typography_font_weight": "400",
                       "_element_width": "initial",
                       "_element_custom_width": {
                         "unit": "px",
@@ -211,7 +204,8 @@
                       },
                       "_css_classes": "hostinger-ai-title hostinger-index-1 hostinger-ai-font-title",
                       "__globals__": {
-                        "title_color": "globals/colors?id=58be983"
+                        "title_color": "globals/colors?id=58be983",
+                        "typography_typography": "globals/typography?id=ff8f921"
                       }
                     },
                     "elements": [],

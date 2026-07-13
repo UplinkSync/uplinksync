@@ -107,6 +107,11 @@ onMounted(() => {
 							<div class="modal__forms-row modal__forms-heading">
 								<div class="modal__forms-col">
 									<HText variant="body-2-bold" as="span">
+										{{ translate('hostinger_reach_forms_title') }}
+									</HText>
+								</div>
+								<div class="modal__forms-col">
+									<HText variant="body-2-bold" as="span">
 										{{ translate('hostinger_reach_contacts_contacts_to_sync') }}
 									</HText>
 								</div>

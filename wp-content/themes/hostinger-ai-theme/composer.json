@@ -4,19 +4,23 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "git@github.com:hostinger/hostinger-wp-helper.git"
+      "url": "git@github.com:hostinger/hostinger-wp-helper.git",
+      "no-api": true
     },
     {
       "type": "vcs",
-      "url": "git@github.com:hostinger/hostinger-wp-menu-manager.git"
+      "url": "git@github.com:hostinger/hostinger-wp-menu-manager.git",
+      "no-api": true
     },
     {
       "type": "vcs",
-      "url": "git@github.com:hostinger/hostinger-wp-surveys.git"
+      "url": "git@github.com:hostinger/hostinger-wp-surveys.git",
+      "no-api": true
     },
     {
       "type": "vcs",
-      "url": "git@github.com:hostinger/hostinger-wp-amplitude.git"
+      "url": "git@github.com:hostinger/hostinger-wp-amplitude.git",
+      "no-api": true
     }
   ],
   "require": {
@@ -50,13 +54,19 @@
   },
   "scripts": {
     "phpunit": "phpunit",
-    "phpcs": "./vendor/bin/phpcs"
+    "phpcs": "./vendor/bin/phpcs",
+    "post-install-cmd": "bash bin/cleanup-hostinger-vendor.sh",
+    "post-update-cmd": "bash bin/cleanup-hostinger-vendor.sh"
   },
   "config": {
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true,
       "alleyinteractive/composer-wordpress-autoloader": true
     },
-    "platform-check": false
+    "platform-check": false,
+    "preferred-install": {
+      "*": "dist"
+    },
+    "github-protocols": ["ssh"]
   }
 }

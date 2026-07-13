@@ -17,7 +17,6 @@ class Hostinger_Ai_Assistant_Chatbot_Endpoints {
         $response_data = array(
             'data' => array(
                 'domain'             => implode( ' ', str_split( $this->helper->get_host_info() ) ),
-                'token'              => Hostinger_Ai_Assistant_Helper::get_api_token(),
                 'metadata'           => array(
                     'environment_info' => array(
                         'wordpress_version' => get_bloginfo( 'version' ) ?? '',

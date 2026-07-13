@@ -24,6 +24,9 @@ export const useIntegrationsStore = defineStore(
 		const syncableIntegrations = computed(() =>
 			activeIntegrations.value.filter((integration) => integration.importEnabled && integration.forms.length > 0)
 		);
+		const importAvailableIntegrations = computed(() =>
+			syncableIntegrations.value.filter((integration) => integration.importStatus.total > 0)
+		);
 
 		const availableIntegrations = computed(() => integrations.value.filter(({ id }) => id !== HOSTINGER_REACH_ID));
 
@@ -210,6 +213,7 @@ export const useIntegrationsStore = defineStore(
 			loadingIntegrations,
 			activeIntegrations,
 			syncableIntegrations,
+			importAvailableIntegrations,
 			availableIntegrations,
 			recommendedPlugins,
 			hasAnyForms,

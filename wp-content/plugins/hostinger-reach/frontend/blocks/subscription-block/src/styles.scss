@@ -84,11 +84,18 @@
 	margin-bottom: 20px;
 }
 
-
-.reach-subscription-message.is-success {
-	background: #009E5B1A;
+.reach-subscription-message {
 	font-weight: bold;
 	padding: 1em;
 	gap: 10px;
+	margin-top: 10px;
+}
+
+.reach-subscription-message.is-success {
+	background: #009E5B1A;
+}
+
+.reach-subscription-message.is-error {
+	background: #EA47681A;
 }
 

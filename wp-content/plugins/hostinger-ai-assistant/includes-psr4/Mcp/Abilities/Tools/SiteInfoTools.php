@@ -67,7 +67,7 @@ class SiteInfoTools {
         foreach ( $all_plugins as $plugin_path => $plugin_data ) {
             $plugin_slug = explode( '/', (string) $plugin_path )[0];
             $plugin_info = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin_path );
-            $update_info = $this->get_plugin_update_info( $plugin_slug );
+            $update_info = $this->get_plugin_update_info( $plugin_path );
 
             $plugins_data[] = array(
                 'name'             => $plugin_info['Name'],
@@ -98,7 +98,7 @@ class SiteInfoTools {
         );
     }
 
-    private function get_plugin_update_info( string $plugin_slug ): array {
+    private function get_plugin_update_info( string $plugin_path ): array {
         $update_info = array(
             'update_available' => false,
             'latest_version'   => '',
@@ -107,15 +107,11 @@ class SiteInfoTools {
 
         $update_plugins = get_site_transient( 'update_plugins' );
 
-        if ( $update_plugins && isset( $update_plugins->response ) ) {
-            foreach ( $update_plugins->response as $plugin_file => $plugin_data ) {
-                if ( strpos( $plugin_file, $plugin_slug ) === 0 ) {
-                    $update_info['update_available'] = true;
-                    $update_info['latest_version']   = $plugin_data->new_version;
-                    $update_info['last_updated']     = isset( $plugin_data->last_updated ) ? $plugin_data->last_updated : '';
-                    break;
-                }
-            }
+        if ( $update_plugins && isset( $update_plugins->response[ $plugin_path ] ) ) {
+            $plugin_data                     = $update_plugins->response[ $plugin_path ];
+            $update_info['update_available'] = true;
+            $update_info['latest_version']   = $plugin_data->new_version;
+            $update_info['last_updated']     = isset( $plugin_data->last_updated ) ? $plugin_data->last_updated : '';
         }
 
         return $update_info;

@@ -26,20 +26,6 @@ class DefaultOptions {
             $hostinger_plugin_settings['bypass_code'] = Helper::generate_bypass_code( 16 );
             $this->update_plugin_settings( $hostinger_plugin_settings );
         }
-
-        $this->configure_authentication_password();
-    }
-
-    public function configure_authentication_password(): void {
-        global $wpdb;
-        $hostinger_plugin_settings = get_option( HOSTINGER_PLUGIN_SETTINGS_OPTION, array() );
-
-        $existing_passwords = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->usermeta} WHERE meta_key = %s", '_application_passwords' ) );
-
-        if ( $existing_passwords === 0 ) {
-            $hostinger_plugin_settings['disable_authentication_password'] = true;
-            $this->update_plugin_settings( $hostinger_plugin_settings );
-        }
     }
 
     private function update_plugin_settings( array $settings ): void {

@@ -18,8 +18,8 @@ class Menu {
 	 */
 	public function add_menu_sub_pages( array $submenus ): array {
 		$submenus[] = array(
-			'page_title' => __( 'AI Website Creation', 'hostinger-ai-theme' ),
-			'menu_title' => __( 'AI Website Creation', 'hostinger-ai-theme' ),
+			'page_title' => __( 'AI Website Builder', 'hostinger-ai-theme' ),
+			'menu_title' => __( 'AI Website Builder', 'hostinger-ai-theme' ),
 			'capability' => 'manage_options',
 			'menu_slug'  => self::AI_BUILDER_MENU_SLUG,
 			'callback'   => array( $this, 'renderWebsiteCreation' ),

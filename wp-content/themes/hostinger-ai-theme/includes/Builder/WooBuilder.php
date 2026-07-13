@@ -2,6 +2,7 @@
 
 namespace Hostinger\AiTheme\Builder;
 
+use Hostinger\AiTheme\Constants\GenerationConstant;
 use Hostinger\AiTheme\Constants\PreviewImageConstant;
 use Hostinger\EasyOnboarding\Dto\WooSetupParameters;
 use Hostinger\EasyOnboarding\WooCommerce\SetupHandler;
@@ -88,6 +89,8 @@ class WooBuilder extends AbstractPluginBuilder {
         'ZM' => 'ZM-09',     // Zambia - Lusaka.
     ];
 
+    private const PRODUCT_RETRY_DELAYS_MS = [ 0, 500, 1000 ];
+
     private ImageManager $image_manager;
 
     public function __construct( ImageManager $image_manager ) {
@@ -158,12 +161,35 @@ class WooBuilder extends AbstractPluginBuilder {
     }
 
     public function generate_products( array $content ): bool {
+        $total_attempts = count( self::PRODUCT_RETRY_DELAYS_MS );
+
+        foreach ( self::PRODUCT_RETRY_DELAYS_MS as $index => $delay_ms ) {
+            if ( $delay_ms > 0 ) {
+                usleep( $delay_ms * 1000 );
+            }
+
+            $product_ids = $this->attempt_product_generation( $content );
+
+            if ( ! empty( $product_ids ) ) {
+                update_option( 'hostinger_ai_created_products', $product_ids );
+                return true;
+            }
+
+            Helper::log( sprintf( 'Product generation attempt %d produced 0 products', $index + 1 ) );
+        }
+
+        Helper::log( sprintf( 'Product generation failed after %d attempts — continuing without products', $total_attempts ) );
+
+        return false;
+    }
+
+    protected function attempt_product_generation( array $content ): array {
         if ( empty( $content['pages']['ecommercePagesGroup']['sections'] ) ) {
-            return false;
+            return [];
         }
 
         if ( ! function_exists( 'wc_get_product' ) ) {
-            return false;
+            return [];
         }
 
         $created_product_ids = [];
@@ -194,12 +220,7 @@ class WooBuilder extends AbstractPluginBuilder {
             }
         }
 
-        if ( ! empty( $created_product_ids ) ) {
-            update_option( 'hostinger_ai_created_products', $created_product_ids );
-            return true;
-        }
-
-        return false;
+        return $created_product_ids;
     }
 
     private function group_product_elements( array $elements ): array {
@@ -274,6 +295,9 @@ class WooBuilder extends AbstractPluginBuilder {
             'post_content'  => $product_data['description'],
             'post_status'   => 'publish',
             'post_type'     => 'product',
+            'meta_input'    => array(
+                GenerationConstant::META_KEY => '1',
+            ),
         ];
 
         $product_id = wp_insert_post( $new_product );

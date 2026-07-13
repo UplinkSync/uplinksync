@@ -50,7 +50,7 @@ class ComingSoon {
             'hostinger_main_styles',
             HOSTINGER_ASSETS_URL . '/css/coming-soon.min.css',
             array(),
-            HOSTINGER_VERSION
+            HOSTINGER_WORDPRESS_PLUGIN_VERSION
         );
     }
 

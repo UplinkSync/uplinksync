@@ -1,7 +1,9 @@
 export interface ReachData {
 	siteUrl: string;
 	ajaxUrl: string;
+	adminUrl: string;
 	nonce: string;
+	addBlockNonce: string;
 	pluginUrl: string;
 	translations: Record<string, string>;
 	isConnected: boolean;
@@ -18,7 +20,9 @@ export interface HstReachDataRaw {
 	site_url: string;
 	rest_base_url: string;
 	ajax_url: string;
+	admin_url: string;
 	nonce: string;
+	add_block_nonce: string;
 	plugin_url: string;
 	translations: Record<string, string>;
 	is_connected: boolean;

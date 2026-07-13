@@ -10,41 +10,46 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-07-31T11:19:40+03:00\n"
-"PO-Revision-Date: 2026-04-02 06:37+0000\n"
+"PO-Revision-Date: 2026-06-30 07:01+0000\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Domain: hostinger-reach\n"
 "Language: ko_KR\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Loco-Version: 2.8.1; wp-6.9; php-8.2.29"
 
-#: src/Setup/Assets.php:189
+#: src/Setup/Assets.php:208
 msgid "(no title)"
 msgstr "(제목 없음)"
 
-#: src/Setup/Assets.php:212
+#: src/Setup/Assets.php:231
 msgid "-"
 msgstr "-"
+
+#: src/Setup/Assets.php:108
+msgid ""
+"<strong>Copy</strong> your new API token and <strong>paste it below</strong>"
+msgstr ""
 
 #: src/Integrations/WooCommerce/WooCommerceIntegration.php:124
 #, fuzzy
 msgid "Abandoned Carts"
 msgstr "버려진 카트"
 
-#: src/Setup/Assets.php:232
+#: src/Setup/Assets.php:251
 #, fuzzy
 msgid "Abandoned carts"
 msgstr "버려진 카트"
 
-#: src/Setup/Assets.php:175 src/Setup/Assets.php:192
+#: src/Setup/Assets.php:194 src/Setup/Assets.php:211
 msgid "Active"
 msgstr "활성"
 
-#: src/Admin/Notices/AddFormNotice.php:83 src/Setup/Assets.php:132
-#: src/Setup/Assets.php:181 src/Setup/Assets.php:195
+#: src/Admin/Notices/AddFormNotice.php:83 src/Setup/Assets.php:150
+#: src/Setup/Assets.php:200 src/Setup/Assets.php:214
 msgid "Add form"
 msgstr "양식 추가"
 
-#: src/Setup/Assets.php:134 src/Setup/Assets.php:161
+#: src/Setup/Assets.php:152 src/Setup/Assets.php:179
 msgid "Add form or plugin"
 msgstr "양식 또는 플러그인 추가"
 
@@ -53,7 +58,7 @@ msgstr "양식 또는 플러그인 추가"
 msgid "Add form to start sending campaigns with Hostinger Reach"
 msgstr "양식을 추가하여 Hostinger Reach로 캠페인 보내기 시작하기"
 
-#: src/Setup/Assets.php:129
+#: src/Setup/Assets.php:147
 #, fuzzy
 msgid "Add new form"
 msgstr "새 양식 추가"
@@ -65,7 +70,7 @@ msgstr "새 양식 추가"
 msgid "Add New Tag"
 msgstr "새 태그 추가"
 
-#: src/Setup/Assets.php:127
+#: src/Setup/Assets.php:145
 #, fuzzy
 msgid "Add or connect a form to start sending campaigns"
 msgstr "캠페인 전송을 시작하려면 양식을 추가하거나 연결하세요"
@@ -77,7 +82,7 @@ msgstr "캠페인 전송을 시작하려면 양식을 추가하거나 연결하�
 msgid "Add Tag"
 msgstr "태그 추가"
 
-#: src/Setup/Assets.php:229
+#: src/Setup/Assets.php:248
 #, fuzzy
 msgid ""
 "Adds a marketing consent checkbox at checkout and syncs contacts to Reach."
@@ -87,7 +92,11 @@ msgstr "결제 시 마케팅 동의 확인란을 추가하고 연락처를 Reach
 msgid "Any ideas or feedback to help us improve Hostinger Reach?"
 msgstr "Hostinger Reach를 개선하는 데 도움이 되는 아이디어나 피드백이 있나요?"
 
-#: src/Setup/Assets.php:210
+#: src/Setup/Assets.php:112
+msgid "API Token field is required"
+msgstr ""
+
+#: src/Setup/Assets.php:229
 #, fuzzy
 #| msgid ""
 #| "are ready to sync with Reach. Any new contacts you’ll collect with these "
@@ -101,29 +110,29 @@ msgstr "을(를) Reach와 동기화할 준비가 되었습니다. 이 양식으�
 msgid "Attention:"
 msgstr "주의:"
 
-#: src/Setup/Assets.php:213
+#: src/Setup/Assets.php:232
 #, fuzzy
 msgid "Auto-sync off"
 msgstr "자동 동기화 끄기"
 
-#: src/Setup/Assets.php:234
+#: src/Setup/Assets.php:253
 #, fuzzy
 msgid "Automation"
 msgstr "자동화"
 
-#: src/Setup/Assets.php:113
+#: src/Setup/Assets.php:131
 msgid "Average CTOR"
 msgstr "평균 CTOR"
 
-#: src/Setup/Assets.php:89
+#: src/Setup/Assets.php:91
 msgid "Back"
 msgstr "뒤로"
 
-#: src/Setup/Assets.php:157
+#: src/Setup/Assets.php:175
 msgid "Background image for"
 msgstr "배경 이미지"
 
-#: src/Setup/Assets.php:156
+#: src/Setup/Assets.php:174
 msgid "Banner background image for"
 msgstr "배너 배경 이미지"
 
@@ -142,48 +151,53 @@ msgstr "Reach 구독 양식"
 msgid "Brave Popup Builder"
 msgstr "브레이브 팝업 빌더"
 
-#: src/Setup/Assets.php:111
+#: src/Setup/Assets.php:129
 msgid "Campaigns"
 msgstr "캠페인"
 
-#: src/Setup/Assets.php:164
+#: src/Setup/Assets.php:114 src/Setup/Assets.php:182
 #, fuzzy
 #| msgid "Cancel "
 msgid "Cancel"
 msgstr "취소"
 
 #: src/Integrations/WooCommerce/WooCommerceIntegration.php:116
-#: src/Setup/Assets.php:228
+#: src/Setup/Assets.php:247
 msgid "Checkout"
 msgstr "결제"
 
-#: src/Setup/Assets.php:159
+#: src/Setup/Assets.php:106
+msgid "Click <strong>Generate API Token</strong>"
+msgstr ""
+
+#: src/Setup/Assets.php:177
 msgid ""
 "Click-to-open rate tells you what percent of opens resulted in a click too. "
 "A good CTOR is 6-17%, depending on your industry."
 msgstr "클릭 투 오픈 비율은 클릭으로 이어진 오픈의 비율을 알려줍니다. 업종에 따라 6~17%가 좋은 CTOR입니다."
 
-#: src/Setup/Assets.php:187
+#: src/Setup/Assets.php:206
 msgid "Collapse {pluginName} details"
 msgstr "{pluginName} 세부 정보 접기"
 
-#: src/Setup/Assets.php:124
+#: src/Setup/Assets.php:142
 #, fuzzy
 msgid ""
 "Collect contacts at checkout, send automated emails after purchases, and "
 "recover abandoned carts to drive more sales with Reach"
 msgstr "결제 시 연락처를 수집하고, 구매 후 자동 이메일을 보내고, 버려진 장바구니를 복구하여 Reach로 더 많은 판매를 유도하세요"
 
-#: src/Setup/Assets.php:223
+#: src/Setup/Assets.php:242
 #, fuzzy
 msgid "Coming soon"
 msgstr "곧 출시 예정"
 
-#: src/Admin/Notices/ConnectionNotice.php:100 src/Setup/Assets.php:202
+#: src/Admin/Notices/ConnectionNotice.php:100 src/Setup/Assets.php:113
+#: src/Setup/Assets.php:221
 msgid "Connect"
 msgstr "연결"
 
-#: src/Setup/Assets.php:98
+#: src/Setup/Assets.php:115
 #, fuzzy
 msgid "Connect domain"
 msgstr "도메인 연결"
@@ -199,38 +213,52 @@ msgstr "이메일 마케팅을 시작하려면 Hostinger Reach를 연결하세�
 msgid "Connect Now"
 msgstr "지금 연결"
 
-#: src/Setup/Assets.php:133
+#: src/Setup/Assets.php:151
 #, fuzzy
 msgid "Connect plugin"
 msgstr "플러그인 연결"
 
-#: src/Setup/Assets.php:97
+#: src/Setup/Assets.php:100
 msgid "Connect site"
 msgstr "사이트 연결"
 
-#: src/Setup/Assets.php:125
+#: src/Setup/Assets.php:101
+msgid "Connect with API token"
+msgstr ""
+
+#: src/Setup/Assets.php:143
 msgid "Connect WooCommerce"
 msgstr "우커머스 연결"
 
-#: src/Setup/Assets.php:123
+#: src/Setup/Assets.php:141
 #, fuzzy
 msgid "Connect WooCommerce to boost sales with email automations"
 msgstr "이메일 자동화를 통한 매출 증대를 위한 WooCommerce 연결"
 
+#: src/Setup/Assets.php:102
+msgid "Connect your website to Hostinger Reach"
+msgstr ""
+
+#: src/Setup/Assets.php:111
+msgid ""
+"Connection failed. Check if your API Token is correct or contact Hostinger "
+"Reach support."
+msgstr ""
+
 #: src/Integrations/ContactForm7/ContactForm7Integration.php:111
-#: src/Setup/Assets.php:183
+#: src/Setup/Assets.php:202
 msgid "Contact Form 7"
 msgstr "문의 양식 7"
 
-#: src/Setup/Assets.php:105 src/Setup/Assets.php:171 src/Setup/Assets.php:204
+#: src/Setup/Assets.php:123 src/Setup/Assets.php:189 src/Setup/Assets.php:223
 msgid "Contacts"
 msgstr "연락처"
 
-#: src/Setup/Assets.php:209
+#: src/Setup/Assets.php:228
 msgid "contacts"
 msgstr "연락처"
 
-#: src/Setup/Assets.php:208
+#: src/Setup/Assets.php:227
 #, fuzzy
 msgid "Contacts to Import"
 msgstr "가져올 연락처"
@@ -239,34 +267,25 @@ msgstr "가져올 연락처"
 msgid "Could not generate auth URL"
 msgstr "인증 URL을 생성할 수 없습니다"
 
-#: src/Setup/Assets.php:128
+#: src/Setup/Assets.php:146
 #, fuzzy
 msgid ""
 "Create a new form or connect a plugin to grow your contact list and start "
 "sending campaigns with Reach."
 msgstr "새 양식을 만들거나 플러그인을 연결하여 연락처 목록을 늘리고 Reach로 캠페인을 보내기 시작하세요."
 
-#: src/Setup/Assets.php:118
+#: src/Setup/Assets.php:136
 msgid "Create campaign"
 msgstr "캠페인 만들기"
 
-#: src/Setup/Assets.php:92
-msgid ""
-"Create email campaigns using AI-crafted templates that match your style. "
-"Instantly sync with your WordPress site and connect with your audience "
-"easily."
-msgstr ""
-"내 스타일에 맞는 AI가 제작한 템플릿을 사용하여 이메일 캠페인을 만드세요. 워드프레스 사이트와 즉시 동기화하여 잠재고객과 쉽게 "
-"소통하세요."
-
-#: src/Setup/Assets.php:225
+#: src/Setup/Assets.php:244
 #, fuzzy
 msgid ""
 "Create fully custom forms in Reach and easily embed them on your WordPress "
 "site using this plugin. Stay tuned!"
 msgstr "이 플러그인을 사용하여 Reach에서 완전 맞춤형 양식을 만들고 워드프레스 사이트에 쉽게 임베드하세요. 계속 지켜봐 주세요!"
 
-#: src/Setup/Assets.php:119
+#: src/Setup/Assets.php:137
 msgid "Create template"
 msgstr "템플릿 만들기"
 
@@ -277,34 +296,34 @@ msgstr "템플릿 만들기"
 msgid "Default"
 msgstr "기본값"
 
-#: src/Setup/Assets.php:165 src/Setup/Assets.php:201
+#: src/Setup/Assets.php:183 src/Setup/Assets.php:220
 msgid "Disconnect"
 msgstr "연결 해제"
 
-#: src/Setup/Assets.php:95
+#: src/Setup/Assets.php:98
 msgid "Disconnect it to link this site instead."
 msgstr "대신 이 사이트를 연결하려면 연결을 해제하세요."
 
-#: src/Setup/Assets.php:180
+#: src/Setup/Assets.php:199
 msgid "Disconnect plugin"
 msgstr "플러그인 연결 해제"
 
-#: src/Setup/Assets.php:162
+#: src/Setup/Assets.php:180
 msgid "Disconnect plugin?"
 msgstr "플러그인 연결을 해제할까요?"
 
-#: src/Setup/Assets.php:163
+#: src/Setup/Assets.php:181
 msgid ""
 "Disconnecting will stop new contacts from being collected. You can reconnect "
 "or use a different form anytime."
 msgstr "연결을 해제하면 새 연락처 수집이 중지됩니다. 언제든지 다시 연결하거나 다른 양식을 사용할 수 있습니다."
 
-#: src/Setup/Assets.php:220
+#: src/Setup/Assets.php:239
 #, fuzzy
 msgid "Don't see your plugin?"
 msgstr "플러그인이 보이지 않나요?"
 
-#: src/Setup/Assets.php:122
+#: src/Setup/Assets.php:140
 msgid "E-Commerce"
 msgstr "이커머스"
 
@@ -317,30 +336,40 @@ msgstr ""
 "기존 양식을 쉽게 추가하거나 연결하고, WooCommerce를 자동화하고, 연락처를 동기화하여 캠페인을 구축하고 비즈니스를 성장시킬 수 "
 "있습니다."
 
-#: src/Setup/Assets.php:178
+#: src/Setup/Assets.php:197
 msgid "Edit form"
 msgstr "양식 편집"
 
-#: src/Integrations/Elementor/ElementorIntegration.php:113
-#: src/Setup/Assets.php:185
+#: src/Integrations/Elementor/ElementorIntegration.php:138
+#: src/Setup/Assets.php:204
 msgid "Elementor"
 msgstr "엘리멘터"
 
-#: src/Blocks/SubscriptionFormBlock.php:75
+#: src/Blocks/SubscriptionFormBlock.php:85
 #: src/Integrations/Elementor/SubscriptionFormElementorWidget.php:106
 msgid "Email"
 msgstr "이메일"
 
-#: src/Setup/Assets.php:101
+#: src/Setup/Assets.php:119
 msgid "Email marketing background with gradient design"
 msgstr "그라데이션 디자인이 적용된 이메일 마케팅 배경"
 
-#: src/Setup/Assets.php:102
+#: src/Setup/Assets.php:120
 msgid ""
 "Email marketing illustration featuring envelopes and communication icons"
 msgstr "봉투와 커뮤니케이션 아이콘이 있는 이메일 마케팅 일러스트레이션"
 
-#: src/Setup/Assets.php:108
+#: src/Setup/Assets.php:94
+#, fuzzy
+msgid ""
+"Email marketing that doesn't need an expert: Let AI write, design, and send "
+"your campaigns - your brand, your colors, applied automatically. No coding, "
+"no complexity."
+msgstr ""
+"전문가가 필요 없는 이메일 마케팅: AI가 자동으로 브랜드와 색상을 적용하여 캠페인을 작성, 디자인, 전송합니다. 코딩할 필요도, 복잡할 "
+"필요도 없습니다."
+
+#: src/Setup/Assets.php:126
 msgid "Emails"
 msgstr "이메일"
 
@@ -351,11 +380,11 @@ msgstr "이메일"
 msgid "Enter tag name and press Enter or click Add Tag"
 msgstr "태그 이름을 입력하고 Enter 키를 누르거나 태그 추가를 클릭합니다"
 
-#: src/Setup/Assets.php:186
+#: src/Setup/Assets.php:205
 msgid "Expand {pluginName} details"
 msgstr "{pluginName} 세부 정보 펼치기"
 
-#: src/Setup/Assets.php:138
+#: src/Setup/Assets.php:156
 msgid "FAQ"
 msgstr "자주 묻는 질문"
 
@@ -363,7 +392,7 @@ msgstr "자주 묻는 질문"
 msgid "Form"
 msgstr "양식"
 
-#: src/Setup/Assets.php:224
+#: src/Setup/Assets.php:243
 #, fuzzy
 msgid "Form Builder"
 msgstr "양식 작성기"
@@ -379,20 +408,28 @@ msgstr "양식 ID"
 msgid "Forminator"
 msgstr "포미네이터"
 
-#: src/Setup/Assets.php:126
+#: src/Setup/Assets.php:144
 msgid "Forms"
 msgstr "양식"
 
-#: src/Setup/Assets.php:172
+#: src/Setup/Assets.php:190
 #, fuzzy
 msgid "Forms syncing with Reach"
 msgstr "Reach와 동기화되는 양식"
 
-#: src/Setup/Assets.php:179
+#: src/Setup/Assets.php:103
+msgid "Generate an API token"
+msgstr ""
+
+#: src/Setup/Assets.php:104
+msgid "Go to"
+msgstr ""
+
+#: src/Setup/Assets.php:198
 msgid "Go to plugin"
 msgstr "플러그인으로 이동"
 
-#: src/Setup/Assets.php:99
+#: src/Setup/Assets.php:117
 #: frontend/blocks/subscription-block/src/Components/Dialog.js:42
 #: frontend/dist/blocks/subscription.js:1
 #: frontend/dist/blocks/subscription.js:87
@@ -405,16 +442,20 @@ msgid "Hostinger"
 msgstr "Hostinger"
 
 #. Plugin Name of the plugin
-#: hostinger-reach.php src/Admin/Menus.php:71
+#: hostinger-reach.php src/Admin/Menus.php:50 src/Admin/Menus.php:106
 #: src/Admin/Notices/AddFormNotice.php:90
 #: src/Admin/Notices/ConnectionNotice.php:110
 #: src/Integrations/Elementor/SubscriptionFormElementorWidget.php:20
-#: src/Integrations/Reach/ReachFormIntegration.php:71 src/Setup/Assets.php:100
-#: src/Setup/Assets.php:182
+#: src/Integrations/Reach/ReachFormIntegration.php:71 src/Setup/Assets.php:118
+#: src/Setup/Assets.php:201
 msgid "Hostinger Reach"
 msgstr "Hostinger Reach"
 
-#: src/Setup/Assets.php:146
+#: src/Setup/Assets.php:105
+msgid "Hostinger Reach Integrations → API Tokens"
+msgstr ""
+
+#: src/Setup/Assets.php:164
 #, fuzzy
 msgid ""
 "Hostinger Reach is a Hostinger service that helps you create and send "
@@ -426,7 +467,7 @@ msgstr ""
 "Hostinger 서비스입니다. Hostinger Reach 워드프레스 플러그인을 사용하면 즐겨 사용하는 워드프레스 플러그인의 연락처를 "
 "Reach에 연결하고 동기화할 수 있습니다."
 
-#: src/Setup/Assets.php:140
+#: src/Setup/Assets.php:158
 msgid ""
 "Hostinger Reach is an AI-powered email marketing tool for small businesses "
 "and creators. It supports your entire email marketing journey—from building "
@@ -435,7 +476,7 @@ msgstr ""
 "Hostinger Reach는 소규모 비즈니스와 크리에이터를 위한 AI 기반 이메일 마케팅 도구입니다. 연락처 목록 작성부터 캠페인 전송 "
 "및 결과 추적에 이르기까지 전체 이메일 마케팅 여정을 지원합니다."
 
-#: src/Setup/Assets.php:142
+#: src/Setup/Assets.php:160
 msgid ""
 "Hostinger Reach is built for simplicity, speed, and results – no design or "
 "marketing experience needed. Unlike most email tools, at the core of Reach "
@@ -469,21 +510,21 @@ msgstr "Hostinger Reach 로고"
 msgid "Hostinger Reach requires minimum PHP version of <b>%s</b>. "
 msgstr "Hostinger Reach에는 최소 PHP 버전 <b>%s</b>가 필요합니다."
 
-#: src/Setup/Assets.php:151
+#: src/Setup/Assets.php:169
 #, fuzzy
 msgid "How are segments and tags created?"
 msgstr "세그먼트와 태그는 어떻게 생성되나요?"
 
-#: src/Setup/Assets.php:147
+#: src/Setup/Assets.php:165
 #, fuzzy
 msgid "How does contact syncing work?"
 msgstr "연락처 동기화는 어떻게 이루어지나요?"
 
-#: src/Setup/Assets.php:141
+#: src/Setup/Assets.php:159
 msgid "How is Hostinger Reach different from other email marketing apps?"
 msgstr "Hostinger Reach는 다른 이메일 마케팅 앱과 어떻게 다른가요?"
 
-#: src/Setup/Assets.php:143
+#: src/Setup/Assets.php:161
 msgid "How much does it cost to use Hostinger Reach?"
 msgstr "Hostinger Reach 사용 비용은 얼마인가요?"
 
@@ -501,7 +542,7 @@ msgstr "https://hostinger.com"
 msgid "https://www.hostinger.com/email-marketing"
 msgstr "https://www.hostinger.com/email-marketing"
 
-#: src/Setup/Assets.php:154
+#: src/Setup/Assets.php:172
 #, fuzzy
 msgid ""
 "If the integration is interrupted, syncing pauses automatically. Once the "
@@ -511,48 +552,48 @@ msgstr ""
 "연동이 중단되면 동기화가 자동으로 일시 중지됩니다. 연결이 복원되면 동기화가 다시 시작되므로 데이터 손실 없이 연락처 수집을 계속할 수 "
 "있습니다."
 
-#: src/Setup/Assets.php:239
+#: src/Setup/Assets.php:258
 #, fuzzy
 msgid ""
 "If your store isn’t ready yet, complete the setup to start selling and "
 "collecting contacts"
 msgstr "스토어가 아직 준비되지 않은 경우 설정을 완료하여 판매 및 연락처 수집을 시작하세요"
 
-#: src/Setup/Assets.php:207
+#: src/Setup/Assets.php:226
 #, fuzzy
 msgid "Import"
 msgstr "가져오기"
 
-#: src/Setup/Assets.php:203
+#: src/Setup/Assets.php:222
 #, fuzzy
 msgid "Import Contacts"
 msgstr "연락처 가져오기"
 
-#: src/Setup/Assets.php:166
+#: src/Setup/Assets.php:184
 #, fuzzy
 msgid "Import contacts"
 msgstr "연락처 가져오기"
 
-#: src/Setup/Assets.php:205
+#: src/Setup/Assets.php:224
 #, fuzzy
 msgid "Import your existing contacts to Reach"
 msgstr "기존 연락처를 Reach로 가져오기"
 
-#: src/Setup/Assets.php:215
+#: src/Setup/Assets.php:234
 #, fuzzy
 msgid "Imported"
 msgstr "가져오기"
 
-#: src/Api/Handlers/IntegrationsApiHandler.php:122
+#: src/Api/Handlers/IntegrationsApiHandler.php:123
 msgid "Importing is not available for this integration"
 msgstr "이 통합에서는 가져오기를 사용할 수 없습니다"
 
-#: src/Setup/Assets.php:217
+#: src/Setup/Assets.php:236
 #, fuzzy
 msgid "Importing..."
 msgstr "가져오기..."
 
-#: src/Setup/Assets.php:176
+#: src/Setup/Assets.php:195
 msgid "Inactive"
 msgstr "비활성"
 
@@ -563,16 +604,16 @@ msgstr "비활성"
 msgid "Inline"
 msgstr "인라인"
 
-#: src/Setup/Assets.php:199
+#: src/Setup/Assets.php:218
 #, fuzzy
 msgid "Install"
 msgstr "설치"
 
-#: src/Setup/Assets.php:200
+#: src/Setup/Assets.php:219
 msgid "Install and connect"
 msgstr "설치 및 연결"
 
-#: src/Setup/Assets.php:198
+#: src/Setup/Assets.php:217
 msgid "Installed plugins"
 msgstr "설치된 플러그인"
 
@@ -581,18 +622,18 @@ msgstr "설치된 플러그인"
 msgid "Integrate your WordPress site with Hostinger Reach."
 msgstr "워드프레스 사이트를 Hostinger Reach와 통합하세요."
 
-#: src/Setup/Assets.php:121
+#: src/Setup/Assets.php:139
 msgid "Integrations"
 msgstr "통합"
 
-#: src/Setup/Assets.php:221
+#: src/Setup/Assets.php:240
 #, fuzzy
 msgid ""
 "It may not be supported yet. You can upload contacts as a CSV or use another "
 "plugin"
 msgstr "아직 지원되지 않을 수 있습니다. 연락처를 CSV로 업로드하거나 다른 플러그인을 사용할 수 있습니다"
 
-#: src/Setup/Assets.php:219
+#: src/Setup/Assets.php:238
 #, fuzzy
 #| msgid "It was an error syncing your contacts to Reach."
 msgid "It was an error importing your contacts to Reach."
@@ -612,49 +653,53 @@ msgstr "레이아웃"
 msgid "Layout Settings"
 msgstr "레이아웃 설정"
 
-#: src/Admin/Notices/ConnectionNotice.php:103 src/Setup/Assets.php:236
+#: src/Admin/Notices/ConnectionNotice.php:103 src/Setup/Assets.php:255
 msgid "Learn more"
 msgstr "자세히 알아보기"
 
-#: src/Setup/Assets.php:193
+#: src/Setup/Assets.php:212
 msgid ""
 "Make sure the people you contact expect your emails and are okay with "
 "receiving them."
 msgstr "연락하는 사람들이 내 이메일을 기대하며 수신에 문제가 없는지 확인하세요."
 
-#: src/Setup/Assets.php:96
+#: src/Setup/Assets.php:99
 msgid "Manage"
 msgstr "관리"
 
-#: src/Setup/Assets.php:235
+#: src/Setup/Assets.php:254
 #, fuzzy
 msgid "Manage automations"
 msgstr "자동화 관리"
 
-#: src/Setup/Assets.php:135 src/Setup/Assets.php:237
+#: src/Setup/Assets.php:153 src/Setup/Assets.php:256
 #, fuzzy
 msgid "Manage plugin"
 msgstr "플러그인 관리"
 
-#: src/Setup/Assets.php:131
+#: src/Setup/Assets.php:149
 #, fuzzy
 msgid "More plugins"
 msgstr "더 많은 플러그인"
 
-#: src/Blocks/SubscriptionFormBlock.php:83
+#: src/Blocks/SubscriptionFormBlock.php:93
 #: src/Integrations/Elementor/SubscriptionFormElementorWidget.php:114
 msgid "Name"
 msgstr "이름"
 
-#: src/Setup/Assets.php:194
+#: src/Setup/Assets.php:107
+msgid "Name your token, then click <strong>Generate token</strong>"
+msgstr ""
+
+#: src/Setup/Assets.php:213
 msgid "New contact form"
 msgstr "새 문의 양식"
 
-#: src/Setup/Assets.php:136
+#: src/Setup/Assets.php:154
 msgid "New page"
 msgstr "새 페이지"
 
-#: src/Setup/Assets.php:115
+#: src/Setup/Assets.php:133
 msgid "New subscribers"
 msgstr "신규 구독자"
 
@@ -674,29 +719,29 @@ msgstr "닌자 양식"
 msgid "No"
 msgstr "아니요"
 
-#: src/Setup/Assets.php:188
+#: src/Setup/Assets.php:207
 msgid "No forms found for this integration."
 msgstr "이 통합에 대한 양식을 찾을 수 없습니다."
 
-#: src/Setup/Assets.php:137
+#: src/Setup/Assets.php:155
 msgid "No pages available. Create a new page to get started."
 msgstr "사용 가능한 페이지가 없습니다. 시작하려면 새 페이지를 만드세요."
 
-#: src/Setup/Assets.php:216
+#: src/Setup/Assets.php:235
 #, fuzzy
 msgid "Not imported"
 msgstr "가져오지 않음"
 
-#: src/Setup/Assets.php:168
+#: src/Setup/Assets.php:186
 #, fuzzy
 msgid "Not needed"
 msgstr "필요 없음"
 
-#: src/Setup/Assets.php:173
+#: src/Setup/Assets.php:192
 msgid "of"
 msgstr "의"
 
-#: src/Setup/Assets.php:148
+#: src/Setup/Assets.php:166
 #, fuzzy
 msgid ""
 "Once you connect a form plugin you use on WordPress (such as Elementor or "
@@ -707,7 +752,7 @@ msgstr ""
 "WordPress에서 사용하는 양식 플러그인(예: Elementor 또는 Contact Form 7)을 연결하면 플러그인이 모든 새 양식 "
 "제출 및 구독자 데이터를 자동으로 Reach 계정으로 전달하므로 각 양식 제출 시 수동 내보내기 없이 연락처가 수집 및 업데이트됩니다"
 
-#: src/Setup/Assets.php:155
+#: src/Setup/Assets.php:173
 msgid "opens in new tab"
 msgstr "새 탭에서 열기"
 
@@ -716,45 +761,44 @@ msgstr "새 탭에서 열기"
 msgid "OptinMonster"
 msgstr "옵틴몬스터"
 
-#: src/Setup/Assets.php:130
+#: src/Setup/Assets.php:148
 #, fuzzy
 msgid "or connect a form plugin"
 msgstr "또는 양식 플러그인 연결"
 
-#: src/Setup/Assets.php:214
+#: src/Setup/Assets.php:233
 #, fuzzy
 msgid "Partially imported"
 msgstr "부분적으로 가져오기"
 
-#: src/Setup/Assets.php:104
+#: src/Setup/Assets.php:110
+msgid "Paste your API token here"
+msgstr ""
+
+#: src/Setup/Assets.php:122
 #, fuzzy
 msgid "Plan & Limits"
 msgstr "요금제 및 제한"
 
-#: src/Setup/Assets.php:170
+#: src/Setup/Assets.php:188
 msgid "Plugin"
 msgstr "플러그인"
 
-#: src/Setup/Assets.php:190
+#: src/Setup/Assets.php:209
 msgid "Plugin connected successfully"
 msgstr "플러그인 연결 성공"
 
-#: src/Setup/Assets.php:191
+#: src/Setup/Assets.php:210
 msgid "Plugin disconnected successfully"
 msgstr "플러그인 연결이 성공적으로 끊어졌습니다"
 
 #: src/Integrations/WooCommerce/WooCommerceIntegration.php:123
-#: src/Setup/Assets.php:230
+#: src/Setup/Assets.php:249
 #, fuzzy
 msgid "Purchases"
 msgstr "구매"
 
-#: src/Admin/Menus.php:34
-#, fuzzy
-msgid "Reach"
-msgstr "도달"
-
-#: src/Setup/Assets.php:152
+#: src/Setup/Assets.php:170
 #, fuzzy
 msgid ""
 "Reach automatically tags synced contacts using the form name and also "
@@ -772,11 +816,11 @@ msgstr ""
 "자동으로 생성하므로 특정 대상에게 캠페인을 쉽게 보낼 수 있으며, Reach에서 언제든지 세그먼트를 완전히 관리하거나 추가 세그먼트를 "
 "만들 수 있습니다."
 
-#: src/Setup/Assets.php:94
+#: src/Setup/Assets.php:97
 msgid "Reach is already connected to another site."
 msgstr "Reach가 이미 다른 사이트에 연결되어 있습니다."
 
-#: src/Setup/Assets.php:144
+#: src/Setup/Assets.php:162
 #| msgid ""
 #| "Reach offers a free plan for one year– perfect for getting started. Paid "
 #| "plans are based on how many unique contacts you aim to reach and how many "
@@ -802,16 +846,21 @@ msgstr ""
 msgid "Reach Subscription Form"
 msgstr "구독 신청 양식에 도달하기"
 
-#: src/Setup/Assets.php:110
+#: src/Setup/Assets.php:128
 msgid "Remaining"
 msgstr "남음"
 
-#: src/Setup/Assets.php:106
+#: src/Setup/Assets.php:116
+#, fuzzy
+msgid "Review domain"
+msgstr "도메인 검토"
+
+#: src/Setup/Assets.php:124
 #, fuzzy
 msgid "Segments"
 msgstr "세그먼트"
 
-#: src/Setup/Assets.php:160
+#: src/Setup/Assets.php:178
 msgid "Select page"
 msgstr "페이지 선택"
 
@@ -825,16 +874,16 @@ msgstr ""
 "전문적으로 디자인된 템플릿으로 뉴스레터를 전송하고, 캠페인을 자동화하고, AI 기반 세그먼트를 구축하세요. Hostinger Reach를 "
 "사용하면 잠재고객을 쉽게 늘릴 수 있습니다."
 
-#: src/Setup/Assets.php:109 src/Setup/Assets.php:112
+#: src/Setup/Assets.php:127 src/Setup/Assets.php:130
 msgid "Sent"
 msgstr "보냄"
 
-#: src/Setup/Assets.php:240
+#: src/Setup/Assets.php:259
 #, fuzzy
 msgid "Set up WooCommerce"
 msgstr "WooCommerce 설정"
 
-#: src/Setup/Assets.php:120 frontend/blocks/subscription-block/src/edit.js:184
+#: src/Setup/Assets.php:138 frontend/blocks/subscription-block/src/edit.js:184
 #: frontend/dist/blocks/subscription.js:1
 #: frontend/dist/blocks/subscription.js:290
 msgid "Settings"
@@ -862,24 +911,24 @@ msgstr "성 표시"
 msgid "Show Surname Field?"
 msgstr "성 필드 표시?"
 
-#: src/Setup/Assets.php:90
+#: src/Setup/Assets.php:92
 msgid "Something went wrong"
 msgstr "문제가 발생했습니다"
 
-#: src/Api/Handlers/ApiHandler.php:36 src/Blocks/SubscriptionFormBlock.php:21
+#: src/Api/Handlers/ApiHandler.php:36 src/Blocks/SubscriptionFormBlock.php:30
 msgid "Something went wrong. Please try again."
 msgstr "문제가 발생했습니다. 다시 시도해 주세요."
 
-#: src/Setup/Assets.php:174 src/Setup/Assets.php:227
+#: src/Setup/Assets.php:193 src/Setup/Assets.php:246
 msgid "Status"
 msgstr "상태"
 
-#: src/Setup/Assets.php:226
+#: src/Setup/Assets.php:245
 #, fuzzy
 msgid "Store Events"
 msgstr "스토어 이벤트"
 
-#: src/Blocks/SubscriptionFormBlock.php:99
+#: src/Blocks/SubscriptionFormBlock.php:110
 #: src/Integrations/Elementor/SubscriptionFormElementorWidget.php:130
 msgid "Subscribe"
 msgstr "구독"
@@ -892,11 +941,16 @@ msgstr "뉴스레터 구독하기"
 msgid "Subscribe to our newsletter"
 msgstr "뉴스레터 구독하기"
 
-#: src/Setup/Assets.php:114
+#: src/Setup/Assets.php:132
 msgid "Subscribers"
 msgstr "구독자"
 
-#: src/Setup/Assets.php:196
+#: src/Blocks/SubscriptionFormBlock.php:125
+#, fuzzy
+msgid "Subscription form is not available at the moment"
+msgstr "현재 구독 양식을 사용할 수 없습니다"
+
+#: src/Setup/Assets.php:215
 #| msgid "View supported plugins"
 msgid "Supported plugins"
 msgstr "지원되는 플러그인 보기"
@@ -905,12 +959,12 @@ msgstr "지원되는 플러그인 보기"
 msgid "Sure Forms"
 msgstr "확실한 양식"
 
-#: src/Blocks/SubscriptionFormBlock.php:91
+#: src/Blocks/SubscriptionFormBlock.php:101
 #: src/Integrations/Elementor/SubscriptionFormElementorWidget.php:122
 msgid "Surname"
 msgstr "성"
 
-#: src/Setup/Assets.php:169
+#: src/Setup/Assets.php:187
 msgid "Sync"
 msgstr "동기화"
 
@@ -921,11 +975,11 @@ msgstr "동기화"
 msgid "Tags"
 msgstr "태그"
 
-#: src/Blocks/SubscriptionFormBlock.php:20
+#: src/Blocks/SubscriptionFormBlock.php:29
 msgid "Thanks for subscribing."
 msgstr "구독해 주셔서 감사합니다."
 
-#: src/Setup/Assets.php:218
+#: src/Setup/Assets.php:237
 #, fuzzy
 #| msgid "The selected contacts are being synced to Reach."
 msgid "The selected contacts are being imported to Reach."
@@ -937,7 +991,7 @@ msgid ""
 "it to be synced with Reach"
 msgstr "이 양식에는 이메일 입력란이 없습니다. 양식에 이메일 필드를 만들어 Reach와 동기화할 수 있도록 하세요"
 
-#: src/Setup/Assets.php:241
+#: src/Setup/Assets.php:260
 #, fuzzy
 msgid ""
 "This form is a Reach native form inserted directly in your page. For "
@@ -945,14 +999,14 @@ msgid ""
 msgstr ""
 "이 양식은 페이지에 직접 삽입되는 Reach 기본 양식입니다. 비활성화하려면 편집기를 사용하여 페이지에서 직접 양식을 제거하세요."
 
-#: src/Setup/Assets.php:93
+#: src/Setup/Assets.php:95
 #, fuzzy
 msgid ""
 "This is a temporary domain. In order to connect WordPress to Reach you need "
 "to connect your domain."
 msgstr "이 도메인은 임시 도메인입니다. 워드프레스를 Reach에 연결하려면 도메인을 연결해야 합니다."
 
-#: src/Setup/Assets.php:103
+#: src/Setup/Assets.php:121
 msgid "This month"
 msgstr "이번 달"
 
@@ -962,18 +1016,18 @@ msgstr "이번 달"
 msgid "Thrive Leads"
 msgstr "번창하는 리드"
 
-#: src/Setup/Assets.php:117
+#: src/Setup/Assets.php:135
 msgid "Total subscribers"
 msgstr "총 구독자 수"
 
-#: src/Setup/Assets.php:233
+#: src/Setup/Assets.php:252
 #, fuzzy
 msgid ""
 "Tracks abandoned carts so you can trigger email automations in Reach when "
 "enabled."
 msgstr "버려진 장바구니를 추적하여 활성화된 경우 Reach에서 이메일 자동화를 트리거할 수 있습니다."
 
-#: src/Setup/Assets.php:231
+#: src/Setup/Assets.php:250
 #, fuzzy
 msgid ""
 "Tracks purchases so you can trigger email automations in Reach when enabled."
@@ -986,52 +1040,57 @@ msgstr "구매를 추적하여 활성화 시 Reach에서 이메일 자동화를 
 msgid "Unique identifier for this form"
 msgstr "이 양식의 고유 식별자"
 
-#: src/Setup/Assets.php:116
+#: src/Setup/Assets.php:134
 msgid "Unsubscribes"
 msgstr "구독 취소"
 
-#: src/Setup/Assets.php:107
+#: src/Setup/Assets.php:125
 msgid "Upgrade"
 msgstr "업그레이드"
 
-#: src/Setup/Assets.php:222
+#: src/Setup/Assets.php:241
 #, fuzzy
 msgid "Upload as CSV"
 msgstr "CSV로 업로드"
 
-#: src/Setup/Assets.php:158
+#: src/Setup/Assets.php:176
 msgid "usage statistics"
 msgstr "사용 통계"
 
-#: src/Setup/Assets.php:177
+#: src/Setup/Assets.php:196
 msgid "View form"
 msgstr "양식 보기"
 
-#: src/Setup/Assets.php:197
+#: src/Setup/Assets.php:216
 msgid "View more supported plugins"
 msgstr "지원되는 플러그인 더 보기"
 
-#: src/Setup/Assets.php:91
+#: src/Setup/Assets.php:93
 msgid "Welcome to Reach"
 msgstr "Reach에 오신 것을 환영합니다"
 
-#: src/Setup/Assets.php:153
+#: src/Setup/Assets.php:171
 #, fuzzy
 msgid "What happens if the connection breaks?"
 msgstr "연결이 끊어지면 어떻게 되나요?"
 
-#: src/Setup/Assets.php:139
+#: src/Setup/Assets.php:157
 msgid "What is Hostinger Reach email marketing service?"
 msgstr "Hostinger Reach 이메일 마케팅 서비스란 무엇인가요?"
 
-#: src/Setup/Assets.php:145
+#: src/Setup/Assets.php:163
 #, fuzzy
 msgid ""
 "What's the difference between Hostinger Reach and Hostinger Reach WordPress "
 "Plugin?"
 msgstr "호스팅어 리치와 호스팅어 리치 워드프레스 플러그인의 차이점은 무엇인가요?"
 
-#: src/Setup/Assets.php:149
+#: src/Setup/Assets.php:191
+#, fuzzy
+msgid "When syncing is off, collected Contacts will not be sent to Reach."
+msgstr "동기화가 꺼져 있으면 수집된 연락처는 Reach로 전송되지 않습니다."
+
+#: src/Setup/Assets.php:167
 #, fuzzy
 msgid "Will contacts be added to my email list automatically?"
 msgstr "연락처가 내 이메일 목록에 자동으로 추가되나요?"
@@ -1044,19 +1103,19 @@ msgstr "우커머스"
 msgid "WooCommerce Customers"
 msgstr "우커머스 고객"
 
-#: src/Setup/Assets.php:238
+#: src/Setup/Assets.php:257
 #, fuzzy
 msgid "WooCommerce Plugin Connected"
 msgstr "WooCommerce 플러그인 연결"
 
-#: src/Setup/Assets.php:167
+#: src/Setup/Assets.php:185
 #, fuzzy
 #| msgid "Would you like to sync contacts collected while sync was disabled?"
 msgid "Would you like to import contacts collected while sync was disabled?"
 msgstr "동기화가 비활성화된 상태에서 수집한 연락처를 동기화하시겠습니까?"
 
 #: src/Integrations/WPFormsLite/WpFormsLiteIntegration.php:29
-#: src/Setup/Assets.php:184
+#: src/Setup/Assets.php:203
 msgid "WP Forms Lite"
 msgstr "WP 양식 라이트"
 
@@ -1075,7 +1134,7 @@ msgstr "WS 양식"
 msgid "Yes"
 msgstr "예"
 
-#: src/Setup/Assets.php:150
+#: src/Setup/Assets.php:168
 #, fuzzy
 msgid ""
 "Yes — new subscribers are added automatically based on your setup. Some "
@@ -1113,14 +1172,14 @@ msgstr ""
 msgid "You are running <b>%s</b> PHP version."
 msgstr "<b>%s</b> PHP 버전을 실행 중입니다."
 
-#: src/Setup/Assets.php:206
+#: src/Setup/Assets.php:225
 #, fuzzy
 msgid ""
 "You can import existing contacts into Reach now to use them for your email "
 "campaigns. New contacts will be synced automatically to Reach."
 msgstr "지금 기존 연락처를 Reach로 가져와서 이메일 캠페인에 사용할 수 있습니다. 새 연락처는 Reach에 자동으로 동기화됩니다."
 
-#: src/Setup/Assets.php:211
+#: src/Setup/Assets.php:230
 #, fuzzy
 #| msgid ""
 #| "You have not selected any forms to sync. Select which forms you want to "
@@ -1130,6 +1189,17 @@ msgid ""
 "import and then click on the Import button below."
 msgstr "동기화할 양식을 선택하지 않았습니다. 동기화할 양식을 선택한 다음 아래의 동기화 버튼을 클릭합니다."
 
+#: src/Setup/Assets.php:109
+msgid "Your API token"
+msgstr ""
+
+#: src/Setup/Assets.php:96
+#, fuzzy
+msgid ""
+"Your domain is not active. In order to connect WordPress to Reach you need "
+"to have an active domain."
+msgstr "도메인이 활성화되어 있지 않습니다. 워드프레스를 Reach에 연결하려면 활성 도메인이 있어야 합니다."
+
 #: frontend/blocks/subscription-block/src/Components/Dialog.js:40
 #: frontend/dist/blocks/subscription.js:1
 #: frontend/dist/blocks/subscription.js:85
@@ -1138,6 +1208,7 @@ msgid "Your form is ready. Go to Reach to complete setup and create templates."
 msgstr "양식이 준비되었습니다. Reach로 이동하여 설정을 완료하고 템플릿을 만듭니다."
 
 #: src/Api/Handlers/ReachApiHandler.php:33
+#: src/Blocks/SubscriptionFormBlock.php:123
 #, fuzzy
 msgid "Your site is not connected to Reach. Connect to Reach and try again."
 msgstr "사이트가 Reach에 연결되어 있지 않습니다. Reach에 연결하고 다시 시도하세요."

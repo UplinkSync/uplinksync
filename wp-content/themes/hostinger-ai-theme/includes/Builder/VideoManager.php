@@ -3,32 +3,41 @@
 namespace Hostinger\AiTheme\Builder;
 
 use stdClass;
-use Hostinger\WpHelper\Config;
-use Hostinger\WpHelper\Requests\Client;
 use Hostinger\WpHelper\Utils;
 use Hostinger\WpHelper\Utils as Helper;
+use Hostinger\WpHelper\Config;
+use Hostinger\WpHelper\Requests\Client;
 use Hostinger\AiTheme\Rest\Endpoints;
+use Hostinger\AiTheme\Constants\ApiRoutes;
 
 defined( 'ABSPATH' ) || exit;
 
 class VideoManager {
+    use SoftwareIdTrait;
+
     private const USED_VIDEOS_OPTION = 'hostinger_ai_used_videos';
-    private const FALLBACK_VIDEO_URL = 'https://videos.pexels.com/video-files/3992590/3992590-uhd_4096_2160_25fps.mp4';
-    private const TARGET_VIDEO_WIDTH = 1920;
+    private const FALLBACK_VIDEO_URL = 'https://videos.pexels.com/video-files/30014429/12877565_1920_1080_30fps.mp4';
+    private const TARGET_VIDEO_WIDTH = 1280;
+    private static array $video_list_cache = [];
+    private static array $extracted_query_cache = [];
+
     public string $keyword;
     public string $keyword_slug = '';
     private Utils $helper;
     private Client $client;
     private Client $ai_client;
     private Config $config_handler;
+    private DomainResolver $domain_resolver;
+    private RequestClient $wh_api_client;
 
-    public function __construct( string $keyword = '' ) {
+    public function __construct( string $keyword = '', ?DomainResolver $domain_resolver = null, ?Helper $helper = null ) {
         $this->keyword = $keyword;
         if ( ! empty( $this->keyword ) ) {
             $this->keyword_slug = sanitize_title( $this->keyword );
         }
-        $this->helper         = new Helper();
+        $this->helper         = $helper ?? new Helper();
         $this->config_handler = new Config();
+        $this->domain_resolver = $domain_resolver ?? new DomainResolver( $this->helper );
         $this->client         = new Client(
             $this->config_handler->getConfigValue( 'base_proxy_rest_uri', HOSTINGER_WP_PROXY_API_URI ),
             [
@@ -37,6 +46,7 @@ class VideoManager {
                 'Content-Type'        => 'application/json'
             ]
         );
+        $this->wh_api_client = new RequestClient( $this->client );
         $this->ai_client = new Client(
             $this->config_handler->getConfigValue( 'base_rest_uri', HOSTINGER_AI_WEBSITES_REST_URI ),
             [
@@ -49,8 +59,21 @@ class VideoManager {
 
     public function get_video_data( bool $random = false ): object {
         $video_list = $this->fetch_video_list();
+        $video      = $this->pick_video_from_list( $video_list, $random );
 
-        return $this->pick_video_from_list( $video_list, $random );
+        if ( ! property_exists( $video, 'url' ) || empty( $video->url ) ) {
+            return $this->get_fallback_video();
+        }
+
+        return $video;
+    }
+
+    private function get_fallback_video(): object {
+        return (object) [
+            'url'         => self::FALLBACK_VIDEO_URL,
+            'thumbnail'   => '',
+            'description' => $this->keyword,
+        ];
     }
 
     public function pick_video_from_list( array $video_list, bool $random = false ): object {
@@ -102,48 +125,6 @@ class VideoManager {
         return array_unique( $all_urls );
     }
 
-    private function get_software_id(): ?string {
-        $software_id = get_option( 'hostinger_sfid' );
-        if ( ! empty( $software_id ) ) {
-            return (string) $software_id;
-        }
-
-        $config_software_id = $this->config_handler->getConfigValue( 'software_id', '' );
-        if ( ! empty( $config_software_id ) ) {
-            update_option( 'hostinger_sfid', $config_software_id, true );
-
-            return (string) $config_software_id;
-        }
-
-        $siteurl = get_option( 'siteurl', '' );
-        $domain  = parse_url( $siteurl, PHP_URL_HOST );
-        if ( empty( $domain ) ) {
-            return null;
-        }
-
-        $response = $this->client->get( '/api/v1/installations', [
-            'domain' => $domain,
-        ] );
-
-        if ( is_wp_error( $response ) ) {
-            return null;
-        }
-
-        $response_code = wp_remote_retrieve_response_code( $response );
-        $response_body = wp_remote_retrieve_body( $response );
-        $response_data = json_decode( $response_body, true );
-
-        if ( $response_code !== 200 || empty( $response_data['data'][0]['id'] ) ) {
-            return null;
-        }
-
-        $software_id = (string) $response_data['data'][0]['id'];
-
-        update_option( 'hostinger_sfid', $software_id, true );
-
-        return $software_id;
-    }
-
     public function fetch_video_list(): array {
         try {
             $software_id = $this->get_software_id();
@@ -158,13 +139,19 @@ class VideoManager {
                 $search_query = $this->keyword;
             }
 
-            $endpoint = '/api/v1/installations/' . $software_id . '/content/videos';
+            $cache_key = $software_id . '|' . $search_query;
+            if ( isset( self::$video_list_cache[ $cache_key ] ) ) {
+                return self::$video_list_cache[ $cache_key ];
+            }
+
+            $endpoint = ApiRoutes::INSTALLATIONS_BASE . $software_id . '/content/videos';
 
             $response = $this->client->get( $endpoint, [
                 'query' => $search_query,
             ] );
 
             if ( is_wp_error( $response ) ) {
+                self::$video_list_cache[ $cache_key ] = [];
                 return [];
             }
 
@@ -173,12 +160,14 @@ class VideoManager {
             $response_data = json_decode( $response_body, true );
 
             if ( $response_code !== 200 ) {
+                self::$video_list_cache[ $cache_key ] = [];
                 return [];
             }
 
             $video_items = $response_data['data'] ?? [];
 
             if ( empty( $video_items ) || ! is_array( $video_items ) ) {
+                self::$video_list_cache[ $cache_key ] = [];
                 return [];
             }
 
@@ -200,6 +189,8 @@ class VideoManager {
                 }
             }
 
+            self::$video_list_cache[ $cache_key ] = $videos;
+
             return $videos;
         } catch ( \Exception $exception ) {
             error_log( 'Hostinger AI Theme - Error fetching video list: ' . $exception->getMessage() );
@@ -213,6 +204,20 @@ class VideoManager {
             return '';
         }
 
+        if ( isset( self::$extracted_query_cache[ $description ] ) ) {
+            return self::$extracted_query_cache[ $description ];
+        }
+
+        $result = $this->compute_search_query( $description );
+
+        self::$extracted_query_cache[ $description ] = $result;
+
+        return $result;
+    }
+
+    private function compute_search_query( string $description ): string {
+        $short_fallback = $this->first_n_words( $description, 3 );
+
         $word_count = count( array_filter( preg_split( '/\s+/', trim( $description ) ) ) );
         if ( $word_count <= 3 ) {
             return $description;
@@ -221,10 +226,12 @@ class VideoManager {
         try {
             $system_message = [
                 'role'    => 'system',
-                'content' => 'From the provided text, extract 1-3 concise keywords suitable for searching stock videos on Pexels. '
-                             . 'Focus on the main topic or theme — it can be a business type, activity, scene, or subject. '
+                'content' => 'You extract stock video search keywords from a website description for searching Pexels. '
+                             . 'Return 1-3 concise, visually searchable keywords that capture the main topic or theme — a business type, activity, scene, or subject. '
+                             . 'ALWAYS return the keywords in English, even if the input text is in another language; translate the concept into the most common English search terms used on stock video sites. '
+                             . 'Prefer concrete, filmable subjects over abstract terms. '
                              . 'Examples: "italian restaurant", "hair salon", "fitness training", "coffee shop", "wedding ceremony", "office teamwork", "nature hiking". '
-                             . 'Output only the keywords as plain text, nothing else.',
+                             . 'Output only the English keywords as lowercase plain text, with no quotes, punctuation, labels, or explanation.',
             ];
 
             $user_message = [
@@ -232,8 +239,7 @@ class VideoManager {
                 'content' => $description,
             ];
 
-            $domain = parse_url( get_site_url(), PHP_URL_HOST );
-            $domain = preg_replace( '/^www\./', '', $domain );
+            $domain = $this->domain_resolver->get_current_domain();
 
             $request_body = [
                 'domain'   => $domain,
@@ -243,13 +249,13 @@ class VideoManager {
             $response = $this->ai_client->post( Endpoints::GENERATE_BLOCKS_ENDPOINT, json_encode( $request_body ) );
 
             if ( is_wp_error( $response ) ) {
-                return mb_substr($description, 0, 250);
+                return $short_fallback;
             }
 
             $response_code = wp_remote_retrieve_response_code( $response );
 
             if ( $response_code !== 200 ) {
-                return mb_substr($description, 0, 250);
+                return $short_fallback;
             }
 
             $body    = json_decode( wp_remote_retrieve_body( $response ), true );
@@ -259,7 +265,7 @@ class VideoManager {
             $content = preg_replace( '/\s+/', ' ', $content );
 
             if ( empty( $content ) ) {
-                return mb_substr($description, 0, 250);
+                return $short_fallback;
             }
 
             $words = explode( ' ', $content );
@@ -269,8 +275,14 @@ class VideoManager {
 
             return $content;
         } catch ( \Exception $e ) {
-            return $description;
+            return $short_fallback;
         }
+    }
+
+    private function first_n_words( string $text, int $n ): string {
+        $words = array_filter( preg_split( '/\s+/', trim( $text ) ) );
+
+        return implode( ' ', array_slice( $words, 0, $n ) );
     }
 
     private function extract_video_data( array $item ): array {
@@ -303,6 +315,6 @@ class VideoManager {
             }
         }
 
-        return $item['url'] ?? $item['video_url'] ?? $item['videoLink'] ?? self::FALLBACK_VIDEO_URL;
+        return $item['video_url'] ?? $item['videoLink'] ?? '';
     }
 }

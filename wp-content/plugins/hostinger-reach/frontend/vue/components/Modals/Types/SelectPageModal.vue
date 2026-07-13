@@ -17,7 +17,11 @@ const props = defineProps<Props>();
 
 const pagesStore = usePagesStore();
 
-const NEW_FORM_BUTTON_LINK = '/wp-admin/post-new.php?post_type=page&hostinger_reach_add_block=1';
+const reachData = hostinger_reach_reach_data;
+const adminUrl = (reachData?.admin_url || '/wp-admin/').replace(/\/?$/, '/');
+const addBlockNonce = reachData?.add_block_nonce || '';
+
+const NEW_FORM_BUTTON_LINK = `${adminUrl}post-new.php?post_type=page&hostinger_reach_add_block=1&_wpnonce=${encodeURIComponent(addBlockNonce)}`;
 
 const loadingPageId = ref<string | null>(null);
 const isNewFormButtonLoading = ref(false);
@@ -56,8 +60,8 @@ const handlePageClick = (page: Page | WordPressPage) => {
 
 	loadingPageId.value = String(page.id);
 
-	const pageUrl = page.link;
-	if (pageUrl) {
+	if (page.link) {
+		const pageUrl = `${page.link}&hostinger_reach_add_block=1&_wpnonce=${encodeURIComponent(addBlockNonce)}`;
 		window.location.href = pageUrl;
 	}
 };

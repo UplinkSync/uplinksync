@@ -100,6 +100,17 @@ class Routes {
             )
         );
 
+        // Generate font options.
+        register_rest_route(
+            HOSTINGER_AI_WEBSITES_REST_API_BASE,
+            'generate-font-options',
+            array(
+                'methods'             => 'GET',
+                'callback'            => array( $this->builder_routes, 'generate_font_options' ),
+                'permission_callback' => array( $this, 'permission_check' ),
+            )
+        );
+
         // Set colors.
         register_rest_route(
             HOSTINGER_AI_WEBSITES_REST_API_BASE,
@@ -125,6 +136,81 @@ class Routes {
                         'type'              => 'string',
                         'sanitize_callback' => 'sanitize_text_field',
                         'default'           => '',
+                    ),
+                ),
+            )
+        );
+
+        // Generate pages list.
+        register_rest_route(
+            HOSTINGER_AI_WEBSITES_REST_API_BASE,
+            'generate-pages-list',
+            array(
+                'methods'             => 'GET',
+                'callback'            => array( $this->builder_routes, 'generate_pages_list' ),
+                'permission_callback' => array( $this, 'permission_check' ),
+                'args'                => array(
+                    'brand_name'  => array(
+                        'required'          => true,
+                        'type'              => 'string',
+                        'sanitize_callback' => 'sanitize_text_field',
+                    ),
+                    'description' => array(
+                        'required'          => true,
+                        'type'              => 'string',
+                        'sanitize_callback' => 'sanitize_text_field',
+                    ),
+                ),
+            )
+        );
+
+        // Save pages structure.
+        register_rest_route(
+            HOSTINGER_AI_WEBSITES_REST_API_BASE,
+            'save-pages-structure',
+            array(
+                'methods'             => 'POST',
+                'callback'            => array( $this->builder_routes, 'save_pages_structure' ),
+                'permission_callback' => array( $this, 'permission_check' ),
+                'args'                => array(
+                    'pages' => array(
+                        'required'          => true,
+                        'type'              => 'array',
+                        'validate_callback' => fn( $param ) => $this->validate_non_empty_array( $param ),
+                    ),
+                ),
+            )
+        );
+
+        // Save contact info.
+        register_rest_route(
+            HOSTINGER_AI_WEBSITES_REST_API_BASE,
+            'save-contact-info',
+            array(
+                'methods'             => 'POST',
+                'callback'            => array( $this->builder_routes, 'save_contact_info' ),
+                'permission_callback' => array( $this, 'permission_check' ),
+                'args'                => array(
+                    'contacts' => array(
+                        'required' => true,
+                        'type'     => 'object',
+                    ),
+                ),
+            )
+        );
+
+        // Save socials.
+        register_rest_route(
+            HOSTINGER_AI_WEBSITES_REST_API_BASE,
+            'save-socials',
+            array(
+                'methods'             => 'POST',
+                'callback'            => array( $this->builder_routes, 'save_socials' ),
+                'permission_callback' => array( $this, 'permission_check' ),
+                'args'                => array(
+                    'socials' => array(
+                        'required' => true,
+                        'type'     => 'object',
                     ),
                 ),
             )
@@ -176,9 +262,7 @@ class Routes {
                         'required'          => true,
                         'type'              => 'string',
                         'sanitize_callback' => 'sanitize_textarea_field',
-                        'validate_callback' => function( $param ) {
-                            return is_string( $param ) && ! empty( trim( $param ) ) && strlen( $param ) <= 2000;
-                        },
+                        'validate_callback' => fn( $param ) => $this->validate_non_empty_string( $param ),
                     ),
                 ),
             )
@@ -197,10 +281,7 @@ class Routes {
                         'required'          => true,
                         'type'              => 'string',
                         'sanitize_callback' => 'sanitize_text_field',
-                        'validate_callback' => function( $param ) {
-                            $length = strlen( trim( $param ) );
-                            return is_string( $param ) && $length >= 11 && $length <= 2000;
-                        },
+                        'validate_callback' => fn( $param ) => $this->validate_non_empty_string( $param, 11 ),
                     ),
                     'is_multiple_types' => array(
                         'required'          => false,
@@ -209,6 +290,65 @@ class Routes {
                             return filter_var( $param, FILTER_VALIDATE_BOOLEAN );
                         },
                         'default'           => true,
+                    ),
+                ),
+            )
+        );
+
+        // Save the selected website language.
+        register_rest_route(
+            HOSTINGER_AI_WEBSITES_REST_API_BASE,
+            'set-website-language',
+            array(
+                'methods'             => 'POST',
+                'callback'            => array( $this->builder_routes, 'set_website_language' ),
+                'permission_callback' => array( $this, 'permission_check' ),
+                'args'                => array(
+                    'language' => array(
+                        'required'          => true,
+                        'type'              => 'string',
+                        'sanitize_callback' => 'sanitize_text_field',
+                    ),
+                ),
+            )
+        );
+
+        register_rest_route(
+            HOSTINGER_AI_WEBSITES_REST_API_BASE,
+            'detect-brand-name',
+            array(
+                'methods'             => 'POST',
+                'callback'            => array( $this->builder_routes, 'detect_brand_name' ),
+                'permission_callback' => array( $this, 'permission_check' ),
+                'args'                => array(
+                    'description' => array(
+                        'required'          => true,
+                        'type'              => 'string',
+                        'sanitize_callback' => 'sanitize_text_field',
+                        'validate_callback' => fn( $param ) => $this->validate_non_empty_string( $param, 11 ),
+                    ),
+                ),
+            )
+        );
+
+        register_rest_route(
+            HOSTINGER_AI_WEBSITES_REST_API_BASE,
+            'detect-website-type',
+            array(
+                'methods'             => 'POST',
+                'callback'            => array( $this->builder_routes, 'detect_website_type' ),
+                'permission_callback' => array( $this, 'permission_check' ),
+                'args'                => array(
+                    'description' => array(
+                        'required'          => true,
+                        'type'              => 'string',
+                        'sanitize_callback' => 'sanitize_text_field',
+                        'validate_callback' => fn( $param ) => $this->validate_non_empty_string( $param, 11 ),
+                    ),
+                    'brand_name'  => array(
+                        'required'          => true,
+                        'type'              => 'string',
+                        'sanitize_callback' => 'sanitize_text_field',
                     ),
                 ),
             )
@@ -227,10 +367,7 @@ class Routes {
                         'required'          => true,
                         'type'              => 'string',
                         'sanitize_callback' => 'sanitize_textarea_field',
-                        'validate_callback' => function( $param ) {
-                            $length = strlen( trim( $param ) );
-                            return is_string( $param ) && $length >= 1 && $length <= 2000;
-                        },
+                        'validate_callback' => fn( $param ) => $this->validate_non_empty_string( $param ),
                     ),
                     'language' => array(
                         'required'          => false,
@@ -344,9 +481,7 @@ class Routes {
                         'required'          => true,
                         'type'              => 'integer',
                         'sanitize_callback' => 'absint',
-                        'validate_callback' => function( $param ) {
-                            return is_numeric( $param ) && (int) $param > 0;
-                        },
+                        'validate_callback' => fn( $param ) => $this->validate_positive_int( $param ),
                     ),
                 ),
             )
@@ -362,6 +497,22 @@ class Routes {
                 'permission_callback' => array( $this, 'permission_check' ),
             )
         );
+    }
+
+    public function validate_non_empty_string( $param, int $min = 1, int $max = 2000 ): bool {
+        if ( ! is_string( $param ) ) {
+            return false;
+        }
+        $length = strlen( trim( $param ) );
+        return $length >= $min && $length <= $max;
+    }
+
+    public function validate_positive_int( $param ): bool {
+        return is_numeric( $param ) && (int) $param > 0;
+    }
+
+    public function validate_non_empty_array( $param ): bool {
+        return is_array( $param ) && ! empty( $param );
     }
 
     /**

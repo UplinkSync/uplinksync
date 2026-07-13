@@ -151,17 +151,6 @@ class Routes {
             )
         );
 
-        // Update addons banner status.
-        register_rest_route(
-            HOSTINGER_EASY_ONBOARDING_REST_API_BASE,
-            'update-addons-banner-status',
-            array(
-                'methods'             => 'POST',
-                'callback'            => array( $this->welcome_routes, 'update_addons_banner_status' ),
-                'permission_callback' => array( $this, 'permission_check' ),
-            )
-        );
-
         register_rest_route(
             HOSTINGER_EASY_ONBOARDING_REST_API_BASE,
             'update-reach-banner-status',
@@ -441,6 +430,16 @@ class Routes {
             array(
                 'methods'             => 'GET',
                 'callback'            => array( $this->onboarding_routes, 'get_homepage_edit_url' ),
+                'permission_callback' => array( $this, 'permission_check' ),
+            )
+        );
+
+        register_rest_route(
+            HOSTINGER_EASY_ONBOARDING_REST_API_BASE,
+            'get-email-providers',
+            array(
+                'methods'             => 'GET',
+                'callback'            => array( $this->onboarding_routes, 'get_email_providers' ),
                 'permission_callback' => array( $this, 'permission_check' ),
             )
         );

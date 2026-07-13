@@ -10,41 +10,46 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-07-31T11:19:40+03:00\n"
-"PO-Revision-Date: 2026-04-02 06:38+0000\n"
+"PO-Revision-Date: 2026-06-30 07:02+0000\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Domain: hostinger-reach\n"
 "Language: vi\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Loco-Version: 2.8.1; wp-6.9; php-8.2.29"
 
-#: src/Setup/Assets.php:189
+#: src/Setup/Assets.php:208
 msgid "(no title)"
 msgstr "(Không có tiêu đề)"
 
-#: src/Setup/Assets.php:212
+#: src/Setup/Assets.php:231
 msgid "-"
 msgstr "-"
+
+#: src/Setup/Assets.php:108
+msgid ""
+"<strong>Copy</strong> your new API token and <strong>paste it below</strong>"
+msgstr ""
 
 #: src/Integrations/WooCommerce/WooCommerceIntegration.php:124
 #, fuzzy
 msgid "Abandoned Carts"
 msgstr "Giỏ hàng bị bỏ quên"
 
-#: src/Setup/Assets.php:232
+#: src/Setup/Assets.php:251
 #, fuzzy
 msgid "Abandoned carts"
 msgstr "Giỏ hàng bị bỏ quên"
 
-#: src/Setup/Assets.php:175 src/Setup/Assets.php:192
+#: src/Setup/Assets.php:194 src/Setup/Assets.php:211
 msgid "Active"
 msgstr "Hoạt động"
 
-#: src/Admin/Notices/AddFormNotice.php:83 src/Setup/Assets.php:132
-#: src/Setup/Assets.php:181 src/Setup/Assets.php:195
+#: src/Admin/Notices/AddFormNotice.php:83 src/Setup/Assets.php:150
+#: src/Setup/Assets.php:200 src/Setup/Assets.php:214
 msgid "Add form"
 msgstr "Thêm biểu mẫu"
 
-#: src/Setup/Assets.php:134 src/Setup/Assets.php:161
+#: src/Setup/Assets.php:152 src/Setup/Assets.php:179
 msgid "Add form or plugin"
 msgstr "Thêm biểu mẫu hoặc plugin"
 
@@ -53,7 +58,7 @@ msgstr "Thêm biểu mẫu hoặc plugin"
 msgid "Add form to start sending campaigns with Hostinger Reach"
 msgstr "Thêm biểu mẫu để bắt đầu gửi các chiến dịch với Hostinger Reach"
 
-#: src/Setup/Assets.php:129
+#: src/Setup/Assets.php:147
 #, fuzzy
 msgid "Add new form"
 msgstr "Thêm biểu mẫu mới"
@@ -65,7 +70,7 @@ msgstr "Thêm biểu mẫu mới"
 msgid "Add New Tag"
 msgstr "Thêm thẻ mới"
 
-#: src/Setup/Assets.php:127
+#: src/Setup/Assets.php:145
 #, fuzzy
 msgid "Add or connect a form to start sending campaigns"
 msgstr "Thêm hoặc kết nối biểu mẫu để bắt đầu gửi các chiến dịch"
@@ -77,7 +82,7 @@ msgstr "Thêm hoặc kết nối biểu mẫu để bắt đầu gửi các chi�
 msgid "Add Tag"
 msgstr "Thêm thẻ"
 
-#: src/Setup/Assets.php:229
+#: src/Setup/Assets.php:248
 #, fuzzy
 msgid ""
 "Adds a marketing consent checkbox at checkout and syncs contacts to Reach."
@@ -91,7 +96,11 @@ msgstr ""
 "Bạn có ý kiến hoặc phản hồi nào để giúp chúng tôi cải thiện Hostinger Reach "
 "không?"
 
-#: src/Setup/Assets.php:210
+#: src/Setup/Assets.php:112
+msgid "API Token field is required"
+msgstr ""
+
+#: src/Setup/Assets.php:229
 #, fuzzy
 #| msgid ""
 #| "are ready to sync with Reach. Any new contacts you’ll collect with these "
@@ -107,29 +116,29 @@ msgstr ""
 msgid "Attention:"
 msgstr "Lưu ý:"
 
-#: src/Setup/Assets.php:213
+#: src/Setup/Assets.php:232
 #, fuzzy
 msgid "Auto-sync off"
 msgstr "Tắt đồng bộ tự động"
 
-#: src/Setup/Assets.php:234
+#: src/Setup/Assets.php:253
 #, fuzzy
 msgid "Automation"
 msgstr "Tự động hóa"
 
-#: src/Setup/Assets.php:113
+#: src/Setup/Assets.php:131
 msgid "Average CTOR"
 msgstr "CTOR trung bình"
 
-#: src/Setup/Assets.php:89
+#: src/Setup/Assets.php:91
 msgid "Back"
 msgstr "Quay lại"
 
-#: src/Setup/Assets.php:157
+#: src/Setup/Assets.php:175
 msgid "Background image for"
 msgstr "Hình nền cho"
 
-#: src/Setup/Assets.php:156
+#: src/Setup/Assets.php:174
 msgid "Banner background image for"
 msgstr "Hình nền cho banner"
 
@@ -148,22 +157,26 @@ msgstr "Biểu mẫu đăng ký Reach"
 msgid "Brave Popup Builder"
 msgstr "Trình tạo cửa sổ popup dũng cảm"
 
-#: src/Setup/Assets.php:111
+#: src/Setup/Assets.php:129
 msgid "Campaigns"
 msgstr "Chiến dịch"
 
-#: src/Setup/Assets.php:164
+#: src/Setup/Assets.php:114 src/Setup/Assets.php:182
 #, fuzzy
 #| msgid "Cancel "
 msgid "Cancel"
 msgstr "Hủy"
 
 #: src/Integrations/WooCommerce/WooCommerceIntegration.php:116
-#: src/Setup/Assets.php:228
+#: src/Setup/Assets.php:247
 msgid "Checkout"
 msgstr "Thanh toán"
 
-#: src/Setup/Assets.php:159
+#: src/Setup/Assets.php:106
+msgid "Click <strong>Generate API Token</strong>"
+msgstr ""
+
+#: src/Setup/Assets.php:177
 msgid ""
 "Click-to-open rate tells you what percent of opens resulted in a click too. "
 "A good CTOR is 6-17%, depending on your industry."
@@ -172,11 +185,11 @@ msgstr ""
 "nhấp chuột. Một CTOR tốt dao động từ 6% đến 17%, tùy thuộc vào ngành nghề "
 "của bạn."
 
-#: src/Setup/Assets.php:187
+#: src/Setup/Assets.php:206
 msgid "Collapse {pluginName} details"
 msgstr "Thu gọn chi tiết {pluginName}"
 
-#: src/Setup/Assets.php:124
+#: src/Setup/Assets.php:142
 #, fuzzy
 msgid ""
 "Collect contacts at checkout, send automated emails after purchases, and "
@@ -185,16 +198,17 @@ msgstr ""
 "Thu thập thông tin liên hệ tại bước thanh toán, gửi email tự động sau khi "
 "mua hàng và khôi phục giỏ hàng bị bỏ quên để tăng doanh số bán hàng với Reach"
 
-#: src/Setup/Assets.php:223
+#: src/Setup/Assets.php:242
 #, fuzzy
 msgid "Coming soon"
 msgstr "Sắp ra mắt"
 
-#: src/Admin/Notices/ConnectionNotice.php:100 src/Setup/Assets.php:202
+#: src/Admin/Notices/ConnectionNotice.php:100 src/Setup/Assets.php:113
+#: src/Setup/Assets.php:221
 msgid "Connect"
 msgstr "Kết nối"
 
-#: src/Setup/Assets.php:98
+#: src/Setup/Assets.php:115
 #, fuzzy
 msgid "Connect domain"
 msgstr "Kết nối tên miền"
@@ -209,39 +223,53 @@ msgstr "Kết nối Hostinger Reach để bắt đầu Tiếp thị qua email"
 msgid "Connect Now"
 msgstr "Kết nối ngay"
 
-#: src/Setup/Assets.php:133
+#: src/Setup/Assets.php:151
 #, fuzzy
 msgid "Connect plugin"
 msgstr "Kết nối plugin"
 
-#: src/Setup/Assets.php:97
+#: src/Setup/Assets.php:100
 msgid "Connect site"
 msgstr "Kết nối trang web"
 
-#: src/Setup/Assets.php:125
+#: src/Setup/Assets.php:101
+msgid "Connect with API token"
+msgstr ""
+
+#: src/Setup/Assets.php:143
 msgid "Connect WooCommerce"
 msgstr "Kết nối WooCommerce"
 
-#: src/Setup/Assets.php:123
+#: src/Setup/Assets.php:141
 #, fuzzy
 msgid "Connect WooCommerce to boost sales with email automations"
 msgstr ""
 "Kết nối WooCommerce để tăng doanh số bán hàng thông qua tự động hóa email"
 
+#: src/Setup/Assets.php:102
+msgid "Connect your website to Hostinger Reach"
+msgstr ""
+
+#: src/Setup/Assets.php:111
+msgid ""
+"Connection failed. Check if your API Token is correct or contact Hostinger "
+"Reach support."
+msgstr ""
+
 #: src/Integrations/ContactForm7/ContactForm7Integration.php:111
-#: src/Setup/Assets.php:183
+#: src/Setup/Assets.php:202
 msgid "Contact Form 7"
 msgstr "Contact Form 7"
 
-#: src/Setup/Assets.php:105 src/Setup/Assets.php:171 src/Setup/Assets.php:204
+#: src/Setup/Assets.php:123 src/Setup/Assets.php:189 src/Setup/Assets.php:223
 msgid "Contacts"
 msgstr "Danh bạ"
 
-#: src/Setup/Assets.php:209
+#: src/Setup/Assets.php:228
 msgid "contacts"
 msgstr "liên hệ"
 
-#: src/Setup/Assets.php:208
+#: src/Setup/Assets.php:227
 #, fuzzy
 msgid "Contacts to Import"
 msgstr "Danh bạ cần nhập"
@@ -250,7 +278,7 @@ msgstr "Danh bạ cần nhập"
 msgid "Could not generate auth URL"
 msgstr "Không thể tạo URL xác thực"
 
-#: src/Setup/Assets.php:128
+#: src/Setup/Assets.php:146
 #, fuzzy
 msgid ""
 "Create a new form or connect a plugin to grow your contact list and start "
@@ -259,21 +287,11 @@ msgstr ""
 "Tạo một biểu mẫu mới hoặc kết nối plugin để mở rộng danh sách liên hệ của "
 "bạn và bắt đầu gửi các chiến dịch với Reach."
 
-#: src/Setup/Assets.php:118
+#: src/Setup/Assets.php:136
 msgid "Create campaign"
 msgstr "Tạo chiến dịch"
 
-#: src/Setup/Assets.php:92
-msgid ""
-"Create email campaigns using AI-crafted templates that match your style. "
-"Instantly sync with your WordPress site and connect with your audience "
-"easily."
-msgstr ""
-"Tạo các chiến dịch email sử dụng các mẫu được thiết kế bởi AI phù hợp với "
-"phong cách của bạn. Đồng bộ hóa ngay lập tức với trang web WordPress và kết "
-"nối dễ dàng với đối tượng mục tiêu."
-
-#: src/Setup/Assets.php:225
+#: src/Setup/Assets.php:244
 #, fuzzy
 msgid ""
 "Create fully custom forms in Reach and easily embed them on your WordPress "
@@ -282,7 +300,7 @@ msgstr ""
 "Tạo các biểu mẫu tùy chỉnh hoàn toàn trong Reach và dễ dàng nhúng chúng vào "
 "trang web WordPress của bạn bằng plugin này. Hãy theo dõi!"
 
-#: src/Setup/Assets.php:119
+#: src/Setup/Assets.php:137
 msgid "Create template"
 msgstr "Tạo mẫu"
 
@@ -292,23 +310,23 @@ msgstr "Tạo mẫu"
 msgid "Default"
 msgstr "Mặc định"
 
-#: src/Setup/Assets.php:165 src/Setup/Assets.php:201
+#: src/Setup/Assets.php:183 src/Setup/Assets.php:220
 msgid "Disconnect"
 msgstr "Ngắt kết nối"
 
-#: src/Setup/Assets.php:95
+#: src/Setup/Assets.php:98
 msgid "Disconnect it to link this site instead."
 msgstr "Ngắt kết nối để liên kết trang web này thay thế."
 
-#: src/Setup/Assets.php:180
+#: src/Setup/Assets.php:199
 msgid "Disconnect plugin"
 msgstr "Ngắt kết nối plugin"
 
-#: src/Setup/Assets.php:162
+#: src/Setup/Assets.php:180
 msgid "Disconnect plugin?"
 msgstr "Ngắt kết nối plugin?"
 
-#: src/Setup/Assets.php:163
+#: src/Setup/Assets.php:181
 msgid ""
 "Disconnecting will stop new contacts from being collected. You can reconnect "
 "or use a different form anytime."
@@ -316,12 +334,12 @@ msgstr ""
 "Ngắt kết nối sẽ ngừng thu thập các liên hệ mới. Bạn có thể kết nối lại hoặc "
 "sử dụng biểu mẫu khác bất cứ lúc nào."
 
-#: src/Setup/Assets.php:220
+#: src/Setup/Assets.php:239
 #, fuzzy
 msgid "Don't see your plugin?"
 msgstr "Không thấy plugin của bạn?"
 
-#: src/Setup/Assets.php:122
+#: src/Setup/Assets.php:140
 msgid "E-Commerce"
 msgstr "Thương mại điện tử"
 
@@ -335,30 +353,41 @@ msgstr ""
 "đồng bộ hóa danh bạ để bắt đầu xây dựng các chiến dịch và phát triển doanh "
 "nghiệp của bạn."
 
-#: src/Setup/Assets.php:178
+#: src/Setup/Assets.php:197
 msgid "Edit form"
 msgstr "Chỉnh sửa biểu mẫu"
 
-#: src/Integrations/Elementor/ElementorIntegration.php:113
-#: src/Setup/Assets.php:185
+#: src/Integrations/Elementor/ElementorIntegration.php:138
+#: src/Setup/Assets.php:204
 msgid "Elementor"
 msgstr "Elementor"
 
-#: src/Blocks/SubscriptionFormBlock.php:75
+#: src/Blocks/SubscriptionFormBlock.php:85
 #: src/Integrations/Elementor/SubscriptionFormElementorWidget.php:106
 msgid "Email"
 msgstr "Email"
 
-#: src/Setup/Assets.php:101
+#: src/Setup/Assets.php:119
 msgid "Email marketing background with gradient design"
 msgstr "Nền email tiếp thị với thiết kế gradient"
 
-#: src/Setup/Assets.php:102
+#: src/Setup/Assets.php:120
 msgid ""
 "Email marketing illustration featuring envelopes and communication icons"
 msgstr "Hình minh họa về email tiếp thị với phong bì và biểu tượng giao tiếp"
 
-#: src/Setup/Assets.php:108
+#: src/Setup/Assets.php:94
+#, fuzzy
+msgid ""
+"Email marketing that doesn't need an expert: Let AI write, design, and send "
+"your campaigns - your brand, your colors, applied automatically. No coding, "
+"no complexity."
+msgstr ""
+"Tiếp thị qua email mà không cần chuyên gia: Hãy để AI viết, thiết kế và gửi "
+"các chiến dịch của bạn – thương hiệu và màu sắc của bạn sẽ được áp dụng tự "
+"động. Không cần lập trình, không phức tạp."
+
+#: src/Setup/Assets.php:126
 msgid "Emails"
 msgstr "Email"
 
@@ -369,11 +398,11 @@ msgstr "Email"
 msgid "Enter tag name and press Enter or click Add Tag"
 msgstr "Nhập tên thẻ và nhấn Enter hoặc nhấp vào Thêm thẻ"
 
-#: src/Setup/Assets.php:186
+#: src/Setup/Assets.php:205
 msgid "Expand {pluginName} details"
 msgstr "Mở rộng chi tiết {pluginName}"
 
-#: src/Setup/Assets.php:138
+#: src/Setup/Assets.php:156
 msgid "FAQ"
 msgstr "Câu hỏi thường gặp"
 
@@ -381,7 +410,7 @@ msgstr "Câu hỏi thường gặp"
 msgid "Form"
 msgstr "Biểu mẫu"
 
-#: src/Setup/Assets.php:224
+#: src/Setup/Assets.php:243
 #, fuzzy
 msgid "Form Builder"
 msgstr "Trình tạo biểu mẫu"
@@ -397,20 +426,28 @@ msgstr "ID biểu mẫu"
 msgid "Forminator"
 msgstr "Forminator"
 
-#: src/Setup/Assets.php:126
+#: src/Setup/Assets.php:144
 msgid "Forms"
 msgstr "Biểu mẫu"
 
-#: src/Setup/Assets.php:172
+#: src/Setup/Assets.php:190
 #, fuzzy
 msgid "Forms syncing with Reach"
 msgstr "Đồng bộ hóa biểu mẫu với Reach"
 
-#: src/Setup/Assets.php:179
+#: src/Setup/Assets.php:103
+msgid "Generate an API token"
+msgstr ""
+
+#: src/Setup/Assets.php:104
+msgid "Go to"
+msgstr ""
+
+#: src/Setup/Assets.php:198
 msgid "Go to plugin"
 msgstr "Đi đến plugin"
 
-#: src/Setup/Assets.php:99
+#: src/Setup/Assets.php:117
 #: frontend/blocks/subscription-block/src/Components/Dialog.js:42
 #: frontend/dist/blocks/subscription.js:1
 #: frontend/dist/blocks/subscription.js:87
@@ -423,16 +460,20 @@ msgid "Hostinger"
 msgstr "Hostinger"
 
 #. Plugin Name of the plugin
-#: hostinger-reach.php src/Admin/Menus.php:71
+#: hostinger-reach.php src/Admin/Menus.php:50 src/Admin/Menus.php:106
 #: src/Admin/Notices/AddFormNotice.php:90
 #: src/Admin/Notices/ConnectionNotice.php:110
 #: src/Integrations/Elementor/SubscriptionFormElementorWidget.php:20
-#: src/Integrations/Reach/ReachFormIntegration.php:71 src/Setup/Assets.php:100
-#: src/Setup/Assets.php:182
+#: src/Integrations/Reach/ReachFormIntegration.php:71 src/Setup/Assets.php:118
+#: src/Setup/Assets.php:201
 msgid "Hostinger Reach"
 msgstr "Hostinger Reach"
 
-#: src/Setup/Assets.php:146
+#: src/Setup/Assets.php:105
+msgid "Hostinger Reach Integrations → API Tokens"
+msgstr ""
+
+#: src/Setup/Assets.php:164
 #, fuzzy
 msgid ""
 "Hostinger Reach is a Hostinger service that helps you create and send "
@@ -445,7 +486,7 @@ msgstr ""
 " Plugin Hostinger Reach cho WordPress cho phép bạn kết nối và đồng bộ danh "
 "bạ từ các plugin WordPress yêu thích của bạn vào Reach."
 
-#: src/Setup/Assets.php:140
+#: src/Setup/Assets.php:158
 msgid ""
 "Hostinger Reach is an AI-powered email marketing tool for small businesses "
 "and creators. It supports your entire email marketing journey—from building "
@@ -455,7 +496,7 @@ msgstr ""
 "nghiệp nhỏ và người sáng tạo. Nó hỗ trợ toàn bộ quy trình tiếp thị email - "
 "từ xây dựng danh sách liên hệ, gửi chiến dịch cho đến theo dõi kết quả."
 
-#: src/Setup/Assets.php:142
+#: src/Setup/Assets.php:160
 msgid ""
 "Hostinger Reach is built for simplicity, speed, and results – no design or "
 "marketing experience needed. Unlike most email tools, at the core of Reach "
@@ -492,23 +533,23 @@ msgstr "Biểu tượng Hostinger Reach"
 msgid "Hostinger Reach requires minimum PHP version of <b>%s</b>. "
 msgstr "Hostinger Reach yêu cầu phiên bản PHP tối thiểu là <b>%s</b>."
 
-#: src/Setup/Assets.php:151
+#: src/Setup/Assets.php:169
 #, fuzzy
 msgid "How are segments and tags created?"
 msgstr "Các phân đoạn và thẻ được tạo ra như thế nào?"
 
-#: src/Setup/Assets.php:147
+#: src/Setup/Assets.php:165
 #, fuzzy
 msgid "How does contact syncing work?"
 msgstr "Cách đồng bộ hóa danh bạ hoạt động như thế nào?"
 
-#: src/Setup/Assets.php:141
+#: src/Setup/Assets.php:159
 msgid "How is Hostinger Reach different from other email marketing apps?"
 msgstr ""
 "Hostinger Reach khác biệt so với các ứng dụng tiếp thị email khác như thế "
 "nào?"
 
-#: src/Setup/Assets.php:143
+#: src/Setup/Assets.php:161
 msgid "How much does it cost to use Hostinger Reach?"
 msgstr "Chi phí sử dụng Hostinger Reach là bao nhiêu?"
 
@@ -527,7 +568,7 @@ msgstr "https://hostinger.vn"
 msgid "https://www.hostinger.com/email-marketing"
 msgstr "https://www.hostinger.com/vn/email-marketing"
 
-#: src/Setup/Assets.php:154
+#: src/Setup/Assets.php:172
 #, fuzzy
 msgid ""
 "If the integration is interrupted, syncing pauses automatically. Once the "
@@ -538,7 +579,7 @@ msgstr ""
 "Khi kết nối được khôi phục, việc đồng bộ hóa sẽ tiếp tục, giúp bạn có thể "
 "tiếp tục thu thập danh bạ mà không mất dữ liệu."
 
-#: src/Setup/Assets.php:239
+#: src/Setup/Assets.php:258
 #, fuzzy
 msgid ""
 "If your store isn’t ready yet, complete the setup to start selling and "
@@ -547,41 +588,41 @@ msgstr ""
 "Nếu cửa hàng của bạn chưa sẵn sàng, hãy hoàn tất quá trình thiết lập để bắt "
 "đầu bán hàng và thu thập thông tin liên hệ"
 
-#: src/Setup/Assets.php:207
+#: src/Setup/Assets.php:226
 #, fuzzy
 msgid "Import"
 msgstr "Nhập khẩu"
 
-#: src/Setup/Assets.php:203
+#: src/Setup/Assets.php:222
 #, fuzzy
 msgid "Import Contacts"
 msgstr "Nhập danh bạ"
 
-#: src/Setup/Assets.php:166
+#: src/Setup/Assets.php:184
 #, fuzzy
 msgid "Import contacts"
 msgstr "Nhập danh bạ"
 
-#: src/Setup/Assets.php:205
+#: src/Setup/Assets.php:224
 #, fuzzy
 msgid "Import your existing contacts to Reach"
 msgstr "Nhập danh bạ hiện có của bạn vào Reach"
 
-#: src/Setup/Assets.php:215
+#: src/Setup/Assets.php:234
 #, fuzzy
 msgid "Imported"
 msgstr "Nhập khẩu"
 
-#: src/Api/Handlers/IntegrationsApiHandler.php:122
+#: src/Api/Handlers/IntegrationsApiHandler.php:123
 msgid "Importing is not available for this integration"
 msgstr "Chức năng nhập không khả dụng cho tích hợp này"
 
-#: src/Setup/Assets.php:217
+#: src/Setup/Assets.php:236
 #, fuzzy
 msgid "Importing..."
 msgstr "Đang nhập..."
 
-#: src/Setup/Assets.php:176
+#: src/Setup/Assets.php:195
 msgid "Inactive"
 msgstr "Không hoạt động"
 
@@ -591,16 +632,16 @@ msgstr "Không hoạt động"
 msgid "Inline"
 msgstr "Trong dòng"
 
-#: src/Setup/Assets.php:199
+#: src/Setup/Assets.php:218
 #, fuzzy
 msgid "Install"
 msgstr "Cài đặt"
 
-#: src/Setup/Assets.php:200
+#: src/Setup/Assets.php:219
 msgid "Install and connect"
 msgstr "Cài đặt và kết nối"
 
-#: src/Setup/Assets.php:198
+#: src/Setup/Assets.php:217
 msgid "Installed plugins"
 msgstr "Các plugin đã cài đặt"
 
@@ -609,11 +650,11 @@ msgstr "Các plugin đã cài đặt"
 msgid "Integrate your WordPress site with Hostinger Reach."
 msgstr "Tích hợp trang web WordPress với Hostinger Reach."
 
-#: src/Setup/Assets.php:121
+#: src/Setup/Assets.php:139
 msgid "Integrations"
 msgstr "Tích hợp"
 
-#: src/Setup/Assets.php:221
+#: src/Setup/Assets.php:240
 #, fuzzy
 msgid ""
 "It may not be supported yet. You can upload contacts as a CSV or use another "
@@ -622,7 +663,7 @@ msgstr ""
 "Có thể tính năng này chưa được hỗ trợ. Bạn có thể tải lên danh bạ dưới dạng "
 "tệp CSV hoặc sử dụng plugin khác"
 
-#: src/Setup/Assets.php:219
+#: src/Setup/Assets.php:238
 #, fuzzy
 #| msgid "It was an error syncing your contacts to Reach."
 msgid "It was an error importing your contacts to Reach."
@@ -640,11 +681,11 @@ msgstr "Bố cục"
 msgid "Layout Settings"
 msgstr "Cài đặt bố cục"
 
-#: src/Admin/Notices/ConnectionNotice.php:103 src/Setup/Assets.php:236
+#: src/Admin/Notices/ConnectionNotice.php:103 src/Setup/Assets.php:255
 msgid "Learn more"
 msgstr "Tìm hiểu thêm"
 
-#: src/Setup/Assets.php:193
+#: src/Setup/Assets.php:212
 msgid ""
 "Make sure the people you contact expect your emails and are okay with "
 "receiving them."
@@ -652,39 +693,43 @@ msgstr ""
 "Đảm bảo rằng những người bạn liên hệ đã biết trước về email của bạn và đồng "
 "ý nhận chúng."
 
-#: src/Setup/Assets.php:96
+#: src/Setup/Assets.php:99
 msgid "Manage"
 msgstr "Quản lý"
 
-#: src/Setup/Assets.php:235
+#: src/Setup/Assets.php:254
 #, fuzzy
 msgid "Manage automations"
 msgstr "Quản lý tự động hóa"
 
-#: src/Setup/Assets.php:135 src/Setup/Assets.php:237
+#: src/Setup/Assets.php:153 src/Setup/Assets.php:256
 #, fuzzy
 msgid "Manage plugin"
 msgstr "Quản lý plugin"
 
-#: src/Setup/Assets.php:131
+#: src/Setup/Assets.php:149
 #, fuzzy
 msgid "More plugins"
 msgstr "Nhiều plugin hơn"
 
-#: src/Blocks/SubscriptionFormBlock.php:83
+#: src/Blocks/SubscriptionFormBlock.php:93
 #: src/Integrations/Elementor/SubscriptionFormElementorWidget.php:114
 msgid "Name"
 msgstr "Tên"
 
-#: src/Setup/Assets.php:194
+#: src/Setup/Assets.php:107
+msgid "Name your token, then click <strong>Generate token</strong>"
+msgstr ""
+
+#: src/Setup/Assets.php:213
 msgid "New contact form"
 msgstr "Biểu mẫu liên hệ mới"
 
-#: src/Setup/Assets.php:136
+#: src/Setup/Assets.php:154
 msgid "New page"
 msgstr "Trang mới"
 
-#: src/Setup/Assets.php:115
+#: src/Setup/Assets.php:133
 msgid "New subscribers"
 msgstr "Người đăng ký mới"
 
@@ -704,29 +749,29 @@ msgstr "Biểu mẫu Ninja"
 msgid "No"
 msgstr "Không"
 
-#: src/Setup/Assets.php:188
+#: src/Setup/Assets.php:207
 msgid "No forms found for this integration."
 msgstr "Không tìm thấy biểu mẫu nào cho tích hợp này."
 
-#: src/Setup/Assets.php:137
+#: src/Setup/Assets.php:155
 msgid "No pages available. Create a new page to get started."
 msgstr "Không có trang nào khả dụng. Tạo một trang mới để bắt đầu."
 
-#: src/Setup/Assets.php:216
+#: src/Setup/Assets.php:235
 #, fuzzy
 msgid "Not imported"
 msgstr "Không nhập khẩu"
 
-#: src/Setup/Assets.php:168
+#: src/Setup/Assets.php:186
 #, fuzzy
 msgid "Not needed"
 msgstr "Không cần thiết"
 
-#: src/Setup/Assets.php:173
+#: src/Setup/Assets.php:192
 msgid "of"
 msgstr "của"
 
-#: src/Setup/Assets.php:148
+#: src/Setup/Assets.php:166
 #, fuzzy
 msgid ""
 "Once you connect a form plugin you use on WordPress (such as Elementor or "
@@ -740,7 +785,7 @@ msgstr ""
 "liên hệ của bạn sẽ được thu thập và cập nhật mà không cần xuất dữ liệu thủ "
 "công cho mỗi lần gửi biểu mẫu"
 
-#: src/Setup/Assets.php:155
+#: src/Setup/Assets.php:173
 msgid "opens in new tab"
 msgstr "mở trong tab mới"
 
@@ -749,45 +794,44 @@ msgstr "mở trong tab mới"
 msgid "OptinMonster"
 msgstr "OptinMonster"
 
-#: src/Setup/Assets.php:130
+#: src/Setup/Assets.php:148
 #, fuzzy
 msgid "or connect a form plugin"
 msgstr "hoặc kết nối plugin biểu mẫu"
 
-#: src/Setup/Assets.php:214
+#: src/Setup/Assets.php:233
 #, fuzzy
 msgid "Partially imported"
 msgstr "Nhập khẩu một phần"
 
-#: src/Setup/Assets.php:104
+#: src/Setup/Assets.php:110
+msgid "Paste your API token here"
+msgstr ""
+
+#: src/Setup/Assets.php:122
 #, fuzzy
 msgid "Plan & Limits"
 msgstr "Kế hoạch & Giới hạn"
 
-#: src/Setup/Assets.php:170
+#: src/Setup/Assets.php:188
 msgid "Plugin"
 msgstr "Plugin"
 
-#: src/Setup/Assets.php:190
+#: src/Setup/Assets.php:209
 msgid "Plugin connected successfully"
 msgstr "Plugin đã được kết nối thành công"
 
-#: src/Setup/Assets.php:191
+#: src/Setup/Assets.php:210
 msgid "Plugin disconnected successfully"
 msgstr "Plugin đã được ngắt kết nối thành công"
 
 #: src/Integrations/WooCommerce/WooCommerceIntegration.php:123
-#: src/Setup/Assets.php:230
+#: src/Setup/Assets.php:249
 #, fuzzy
 msgid "Purchases"
 msgstr "Mua hàng"
 
-#: src/Admin/Menus.php:34
-#, fuzzy
-msgid "Reach"
-msgstr "Tiếp cận"
-
-#: src/Setup/Assets.php:152
+#: src/Setup/Assets.php:170
 #, fuzzy
 msgid ""
 "Reach automatically tags synced contacts using the form name and also "
@@ -808,11 +852,11 @@ msgstr ""
 "giúp dễ dàng gửi chiến dịch đến các đối tượng cụ thể — và bạn có thể quản lý "
 "hoàn toàn hoặc tạo thêm phân đoạn bất cứ lúc nào trong Reach."
 
-#: src/Setup/Assets.php:94
+#: src/Setup/Assets.php:97
 msgid "Reach is already connected to another site."
 msgstr "Reach đã được kết nối với một trang web khác."
 
-#: src/Setup/Assets.php:144
+#: src/Setup/Assets.php:162
 #| msgid ""
 #| "Reach offers a free plan for one year– perfect for getting started. Paid "
 #| "plans are based on how many unique contacts you aim to reach and how many "
@@ -840,16 +884,21 @@ msgstr ""
 msgid "Reach Subscription Form"
 msgstr "Biểu mẫu đăng ký Reach"
 
-#: src/Setup/Assets.php:110
+#: src/Setup/Assets.php:128
 msgid "Remaining"
 msgstr "Còn lại"
 
-#: src/Setup/Assets.php:106
+#: src/Setup/Assets.php:116
+#, fuzzy
+msgid "Review domain"
+msgstr "Xem xét tên miền"
+
+#: src/Setup/Assets.php:124
 #, fuzzy
 msgid "Segments"
 msgstr "Các phân đoạn"
 
-#: src/Setup/Assets.php:160
+#: src/Setup/Assets.php:178
 msgid "Select page"
 msgstr "Chọn trang"
 
@@ -864,16 +913,16 @@ msgstr ""
 "và tạo các phân đoạn được hỗ trợ bởi trí tuệ nhân tạo (AI). Với Hostinger "
 "Reach, việc mở rộng đối tượng của bạn trở nên dễ dàng."
 
-#: src/Setup/Assets.php:109 src/Setup/Assets.php:112
+#: src/Setup/Assets.php:127 src/Setup/Assets.php:130
 msgid "Sent"
 msgstr "Đã gửi"
 
-#: src/Setup/Assets.php:240
+#: src/Setup/Assets.php:259
 #, fuzzy
 msgid "Set up WooCommerce"
 msgstr "Cài đặt WooCommerce"
 
-#: src/Setup/Assets.php:120 frontend/blocks/subscription-block/src/edit.js:184
+#: src/Setup/Assets.php:138 frontend/blocks/subscription-block/src/edit.js:184
 #: frontend/dist/blocks/subscription.js:1
 #: frontend/dist/blocks/subscription.js:290
 msgid "Settings"
@@ -899,24 +948,24 @@ msgstr "Hiển thị họ"
 msgid "Show Surname Field?"
 msgstr "Hiển thị trường họ?"
 
-#: src/Setup/Assets.php:90
+#: src/Setup/Assets.php:92
 msgid "Something went wrong"
 msgstr "Có sự cố xảy ra"
 
-#: src/Api/Handlers/ApiHandler.php:36 src/Blocks/SubscriptionFormBlock.php:21
+#: src/Api/Handlers/ApiHandler.php:36 src/Blocks/SubscriptionFormBlock.php:30
 msgid "Something went wrong. Please try again."
 msgstr "Có sự cố xảy ra. Vui lòng thử lại."
 
-#: src/Setup/Assets.php:174 src/Setup/Assets.php:227
+#: src/Setup/Assets.php:193 src/Setup/Assets.php:246
 msgid "Status"
 msgstr "Trạng thái"
 
-#: src/Setup/Assets.php:226
+#: src/Setup/Assets.php:245
 #, fuzzy
 msgid "Store Events"
 msgstr "Sự kiện tại cửa hàng"
 
-#: src/Blocks/SubscriptionFormBlock.php:99
+#: src/Blocks/SubscriptionFormBlock.php:110
 #: src/Integrations/Elementor/SubscriptionFormElementorWidget.php:130
 msgid "Subscribe"
 msgstr "Đăng ký"
@@ -929,11 +978,16 @@ msgstr "Đăng ký nhận bản tin của chúng tôi"
 msgid "Subscribe to our newsletter"
 msgstr "Đăng ký nhận bản tin của chúng tôi"
 
-#: src/Setup/Assets.php:114
+#: src/Setup/Assets.php:132
 msgid "Subscribers"
 msgstr "Người đăng ký"
 
-#: src/Setup/Assets.php:196
+#: src/Blocks/SubscriptionFormBlock.php:125
+#, fuzzy
+msgid "Subscription form is not available at the moment"
+msgstr "Hiện tại, biểu mẫu đăng ký chưa khả dụng"
+
+#: src/Setup/Assets.php:215
 #| msgid "View supported plugins"
 msgid "Supported plugins"
 msgstr "Các plugin được hỗ trợ"
@@ -942,12 +996,12 @@ msgstr "Các plugin được hỗ trợ"
 msgid "Sure Forms"
 msgstr "Các biểu mẫu chắc chắn"
 
-#: src/Blocks/SubscriptionFormBlock.php:91
+#: src/Blocks/SubscriptionFormBlock.php:101
 #: src/Integrations/Elementor/SubscriptionFormElementorWidget.php:122
 msgid "Surname"
 msgstr "Họ"
 
-#: src/Setup/Assets.php:169
+#: src/Setup/Assets.php:187
 msgid "Sync"
 msgstr "Đồng bộ hóa"
 
@@ -958,11 +1012,11 @@ msgstr "Đồng bộ hóa"
 msgid "Tags"
 msgstr "Thẻ"
 
-#: src/Blocks/SubscriptionFormBlock.php:20
+#: src/Blocks/SubscriptionFormBlock.php:29
 msgid "Thanks for subscribing."
 msgstr "Cảm ơn bạn đã đăng ký."
 
-#: src/Setup/Assets.php:218
+#: src/Setup/Assets.php:237
 #, fuzzy
 #| msgid "The selected contacts are being synced to Reach."
 msgid "The selected contacts are being imported to Reach."
@@ -976,7 +1030,7 @@ msgstr ""
 "Biểu mẫu này không có trường email. Hãy tạo một trường email trong biểu mẫu "
 "để cho phép nó được đồng bộ hóa với Reach"
 
-#: src/Setup/Assets.php:241
+#: src/Setup/Assets.php:260
 #, fuzzy
 msgid ""
 "This form is a Reach native form inserted directly in your page. For "
@@ -986,7 +1040,7 @@ msgstr ""
 " Để tắt biểu mẫu này, hãy xóa biểu mẫu trực tiếp khỏi trang bằng trình chỉnh "
 "sửa."
 
-#: src/Setup/Assets.php:93
+#: src/Setup/Assets.php:95
 #, fuzzy
 msgid ""
 "This is a temporary domain. In order to connect WordPress to Reach you need "
@@ -995,7 +1049,7 @@ msgstr ""
 "Đây là một tên miền tạm thời. Để kết nối WordPress với Reach, bạn cần liên "
 "kết tên miền của mình."
 
-#: src/Setup/Assets.php:103
+#: src/Setup/Assets.php:121
 msgid "This month"
 msgstr "Tháng này"
 
@@ -1005,11 +1059,11 @@ msgstr "Tháng này"
 msgid "Thrive Leads"
 msgstr "Phát triển khách hàng tiềm năng"
 
-#: src/Setup/Assets.php:117
+#: src/Setup/Assets.php:135
 msgid "Total subscribers"
 msgstr "Tổng số người đăng ký"
 
-#: src/Setup/Assets.php:233
+#: src/Setup/Assets.php:252
 #, fuzzy
 msgid ""
 "Tracks abandoned carts so you can trigger email automations in Reach when "
@@ -1018,7 +1072,7 @@ msgstr ""
 "Theo dõi các giỏ hàng bị bỏ quên để bạn có thể kích hoạt các quy trình tự "
 "động hóa email trong Reach khi tính năng này được bật."
 
-#: src/Setup/Assets.php:231
+#: src/Setup/Assets.php:250
 #, fuzzy
 msgid ""
 "Tracks purchases so you can trigger email automations in Reach when enabled."
@@ -1032,45 +1086,45 @@ msgstr ""
 msgid "Unique identifier for this form"
 msgstr "Mã định danh duy nhất cho biểu mẫu này"
 
-#: src/Setup/Assets.php:116
+#: src/Setup/Assets.php:134
 msgid "Unsubscribes"
 msgstr "Hủy đăng ký"
 
-#: src/Setup/Assets.php:107
+#: src/Setup/Assets.php:125
 msgid "Upgrade"
 msgstr "Nâng cấp"
 
-#: src/Setup/Assets.php:222
+#: src/Setup/Assets.php:241
 #, fuzzy
 msgid "Upload as CSV"
 msgstr "Tải lên dưới dạng CSV"
 
-#: src/Setup/Assets.php:158
+#: src/Setup/Assets.php:176
 msgid "usage statistics"
 msgstr "thống kê sử dụng"
 
-#: src/Setup/Assets.php:177
+#: src/Setup/Assets.php:196
 msgid "View form"
 msgstr "Xem biểu mẫu"
 
-#: src/Setup/Assets.php:197
+#: src/Setup/Assets.php:216
 msgid "View more supported plugins"
 msgstr "Xem thêm các plugin được hỗ trợ"
 
-#: src/Setup/Assets.php:91
+#: src/Setup/Assets.php:93
 msgid "Welcome to Reach"
 msgstr "Chào mừng đến với Reach"
 
-#: src/Setup/Assets.php:153
+#: src/Setup/Assets.php:171
 #, fuzzy
 msgid "What happens if the connection breaks?"
 msgstr "Nếu kết nối bị gián đoạn thì sao?"
 
-#: src/Setup/Assets.php:139
+#: src/Setup/Assets.php:157
 msgid "What is Hostinger Reach email marketing service?"
 msgstr "Dịch vụ tiếp thị email Hostinger Reach là gì?"
 
-#: src/Setup/Assets.php:145
+#: src/Setup/Assets.php:163
 #, fuzzy
 msgid ""
 "What's the difference between Hostinger Reach and Hostinger Reach WordPress "
@@ -1078,7 +1132,14 @@ msgid ""
 msgstr ""
 "Sự khác biệt giữa Hostinger Reach và plugin Hostinger Reach WordPress là gì?"
 
-#: src/Setup/Assets.php:149
+#: src/Setup/Assets.php:191
+#, fuzzy
+msgid "When syncing is off, collected Contacts will not be sent to Reach."
+msgstr ""
+"Khi tính năng đồng bộ hóa bị tắt, các Danh bạ đã thu thập sẽ không được gửi "
+"đến Reach."
+
+#: src/Setup/Assets.php:167
 #, fuzzy
 msgid "Will contacts be added to my email list automatically?"
 msgstr "Các liên hệ có được tự động thêm vào danh sách email của tôi không?"
@@ -1091,12 +1152,12 @@ msgstr "WooCommerce"
 msgid "WooCommerce Customers"
 msgstr "Khách hàng WooCommerce"
 
-#: src/Setup/Assets.php:238
+#: src/Setup/Assets.php:257
 #, fuzzy
 msgid "WooCommerce Plugin Connected"
 msgstr "Plugin WooCommerce đã được kết nối"
 
-#: src/Setup/Assets.php:167
+#: src/Setup/Assets.php:185
 #, fuzzy
 #| msgid "Would you like to sync contacts collected while sync was disabled?"
 msgid "Would you like to import contacts collected while sync was disabled?"
@@ -1105,7 +1166,7 @@ msgstr ""
 "hóa bị tắt không?"
 
 #: src/Integrations/WPFormsLite/WpFormsLiteIntegration.php:29
-#: src/Setup/Assets.php:184
+#: src/Setup/Assets.php:203
 msgid "WP Forms Lite"
 msgstr "WP Forms Lite"
 
@@ -1124,7 +1185,7 @@ msgstr "WS Form"
 msgid "Yes"
 msgstr "Có"
 
-#: src/Setup/Assets.php:150
+#: src/Setup/Assets.php:168
 #, fuzzy
 msgid ""
 "Yes — new subscribers are added automatically based on your setup. Some "
@@ -1164,7 +1225,7 @@ msgstr ""
 msgid "You are running <b>%s</b> PHP version."
 msgstr "Bạn đang sử dụng phiên bản PHP <b>%s</b>."
 
-#: src/Setup/Assets.php:206
+#: src/Setup/Assets.php:225
 #, fuzzy
 msgid ""
 "You can import existing contacts into Reach now to use them for your email "
@@ -1173,7 +1234,7 @@ msgstr ""
 "Bạn có thể nhập danh bạ hiện có vào Reach ngay bây giờ để sử dụng cho các "
 "chiến dịch email của mình. Danh bạ mới sẽ được đồng bộ hóa tự động với Reach."
 
-#: src/Setup/Assets.php:211
+#: src/Setup/Assets.php:230
 #, fuzzy
 #| msgid ""
 #| "You have not selected any forms to sync. Select which forms you want to "
@@ -1185,6 +1246,19 @@ msgstr ""
 "Bạn chưa chọn bất kỳ biểu mẫu nào để đồng bộ hóa. Hãy chọn các biểu mẫu mà "
 "bạn muốn đồng bộ hóa và sau đó nhấp vào nút Đồng bộ hóa bên dưới."
 
+#: src/Setup/Assets.php:109
+msgid "Your API token"
+msgstr ""
+
+#: src/Setup/Assets.php:96
+#, fuzzy
+msgid ""
+"Your domain is not active. In order to connect WordPress to Reach you need "
+"to have an active domain."
+msgstr ""
+"Tên miền của bạn hiện chưa hoạt động. Để kết nối WordPress với Reach, bạn "
+"cần có một tên miền đang hoạt động."
+
 #: frontend/blocks/subscription-block/src/Components/Dialog.js:40
 #: frontend/dist/blocks/subscription.js:1
 #: frontend/dist/blocks/subscription.js:85
@@ -1194,6 +1268,7 @@ msgstr ""
 "mẫu."
 
 #: src/Api/Handlers/ReachApiHandler.php:33
+#: src/Blocks/SubscriptionFormBlock.php:123
 #, fuzzy
 msgid "Your site is not connected to Reach. Connect to Reach and try again."
 msgstr ""

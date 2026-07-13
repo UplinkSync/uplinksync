@@ -7,6 +7,9 @@ use Hostinger\EasyOnboarding\Admin\Onboarding\Onboarding;
 use Hostinger\EasyOnboarding\AmplitudeEvents\Amplitude;
 use Hostinger\EasyOnboarding\AmplitudeEvents\Actions as AmplitudeActions;
 use WP_Admin_Bar;
+use WP_REST_Request;
+use WP_Post;
+use WP_User;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -34,11 +37,13 @@ class Hooks {
         add_action( 'update_option_WPLANG', array( $this, 'changed_site_language' ), 10, 3 );
         add_action( 'password_reset', array( $this, 'admin_password_reset_action' ), 10, 2 );
         add_action( 'profile_update', array( $this, 'admin_password_reset_action_on_edit' ), 10, 2 );
-        // Edit site events.
+        add_action( 'rest_after_insert_post', array( $this, 'save_gutenberg_post_content' ), 10, 3 );
+        add_action( 'rest_after_insert_page', array( $this, 'save_gutenberg_post_content' ), 10, 3 );
         add_action( 'save_post', array( $this, 'save_post_content' ), 10, 3 );
         add_action( 'updated_option', array( $this, 'save_settings' ), 10, 1 );
         add_action( 'customize_save_after', array( $this, 'save_customizer_settings' ) );
         add_action( 'admin_bar_menu', array( $this, 'customize_admin_bar_logo' ), 100 );
+        add_action( 'admin_bar_menu', array( $this, 'custom_admin_bar_edit_site_link' ), 9999 );
         add_action( 'admin_bar_menu', array( $this, 'custom_admin_bar_edit_home_page_link' ), 9999 );
 
         add_action( 'plugins_loaded', array( $this, 'disable_prebuild_website_redirect' ) );
@@ -73,7 +78,7 @@ class Hooks {
         add_filter( 'srfm_enable_redirect_activation', fn( $do_redirect ) => false, 10 );
     }
 
-    public function admin_password_reset_action( \WP_User $user, string $new_pass ): void {
+    public function admin_password_reset_action( WP_User $user, string $new_pass ): void {
         $amplitude_events = new Amplitude();
 
         if ( ! in_array( 'administrator', (array) $user->roles, true ) ) {
@@ -83,7 +88,7 @@ class Hooks {
         $amplitude_events->send_event( array( 'action' => AmplitudeActions::WP_PASSWORD_RESET ) );
     }
 
-    public function admin_password_reset_action_on_edit( int $user_id, \WP_User $old_user_data ): void {
+    public function admin_password_reset_action_on_edit( int $user_id, WP_User $old_user_data ): void {
         $amplitude_events = new Amplitude();
         $user             = get_userdata( $user_id );
 
@@ -106,12 +111,35 @@ class Hooks {
         $amplitude_events->send_event( $params );
     }
 
-    public function save_post_content( int $post_ID, \WP_Post $post, bool $update ): void {
+    public function save_gutenberg_post_content( WP_Post $post, WP_REST_Request $request, bool $creating ): void {
+        if ( Helper::should_skip_event() || $this->event_incremented || $creating ) {
+            return;
+        }
+
+        $params = $request->get_json_params() ?? array();
+        if ( ! isset( $params['content'] ) && ! isset( $params['title'] ) ) {
+            return;
+        }
+
+        $debounce_key = 'hostinger_edit_event_' . $post->ID;
+        if ( get_transient( $debounce_key ) ) {
+            return;
+        }
+
+        $amplitude_events = new Amplitude();
+        if ( $amplitude_events->can_send_edit_amplitude_event() ) {
+            set_transient( $debounce_key, 1, 10 );
+            $amplitude_events->send_edit_amplitude_event();
+            $this->event_incremented = true;
+        }
+    }
+
+    public function save_post_content( int $post_ID, WP_Post $post, bool $update ): void {
         if ( Helper::should_skip_event() || $this->event_incremented ) {
             return;
         }
 
-        if ( $post->post_status === 'auto-draft' ) {
+        if ( ! isset( $_POST['action'] ) || $_POST['action'] !== 'editpost' ) {
             return;
         }
 
@@ -133,8 +161,8 @@ class Hooks {
         $amplitude_events = new Amplitude();
 
         if ( $amplitude_events->can_send_edit_amplitude_event() ) {
-            $amplitude_events->send_edit_amplitude_event();
             $this->event_incremented = true;
+            $amplitude_events->send_edit_amplitude_event();
         }
     }
 
@@ -207,7 +235,6 @@ class Hooks {
             AmplitudeActions::WP_BLACK_FRIDAY_BANNER_OFFER_SHOWN,
             AmplitudeActions::WP_CHANGED_LANG,
             AmplitudeActions::WP_PASSWORD_RESET,
-            AmplitudeActions::WP_ADDONS_BANNER_SHOWN,
             AmplitudeActions::WP_REACH_BANNER_SHOWN,
         );
 
@@ -266,12 +293,30 @@ class Hooks {
         );
     }
 
+    public function custom_admin_bar_edit_site_link( WP_Admin_Bar $wp_admin_bar ): void {
+        if ( ! function_exists( 'wp_is_block_theme' ) || ! wp_is_block_theme() ) {
+            return;
+        }
+
+        $wp_admin_bar->add_node(
+            array(
+                'id'    => 'site-editor',
+                'title' => __( 'Edit site', 'hostinger-easy-onboarding' ),
+                'href'  => admin_url( 'site-editor.php' ),
+            )
+        );
+    }
+
     public function custom_admin_bar_edit_home_page_link( WP_Admin_Bar $wp_admin_bar ): void {
         $front_page_id   = get_option( 'page_on_front' );
         $show_on_front   = get_option( 'show_on_front' );
         $has_static_page = $show_on_front === self::HOMEPAGE_DISPLAY && $front_page_id;
 
         if ( ! $has_static_page ) {
+            return;
+        }
+
+        if ( ! is_admin() && is_front_page() ) {
             return;
         }
 

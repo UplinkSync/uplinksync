@@ -7,9 +7,9 @@
       "padding": {
         "unit": "rem",
         "top": "2.25",
-        "right": "0",
+        "right": "2.25",
         "bottom": "2.25",
-        "left": "0",
+        "left": "2.25",
         "isLinked": false
       },
       "padding_tablet": {
@@ -154,8 +154,8 @@
                 "id": "0f97aa9",
                 "elType": "widget",
                 "settings": {
-                  "title": "Address",
-                  "_css_classes": "hostinger-ai-title hostinger-index-1 hostinger-ai-font-bold",
+                  "title": "trans-address-heading",
+                  "_css_classes": "hostinger-ai-font-bold",
                   "__globals__": {
                     "title_color": "globals/colors?id=09cc561",
                     "typography_typography": "globals/typography?id=2142591"
@@ -168,7 +168,7 @@
                 "id": "82e8020",
                 "elType": "widget",
                 "settings": {
-                  "editor": "<p>697 Hilltop Street, Springfield, MA, USA</p>",
+                  "editor": "<p>trans-contact_address</p>",
                   "column_gap": {
                     "unit": "px",
                     "size": 0,
@@ -224,8 +224,8 @@
                 "id": "243157a",
                 "elType": "widget",
                 "settings": {
-                  "title": "Hours",
-                  "_css_classes": "hostinger-ai-title hostinger-index-2 hostinger-ai-font-bold",
+                  "title": "trans-hours-heading",
+                  "_css_classes": "hostinger-ai-font-bold",
                   "__globals__": {
                     "title_color": "globals/colors?id=09cc561",
                     "typography_typography": "globals/typography?id=2142591"
@@ -297,7 +297,7 @@
             "id": "53165b4",
             "elType": "widget",
             "settings": {
-              "html": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d47368.39682225005!2d-72.489385!3d42.09623!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e6e85bbff73363%3A0x5241d930e1909b8f!2sHilltop%20St%2C%20Springfield%2C%20MA%2001128!5e0!3m2!1sen!2sus!4v1722498156021!5m2!1sen!2sus\" height=\"450\" style=\"width: 100%; min-width: 100%; border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
+              "html": "<iframe src=\"https://www.google.com/maps?q=trans-encoded_address&output=embed\" height=\"450\" style=\"width: 100%; min-width: 100%; border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
             },
             "elements": [],
             "widgetType": "html"

@@ -73,8 +73,7 @@ class Helper {
 
     private const HPANEL_DOMAIN_URL = 'https://hpanel.hostinger.com/websites/';
 
-    public const HIDE_ADDONS_BANNER = 'hostinger_hide_addons_banner';
-    public const HIDE_REACH_BANNER  = 'hostinger_hide_reach_banner';
+    public const HIDE_REACH_BANNER = 'hostinger_hide_reach_banner';
 
     /**
      *
@@ -141,9 +140,28 @@ class Helper {
     }
 
     public function is_free_subdomain(): bool {
-        $site_url = preg_replace( '#^https?://#', '', get_site_url() );
+        $site_url = preg_replace( '#^https?://#', '', (string) get_option( 'siteurl' ) );
 
-        return ! empty( $site_url ) && ( strpos( $site_url, self::HOSTINGER_FREE_SUBDOMAIN_URL ) !== false || strpos( $site_url, self::HOSTINGER_DEV_FREE_SUBDOMAIN_URL ) );
+        return ! empty( $site_url ) && ( strpos( $site_url, self::HOSTINGER_FREE_SUBDOMAIN_URL ) !== false || strpos( $site_url, self::HOSTINGER_DEV_FREE_SUBDOMAIN_URL ) !== false );
+    }
+
+    public function get_ai_domain_query(): string {
+        $description = trim( wp_strip_all_tags( (string) get_option( 'hostinger_ai_description', '' ) ) );
+        $brand_name  = trim( wp_strip_all_tags( (string) get_option( 'hostinger_ai_brand_name', '' ) ) );
+
+        if ( $description !== '' && $brand_name !== '' ) {
+            return sprintf( '%s brand name: %s', $description, $brand_name );
+        }
+
+        if ( $description !== '' ) {
+            return $description;
+        }
+
+        if ( $brand_name !== '' ) {
+            return sprintf( 'brand name: %s', $brand_name );
+        }
+
+        return '';
     }
 
     /**
@@ -212,7 +230,7 @@ class Helper {
             set_transient( $transient_request_key, true, $cache_time );
 
             // Check if transient was set successfully.
-            if ( false === get_transient( $transient_request_key ) ) {
+            if ( get_transient( $transient_request_key ) === false ) {
                 throw new \Exception( 'Unable to create transient in WordPress.' );
             }
 
@@ -391,14 +409,6 @@ class Helper {
 
     public function is_selling_digital_products(): bool {
         return in_array( 'digital', $this->get_store_industry(), true );
-    }
-
-    public function get_addons_banner_status(): bool {
-        if ( get_transient( self::HIDE_ADDONS_BANNER ) || ! current_user_can( 'manage_options' ) ) {
-            return false;
-        }
-
-        return $this->is_oldest_user_older_than( '1 week' );
     }
 
     public function get_reach_banner_status(): bool {

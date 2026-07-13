@@ -90,6 +90,18 @@ class ContactFormWidget extends Widget_Base {
         );
 
         $this->add_control(
+            'show_date',
+            [
+                'label'        => __( 'Show Date', 'hostinger-ai-theme' ),
+                'type'         => Controls_Manager::SWITCHER,
+                'label_on'     => __( 'Show', 'hostinger-ai-theme' ),
+                'label_off'    => __( 'Hide', 'hostinger-ai-theme' ),
+                'return_value' => 'yes',
+                'default'      => 'no',
+            ]
+        );
+
+        $this->add_control(
             'description',
             [
                 'label'       => __( 'Description', 'hostinger-ai-theme' ),
@@ -190,6 +202,30 @@ class ContactFormWidget extends Widget_Base {
             ]
         );
 
+        $this->add_control(
+            'date_label',
+            [
+                'label'     => __( 'Date Label', 'hostinger-ai-theme' ),
+                'type'      => Controls_Manager::TEXT,
+                'default'   => __( 'Date', 'hostinger-ai-theme' ),
+                'condition' => [
+                    'show_date' => 'yes',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'date_placeholder',
+            [
+                'label'     => __( 'Date Placeholder', 'hostinger-ai-theme' ),
+                'type'      => Controls_Manager::TEXT,
+                'default'   => __( 'Select a date', 'hostinger-ai-theme' ),
+                'condition' => [
+                    'show_date' => 'yes',
+                ],
+            ]
+        );
+
         $this->end_controls_section();
     }
 
@@ -265,6 +301,16 @@ class ContactFormWidget extends Widget_Base {
                                    placeholder="<?php echo esc_attr( $settings['email_placeholder'] ); ?>"
                                    required>
 
+                            <?php if ( 'yes' === $settings['show_date'] ) : ?>
+                                <label for="<?php echo esc_attr( $form_id ); ?>-date"><?php echo esc_html( $settings['date_label'] ); ?></label>
+                                <input type="date"
+                                       id="<?php echo esc_attr( $form_id ); ?>-date"
+                                       class="contact-date"
+                                       name="date"
+                                       placeholder="<?php echo esc_attr( $settings['date_placeholder'] ); ?>"
+                                       required>
+                            <?php endif; ?>
+
                             <label for="<?php echo esc_attr( $form_id ); ?>-message"><?php echo esc_html( $settings['message_label'] ); ?></label>
                             <textarea id="<?php echo esc_attr( $form_id ); ?>-message"
                                       class="contact-message"
@@ -298,6 +344,7 @@ class ContactFormWidget extends Widget_Base {
 
         $name             = isset( $_POST['name'] ) ? sanitize_text_field( $_POST['name'] ) : '';
         $email            = isset( $_POST['email'] ) ? sanitize_email( $_POST['email'] ) : '';
+        $date             = isset( $_POST['date'] ) ? sanitize_text_field( $_POST['date'] ) : '';
         $privacy_policy   = isset( $_POST['privacy_policy'] ) ? sanitize_text_field( $_POST['privacy_policy'] ) : '';
         $form_message     = isset( $_POST['message'] ) ? sanitize_text_field( $_POST['message'] ) : '';
         $recipient_email  = isset( $_POST['recipient_email'] ) ? sanitize_email( $_POST['recipient_email'] ) : '';
@@ -315,6 +362,7 @@ class ContactFormWidget extends Widget_Base {
         $email_data = array(
             'name'         => $name,
             'email'        => $email,
+            'date'         => $date,
             'form_message' => $form_message,
         );
 

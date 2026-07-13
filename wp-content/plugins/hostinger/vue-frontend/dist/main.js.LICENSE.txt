@@ -1,18 +1,16 @@
 /*!
- * pinia v2.3.1
+ * pinia v3.0.4
  * (c) 2025 Eduardo San Martin Morote
  * @license MIT
  */
 
 /*!
- * vue-router v4.6.4
- * (c) 2025 Eduardo San Martin Morote
- * @license MIT
- */
+* vue-router v5.1.0
+* (c) 2026 Eduardo San Martin Morote
+* @license MIT
+*/
 
 /*! #__NO_SIDE_EFFECTS__ */
-
-/*! https://mths.be/punycode v1.4.1 by @mathias */
 
 /**
  * @license
@@ -24,19 +22,21 @@
  */
 
 /**
-* @vue/reactivity v3.5.30
+* @vue/reactivity v3.5.39
 * (c) 2018-present Yuxi (Evan) You and Vue contributors
 * @license MIT
 **/
 
 /**
-* @vue/runtime-dom v3.5.30
+* @vue/runtime-dom v3.5.39
 * (c) 2018-present Yuxi (Evan) You and Vue contributors
 * @license MIT
 **/
 
 /**
-* @vue/shared v3.5.30
+* @vue/shared v3.5.39
 * (c) 2018-present Yuxi (Evan) You and Vue contributors
 * @license MIT
 **/
+
+// v8 ignore if -- @preserve

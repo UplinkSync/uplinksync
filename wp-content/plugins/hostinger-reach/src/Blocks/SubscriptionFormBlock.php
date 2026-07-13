@@ -3,7 +3,10 @@
 namespace Hostinger\Reach\Blocks;
 
 
+use Hostinger\Reach\Api\Handlers\ReachApiHandler;
+use Hostinger\Reach\Functions;
 use Hostinger\Reach\Integrations\Reach\ReachFormIntegration;
+use Hostinger\Reach\Setup\Assets;
 
 if ( ! defined( 'ABSPATH' ) ) {
     die;
@@ -11,6 +14,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class SubscriptionFormBlock extends Block {
     public string $name = 'subscription';
+    private ReachApiHandler $reach_api_handler;
+
+    public function __construct( Assets $assets, Functions $functions, ReachApiHandler $reach_api_handler ) {
+        parent::__construct( $assets, $functions );
+        $this->reach_api_handler = $reach_api_handler;
+    }
 
     public function data(): array {
         return array(
@@ -45,12 +54,13 @@ class SubscriptionFormBlock extends Block {
 
     public function render( array $attributes ): bool|string {
         ob_start();
-        $this->render_block_html( $attributes );
+        $is_connected = $this->reach_api_handler->is_connected();
+        $this->render_block_html( $attributes, null, $is_connected );
 
         return ob_get_clean();
     }
 
-    public static function render_block_html( array $attributes, ?string $plugin = null ): void {
+    public static function render_block_html( array $attributes, ?string $plugin = null, bool $is_connected = true ): void {
         $form_id      = $attributes['formId'] ?? '';
         $show_name    = $attributes['showName'] ?? false;
         $show_surname = $attributes['showSurname'] ?? false;
@@ -101,12 +111,35 @@ class SubscriptionFormBlock extends Block {
                 </div>
 
                 <div class="reach-subscription-message" style="display: none;">
-                    <div class="reach-subscription-message__icon" style="display: none;">
+                    <div class="reach-subscription-message__icon-success" style="display: none;">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M21.0455 5.95463C21.4848 6.39397 21.4848 7.10628 21.0455 7.54562L11.5076 17.0835C10.9511 17.64 10.0489 17.64 9.49237 17.0835L5.2045 12.7956C4.76517 12.3563 4.76517 11.644 5.2045 11.2046C5.64384 10.7653 6.35616 10.7653 6.7955 11.2046L10.5 14.9091L19.4545 5.95463C19.8938 5.51529 20.6062 5.51529 21.0455 5.95463Z" fill="#18181A"/>
+                            <path
+                                d="M21.0455 5.95463C21.4848 6.39397 21.4848 7.10628 21.0455 7.54562L11.5076 17.0835C10.9511 17.64 10.0489 17.64 9.49237 17.0835L5.2045 12.7956C4.76517 12.3563 4.76517 11.644 5.2045 11.2046C5.64384 10.7653 6.35616 10.7653 6.7955 11.2046L10.5 14.9091L19.4545 5.95463C19.8938 5.51529 20.6062 5.51529 21.0455 5.95463Z"
+                                fill="#18181A"/>
                         </svg>
                     </div>
-                    <div class="reach-subscription-message__text"></div>
+                    <div class="reach-subscription-message__icon-error" style="display: none;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#a10223" fill-rule="evenodd"
+                                    d="M11.279 4.721a.75.75 0 0 1 0 1.06L5.782 11.28a.75.75 0 0 1-1.06-1.06l5.496-5.498a.75.75 0 0 1 1.06 0"
+                                    clip-rule="evenodd"></path>
+                            <path fill="#a10223" fill-rule="evenodd"
+                                    d="M4.721 4.721a.75.75 0 0 0 0 1.06l5.497 5.498a.75.75 0 0 0 1.06-1.06L5.783 4.72a.75.75 0 0 0-1.06 0"
+                                    clip-rule="evenodd"></path>
+                            <path fill="#a10223" fill-rule="evenodd"
+                                    d="M8 1.75a6.25 6.25 0 1 0 0 12.5 6.25 6.25 0 0 0 0-12.5M.25 8a7.75 7.75 0 1 1 15.5 0A7.75 7.75 0 0 1 .25 8"
+                                    clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <div class="reach-subscription-message__text">
+                        <?php
+                        if ( ! $is_connected && current_user_can( 'manage_options' ) ) {
+                            esc_html_e( 'Your site is not connected to Reach. Connect to Reach and try again.', 'hostinger-reach' );
+                        } else {
+                            esc_html_e( 'Subscription form is not available at the moment', 'hostinger-reach' );
+                        }
+                        ?>
+                    </div>
                 </div>
             </form>
         </div>

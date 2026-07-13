@@ -227,7 +227,7 @@ class MediaTools extends RestEndpointTool {
             return new WP_Error( 'file_not_found', __( 'File not found', 'hostinger-ai-assistant' ), array( 'status' => 404 ) );
         }
 
-        if ( 'full' !== $size && 'original' !== $size ) {
+        if ( $size !== 'full' && $size !== 'original' ) {
             $meta = wp_get_attachment_metadata( $id );
             if ( isset( $meta['sizes'][ $size ]['file'] ) ) {
                 $base_dir  = pathinfo( $file_path, PATHINFO_DIRNAME );
@@ -271,13 +271,12 @@ class MediaTools extends RestEndpointTool {
             }
 
             $file_data = base64_decode( $base64_data, true );
-            if ( false === $file_data ) {
+            if ( $file_data === false ) {
                 return new WP_Error( 'invalid_base64', __( 'Invalid base64 data', 'hostinger-ai-assistant' ), array( 'status' => 400 ) );
             }
 
             $finfo     = finfo_open( FILEINFO_MIME_TYPE );
             $mime_type = finfo_buffer( $finfo, $file_data );
-            finfo_close( $finfo );
 
             if ( empty( $mime_type ) ) {
                 return new WP_Error( 'unknown_file_type', __( 'Could not determine file type', 'hostinger-ai-assistant' ), array( 'status' => 400 ) );

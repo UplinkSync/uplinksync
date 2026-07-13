@@ -32,7 +32,7 @@ class ForminatorIntegration extends Integration implements IntegrationInterface 
                 'url'            => 'https://wordpress.org/plugins/forminator/',
                 'download_url'   => 'https://downloads.wordpress.org/plugin/forminator.zip',
                 'title'          => __( 'Forminator', 'hostinger-reach' ),
-                'icon'           => 'https://ps.w.org/forminator/assets/icon-256x256.png',
+                'icon'           => 'https://ps.w.org/forminator/assets/icon-256x256.gif',
                 'import_enabled' => true,
             )
         );

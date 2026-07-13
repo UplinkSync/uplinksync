@@ -10,42 +10,47 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-07-31T11:19:40+03:00\n"
-"PO-Revision-Date: 2026-04-02 06:38+0000\n"
+"PO-Revision-Date: 2026-06-30 07:02+0000\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Domain: hostinger-reach\n"
 "Language: th\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Loco-Version: 2.8.0; wp-6.8.2; php-8.2.29"
 
-#: src/Setup/Assets.php:189
+#: src/Setup/Assets.php:208
 msgid "(no title)"
 msgstr "(ไม่มีชื่อเรื่อง)"
 
-#: src/Setup/Assets.php:212
+#: src/Setup/Assets.php:231
 #, fuzzy
 msgid "-"
 msgstr "-การแปล: \"การแปล\""
+
+#: src/Setup/Assets.php:108
+msgid ""
+"<strong>Copy</strong> your new API token and <strong>paste it below</strong>"
+msgstr ""
 
 #: src/Integrations/WooCommerce/WooCommerceIntegration.php:124
 #, fuzzy
 msgid "Abandoned Carts"
 msgstr "ตะกร้าสินค้าที่ถูกทิ้งไว้"
 
-#: src/Setup/Assets.php:232
+#: src/Setup/Assets.php:251
 #, fuzzy
 msgid "Abandoned carts"
 msgstr "ตะกร้าสินค้าที่ถูกทิ้ง"
 
-#: src/Setup/Assets.php:175 src/Setup/Assets.php:192
+#: src/Setup/Assets.php:194 src/Setup/Assets.php:211
 msgid "Active"
 msgstr "ทำงานอยู่"
 
-#: src/Admin/Notices/AddFormNotice.php:83 src/Setup/Assets.php:132
-#: src/Setup/Assets.php:181 src/Setup/Assets.php:195
+#: src/Admin/Notices/AddFormNotice.php:83 src/Setup/Assets.php:150
+#: src/Setup/Assets.php:200 src/Setup/Assets.php:214
 msgid "Add form"
 msgstr "เพิ่มแบบฟอร์ม"
 
-#: src/Setup/Assets.php:134 src/Setup/Assets.php:161
+#: src/Setup/Assets.php:152 src/Setup/Assets.php:179
 #, fuzzy
 msgid "Add form or plugin"
 msgstr "เพิ่มแบบฟอร์มหรือปลั๊กอิน"
@@ -55,7 +60,7 @@ msgstr "เพิ่มแบบฟอร์มหรือปลั๊กอิ
 msgid "Add form to start sending campaigns with Hostinger Reach"
 msgstr "เพิ่มแบบฟอร์มเพื่อเริ่มส่งแคมเปญด้วย Hostinger Reach"
 
-#: src/Setup/Assets.php:129
+#: src/Setup/Assets.php:147
 #, fuzzy
 msgid "Add new form"
 msgstr "เพิ่มแบบฟอร์มใหม่"
@@ -67,7 +72,7 @@ msgstr "เพิ่มแบบฟอร์มใหม่"
 msgid "Add New Tag"
 msgstr "เพิ่มแท็กใหม่"
 
-#: src/Setup/Assets.php:127
+#: src/Setup/Assets.php:145
 #, fuzzy
 msgid "Add or connect a form to start sending campaigns"
 msgstr "เพิ่มหรือเชื่อมต่อแบบฟอร์มเพื่อเริ่มส่งแคมเปญ"
@@ -79,7 +84,7 @@ msgstr "เพิ่มหรือเชื่อมต่อแบบฟอร
 msgid "Add Tag"
 msgstr "เพิ่มแท็ก"
 
-#: src/Setup/Assets.php:229
+#: src/Setup/Assets.php:248
 #, fuzzy
 msgid ""
 "Adds a marketing consent checkbox at checkout and syncs contacts to Reach."
@@ -93,7 +98,11 @@ msgstr ""
 "มีไอเดียหรือข้อเสนอแนะอะไร ที่จะช่วยให้เราปรับปรุง Hostinger Reach "
 "ได้บ้างไหม?"
 
-#: src/Setup/Assets.php:210
+#: src/Setup/Assets.php:112
+msgid "API Token field is required"
+msgstr ""
+
+#: src/Setup/Assets.php:229
 #, fuzzy
 #| msgid ""
 #| "are ready to sync with Reach. Any new contacts you’ll collect with these "
@@ -109,30 +118,30 @@ msgstr ""
 msgid "Attention:"
 msgstr "โปรดทราบ:"
 
-#: src/Setup/Assets.php:213
+#: src/Setup/Assets.php:232
 #, fuzzy
 msgid "Auto-sync off"
 msgstr "ปิดการซิงค์อัตโนมัติ"
 
-#: src/Setup/Assets.php:234
+#: src/Setup/Assets.php:253
 #, fuzzy
 msgid "Automation"
 msgstr "ระบบอัตโนมัติ"
 
-#: src/Setup/Assets.php:113
+#: src/Setup/Assets.php:131
 msgid "Average CTOR"
 msgstr "ค่าเฉลี่ย CTOR"
 
-#: src/Setup/Assets.php:89
+#: src/Setup/Assets.php:91
 #, fuzzy
 msgid "Back"
 msgstr "กลับ"
 
-#: src/Setup/Assets.php:157
+#: src/Setup/Assets.php:175
 msgid "Background image for"
 msgstr "ภาพพื้นหลังสำหรับ"
 
-#: src/Setup/Assets.php:156
+#: src/Setup/Assets.php:174
 msgid "Banner background image for"
 msgstr "ภาพพื้นหลังแบนเนอร์สำหรับ"
 
@@ -151,23 +160,27 @@ msgstr "แบบฟอร์มสมัครสมาชิก Reach"
 msgid "Brave Popup Builder"
 msgstr "Brave Popup Builder"
 
-#: src/Setup/Assets.php:111
+#: src/Setup/Assets.php:129
 msgid "Campaigns"
 msgstr "แคมเปญ"
 
-#: src/Setup/Assets.php:164
+#: src/Setup/Assets.php:114 src/Setup/Assets.php:182
 #, fuzzy
 #| msgid "Cancel "
 msgid "Cancel"
 msgstr "ยกเลิก"
 
 #: src/Integrations/WooCommerce/WooCommerceIntegration.php:116
-#: src/Setup/Assets.php:228
+#: src/Setup/Assets.php:247
 #, fuzzy
 msgid "Checkout"
 msgstr "ชำระเงิน"
 
-#: src/Setup/Assets.php:159
+#: src/Setup/Assets.php:106
+msgid "Click <strong>Generate API Token</strong>"
+msgstr ""
+
+#: src/Setup/Assets.php:177
 msgid ""
 "Click-to-open rate tells you what percent of opens resulted in a click too. "
 "A good CTOR is 6-17%, depending on your industry."
@@ -175,11 +188,11 @@ msgstr ""
 "อัตราการเปิดคลิกบอกคุณว่ากี่เปอร์เซ็นต์ของการเปิดที่ส่งผลให้เกิดการคลิกด้วย "
 "อัตราการเปิดคลิกที่ดีคือ 6-17% ขึ้นอยู่กับอุตสาหกรรมของคุณ"
 
-#: src/Setup/Assets.php:187
+#: src/Setup/Assets.php:206
 msgid "Collapse {pluginName} details"
 msgstr "ยุบรายละเอียด {ชื่อปลั๊กอิน}"
 
-#: src/Setup/Assets.php:124
+#: src/Setup/Assets.php:142
 #, fuzzy
 msgid ""
 "Collect contacts at checkout, send automated emails after purchases, and "
@@ -188,16 +201,17 @@ msgstr ""
 "รวบรวมข้อมูลติดต่อที่จุดชำระเงิน ส่งอีเมลอัตโนมัติหลังการซื้อ "
 "และกู้คืนตะกร้าสินค้าที่ถูกทิ้งไว้เพื่อเพิ่มยอดขายด้วย Reach"
 
-#: src/Setup/Assets.php:223
+#: src/Setup/Assets.php:242
 #, fuzzy
 msgid "Coming soon"
 msgstr "กำลังจะมาถึงเร็ว ๆ นี้"
 
-#: src/Admin/Notices/ConnectionNotice.php:100 src/Setup/Assets.php:202
+#: src/Admin/Notices/ConnectionNotice.php:100 src/Setup/Assets.php:113
+#: src/Setup/Assets.php:221
 msgid "Connect"
 msgstr "เชื่อมต่อ"
 
-#: src/Setup/Assets.php:98
+#: src/Setup/Assets.php:115
 #, fuzzy
 msgid "Connect domain"
 msgstr "เชื่อมต่อโดเมน"
@@ -214,41 +228,55 @@ msgstr "เชื่อมต่อ Hostinger Reach เพื่อเริ่�
 msgid "Connect Now"
 msgstr "เชื่อมต่อเดี๋ยวนี้"
 
-#: src/Setup/Assets.php:133
+#: src/Setup/Assets.php:151
 #, fuzzy
 msgid "Connect plugin"
 msgstr "เชื่อมต่อปลั๊กอิน"
 
-#: src/Setup/Assets.php:97
+#: src/Setup/Assets.php:100
 msgid "Connect site"
 msgstr "เชื่อมต่อไซต์"
 
-#: src/Setup/Assets.php:125
+#: src/Setup/Assets.php:101
+msgid "Connect with API token"
+msgstr ""
+
+#: src/Setup/Assets.php:143
 #, fuzzy
 msgid "Connect WooCommerce"
 msgstr "เชื่อมต่อ WooCommerce"
 
-#: src/Setup/Assets.php:123
+#: src/Setup/Assets.php:141
 #, fuzzy
 msgid "Connect WooCommerce to boost sales with email automations"
 msgstr "เชื่อมต่อ WooCommerce เพื่อเพิ่มยอดขายด้วยการอัตโนมัติทางอีเมล"
 
+#: src/Setup/Assets.php:102
+msgid "Connect your website to Hostinger Reach"
+msgstr ""
+
+#: src/Setup/Assets.php:111
+msgid ""
+"Connection failed. Check if your API Token is correct or contact Hostinger "
+"Reach support."
+msgstr ""
+
 #: src/Integrations/ContactForm7/ContactForm7Integration.php:111
-#: src/Setup/Assets.php:183
+#: src/Setup/Assets.php:202
 msgid "Contact Form 7"
 msgstr "Contact Form 7"
 
-#: src/Setup/Assets.php:105 src/Setup/Assets.php:171 src/Setup/Assets.php:204
+#: src/Setup/Assets.php:123 src/Setup/Assets.php:189 src/Setup/Assets.php:223
 #, fuzzy
 msgid "Contacts"
 msgstr "รายชื่อผู้ติดต่อ"
 
-#: src/Setup/Assets.php:209
+#: src/Setup/Assets.php:228
 #, fuzzy
 msgid "contacts"
 msgstr "รายชื่อผู้ติดต่อ"
 
-#: src/Setup/Assets.php:208
+#: src/Setup/Assets.php:227
 #, fuzzy
 msgid "Contacts to Import"
 msgstr "รายชื่อผู้ติดต่อที่จะนำเข้า"
@@ -258,7 +286,7 @@ msgstr "รายชื่อผู้ติดต่อที่จะนำเ
 msgid "Could not generate auth URL"
 msgstr "ไม่สามารถสร้าง URL สำหรับยืนยันตัวตนได้"
 
-#: src/Setup/Assets.php:128
+#: src/Setup/Assets.php:146
 #, fuzzy
 msgid ""
 "Create a new form or connect a plugin to grow your contact list and start "
@@ -267,21 +295,11 @@ msgstr ""
 "สร้างแบบฟอร์มใหม่หรือเชื่อมต่อปลั๊กอินเพื่อเพิ่มรายชื่อผู้ติดต่อของคุณและเริ่มส่งแคมเปญด้วย"
 " Reach"
 
-#: src/Setup/Assets.php:118
+#: src/Setup/Assets.php:136
 msgid "Create campaign"
 msgstr "สร้างแคมเปญ"
 
-#: src/Setup/Assets.php:92
-msgid ""
-"Create email campaigns using AI-crafted templates that match your style. "
-"Instantly sync with your WordPress site and connect with your audience "
-"easily."
-msgstr ""
-"สร้างแคมเปญอีเมลโดยใช้เทมเพลตที่สร้างด้วย AI ซึ่งตรงกับสไตล์ของคุณ "
-"ซิงค์กับเว็บไซต์ WordPress "
-"ของคุณได้ทันทีและเชื่อมต่อกับผู้ชมของคุณได้อย่างง่ายดาย"
-
-#: src/Setup/Assets.php:225
+#: src/Setup/Assets.php:244
 #, fuzzy
 msgid ""
 "Create fully custom forms in Reach and easily embed them on your WordPress "
@@ -290,7 +308,7 @@ msgstr ""
 "สร้างแบบฟอร์มที่ปรับแต่งได้อย่างสมบูรณ์ใน Reach และฝังลงในเว็บไซต์ WordPress "
 "ของคุณได้อย่างง่ายดายด้วยปลั๊กอินนี้ ติดตามข่าวสารของเรา!"
 
-#: src/Setup/Assets.php:119
+#: src/Setup/Assets.php:137
 msgid "Create template"
 msgstr "สร้างเทมเพลต"
 
@@ -301,23 +319,23 @@ msgstr "สร้างเทมเพลต"
 msgid "Default"
 msgstr "ค่าเริ่มต้น"
 
-#: src/Setup/Assets.php:165 src/Setup/Assets.php:201
+#: src/Setup/Assets.php:183 src/Setup/Assets.php:220
 msgid "Disconnect"
 msgstr "ปิดการเชื่อมต่อ"
 
-#: src/Setup/Assets.php:95
+#: src/Setup/Assets.php:98
 msgid "Disconnect it to link this site instead."
 msgstr "ปิดการเชื่อมต่อเพื่อเชื่อมต่อเว็บไซต์นี้แทน"
 
-#: src/Setup/Assets.php:180
+#: src/Setup/Assets.php:199
 msgid "Disconnect plugin"
 msgstr "ปลั๊กอินถูกปิดการเชื่อมต่อ"
 
-#: src/Setup/Assets.php:162
+#: src/Setup/Assets.php:180
 msgid "Disconnect plugin?"
 msgstr "ปลั๊กอินถูกปิดการเชื่อมต่อ?"
 
-#: src/Setup/Assets.php:163
+#: src/Setup/Assets.php:181
 msgid ""
 "Disconnecting will stop new contacts from being collected. You can reconnect "
 "or use a different form anytime."
@@ -325,12 +343,12 @@ msgstr ""
 "การยกเลิกการเชื่อมต่อจะหยุดรวบรวมผู้ติดต่อใหม่ "
 "คุณสามารถเชื่อมต่อใหม่หรือใช้แบบฟอร์มอื่นได้ตลอดเวลา"
 
-#: src/Setup/Assets.php:220
+#: src/Setup/Assets.php:239
 #, fuzzy
 msgid "Don't see your plugin?"
 msgstr "ไม่เห็นปลั๊กอินของคุณใช่ไหม?"
 
-#: src/Setup/Assets.php:122
+#: src/Setup/Assets.php:140
 #, fuzzy
 msgid "E-Commerce"
 msgstr "อีคอมเมิร์ซ"
@@ -344,30 +362,41 @@ msgstr ""
 "เพิ่มหรือเชื่อมต่อแบบฟอร์มที่มีอยู่ได้อย่างง่ายดาย, อัตโนมัติ WooCommerce, "
 "และซิงค์ผู้ติดต่อเพื่อเริ่มสร้างแคมเปญและเติบโตธุรกิจของคุณ"
 
-#: src/Setup/Assets.php:178
+#: src/Setup/Assets.php:197
 msgid "Edit form"
 msgstr "แก้ไขแบบฟอร์ม"
 
-#: src/Integrations/Elementor/ElementorIntegration.php:113
-#: src/Setup/Assets.php:185
+#: src/Integrations/Elementor/ElementorIntegration.php:138
+#: src/Setup/Assets.php:204
 msgid "Elementor"
 msgstr "Elementor"
 
-#: src/Blocks/SubscriptionFormBlock.php:75
+#: src/Blocks/SubscriptionFormBlock.php:85
 #: src/Integrations/Elementor/SubscriptionFormElementorWidget.php:106
 msgid "Email"
 msgstr "อีเมล"
 
-#: src/Setup/Assets.php:101
+#: src/Setup/Assets.php:119
 msgid "Email marketing background with gradient design"
 msgstr "พื้นหลังการตลาดทางอีเมลพร้อมการออกแบบไล่ระดับสี"
 
-#: src/Setup/Assets.php:102
+#: src/Setup/Assets.php:120
 msgid ""
 "Email marketing illustration featuring envelopes and communication icons"
 msgstr "ภาพประกอบการตลาดทางอีเมลที่มีซองจดหมายและไอคอนการสื่อสาร"
 
-#: src/Setup/Assets.php:108
+#: src/Setup/Assets.php:94
+#, fuzzy
+msgid ""
+"Email marketing that doesn't need an expert: Let AI write, design, and send "
+"your campaigns - your brand, your colors, applied automatically. No coding, "
+"no complexity."
+msgstr ""
+"การตลาดทางอีเมลที่ไม่ต้องใช้ผู้เชี่ยวชาญ: ให้ AI เขียน ออกแบบ "
+"และส่งแคมเปญของคุณ - แบรนด์ของคุณ สีของคุณ ถูกนำไปใช้โดยอัตโนมัติ "
+"ไม่ต้องเขียนโค้ด ไม่ต้องมีความซับซ้อน"
+
+#: src/Setup/Assets.php:126
 msgid "Emails"
 msgstr "อีเมล"
 
@@ -378,11 +407,11 @@ msgstr "อีเมล"
 msgid "Enter tag name and press Enter or click Add Tag"
 msgstr "ป้อนชื่อแท็กแล้วกด Enter หรือคลิก เพิ่มแท็ก"
 
-#: src/Setup/Assets.php:186
+#: src/Setup/Assets.php:205
 msgid "Expand {pluginName} details"
 msgstr "ขยายรายละเอียด {pluginName}"
 
-#: src/Setup/Assets.php:138
+#: src/Setup/Assets.php:156
 msgid "FAQ"
 msgstr "คำถามที่พบบ่อย"
 
@@ -390,7 +419,7 @@ msgstr "คำถามที่พบบ่อย"
 msgid "Form"
 msgstr "แบบฟอร์ม"
 
-#: src/Setup/Assets.php:224
+#: src/Setup/Assets.php:243
 #, fuzzy
 msgid "Form Builder"
 msgstr "ผู้สร้างแบบฟอร์ม"
@@ -407,20 +436,28 @@ msgstr "รหัสแบบฟอร์ม"
 msgid "Forminator"
 msgstr "ฟอร์มมิเนเตอร์"
 
-#: src/Setup/Assets.php:126
+#: src/Setup/Assets.php:144
 msgid "Forms"
 msgstr "แบบฟอร์ม"
 
-#: src/Setup/Assets.php:172
+#: src/Setup/Assets.php:190
 #, fuzzy
 msgid "Forms syncing with Reach"
 msgstr "การซิงค์แบบฟอร์มกับ Reach"
 
-#: src/Setup/Assets.php:179
+#: src/Setup/Assets.php:103
+msgid "Generate an API token"
+msgstr ""
+
+#: src/Setup/Assets.php:104
+msgid "Go to"
+msgstr ""
+
+#: src/Setup/Assets.php:198
 msgid "Go to plugin"
 msgstr "ไปที่ปลั๊กอิน"
 
-#: src/Setup/Assets.php:99
+#: src/Setup/Assets.php:117
 #: frontend/blocks/subscription-block/src/Components/Dialog.js:42
 #: frontend/dist/blocks/subscription.js:1
 #: frontend/dist/blocks/subscription.js:87
@@ -433,16 +470,20 @@ msgid "Hostinger"
 msgstr "Hostinger"
 
 #. Plugin Name of the plugin
-#: hostinger-reach.php src/Admin/Menus.php:71
+#: hostinger-reach.php src/Admin/Menus.php:50 src/Admin/Menus.php:106
 #: src/Admin/Notices/AddFormNotice.php:90
 #: src/Admin/Notices/ConnectionNotice.php:110
 #: src/Integrations/Elementor/SubscriptionFormElementorWidget.php:20
-#: src/Integrations/Reach/ReachFormIntegration.php:71 src/Setup/Assets.php:100
-#: src/Setup/Assets.php:182
+#: src/Integrations/Reach/ReachFormIntegration.php:71 src/Setup/Assets.php:118
+#: src/Setup/Assets.php:201
 msgid "Hostinger Reach"
 msgstr "Hostinger Reach"
 
-#: src/Setup/Assets.php:146
+#: src/Setup/Assets.php:105
+msgid "Hostinger Reach Integrations → API Tokens"
+msgstr ""
+
+#: src/Setup/Assets.php:164
 #, fuzzy
 msgid ""
 "Hostinger Reach is a Hostinger service that helps you create and send "
@@ -456,7 +497,7 @@ msgstr ""
 "ช่วยให้คุณสามารถเชื่อมต่อและซิงค์รายชื่อผู้ติดต่อจากปลั๊กอิน WordPress "
 "ที่คุณชื่นชอบเข้าสู่ Reach ได้อย่างง่ายดาย"
 
-#: src/Setup/Assets.php:140
+#: src/Setup/Assets.php:158
 msgid ""
 "Hostinger Reach is an AI-powered email marketing tool for small businesses "
 "and creators. It supports your entire email marketing journey—from building "
@@ -466,7 +507,7 @@ msgstr ""
 "สำหรับธุรกิจขนาดเล็กและผู้สร้างสรรค์ "
 "มันรองรับการเดินทางทั้งหมดของการตลาดทางอีเมลของคุณ—ตั้งแต่การสร้างรายชื่อผู้ติดต่อไปจนถึงการส่งแคมเปญและการติดตามผลลัพธ์"
 
-#: src/Setup/Assets.php:142
+#: src/Setup/Assets.php:160
 msgid ""
 "Hostinger Reach is built for simplicity, speed, and results – no design or "
 "marketing experience needed. Unlike most email tools, at the core of Reach "
@@ -506,21 +547,21 @@ msgstr "โลโก้ Hostinger Reach"
 msgid "Hostinger Reach requires minimum PHP version of <b>%s</b>. "
 msgstr "Hostinger Reach ต้องการเวอร์ชัน PHP ขั้นต่ำ <b>%s</b>"
 
-#: src/Setup/Assets.php:151
+#: src/Setup/Assets.php:169
 #, fuzzy
 msgid "How are segments and tags created?"
 msgstr "ส่วนและแท็กถูกสร้างขึ้นอย่างไร?"
 
-#: src/Setup/Assets.php:147
+#: src/Setup/Assets.php:165
 #, fuzzy
 msgid "How does contact syncing work?"
 msgstr "การซิงค์ข้อมูลการติดต่อทำงานอย่างไร?"
 
-#: src/Setup/Assets.php:141
+#: src/Setup/Assets.php:159
 msgid "How is Hostinger Reach different from other email marketing apps?"
 msgstr "Hostinger Reach แตกต่างจากแอปการตลาดทางอีเมลอื่น ๆ อย่างไร?"
 
-#: src/Setup/Assets.php:143
+#: src/Setup/Assets.php:161
 msgid "How much does it cost to use Hostinger Reach?"
 msgstr "ค่าใช้จ่ายในการใช้ Hostinger Reach เท่าไหร่?"
 
@@ -539,7 +580,7 @@ msgstr "https://hostinger.com"
 msgid "https://www.hostinger.com/email-marketing"
 msgstr "https://www.hostinger.com/email-marketing"
 
-#: src/Setup/Assets.php:154
+#: src/Setup/Assets.php:172
 #, fuzzy
 msgid ""
 "If the integration is interrupted, syncing pauses automatically. Once the "
@@ -550,7 +591,7 @@ msgstr ""
 "เมื่อการเชื่อมต่อกลับมา การซิงค์จะดำเนินการต่อโดยอัตโนมัติ "
 "คุณจึงสามารถเก็บรวบรวมรายชื่อผู้ติดต่อต่อไปได้โดยไม่สูญเสียข้อมูล"
 
-#: src/Setup/Assets.php:239
+#: src/Setup/Assets.php:258
 #, fuzzy
 msgid ""
 "If your store isn’t ready yet, complete the setup to start selling and "
@@ -559,42 +600,42 @@ msgstr ""
 "หากร้านค้าของคุณยังไม่พร้อม "
 "กรุณาดำเนินการตั้งค่าให้เสร็จสมบูรณ์เพื่อเริ่มขายและเก็บรวบรวมข้อมูลติดต่อ"
 
-#: src/Setup/Assets.php:207
+#: src/Setup/Assets.php:226
 #, fuzzy
 msgid "Import"
 msgstr "นำเข้า"
 
-#: src/Setup/Assets.php:203
+#: src/Setup/Assets.php:222
 #, fuzzy
 msgid "Import Contacts"
 msgstr "นำเข้าผู้ติดต่อ"
 
-#: src/Setup/Assets.php:166
+#: src/Setup/Assets.php:184
 #, fuzzy
 msgid "Import contacts"
 msgstr "นำเข้าผู้ติดต่อ"
 
-#: src/Setup/Assets.php:205
+#: src/Setup/Assets.php:224
 #, fuzzy
 msgid "Import your existing contacts to Reach"
 msgstr "นำเข้าผู้ติดต่อที่มีอยู่ของคุณไปยัง Reach"
 
-#: src/Setup/Assets.php:215
+#: src/Setup/Assets.php:234
 #, fuzzy
 msgid "Imported"
 msgstr "นำเข้า"
 
-#: src/Api/Handlers/IntegrationsApiHandler.php:122
+#: src/Api/Handlers/IntegrationsApiHandler.php:123
 #, fuzzy
 msgid "Importing is not available for this integration"
 msgstr "การนำเข้าไม่พร้อมใช้งานสำหรับการผสานนี้"
 
-#: src/Setup/Assets.php:217
+#: src/Setup/Assets.php:236
 #, fuzzy
 msgid "Importing..."
 msgstr "กำลังนำเข้า..."
 
-#: src/Setup/Assets.php:176
+#: src/Setup/Assets.php:195
 msgid "Inactive"
 msgstr "ไม่ทำงาน"
 
@@ -605,16 +646,16 @@ msgstr "ไม่ทำงาน"
 msgid "Inline"
 msgstr "อินไลน์"
 
-#: src/Setup/Assets.php:199
+#: src/Setup/Assets.php:218
 #, fuzzy
 msgid "Install"
 msgstr "ติดตั้ง"
 
-#: src/Setup/Assets.php:200
+#: src/Setup/Assets.php:219
 msgid "Install and connect"
 msgstr "ติดตั้งและเชื่อมต่อ"
 
-#: src/Setup/Assets.php:198
+#: src/Setup/Assets.php:217
 msgid "Installed plugins"
 msgstr "ติดตั้งปลั๊กอิน"
 
@@ -623,12 +664,12 @@ msgstr "ติดตั้งปลั๊กอิน"
 msgid "Integrate your WordPress site with Hostinger Reach."
 msgstr "ผสานเว็บไซต์ WordPress ของคุณกับ Hostinger Reach"
 
-#: src/Setup/Assets.php:121
+#: src/Setup/Assets.php:139
 #, fuzzy
 msgid "Integrations"
 msgstr "การผสานรวม"
 
-#: src/Setup/Assets.php:221
+#: src/Setup/Assets.php:240
 #, fuzzy
 msgid ""
 "It may not be supported yet. You can upload contacts as a CSV or use another "
@@ -637,7 +678,7 @@ msgstr ""
 "อาจยังไม่รองรับ คุณสามารถอัปโหลดรายชื่อผู้ติดต่อในรูปแบบ CSV "
 "หรือใช้ปลั๊กอินอื่น"
 
-#: src/Setup/Assets.php:219
+#: src/Setup/Assets.php:238
 #, fuzzy
 #| msgid "It was an error syncing your contacts to Reach."
 msgid "It was an error importing your contacts to Reach."
@@ -657,51 +698,55 @@ msgstr "เลย์เอาต์"
 msgid "Layout Settings"
 msgstr "การตั้งค่าเลย์เอาต์"
 
-#: src/Admin/Notices/ConnectionNotice.php:103 src/Setup/Assets.php:236
+#: src/Admin/Notices/ConnectionNotice.php:103 src/Setup/Assets.php:255
 #, fuzzy
 msgid "Learn more"
 msgstr "เรียนรู้เพิ่มเติม"
 
-#: src/Setup/Assets.php:193
+#: src/Setup/Assets.php:212
 msgid ""
 "Make sure the people you contact expect your emails and are okay with "
 "receiving them."
 msgstr ""
 "ตรวจสอบให้แน่ใจว่าผู้ที่ติดต่อของคุณรอคอยอีเมลของคุณและยินดีที่จะรับอีเมลเหล่านั้น"
 
-#: src/Setup/Assets.php:96
+#: src/Setup/Assets.php:99
 msgid "Manage"
 msgstr "จัดการ"
 
-#: src/Setup/Assets.php:235
+#: src/Setup/Assets.php:254
 #, fuzzy
 msgid "Manage automations"
 msgstr "จัดการระบบอัตโนมัติ"
 
-#: src/Setup/Assets.php:135 src/Setup/Assets.php:237
+#: src/Setup/Assets.php:153 src/Setup/Assets.php:256
 #, fuzzy
 msgid "Manage plugin"
 msgstr "จัดการปลั๊กอิน"
 
-#: src/Setup/Assets.php:131
+#: src/Setup/Assets.php:149
 #, fuzzy
 msgid "More plugins"
 msgstr "ปลั๊กอินเพิ่มเติม"
 
-#: src/Blocks/SubscriptionFormBlock.php:83
+#: src/Blocks/SubscriptionFormBlock.php:93
 #: src/Integrations/Elementor/SubscriptionFormElementorWidget.php:114
 msgid "Name"
 msgstr "ชื่อ"
 
-#: src/Setup/Assets.php:194
+#: src/Setup/Assets.php:107
+msgid "Name your token, then click <strong>Generate token</strong>"
+msgstr ""
+
+#: src/Setup/Assets.php:213
 msgid "New contact form"
 msgstr "แบบฟอร์มติดต่อใหม่"
 
-#: src/Setup/Assets.php:136
+#: src/Setup/Assets.php:154
 msgid "New page"
 msgstr "หน้าใหม่"
 
-#: src/Setup/Assets.php:115
+#: src/Setup/Assets.php:133
 msgid "New subscribers"
 msgstr "สมาชิกใหม่"
 
@@ -722,30 +767,30 @@ msgstr "นินจาฟอร์ม"
 msgid "No"
 msgstr "ไม่"
 
-#: src/Setup/Assets.php:188
+#: src/Setup/Assets.php:207
 msgid "No forms found for this integration."
 msgstr "ไม่พบแบบฟอร์มสำหรับการผสานนี้"
 
-#: src/Setup/Assets.php:137
+#: src/Setup/Assets.php:155
 msgid "No pages available. Create a new page to get started."
 msgstr "ไม่มีหน้าที่ใช้งานได้ สร้างหน้าใหม่เพื่อเริ่มต้น"
 
-#: src/Setup/Assets.php:216
+#: src/Setup/Assets.php:235
 #, fuzzy
 msgid "Not imported"
 msgstr "ไม่ได้นำเข้า"
 
-#: src/Setup/Assets.php:168
+#: src/Setup/Assets.php:186
 #, fuzzy
 msgid "Not needed"
 msgstr "ไม่จำเป็น"
 
-#: src/Setup/Assets.php:173
+#: src/Setup/Assets.php:192
 #, fuzzy
 msgid "of"
 msgstr "ของ"
 
-#: src/Setup/Assets.php:148
+#: src/Setup/Assets.php:166
 #, fuzzy
 msgid ""
 "Once you connect a form plugin you use on WordPress (such as Elementor or "
@@ -759,7 +804,7 @@ msgstr ""
 " Reach ของคุณโดยอัตโนมัติ "
 "ทำให้ข้อมูลติดต่อของคุณถูกรวบรวมและอัปเดตโดยไม่ต้องส่งออกด้วยตนเองในแต่ละครั้งที่มีการส่งแบบฟอร์ม"
 
-#: src/Setup/Assets.php:155
+#: src/Setup/Assets.php:173
 msgid "opens in new tab"
 msgstr "เปิดในแท็บใหม่"
 
@@ -768,45 +813,44 @@ msgstr "เปิดในแท็บใหม่"
 msgid "OptinMonster"
 msgstr "OptinMonster"
 
-#: src/Setup/Assets.php:130
+#: src/Setup/Assets.php:148
 #, fuzzy
 msgid "or connect a form plugin"
 msgstr "หรือเชื่อมต่อปลั๊กอินแบบฟอร์ม"
 
-#: src/Setup/Assets.php:214
+#: src/Setup/Assets.php:233
 #, fuzzy
 msgid "Partially imported"
 msgstr "นำเข้าบางส่วน"
 
-#: src/Setup/Assets.php:104
+#: src/Setup/Assets.php:110
+msgid "Paste your API token here"
+msgstr ""
+
+#: src/Setup/Assets.php:122
 #, fuzzy
 msgid "Plan & Limits"
 msgstr "แผน & ข้อจำกัด"
 
-#: src/Setup/Assets.php:170
+#: src/Setup/Assets.php:188
 msgid "Plugin"
 msgstr "ปลั๊กอิน"
 
-#: src/Setup/Assets.php:190
+#: src/Setup/Assets.php:209
 msgid "Plugin connected successfully"
 msgstr "ปลั๊กอินเชื่อมต่อสำเร็จ"
 
-#: src/Setup/Assets.php:191
+#: src/Setup/Assets.php:210
 msgid "Plugin disconnected successfully"
 msgstr "ปลั๊กอินถูกปิดการเชื่อมต่อสำเร็จ"
 
 #: src/Integrations/WooCommerce/WooCommerceIntegration.php:123
-#: src/Setup/Assets.php:230
+#: src/Setup/Assets.php:249
 #, fuzzy
 msgid "Purchases"
 msgstr "การซื้อ"
 
-#: src/Admin/Menus.php:34
-#, fuzzy
-msgid "Reach"
-msgstr "การเข้าถึง"
-
-#: src/Setup/Assets.php:152
+#: src/Setup/Assets.php:170
 #, fuzzy
 msgid ""
 "Reach automatically tags synced contacts using the form name and also "
@@ -827,11 +871,11 @@ msgstr ""
 " Reach โดยอัตโนมัติ ทำให้ง่ายต่อการส่งแคมเปญไปยังกลุ่มเป้าหมายเฉพาะ — "
 "และคุณสามารถจัดการหรือสร้างเซ็กเมนต์เพิ่มเติมได้ตลอดเวลาใน Reach"
 
-#: src/Setup/Assets.php:94
+#: src/Setup/Assets.php:97
 msgid "Reach is already connected to another site."
 msgstr "Reach ได้เชื่อมต่อกับอีกไซต์หนึ่งแล้ว"
 
-#: src/Setup/Assets.php:144
+#: src/Setup/Assets.php:162
 #| msgid ""
 #| "Reach offers a free plan for one year– perfect for getting started. Paid "
 #| "plans are based on how many unique contacts you aim to reach and how many "
@@ -860,16 +904,21 @@ msgstr ""
 msgid "Reach Subscription Form"
 msgstr "แบบฟอร์มสมัครสมาชิก"
 
-#: src/Setup/Assets.php:110
+#: src/Setup/Assets.php:128
 msgid "Remaining"
 msgstr "คงเหลือ"
 
-#: src/Setup/Assets.php:106
+#: src/Setup/Assets.php:116
+#, fuzzy
+msgid "Review domain"
+msgstr "โดเมนทบทวน"
+
+#: src/Setup/Assets.php:124
 #, fuzzy
 msgid "Segments"
 msgstr "เซ็กเมนต์"
 
-#: src/Setup/Assets.php:160
+#: src/Setup/Assets.php:178
 msgid "Select page"
 msgstr "เลือกหน้า"
 
@@ -884,16 +933,16 @@ msgstr ""
 "และสร้างกลุ่มเป้าหมายด้วยระบบ AI. ด้วย Hostinger Reach, "
 "การขยายฐานผู้ชมของคุณเป็นเรื่องง่าย."
 
-#: src/Setup/Assets.php:109 src/Setup/Assets.php:112
+#: src/Setup/Assets.php:127 src/Setup/Assets.php:130
 msgid "Sent"
 msgstr "ส่งแล้ว"
 
-#: src/Setup/Assets.php:240
+#: src/Setup/Assets.php:259
 #, fuzzy
 msgid "Set up WooCommerce"
 msgstr "ติดตั้ง WooCommerce"
 
-#: src/Setup/Assets.php:120 frontend/blocks/subscription-block/src/edit.js:184
+#: src/Setup/Assets.php:138 frontend/blocks/subscription-block/src/edit.js:184
 #: frontend/dist/blocks/subscription.js:1
 #: frontend/dist/blocks/subscription.js:290
 msgid "Settings"
@@ -921,24 +970,24 @@ msgstr "แสดงนามสกุล"
 msgid "Show Surname Field?"
 msgstr "แสดงช่องนามสกุลหรือไม่?"
 
-#: src/Setup/Assets.php:90
+#: src/Setup/Assets.php:92
 msgid "Something went wrong"
 msgstr "เกิดข้อผิดพลาด"
 
-#: src/Api/Handlers/ApiHandler.php:36 src/Blocks/SubscriptionFormBlock.php:21
+#: src/Api/Handlers/ApiHandler.php:36 src/Blocks/SubscriptionFormBlock.php:30
 msgid "Something went wrong. Please try again."
 msgstr "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง"
 
-#: src/Setup/Assets.php:174 src/Setup/Assets.php:227
+#: src/Setup/Assets.php:193 src/Setup/Assets.php:246
 msgid "Status"
 msgstr "สถานะ"
 
-#: src/Setup/Assets.php:226
+#: src/Setup/Assets.php:245
 #, fuzzy
 msgid "Store Events"
 msgstr "กิจกรรมร้านค้า"
 
-#: src/Blocks/SubscriptionFormBlock.php:99
+#: src/Blocks/SubscriptionFormBlock.php:110
 #: src/Integrations/Elementor/SubscriptionFormElementorWidget.php:130
 msgid "Subscribe"
 msgstr "สมัครสมาชิก"
@@ -953,11 +1002,16 @@ msgstr "สมัครสมาชิกจดหมายข่าวของ
 msgid "Subscribe to our newsletter"
 msgstr "สมัครสมาชิกจดหมายข่าวของเรา"
 
-#: src/Setup/Assets.php:114
+#: src/Setup/Assets.php:132
 msgid "Subscribers"
 msgstr "ผู้สมัครสมาชิก"
 
-#: src/Setup/Assets.php:196
+#: src/Blocks/SubscriptionFormBlock.php:125
+#, fuzzy
+msgid "Subscription form is not available at the moment"
+msgstr "แบบฟอร์มสมัครสมาชิกไม่พร้อมใช้งานในขณะนี้"
+
+#: src/Setup/Assets.php:215
 #, fuzzy
 #| msgid "View supported plugins"
 msgid "Supported plugins"
@@ -968,12 +1022,12 @@ msgstr "ดูปลั๊กอินที่รองรับ"
 msgid "Sure Forms"
 msgstr "ฟอร์มสำเร็จรูป"
 
-#: src/Blocks/SubscriptionFormBlock.php:91
+#: src/Blocks/SubscriptionFormBlock.php:101
 #: src/Integrations/Elementor/SubscriptionFormElementorWidget.php:122
 msgid "Surname"
 msgstr "นามสกุล"
 
-#: src/Setup/Assets.php:169
+#: src/Setup/Assets.php:187
 #, fuzzy
 msgid "Sync"
 msgstr "ซิงค์"
@@ -985,11 +1039,11 @@ msgstr "ซิงค์"
 msgid "Tags"
 msgstr "แท็ก"
 
-#: src/Blocks/SubscriptionFormBlock.php:20
+#: src/Blocks/SubscriptionFormBlock.php:29
 msgid "Thanks for subscribing."
 msgstr "ขอบคุณที่สมัคร"
 
-#: src/Setup/Assets.php:218
+#: src/Setup/Assets.php:237
 #, fuzzy
 #| msgid "The selected contacts are being synced to Reach."
 msgid "The selected contacts are being imported to Reach."
@@ -1004,7 +1058,7 @@ msgstr ""
 "แบบฟอร์มนี้ไม่มีช่องอีเมล "
 "กรุณาสร้างช่องอีเมลในแบบฟอร์มเพื่อให้สามารถซิงค์กับ Reach ได้"
 
-#: src/Setup/Assets.php:241
+#: src/Setup/Assets.php:260
 #, fuzzy
 msgid ""
 "This form is a Reach native form inserted directly in your page. For "
@@ -1013,7 +1067,7 @@ msgstr ""
 "แบบฟอร์มนี้เป็นแบบฟอร์มของ Reach ที่ฝังอยู่ในหน้าของคุณโดยตรง "
 "หากต้องการปิดการใช้งาน ให้ลบแบบฟอร์มออกจากหน้าโดยตรงโดยใช้ตัวแก้ไข"
 
-#: src/Setup/Assets.php:93
+#: src/Setup/Assets.php:95
 #, fuzzy
 msgid ""
 "This is a temporary domain. In order to connect WordPress to Reach you need "
@@ -1022,7 +1076,7 @@ msgstr ""
 "นี่คือโดเมนชั่วคราว ในการเชื่อมต่อ WordPress กับ Reach "
 "คุณจำเป็นต้องเชื่อมต่อโดเมนของคุณ"
 
-#: src/Setup/Assets.php:103
+#: src/Setup/Assets.php:121
 msgid "This month"
 msgstr "เดือนนี้"
 
@@ -1032,11 +1086,11 @@ msgstr "เดือนนี้"
 msgid "Thrive Leads"
 msgstr "Thrive Leads"
 
-#: src/Setup/Assets.php:117
+#: src/Setup/Assets.php:135
 msgid "Total subscribers"
 msgstr "จำนวนผู้สมัครสมาชิกทั้งหมด"
 
-#: src/Setup/Assets.php:233
+#: src/Setup/Assets.php:252
 #, fuzzy
 msgid ""
 "Tracks abandoned carts so you can trigger email automations in Reach when "
@@ -1045,7 +1099,7 @@ msgstr ""
 "ติดตามตะกร้าสินค้าที่ถูกทิ้งไว้เพื่อให้คุณสามารถกระตุ้นการส่งอีเมลอัตโนมัติใน"
 " Reach ได้เมื่อเปิดใช้งาน"
 
-#: src/Setup/Assets.php:231
+#: src/Setup/Assets.php:250
 #, fuzzy
 msgid ""
 "Tracks purchases so you can trigger email automations in Reach when enabled."
@@ -1060,53 +1114,58 @@ msgstr ""
 msgid "Unique identifier for this form"
 msgstr "รหัสประจำตัวที่ไม่ซ้ำกันสำหรับแบบฟอร์มนี้"
 
-#: src/Setup/Assets.php:116
+#: src/Setup/Assets.php:134
 msgid "Unsubscribes"
 msgstr "ยกเลิกการสมัคร"
 
-#: src/Setup/Assets.php:107
+#: src/Setup/Assets.php:125
 msgid "Upgrade"
 msgstr "อัปเกรด"
 
-#: src/Setup/Assets.php:222
+#: src/Setup/Assets.php:241
 #, fuzzy
 msgid "Upload as CSV"
 msgstr "อัปโหลดเป็น CSV"
 
-#: src/Setup/Assets.php:158
+#: src/Setup/Assets.php:176
 msgid "usage statistics"
 msgstr "สถิติการใช้งาน"
 
-#: src/Setup/Assets.php:177
+#: src/Setup/Assets.php:196
 msgid "View form"
 msgstr "ดูแบบฟอร์ม"
 
-#: src/Setup/Assets.php:197
+#: src/Setup/Assets.php:216
 #, fuzzy
 msgid "View more supported plugins"
 msgstr "ดูปลั๊กอินที่รองรับเพิ่มเติม"
 
-#: src/Setup/Assets.php:91
+#: src/Setup/Assets.php:93
 msgid "Welcome to Reach"
 msgstr "ยินดีต้อนรับสู่ Reach"
 
-#: src/Setup/Assets.php:153
+#: src/Setup/Assets.php:171
 #, fuzzy
 msgid "What happens if the connection breaks?"
 msgstr "จะเกิดอะไรขึ้นหากการเชื่อมต่อถูกตัดขาด?"
 
-#: src/Setup/Assets.php:139
+#: src/Setup/Assets.php:157
 msgid "What is Hostinger Reach email marketing service?"
 msgstr "บริการการตลาดทางอีเมล Hostinger Reach คืออะไร?"
 
-#: src/Setup/Assets.php:145
+#: src/Setup/Assets.php:163
 #, fuzzy
 msgid ""
 "What's the difference between Hostinger Reach and Hostinger Reach WordPress "
 "Plugin?"
 msgstr "Hostinger Reach และ Hostinger Reach WordPress Plugin ต่างกันอย่างไร?"
 
-#: src/Setup/Assets.php:149
+#: src/Setup/Assets.php:191
+#, fuzzy
+msgid "When syncing is off, collected Contacts will not be sent to Reach."
+msgstr "เมื่อการซิงค์ปิดอยู่ รายชื่อที่เก็บรวบรวมไว้จะไม่ถูกส่งไปยัง Reach"
+
+#: src/Setup/Assets.php:167
 #, fuzzy
 msgid "Will contacts be added to my email list automatically?"
 msgstr "รายชื่อผู้ติดต่อจะถูกเพิ่มลงในรายชื่ออีเมลของฉันโดยอัตโนมัติหรือไม่?"
@@ -1121,12 +1180,12 @@ msgstr "วูคอมเมิร์ซ"
 msgid "WooCommerce Customers"
 msgstr "ลูกค้า WooCommerce"
 
-#: src/Setup/Assets.php:238
+#: src/Setup/Assets.php:257
 #, fuzzy
 msgid "WooCommerce Plugin Connected"
 msgstr "เชื่อมต่อปลั๊กอิน WooCommerce"
 
-#: src/Setup/Assets.php:167
+#: src/Setup/Assets.php:185
 #, fuzzy
 #| msgid "Would you like to sync contacts collected while sync was disabled?"
 msgid "Would you like to import contacts collected while sync was disabled?"
@@ -1134,7 +1193,7 @@ msgstr ""
 "คุณต้องการซิงค์รายชื่อที่เก็บรวบรวมไว้ในขณะที่การซิงค์ถูกปิดอยู่หรือไม่?"
 
 #: src/Integrations/WPFormsLite/WpFormsLiteIntegration.php:29
-#: src/Setup/Assets.php:184
+#: src/Setup/Assets.php:203
 msgid "WP Forms Lite"
 msgstr "WP Forms Lite"
 
@@ -1154,7 +1213,7 @@ msgstr "แบบฟอร์ม WS"
 msgid "Yes"
 msgstr "ใช่"
 
-#: src/Setup/Assets.php:150
+#: src/Setup/Assets.php:168
 #, fuzzy
 msgid ""
 "Yes — new subscribers are added automatically based on your setup. Some "
@@ -1195,7 +1254,7 @@ msgstr ""
 msgid "You are running <b>%s</b> PHP version."
 msgstr "คุณกำลังใช้งาน PHP เวอร์ชัน <b>%s</b>"
 
-#: src/Setup/Assets.php:206
+#: src/Setup/Assets.php:225
 #, fuzzy
 msgid ""
 "You can import existing contacts into Reach now to use them for your email "
@@ -1205,7 +1264,7 @@ msgstr ""
 "ได้ทันทีเพื่อใช้ในแคมเปญอีเมลของคุณ ผู้ติดต่อใหม่จะถูกซิงค์เข้าสู่ Reach "
 "โดยอัตโนมัติ"
 
-#: src/Setup/Assets.php:211
+#: src/Setup/Assets.php:230
 #, fuzzy
 #| msgid ""
 #| "You have not selected any forms to sync. Select which forms you want to "
@@ -1217,6 +1276,19 @@ msgstr ""
 "คุณยังไม่ได้เลือกแบบฟอร์มใด ๆ ที่จะซิงค์ "
 "กรุณาเลือกแบบฟอร์มที่คุณต้องการซิงค์ จากนั้นคลิกที่ปุ่ม ซิงค์ ด้านล่าง"
 
+#: src/Setup/Assets.php:109
+msgid "Your API token"
+msgstr ""
+
+#: src/Setup/Assets.php:96
+#, fuzzy
+msgid ""
+"Your domain is not active. In order to connect WordPress to Reach you need "
+"to have an active domain."
+msgstr ""
+"โดเมนของคุณไม่ใช้งานอยู่. เพื่อเชื่อมต่อ WordPress กับ Reach "
+"คุณต้องมีโดเมนที่ใช้งานอยู่."
+
 #: frontend/blocks/subscription-block/src/Components/Dialog.js:40
 #: frontend/dist/blocks/subscription.js:1
 #: frontend/dist/blocks/subscription.js:85
@@ -1227,6 +1299,7 @@ msgstr ""
 "เพื่อดำเนินการตั้งค่าให้เสร็จสมบูรณ์และสร้างเทมเพลต"
 
 #: src/Api/Handlers/ReachApiHandler.php:33
+#: src/Blocks/SubscriptionFormBlock.php:123
 #, fuzzy
 msgid "Your site is not connected to Reach. Connect to Reach and try again."
 msgstr ""

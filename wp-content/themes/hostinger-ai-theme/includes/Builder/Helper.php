@@ -8,6 +8,17 @@ use Automatic_Upgrader_Skin;
 defined( 'ABSPATH' ) || exit;
 
 class Helper {
+
+	const HOSTINGER_AI_THEME_GENERATED_ONCE_OPTION = 'hostinger_ai_site_generated_once';
+
+    private const LOG_PREFIX = '[hostinger-ai-theme] ';
+
+    public static function log( string $message ): void {
+        if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+            error_log( self::LOG_PREFIX . $message );
+        }
+    }
+
     /**
      * @param array $structure
      * @param array $element_data
@@ -79,6 +90,18 @@ class Helper {
 
         return $locale_map[ $wp_locale ] ?? 'English';
     }
+
+	public static function get_site_locale(): string {
+		$wp_locale = get_option( 'hostinger_ai_selected_language', 'en_US' );
+
+		return self::get_locale_name( $wp_locale );
+	}
+
+	public static function should_render_india_version(): bool {
+		$locale = self::get_site_locale();
+		$is_first_generation = ! get_option( self::HOSTINGER_AI_THEME_GENERATED_ONCE_OPTION, false );
+		return in_array( $locale, array( 'Hindi') ) && $is_first_generation;
+	}
 
     public static function get_locale_mapping(): array {
         return array(
@@ -249,15 +272,8 @@ class Helper {
     public static function install_and_set_language( string $locale = '' ): void {
         if ( $locale === 'en_US' ) {
             update_option( 'WPLANG', '' );
+            self::update_date_time_format_options( $locale );
             return;
-        }
-
-        if ( class_exists( '\LiteSpeed\Conf' ) ){
-            $conf = new \LiteSpeed\Conf();
-            $conf->update_confs( array( 'object-admin' => 0, 'object-transients' => 0 ) );
-
-            $purge = new \LiteSpeed\Purge();
-            $purge::purge_all('Hostinger AI Theme Generation');
         }
 
         require_once ABSPATH . 'wp-admin/includes/translation-install.php';
@@ -290,7 +306,13 @@ class Helper {
         if ( $language_set ) {
             unload_textdomain( 'default' );
             load_default_textdomain( $locale );
+        } else {
+            if ( ! is_textdomain_loaded( 'default' ) ) {
+                load_default_textdomain( $locale );
+            }
         }
+
+        self::update_date_time_format_options( $locale );
 
         wp_clean_update_cache();
         wp_version_check();
@@ -324,5 +346,60 @@ class Helper {
                 }
             }
         }
+    }
+
+    private static function update_date_time_format_options( string $locale ): void {
+        $defaults     = self::get_locale_date_time_defaults();
+        $default_date = 'F j, Y';
+        $default_time = 'g:i a';
+
+        if ( $locale === 'en_US' ) {
+            $date_format = $default_date;
+            $time_format = $default_time;
+        } else {
+            $translated_date = __( 'F j, Y' );
+            $translated_time = __( 'g:i a' );
+
+            $date_format = ( $translated_date !== $default_date )
+                ? $translated_date
+                : ( $defaults[ $locale ]['date_format'] ?? $default_date );
+
+            $time_format = ( $translated_time !== $default_time )
+                ? $translated_time
+                : ( $defaults[ $locale ]['time_format'] ?? $default_time );
+        }
+
+        update_option( 'date_format', $date_format );
+        update_option( 'time_format', $time_format );
+    }
+
+    private static function get_locale_date_time_defaults(): array {
+        return array(
+            'id_ID' => array( 'date_format' => 'j F Y',    'time_format' => 'H:i' ),
+            'lt_LT' => array( 'date_format' => 'Y-m-d',    'time_format' => 'G:i' ),
+            'tr_TR' => array( 'date_format' => 'j F Y',    'time_format' => 'H:i' ),
+            'de_DE' => array( 'date_format' => 'j. F Y',   'time_format' => 'H:i' ),
+            'nl_NL' => array( 'date_format' => 'j F Y',    'time_format' => 'H:i' ),
+            'uk'    => array( 'date_format' => 'j F Y',    'time_format' => 'H:i' ),
+            'en_US' => array( 'date_format' => 'F j, Y',   'time_format' => 'g:i a' ),
+            'pl_PL' => array( 'date_format' => 'j F Y',    'time_format' => 'H:i' ),
+            'th'    => array( 'date_format' => 'j F Y',    'time_format' => 'H:i' ),
+            'es_AR' => array( 'date_format' => 'j de F de Y', 'time_format' => 'H:i' ),
+            'pt_PT' => array( 'date_format' => 'j de F de Y', 'time_format' => 'H:i' ),
+            'zh_CN' => array( 'date_format' => 'Y年n月j日',  'time_format' => 'ag:i' ),
+            'es_CO' => array( 'date_format' => 'j de F de Y', 'time_format' => 'H:i' ),
+            'pt_BR' => array( 'date_format' => 'j \\d\\e F \\d\\e Y', 'time_format' => 'H:i' ),
+            'hi_IN' => array( 'date_format' => 'j F Y',    'time_format' => 'g:i a' ),
+            'es_MX' => array( 'date_format' => 'j de F de Y', 'time_format' => 'H:i' ),
+            'ro_RO' => array( 'date_format' => 'j F Y',    'time_format' => 'H:i' ),
+            'es_ES' => array( 'date_format' => 'j de F de Y', 'time_format' => 'H:i' ),
+            'ar'    => array( 'date_format' => 'j F Y',    'time_format' => 'g:i a' ),
+            'fr_FR' => array( 'date_format' => 'j F Y',    'time_format' => 'H:i' ),
+            'he_IL' => array( 'date_format' => 'j בF Y',   'time_format' => 'H:i' ),
+            'it_IT' => array( 'date_format' => 'j F Y',    'time_format' => 'H:i' ),
+            'vi'    => array( 'date_format' => 'j F, Y',   'time_format' => 'H:i' ),
+            'ja'    => array( 'date_format' => 'Y年n月j日',  'time_format' => 'H:i' ),
+            'ko_KR' => array( 'date_format' => 'Y년 n월 j일', 'time_format' => 'a g:i' ),
+        );
     }
 }

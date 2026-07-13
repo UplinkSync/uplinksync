@@ -14,6 +14,22 @@ class Menus {
         add_action( 'admin_menu', array( $this, 'add_main_menu_page' ), 2 );
         add_filter( 'hostinger_menu_subpages', array( $this, 'add_sub_menu_page' ), 20 );
         add_filter( 'hostinger_admin_menu_bar_items', array( $this, 'add_admin_bar_items' ), 110 );
+        add_action( 'admin_menu', array( $this, 'maybe_remove_hostinger_menu' ), 999 );
+    }
+
+    public function maybe_remove_hostinger_menu(): void {
+        $submenus = apply_filters( 'hostinger_menu_subpages', array() );
+
+        $other_submenus = array_filter(
+            $submenus,
+            function ( $submenu ) {
+                return ( $submenu['menu_slug'] ?? '' ) !== 'hostinger-reach';
+            }
+        );
+
+        if ( empty( $other_submenus ) ) {
+            remove_menu_page( 'hostinger' );
+        }
     }
 
     public function add_main_menu_page(): void {
@@ -31,7 +47,7 @@ class Menus {
     public function add_sub_menu_page( array $submenus ): array {
         $submenus[] = array(
             'page_title' => $this->get_title(),
-            'menu_title' => __( 'Reach', 'hostinger-reach' ),
+            'menu_title' => __( 'Hostinger Reach', 'hostinger-reach' ),
             'capability' => 'manage_options',
             'menu_slug'  => 'hostinger-reach',
             'callback'   => array( $this, 'render_plugin_content' ),
@@ -56,8 +72,27 @@ class Menus {
     }
 
     public function render_plugin_content(): void {
-        echo wp_kses_post( WpMenu::renderMenuNavigation() );
-
+        $allowed_tags = array_merge(
+            wp_kses_allowed_html( 'post' ),
+            array(
+                'svg'  => array(
+                    'xmlns'   => true,
+                    'width'   => true,
+                    'height'  => true,
+                    'viewbox' => true,
+                    'fill'    => true,
+                    'class'   => true,
+                    'style'   => true,
+                ),
+                'path' => array(
+                    'fill-rule' => true,
+                    'clip-rule' => true,
+                    'd'         => true,
+                    'fill'      => true,
+                ),
+            )
+        );
+        echo wp_kses( WpMenu::renderMenuNavigation(), $allowed_tags );
         ?>
         <div id="hostinger-reach-app" class="hostinger-reach-app"></div>
         <?php

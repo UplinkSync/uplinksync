@@ -5,6 +5,7 @@ namespace Hostinger\AiTheme;
 use Hostinger\AiTheme\GutenbergBlocks\Booking\Booking;
 use Hostinger\AiTheme\GutenbergBlocks\AiContent\AiContent;
 use Hostinger\AiTheme\GutenbergBlocks\ContactForm\ContactForm;
+use Hostinger\AiTheme\GutenbergBlocks\Map\Map;
 
 class GutenbergBlocks {
     /**
@@ -16,6 +17,7 @@ class GutenbergBlocks {
         'BookingBlock' => Booking::class,
         'AiContent' => AiContent::class,
         'ContactForm' => ContactForm::class,
+        'Map' => Map::class,
         // Add more blocks here in future
     ];
 

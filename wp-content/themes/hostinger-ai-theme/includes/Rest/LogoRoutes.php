@@ -55,10 +55,13 @@ class LogoRoutes {
 
 		set_theme_mod( 'custom_logo', $attachment_id );
 
+		$attachment_url = wp_get_attachment_image_url( $attachment_id, 'full' );
+
 		$data = array(
 			'data' => array(
-				'logo_set'      => true,
-				'attachment_id' => $attachment_id,
+				'logo_set'       => true,
+				'attachment_id'  => $attachment_id,
+				'attachment_url' => $attachment_url,
 			),
 		);
 

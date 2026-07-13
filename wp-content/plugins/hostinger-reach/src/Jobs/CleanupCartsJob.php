@@ -21,7 +21,7 @@ class CleanupCartsJob extends AbstractBatchedJob implements RecurringJobInterfac
     }
 
     public function schedule( array $args = array() ): void {
-        // $this->schedule_create_batch_action( 1, $args );
+        $this->schedule_create_batch_action( 1, $args );
     }
 
     public function can_schedule( array $args = array() ): bool {
