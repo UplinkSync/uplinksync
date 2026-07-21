@@ -111,6 +111,22 @@ function uplinksync_child_enqueue_assets() {
 		array( 'uplinksync-tokens' ),
 		wp_get_theme()->get( 'Version' )
 	);
+
+	/**
+	 * ***-102: bind the brand layer to the Gutenberg block markup the parent
+	 * theme actually emits. brand.css targets `uls-*` utility classes intended
+	 * for an Elementor build; the live homepage is a block-theme page, so those
+	 * classes never appear and the section/card/button/hero/footer styling is
+	 * orphaned. brand-blocks.css re-expresses those visual-system.md rules against
+	 * the real block classes (wp-block-button__link, wp-block-cover,
+	 * hostinger-ai-service-*, the footer template part). Loaded last so it wins.
+	 */
+	wp_enqueue_style(
+		'uplinksync-brand-blocks',
+		get_stylesheet_directory_uri() . '/assets/css/brand-blocks.css',
+		array( 'uplinksync-brand' ),
+		wp_get_theme()->get( 'Version' )
+	);
 }
 add_action( 'wp_enqueue_scripts', 'uplinksync_child_enqueue_assets', 20 );
 
