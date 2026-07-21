@@ -89,14 +89,18 @@ function uplinksync_contact_social_rewrite( $html ) {
 	 * on the way out, so the address kept rendering as "[email protected]"
 	 * against a /cdn-cgi/l/email-protection decoder that 404s.
 	 *
-	 * UPLINKSYNC_EMAIL_OFF/ON are Cloudflare's documented origin-side opt-out:
-	 * anything between those two comments is left alone by the obfuscator. So
-	 * we replace the anchor AND mark it exempt in the same pass.
+	 * Cloudflare documents an origin-side opt-out (<!--email_off-->), which is
+	 * applied by uplinksync_email_exempt_mailtos() as the LAST step of this
+	 * filter. It deliberately runs over the whole finished document rather than
+	 * only over the anchors built here: pages carry mailto: links this plugin
+	 * never touches -- /contact/ has one saved directly in the page content --
+	 * and those get obfuscated at the edge just the same. Exempting only our
+	 * own output fixed the home page and left /contact/ broken.
 	 *
 	 * The data-cfemail hash differs per page, hence the regex rather than a
 	 * literal, and both emitted forms are handled.
 	 * ------------------------------------------------------------------- */
-	$mailto = uplinksync_email_exempt( '<a href="mailto:' . $email . '">' . $email . '</a>' );
+	$mailto = '<a href="mailto:' . $email . '">' . $email . '</a>';
 
 	// Form A: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="...">[email protected]</a>
 	$html = preg_replace(
@@ -110,9 +114,14 @@ function uplinksync_contact_social_rewrite( $html ) {
 		$mailto,
 		$html
 	);
+	// The untranslated footer template emits <a href="mailto:trans-encoded_email">,
+	// so the label was being corrected while the link target kept the i18n key --
+	// a live anchor that mailed nobody. Repair the href before the labels.
+	$html = str_replace( 'mailto:trans-encoded_email', 'mailto:' . $email, $html );
+
 	// Any leftover literal placeholders / i18n keys, just in case.
 	$html = str_replace(
-		array( 'email@email.com', 'trans-contact_email' ),
+		array( 'email@email.com', 'trans-contact_email', 'trans-encoded_email' ),
 		$email,
 		$html
 	);
@@ -185,6 +194,10 @@ function uplinksync_contact_social_rewrite( $html ) {
 
 	$html = uplinksync_contact_linkify_email( $html );
 
+	// LAST: exempt every mailto: on the finished page from edge obfuscation.
+	// Must stay last so it also covers anchors introduced above.
+	$html = uplinksync_email_exempt_mailtos( $html );
+
 	return $html;
 }
 
@@ -252,9 +265,39 @@ function uplinksync_email_exempt( $fragment ) {
 }
 
 /**
- * Linkify a bare, unlinked contact address, exempting it from edge obfuscation
- * so it survives to the visitor. Never double-wraps an address that is already
- * inside an anchor.
+ * Wrap every mailto: anchor in the finished document in the Cloudflare opt-out.
+ *
+ * Scope is deliberately the whole page, not just the anchors this plugin
+ * builds. Any mailto: Cloudflare sees gets rewritten into a __cf_email__ span
+ * backed by a /cdn-cgi/l/email-protection decoder that 404s on this site, and
+ * plenty of the page's mailto: links come from saved page content or the theme
+ * rather than from here.
+ *
+ * Skips anchors already exempt so repeated passes are a no-op -- the output
+ * buffer filter can run more than once, and nested comments would break the
+ * markers.
+ */
+function uplinksync_email_exempt_mailtos( $html ) {
+	if ( false === stripos( $html, 'mailto:' ) ) {
+		return $html;
+	}
+	return preg_replace_callback(
+		'#(<!--email_off-->\s*)?<a\b[^>]*\bhref="mailto:[^"]*"[^>]*>.*?</a>#is',
+		function ( $m ) {
+			// Already wrapped — leave it exactly as it is.
+			if ( ! empty( $m[1] ) ) {
+				return $m[0];
+			}
+			return uplinksync_email_exempt( $m[0] );
+		},
+		$html
+	);
+}
+
+/**
+ * Linkify a bare, unlinked contact address. The edge-obfuscation exemption is
+ * applied afterwards by uplinksync_email_exempt_mailtos(), which sweeps the
+ * whole document. Never double-wraps an address already inside an anchor.
  */
 function uplinksync_contact_linkify_email( $html ) {
 	$email = UPLINKSYNC_CONTACT_EMAIL;
@@ -263,7 +306,7 @@ function uplinksync_contact_linkify_email( $html ) {
 	}
 	return preg_replace(
 		'#(?<!mailto:)(?<![\w.@-])' . preg_quote( $email, '#' ) . '(?![\w.@-])(?![^<]*</a>)#i',
-		uplinksync_email_exempt( '<a href="mailto:' . $email . '">' . $email . '</a>' ),
+		'<a href="mailto:' . $email . '">' . $email . '</a>',
 		$html
 	);
 }
