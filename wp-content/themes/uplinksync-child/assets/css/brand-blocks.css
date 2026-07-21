@@ -1,0 +1,122 @@
+/*
+ * UplinkSync brand layer — Gutenberg block bindings (***-102).
+ *
+ * WHY THIS FILE EXISTS
+ * --------------------
+ * brand.css was written against `uls-*` utility classes intended to be pasted
+ * into Elementor widgets' "Advanced > CSS Classes" fields (see the header of
+ * brand.css and docs/elementor-handoff-***-46.md). But the live homepage is
+ * NOT an Elementor build — it is a Gutenberg block theme page rendered by the
+ * parent `hostinger-ai-theme`. The rendered markup carries ZERO `uls-*`
+ * classes, so the entire brand.css section/card/button/hero/CTA/footer layer
+ * is orphaned on the live site: only the bare `:root` tokens and base
+ * h1/h2/h3/body typography from tokens.css take effect.
+ *
+ * The homepage block content lives in the WordPress database, not in this repo,
+ * so we cannot add `uls-*` classes to the markup from version control. Instead
+ * this sheet binds the visual-system.md rules directly onto the block classes
+ * the theme actually emits (`wp-block-button__link`, `wp-block-cover`,
+ * `hostinger-ai-service-*`, the footer template part, etc.). It is loaded after
+ * brand.css and is intentionally additive: it does not touch the `uls-*`
+ * classes, so an eventual Elementor path still works.
+ *
+ * Scope is deliberately narrow — content buttons, hero cover, service cards,
+ * section container width, and the footer — to avoid disturbing WooCommerce
+ * shop chrome, the block editor, or admin UI.
+ */
+
+/* ---------------------------------------------------------------------------
+ * Section 7 — Buttons.
+ * Brand primary = solid accent-600 fill (AA-safe with white text, 5.01:1),
+ * 8px radius, NO gradient, hover darken only. The theme ships buttons with a
+ * 50px pill radius as an inline style and default (non-brand) fills, so we
+ * establish a brand default here and normalize the radius. WooCommerce and
+ * form-submit buttons are excluded.
+ * ------------------------------------------------------------------------- */
+.wp-block-button__link:not(.wc-block-components-button):not([type="submit"]) {
+	background-color: var(--accent-600);
+	background-image: none;
+	color: var(--uplinksync-white);
+	border-radius: var(--radius-default) !important; /* overrides inline 50px pill */
+	box-shadow: none;
+	transition: background-color 0.15s ease;
+}
+.wp-block-button__link:not(.wc-block-components-button):not([type="submit"]):hover,
+.wp-block-button__link:not(.wc-block-components-button):not([type="submit"]):focus {
+	background-color: var(--navy-700); /* darken-only hover, no scale/gradient */
+	color: var(--uplinksync-white);
+	transform: none;
+}
+
+/* Secondary / outline buttons: when the editor marks a button "outline",
+   render it as navy outline on light, white outline on dark. */
+.wp-block-button.is-style-outline .wp-block-button__link {
+	background-color: transparent;
+	background-image: none;
+	border: 2px solid var(--navy-900);
+	color: var(--navy-900);
+}
+.wp-block-button.is-style-outline .wp-block-button__link:hover,
+.wp-block-button.is-style-outline .wp-block-button__link:focus {
+	border-color: var(--accent-600);
+	color: var(--accent-600);
+	background-color: transparent;
+}
+
+/* ---------------------------------------------------------------------------
+ * Section 5/8 — Hero overlay.
+ * Cover blocks used as hero imagery get a subtle navy overlay (10–25%) so
+ * headline text stays legible without abstracting the photo. The theme's own
+ * cover overlay (.wp-block-cover__background) is respected; we only clamp it
+ * into the brand's navy range when it is a solid/plain overlay.
+ * ------------------------------------------------------------------------- */
+.wp-block-cover .wp-block-cover__background.has-background-dim:not([class*="-gradient-"]) {
+	background-color: var(--navy-900);
+	opacity: 0.18; /* within the 10–25% band */
+}
+
+/* ---------------------------------------------------------------------------
+ * Section 4 — Content cards.
+ * Service cards: white surface, 1px grey-200 border, 8px radius, no heavy
+ * drop shadow. Bind onto the theme's service block classes.
+ * ------------------------------------------------------------------------- */
+.hostinger-ai-service-image,
+.hostinger-ai-service-title,
+.hostinger-ai-service-description {
+	color: var(--navy-900);
+}
+.hostinger-ai-service-image {
+	border: var(--border-card);
+	border-radius: var(--radius-default);
+	box-shadow: none;
+	overflow: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+ * Section 3 — Spacing & rhythm.
+ * Keep primary content columns within the 1200px max-width. Applied to the
+ * theme's constrained-layout groups so wide sections read as centered content
+ * rather than edge-to-edge text.
+ * ------------------------------------------------------------------------- */
+.is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
+	max-width: min(var(--content-max-width), 100%);
+}
+
+/* ---------------------------------------------------------------------------
+ * Section 4 — Footer.
+ * Footer template part: navy background, white text. The theme renders it via
+ * a color-2 preset group; pin it to brand navy-900 and force legible white
+ * link/text color.
+ * ------------------------------------------------------------------------- */
+.wp-block-template-part .wp-block-group.has-color-2-background-color,
+.site-footer .wp-block-group.has-color-2-background-color {
+	background-color: var(--navy-900);
+	color: var(--uplinksync-white);
+}
+.wp-block-template-part .wp-block-group.has-color-2-background-color a,
+.wp-block-template-part .wp-block-group.has-color-2-background-color h1,
+.wp-block-template-part .wp-block-group.has-color-2-background-color h2,
+.wp-block-template-part .wp-block-group.has-color-2-background-color h3,
+.wp-block-template-part .wp-block-group.has-color-2-background-color p {
+	color: var(--uplinksync-white);
+}
