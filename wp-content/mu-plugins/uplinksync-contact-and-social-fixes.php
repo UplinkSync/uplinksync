@@ -78,15 +78,25 @@ function uplinksync_contact_social_rewrite( $html ) {
 	$email = UPLINKSYNC_CONTACT_EMAIL;
 
 	/* ---------------------------------------------------------------------
-	 * 1. EMAIL — remove the broken Cloudflare obfuscation entirely.
+	 * 1. EMAIL — replace the broken Cloudflare obfuscation, and stop the edge
+	 *    from simply re-applying it.
 	 *
-	 * This site is not behind Cloudflare, so the /cdn-cgi/l/email-protection
-	 * decoder 404s and the address renders as "[email protected]". Replace the
-	 * whole anchor (both the span-class form and the "#hash" href-only form)
-	 * with a plain mailto:. The data-cfemail hash differs per page, hence the
-	 * regex rather than a literal.
+	 * The site IS behind Cloudflare (`server: cloudflare`, a cf-ray header, a
+	 * live /cdn-cgi/trace), and Scrape Shield's Email Address Obfuscation is
+	 * on for the zone. That rewrite happens at the EDGE, after WordPress has
+	 * rendered — which is why replacing the anchor here was never enough on
+	 * its own: we emitted a clean mailto: and Cloudflare obfuscated it again
+	 * on the way out, so the address kept rendering as "[email protected]"
+	 * against a /cdn-cgi/l/email-protection decoder that 404s.
+	 *
+	 * UPLINKSYNC_EMAIL_OFF/ON are Cloudflare's documented origin-side opt-out:
+	 * anything between those two comments is left alone by the obfuscator. So
+	 * we replace the anchor AND mark it exempt in the same pass.
+	 *
+	 * The data-cfemail hash differs per page, hence the regex rather than a
+	 * literal, and both emitted forms are handled.
 	 * ------------------------------------------------------------------- */
-	$mailto = '<a href="mailto:' . $email . '">' . $email . '</a>';
+	$mailto = uplinksync_email_exempt( '<a href="mailto:' . $email . '">' . $email . '</a>' );
 
 	// Form A: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="...">[email protected]</a>
 	$html = preg_replace(
@@ -147,6 +157,11 @@ function uplinksync_contact_social_rewrite( $html ) {
 	$html = uplinksync_social_set_href( $html, array( 'linkedin' ), UPLINKSYNC_SOCIAL_LINKEDIN );
 	$html = uplinksync_social_set_href( $html, array( 'facebook' ), UPLINKSYNC_SOCIAL_FACEBOOK );
 
+	// (a2) LinkedIn was never in the theme's social list, so there is no href
+	//      for (a) to rewrite -- set_href can only edit an element that already
+	//      exists. Insert a LinkedIn <li> after Facebook when it is absent.
+	$html = uplinksync_social_ensure_linkedin( $html );
+
 	// (b) Remove Instagram (pending), plus X/Twitter and TikTok (do not exist).
 	//     Drop the whole <li> in wp-block-social-links.
 	$html = preg_replace(
@@ -168,6 +183,8 @@ function uplinksync_contact_social_rewrite( $html ) {
 		$html
 	);
 
+	$html = uplinksync_contact_linkify_email( $html );
+
 	return $html;
 }
 
@@ -182,6 +199,75 @@ function uplinksync_contact_social_rewrite( $html ) {
  * @param string   $url      Real profile URL to set.
  * @return string
  */
+/**
+ * Insert a LinkedIn entry into each wp-block-social-links list that does not
+ * already have one, cloning the markup shape of the Facebook item so it picks
+ * up the same block styling. Idempotent: a list that already contains
+ * wp-social-link-linkedin is left alone.
+ */
+function uplinksync_social_ensure_linkedin( $html ) {
+	if ( false === stripos( $html, 'wp-block-social-links' ) ) {
+		return $html;
+	}
+	$svg = '<svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M19.7,3H4.3C3.582,3,3,3.582,3,4.3v15.4C3,20.418,3.582,21,4.3,21h15.4c0.718,0,1.3-0.582,1.3-1.3V4.3C21,3.582,20.418,3,19.7,3z M8.339,18.338H5.667v-8.59h2.672V18.338z M7.004,8.574c-0.857,0-1.549-0.694-1.549-1.548c0-0.855,0.691-1.548,1.549-1.548c0.854,0,1.547,0.694,1.547,1.548C8.551,7.881,7.858,8.574,7.004,8.574z M18.339,18.338h-2.669V14.16c0-0.996-0.017-2.277-1.387-2.277c-1.389,0-1.601,1.086-1.601,2.207v4.248h-2.667v-8.59h2.559v1.174h0.037c0.356-0.675,1.227-1.387,2.526-1.387c2.703,0,3.203,1.779,3.203,4.092V18.338z"></path></svg>';
+	$li  = '<li class="wp-social-link wp-social-link-linkedin wp-block-social-link">'
+	     . '<a href="' . esc_url( UPLINKSYNC_SOCIAL_LINKEDIN ) . '" class="wp-block-social-link-anchor"'
+	     . ' target="_blank" rel="noopener"><span class="screen-reader-text">LinkedIn</span>'
+	     . $svg . '</a></li>';
+
+	return preg_replace_callback(
+		'#(<ul\b[^>]*class="[^"]*wp-block-social-links[^"]*"[^>]*>)(.*?)(</ul>)#is',
+		static function ( $m ) use ( $li ) {
+			if ( false !== stripos( $m[2], 'wp-social-link-linkedin' ) ) {
+				return $m[0]; // already present
+			}
+			// place it directly after the Facebook item when there is one
+			$inner = preg_replace(
+				'#(<li\b[^>]*class="[^"]*wp-social-link-facebook\b[^"]*"[^>]*>.*?</li>)#is',
+				'${1}' . $li,
+				$m[2],
+				1,
+				$count
+			);
+			if ( ! $count ) {
+				$inner = $m[2] . $li; // no Facebook item: append
+			}
+			return $m[1] . $inner . $m[3];
+		},
+		$html
+	);
+}
+
+/**
+ * Mark a fragment exempt from Cloudflare's Email Address Obfuscation.
+ *
+ * Cloudflare skips anything wrapped in these two comments. Without it the edge
+ * re-obfuscates every mailto: we emit, which is what kept the published address
+ * broken no matter what the origin rendered. The comments are inert HTML
+ * everywhere else, so this stays correct if the zone setting is ever disabled
+ * or the site moves off Cloudflare.
+ */
+function uplinksync_email_exempt( $fragment ) {
+	return '<!--email_off-->' . $fragment . '<!--email_on-->';
+}
+
+/**
+ * Linkify a bare, unlinked contact address, exempting it from edge obfuscation
+ * so it survives to the visitor. Never double-wraps an address that is already
+ * inside an anchor.
+ */
+function uplinksync_contact_linkify_email( $html ) {
+	$email = UPLINKSYNC_CONTACT_EMAIL;
+	if ( false === stripos( $html, $email ) ) {
+		return $html;
+	}
+	return preg_replace(
+		'#(?<!mailto:)(?<![\w.@-])' . preg_quote( $email, '#' ) . '(?![\w.@-])(?![^<]*</a>)#i',
+		uplinksync_email_exempt( '<a href="mailto:' . $email . '">' . $email . '</a>' ),
+		$html
+	);
+}
+
 function uplinksync_social_set_href( $html, $services, $url ) {
 	$alt = implode( '|', array_map( 'preg_quote', $services ) );
 	$pattern = '#(<li\b[^>]*class="[^"]*wp-social-link-(?:' . $alt . ')\b[^"]*"[^>]*>.*?<a\b[^>]*\bhref=")[^"]*(")#is';
