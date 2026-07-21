@@ -115,12 +115,37 @@ function uplinksync_child_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'uplinksync_child_enqueue_assets', 20 );
 
 /**
- * ***-69: Phase 1 drone gallery page (slug: drone-services).
- * Watermark CSS is only needed there; title tag is fixed per the
- * ***-25 strategy ("Drone Photography & Inspection Services | UplinkSync").
+ * ***-99: match a singular view by slug across post types.
+ *
+ * The conditional assets below were originally gated on is_page( 'slug' ), but
+ * the live URLs they target are WooCommerce products, not Pages:
+ *   /product/drone-services/        -> is_product(), slug "drone-services"
+ *   /product/managed-it-services/   -> is_product(), slug "managed-it-services"
+ * is_page() is false for products, so those enqueues never fired on the live
+ * site. This helper matches the queried object's slug on any singular view
+ * (page OR product OR post), so the assets load wherever that content lives.
+ *
+ * @param string|string[] $slugs One or more post slugs to match.
+ * @return bool
+ */
+function uplinksync_child_is_singular_slug( $slugs ) {
+	if ( ! is_singular() ) {
+		return false;
+	}
+	$queried = get_queried_object();
+	if ( ! $queried || empty( $queried->post_name ) ) {
+		return false;
+	}
+	return in_array( $queried->post_name, (array) $slugs, true );
+}
+
+/**
+ * ***-69 / ***-99: drone gallery watermark CSS.
+ * Live target is the WooCommerce product /product/drone-services/ (slug
+ * "drone-services"). Title tag is fixed per the ***-25 strategy.
  */
 function uplinksync_child_drone_gallery_assets() {
-	if ( ! is_page( 'drone-services' ) ) {
+	if ( ! uplinksync_child_is_singular_slug( 'drone-services' ) ) {
 		return;
 	}
 	wp_enqueue_style(
@@ -133,7 +158,7 @@ function uplinksync_child_drone_gallery_assets() {
 add_action( 'wp_enqueue_scripts', 'uplinksync_child_drone_gallery_assets', 21 );
 
 function uplinksync_child_drone_gallery_title( $title_parts ) {
-	if ( is_page( 'drone-services' ) ) {
+	if ( uplinksync_child_is_singular_slug( 'drone-services' ) ) {
 		return array( 'title' => 'Drone Photography & Inspection Services | UplinkSync' );
 	}
 	return $title_parts;
@@ -141,12 +166,17 @@ function uplinksync_child_drone_gallery_title( $title_parts ) {
 add_filter( 'document_title_parts', 'uplinksync_child_drone_gallery_title' );
 
 /**
- * ***-42: quote form styling/behaviour, only on the pages that host the form.
- * Markup is supplied by Contact Form 7, which is installed on the host rather
- * than vendored into this repo (site deploys exclude plugins/).
+ * ***-42 / ***-99: quote form styling/behaviour, only where the form lives.
+ * Markup is supplied by Contact Form 7 (installed on the host, not vendored).
+ *
+ * Live target is the WooCommerce product /product/managed-it-services/ (slug
+ * "managed-it-services"). The original is_page() gate never matched it (it is a
+ * product, not a Page) and also listed a non-existent /contact page. The
+ * dedicated /contact page is tracked separately (issue 4cdcb7cc); its slug is
+ * kept here so these assets load automatically once that page ships.
  */
 function uplinksync_child_quote_form_assets() {
-	if ( ! is_page( array( 'contact', 'services/managed-it', 'managed-it' ) ) ) {
+	if ( ! uplinksync_child_is_singular_slug( array( 'contact', 'managed-it-services' ) ) ) {
 		return;
 	}
 	wp_enqueue_style(
