@@ -1,0 +1,58 @@
+/*
+ * UplinkSync quote form styling (***-42, quote-flow-spec.md section 5).
+ *
+ * Scoped to any form wrapper with id starting "quote-form" so it covers both
+ * the master form (#quote-form on /contact) and the mini-form
+ * (#quote-form-mini on /services/managed-it) without duplicating rules.
+ * See docs/quote-form-build-guide.md for the field-id contract this depends on.
+ */
+
+form[id^="quote-form"] input[type="text"],
+form[id^="quote-form"] input[type="email"],
+form[id^="quote-form"] input[type="tel"],
+form[id^="quote-form"] select,
+form[id^="quote-form"] textarea {
+	font-size: var( --fs-body-mobile, 16px ); /* prevents iOS auto-zoom on focus */
+	min-height: 44px;
+	padding: 10px 12px;
+	border: 1px solid var( --grey-200, #e3e8ed );
+	border-radius: var( --radius-default, 6px );
+	width: 100%;
+	box-sizing: border-box;
+}
+
+form[id^="quote-form"] textarea {
+	min-height: 96px;
+}
+
+form[id^="quote-form"] button[type="submit"],
+form[id^="quote-form"] input[type="submit"] {
+	min-height: 44px;
+	min-width: 44px;
+	padding: 12px 24px;
+	font-size: var( --fs-body-mobile, 16px );
+}
+
+form[id^="quote-form"] .uls-field {
+	margin-bottom: 16px;
+}
+
+@media ( max-width: 640px ) {
+	form[id^="quote-form"] {
+		display: flex;
+		flex-direction: column;
+	}
+
+	form[id^="quote-form"] .uls-field-row {
+		flex-direction: column;
+	}
+}
+
+/* Honeypot field — visually hidden, still reachable by bots, not by AT/tab order */
+form[id^="quote-form"] .uls-honeypot {
+	position: absolute;
+	left: -9999px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
