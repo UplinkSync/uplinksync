@@ -105,6 +105,13 @@
 	color: var(--accent-600);
 	transform: none;
 }
+/* Dark-context hover/focus — accent-600 on navy fails WCAG AA (2.57:1, ***-108).
+   accent-teal on navy-900 = 7.86:1. Do not fold into the rule above. */
+.uls-bg-dark .uls-btn-secondary:hover,
+.uls-bg-dark .uls-btn-secondary:focus {
+	border-color: var(--accent-teal);
+	color: var(--accent-teal);
+}
 
 /* Icons — Section 6 */
 .uls-icon {
