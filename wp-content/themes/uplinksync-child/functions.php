@@ -59,3 +59,29 @@ function uplinksync_child_drone_gallery_title( $title_parts ) {
 	return $title_parts;
 }
 add_filter( 'document_title_parts', 'uplinksync_child_drone_gallery_title' );
+
+/**
+ * ***-42: quote form styling/behaviour, only on the pages that host the form.
+ * Markup is supplied by Contact Form 7, which is installed on the host rather
+ * than vendored into this repo (site deploys exclude plugins/).
+ */
+function uplinksync_child_quote_form_assets() {
+	if ( ! is_page( array( 'contact', 'services/managed-it', 'managed-it' ) ) ) {
+		return;
+	}
+	wp_enqueue_style(
+		'uplinksync-quote-form',
+		get_stylesheet_directory_uri() . '/assets/css/quote-form.css',
+		array( 'uplinksync-brand' ),
+		wp_get_theme()->get( 'Version' )
+	);
+
+	wp_enqueue_script(
+		'uplinksync-quote-form',
+		get_stylesheet_directory_uri() . '/assets/js/quote-form.js',
+		array(),
+		wp_get_theme()->get( 'Version' ),
+		true
+	);
+}
+add_action( 'wp_enqueue_scripts', 'uplinksync_child_quote_form_assets', 21 );
