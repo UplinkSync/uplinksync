@@ -1,0 +1,147 @@
+/*
+ * UplinkSync brand overrides — section styles, buttons, cards, overlays.
+ * Applied via utility classes added to Elementor sections/widgets in the
+ * "Advanced > CSS Classes" field. See docs/elementor-handoff-***-46.md
+ * for the class-to-section mapping used on the homepage build.
+ */
+
+/* Section 3 — spacing & rhythm */
+.uls-section {
+	padding-top: var(--section-padding-mobile);
+	padding-bottom: var(--section-padding-mobile);
+}
+@media (min-width: 768px) {
+	.uls-section {
+		padding-top: var(--section-padding-desktop);
+		padding-bottom: var(--section-padding-desktop);
+	}
+}
+.uls-container {
+	max-width: var(--content-max-width);
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: var(--gutter-mobile);
+	padding-right: var(--gutter-mobile);
+}
+
+/* Section 4 — light/dark section backgrounds */
+.uls-bg-light {
+	background-color: var(--grey-50);
+	color: var(--navy-900);
+}
+.uls-bg-dark {
+	background-color: var(--navy-900);
+	color: var(--uplinksync-white);
+}
+.uls-bg-dark h1, .uls-bg-dark h2, .uls-bg-dark h3 {
+	color: var(--uplinksync-white);
+}
+.uls-bg-light h1, .uls-bg-light h2, .uls-bg-light h3 {
+	color: var(--navy-900);
+}
+
+/* Cards — Section 4 */
+.uls-card {
+	background-color: var(--uplinksync-white);
+	border: var(--border-card);
+	border-radius: var(--radius-default);
+	box-shadow: none;
+}
+
+/* Stat/proof block — Section 4, dark bg, accent numerals, use sparingly */
+.uls-stat-block {
+	background-color: var(--navy-900);
+	color: var(--uplinksync-white);
+}
+.uls-stat-block .uls-stat-number {
+	color: var(--accent-500);
+	font-weight: var(--fw-h1);
+	font-size: var(--fs-h1-mobile);
+}
+@media (min-width: 768px) {
+	.uls-stat-block .uls-stat-number { font-size: var(--fs-h1-desktop); }
+}
+
+/* CTA band — Section 4, one per page, directly above footer, single button */
+.uls-cta-band {
+	background-color: var(--navy-900);
+	color: var(--uplinksync-white);
+	text-align: center;
+}
+
+/* Buttons — Section 7 */
+.uls-btn-primary {
+	display: inline-block;
+	background-color: var(--accent-600);
+	color: var(--uplinksync-white);
+	border: none;
+	border-radius: var(--radius-default);
+	background-image: none;
+	transition: background-color 0.15s ease;
+}
+.uls-btn-primary:hover,
+.uls-btn-primary:focus {
+	background-color: var(--navy-700);
+	color: var(--uplinksync-white);
+	transform: none;
+}
+
+.uls-btn-secondary {
+	display: inline-block;
+	background-color: transparent;
+	background-image: none;
+	border: 2px solid var(--navy-900);
+	color: var(--navy-900);
+	border-radius: var(--radius-default);
+	transition: border-color 0.15s ease, color 0.15s ease;
+}
+.uls-bg-dark .uls-btn-secondary {
+	border-color: var(--uplinksync-white);
+	color: var(--uplinksync-white);
+}
+.uls-btn-secondary:hover,
+.uls-btn-secondary:focus {
+	border-color: var(--accent-600);
+	color: var(--accent-600);
+	transform: none;
+}
+
+/* Icons — Section 6 */
+.uls-icon {
+	stroke-width: 1.75px;
+	fill: none;
+	color: var(--accent-500);
+	width: 36px;
+	height: 36px;
+}
+.uls-bg-dark .uls-icon {
+	color: var(--uplinksync-white);
+}
+
+/* Overlays — Section 8. Subtle navy wash only; never full-opacity or multi-hue. */
+.uls-hero-overlay {
+	position: relative;
+}
+.uls-hero-overlay::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgba(11, 30, 51, 0.25) 0%, rgba(11, 30, 51, 0.1) 100%);
+	pointer-events: none;
+}
+.uls-gradient-dark {
+	background: linear-gradient(180deg, var(--navy-900) 0%, var(--navy-700) 100%);
+}
+
+/* Anti-pattern guards — Section 9. Scoped to the hero/CTA/button classes this
+   spec governs — not a sitewide reset, so unrelated Elementor widgets (e.g.
+   accordions, loading states) keep their own transitions. */
+.uls-hero .swiper,
+.uls-hero .elementor-slides-wrapper,
+.uls-hero [class*="particle"],
+.uls-hero [class*="matrix-bg"] {
+	display: none !important;
+}
+.uls-hero, .uls-hero * {
+	animation: none !important;
+}

@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 2,
+	"settings": {
+		"color": {
+			"palette": [
+				{ "slug": "navy-900", "color": "#173258", "name": "Navy 900 (primary dark)" },
+				{ "slug": "navy-700", "color": "#1F4375", "name": "Navy 700 (secondary dark surface)" },
+				{ "slug": "accent-500", "color": "#5697F3", "name": "Accent 500 (primary accent)" },
+				{ "slug": "accent-600", "color": "#2F6FC4", "name": "Accent 600 (interactive fill, WCAG AA with white text)" },
+				{ "slug": "accent-teal", "color": "#95D5DD", "name": "Accent Teal (secondary accent)" },
+				{ "slug": "grey-50", "color": "#F7F9FB", "name": "Grey 50 (page background)" },
+				{ "slug": "grey-200", "color": "#E3E8ED", "name": "Grey 200 (borders/dividers)" },
+				{ "slug": "grey-600", "color": "#5B6672", "name": "Grey 600 (secondary text)" },
+				{ "slug": "black", "color": "#0A0A0A", "name": "Black (high-contrast text)" },
+				{ "slug": "white", "color": "#FFFFFF", "name": "White" }
+			],
+			"gradients": [
+				{
+					"slug": "navy-wash",
+					"gradient": "linear-gradient(180deg, #173258 0%, #1F4375 100%)",
+					"name": "Navy wash (dark section background)"
+				}
+			]
+		}
+	}
+}

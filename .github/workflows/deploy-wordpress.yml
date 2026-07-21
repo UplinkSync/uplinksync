@@ -22,6 +22,14 @@
 #   site mode:   syncs the repo's wp-content/ over the live wp-content WITHOUT
 #                --delete, excluding uploads/caches/runtime files — live-only
 #                files survive; only files tracked in the repo are overwritten.
+#                plugins/ is EXCLUDED (2026-07-21). The committed wp-content is a
+#                point-in-time snapshot of live ("Sync wp-content from live
+#                uplinksync.com", 2026-07-12); WordPress auto-updates plugins on
+#                the host, so the snapshot goes stale within days. Without this
+#                exclude a site deploy silently DOWNGRADES live plugins — at the
+#                time it was added the repo held Elementor 4.1.4 / Jetpack 16.0
+#                against live 4.1.5 / 16.0.1. Themes, mu-plugins and drop-ins
+#                still deploy. Manage plugins on the host, not from this repo.
 #   The guard refuses REMOTE_PLUGIN_PATH values outside wp-content either way.
 
 name: Deploy to WordPress host
@@ -91,6 +99,7 @@ jobs:
             --exclude 'jetpack-waf/' --exclude 'jpcrm-storage/' \
             --exclude 'object-cache.php' --exclude 'advanced-cache.php' \
             --exclude '*.dat' --exclude '.git*' \
+            --exclude 'plugins/' \
             -e "ssh -i ~/.ssh/deploy_key -p ${{ secrets.HOSTINGER_SSH_PORT }}" \
             wp-content/ "${{ secrets.HOSTINGER_SSH_USER }}@${{ secrets.HOSTINGER_SSH_HOST }}:${{ vars.REMOTE_PLUGIN_PATH }}/"
 

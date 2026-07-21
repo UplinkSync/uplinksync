@@ -1,0 +1,30 @@
+/* ***-69: Phase 1 drone gallery (gallery-only). Watermark overlay on all
+   preview images — full-res is delivered manually after a licensing inquiry,
+   so every rendered preview must carry the mark. */
+
+.uplinksync-drone-gallery .wp-block-image {
+	position: relative;
+	overflow: hidden;
+}
+
+.uplinksync-drone-gallery .wp-block-image::after {
+	content: "UplinkSync \2014  preview";
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: rgba(255, 255, 255, 0.55);
+	font-size: clamp(0.9rem, 2.2vw, 1.3rem);
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	transform: rotate(-24deg);
+	pointer-events: none;
+	text-shadow: 0 1px 3px rgba(10, 10, 10, 0.45);
+}
+
+/* Keep the section calm: no oversized imagery, consistent card radius. */
+.uplinksync-drone-gallery img {
+	border-radius: 8px;
+}
