@@ -26,25 +26,57 @@
  */
 
 /* ---------------------------------------------------------------------------
+ * Section 2 — Typography (heading family binding).
+ *
+ * CASCADE FIX (***-102 design review, 2026-07-21):
+ * tokens.css sets heading *size* and *weight* but never a heading font-family,
+ * so the live H1/H2 inherited the parent theme's element style and rendered in
+ * POPPINS (measured live: font-family "Poppins, sans-serif" on both H1 and H2)
+ * instead of the brand's DM Sans (Section 2). Body text already resolves to
+ * DMSans via tokens.css body{}, so only headings drift. Pin the brand family
+ * onto block headings; !important guards against the theme's heading element
+ * rule and any has-*-font-family preset the editor may attach.
+ * ------------------------------------------------------------------------- */
+h1, h2, h3,
+.wp-block-heading,
+.uls-h1, .uls-h2, .uls-h3 {
+	font-family: var(--font-body) !important;
+}
+
+/* ---------------------------------------------------------------------------
  * Section 7 — Buttons.
  * Brand primary = solid accent-600 fill (AA-safe with white text, 5.01:1),
  * 8px radius, NO gradient, hover darken only. The theme ships buttons with a
  * 50px pill radius as an inline style and default (non-brand) fills, so we
  * establish a brand default here and normalize the radius. WooCommerce and
  * form-submit buttons are excluded.
+ *
+ * CASCADE FIX (***-102 design review, 2026-07-21):
+ * The live homepage buttons carry WordPress theme *preset* utility classes on
+ * the same element — has-light-background-color, has-contrast-background-color,
+ * and has-dark-color. Those presets are emitted with !important, so the plain
+ * (non-!important) declarations previously here LOST the cascade: the measured
+ * live render was the hero primary CTA "Consult Now" painting WHITE
+ * (has-light-background-color) and the accent-filled buttons painting their
+ * label in DARK ink (has-dark-color rgb(13,20,26)) — an off-brand, AA-failing
+ * pair. Scope brand-primary fill to buttons NOT explicitly outline, raise the
+ * color/background/label declarations to !important to beat the preset color
+ * classes, and use the .wp-block-button parent + child combinator to lift
+ * specificity above the bare preset selectors. Outline buttons handled below.
  * ------------------------------------------------------------------------- */
-.wp-block-button__link:not(.wc-block-components-button):not([type="submit"]) {
-	background-color: var(--accent-600);
-	background-image: none;
-	color: var(--uplinksync-white);
+.wp-block-button:not(.is-style-outline) > .wp-block-button__link:not(.wc-block-components-button):not([type="submit"]) {
+	background-color: var(--accent-600) !important; /* beats has-*-background-color preset */
+	background-image: none !important;
+	color: var(--uplinksync-white) !important; /* beats has-dark-color preset — restores AA (5.01:1) */
+	border-color: transparent !important; /* drops the stray 1px contrast border the preset adds */
 	border-radius: var(--radius-default) !important; /* overrides inline 50px pill */
 	box-shadow: none;
 	transition: background-color 0.15s ease;
 }
-.wp-block-button__link:not(.wc-block-components-button):not([type="submit"]):hover,
-.wp-block-button__link:not(.wc-block-components-button):not([type="submit"]):focus {
-	background-color: var(--navy-700); /* darken-only hover, no scale/gradient */
-	color: var(--uplinksync-white);
+.wp-block-button:not(.is-style-outline) > .wp-block-button__link:not(.wc-block-components-button):not([type="submit"]):hover,
+.wp-block-button:not(.is-style-outline) > .wp-block-button__link:not(.wc-block-components-button):not([type="submit"]):focus {
+	background-color: var(--navy-700) !important; /* darken-only hover, no scale/gradient */
+	color: var(--uplinksync-white) !important;
 	transform: none;
 }
 
@@ -69,10 +101,17 @@
  * headline text stays legible without abstracting the photo. The theme's own
  * cover overlay (.wp-block-cover__background) is respected; we only clamp it
  * into the brand's navy range when it is a solid/plain overlay.
+ *
+ * CASCADE FIX (***-102 design review, 2026-07-21):
+ * The live hero overlay carries has-black-background-color, a theme preset
+ * emitted with !important (measured live: background rgb(0,0,0)). The plain
+ * declaration here lost, so the hero read as a flat BLACK scrim rather than the
+ * brand navy the spec calls for (Section 5/8). Raise to !important to clamp it
+ * into the navy 10–25% band.
  * ------------------------------------------------------------------------- */
 .wp-block-cover .wp-block-cover__background.has-background-dim:not([class*="-gradient-"]) {
-	background-color: var(--navy-900);
-	opacity: 0.18; /* within the 10–25% band */
+	background-color: var(--navy-900) !important; /* beats has-black-background-color preset */
+	opacity: 0.18 !important; /* within the 10–25% band */
 }
 
 /* ---------------------------------------------------------------------------
