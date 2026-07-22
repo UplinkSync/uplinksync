@@ -1,0 +1,222 @@
+[
+  {
+    "frame": "palisades",
+    "loc": "Palisades, Idaho — Mountainscape",
+    "size": "hero",
+    "fmt": "webp",
+    "w": 2560,
+    "h": 1440,
+    "bytes": 1361674,
+    "srcBytes": 56188928
+  },
+  {
+    "frame": "palisades",
+    "loc": "Palisades, Idaho — Mountainscape",
+    "size": "hero",
+    "fmt": "jpg",
+    "w": 2560,
+    "h": 1440,
+    "bytes": 1121368,
+    "srcBytes": 56188928
+  },
+  {
+    "frame": "palisades",
+    "loc": "Palisades, Idaho — Mountainscape",
+    "size": "full",
+    "fmt": "webp",
+    "w": 1920,
+    "h": 1080,
+    "bytes": 754678,
+    "srcBytes": 56188928
+  },
+  {
+    "frame": "palisades",
+    "loc": "Palisades, Idaho — Mountainscape",
+    "size": "full",
+    "fmt": "jpg",
+    "w": 1920,
+    "h": 1080,
+    "bytes": 628569,
+    "srcBytes": 56188928
+  },
+  {
+    "frame": "palisades",
+    "loc": "Palisades, Idaho — Mountainscape",
+    "size": "thumb",
+    "fmt": "webp",
+    "w": 800,
+    "h": 450,
+    "bytes": 137230,
+    "srcBytes": 56188928
+  },
+  {
+    "frame": "palisades",
+    "loc": "Palisades, Idaho — Mountainscape",
+    "size": "thumb",
+    "fmt": "jpg",
+    "w": 800,
+    "h": 450,
+    "bytes": 120771,
+    "srcBytes": 56188928
+  },
+  {
+    "frame": "pocatello",
+    "loc": "Pocatello, Idaho — Brooklyn's Playground",
+    "size": "full",
+    "fmt": "webp",
+    "w": 1920,
+    "h": 1080,
+    "bytes": 812654,
+    "srcBytes": 29982720
+  },
+  {
+    "frame": "pocatello",
+    "loc": "Pocatello, Idaho — Brooklyn's Playground",
+    "size": "full",
+    "fmt": "jpg",
+    "w": 1920,
+    "h": 1080,
+    "bytes": 668155,
+    "srcBytes": 29982720
+  },
+  {
+    "frame": "pocatello",
+    "loc": "Pocatello, Idaho — Brooklyn's Playground",
+    "size": "thumb",
+    "fmt": "webp",
+    "w": 800,
+    "h": 450,
+    "bytes": 159516,
+    "srcBytes": 29982720
+  },
+  {
+    "frame": "pocatello",
+    "loc": "Pocatello, Idaho — Brooklyn's Playground",
+    "size": "thumb",
+    "fmt": "jpg",
+    "w": 800,
+    "h": 450,
+    "bytes": 135959,
+    "srcBytes": 29982720
+  },
+  {
+    "frame": "kaysville",
+    "loc": "Kaysville, Utah",
+    "size": "full",
+    "fmt": "webp",
+    "w": 1920,
+    "h": 1080,
+    "bytes": 739036,
+    "srcBytes": 28516352
+  },
+  {
+    "frame": "kaysville",
+    "loc": "Kaysville, Utah",
+    "size": "full",
+    "fmt": "jpg",
+    "w": 1920,
+    "h": 1080,
+    "bytes": 641257,
+    "srcBytes": 28516352
+  },
+  {
+    "frame": "kaysville",
+    "loc": "Kaysville, Utah",
+    "size": "thumb",
+    "fmt": "webp",
+    "w": 800,
+    "h": 450,
+    "bytes": 166374,
+    "srcBytes": 28516352
+  },
+  {
+    "frame": "kaysville",
+    "loc": "Kaysville, Utah",
+    "size": "thumb",
+    "fmt": "jpg",
+    "w": 800,
+    "h": 450,
+    "bytes": 143446,
+    "srcBytes": 28516352
+  },
+  {
+    "frame": "soda-springs",
+    "loc": "Soda Springs, Idaho",
+    "size": "full",
+    "fmt": "webp",
+    "w": 1920,
+    "h": 1080,
+    "bytes": 671566,
+    "srcBytes": 26791936
+  },
+  {
+    "frame": "soda-springs",
+    "loc": "Soda Springs, Idaho",
+    "size": "full",
+    "fmt": "jpg",
+    "w": 1920,
+    "h": 1080,
+    "bytes": 603323,
+    "srcBytes": 26791936
+  },
+  {
+    "frame": "soda-springs",
+    "loc": "Soda Springs, Idaho",
+    "size": "thumb",
+    "fmt": "webp",
+    "w": 800,
+    "h": 450,
+    "bytes": 155072,
+    "srcBytes": 26791936
+  },
+  {
+    "frame": "soda-springs",
+    "loc": "Soda Springs, Idaho",
+    "size": "thumb",
+    "fmt": "jpg",
+    "w": 800,
+    "h": 450,
+    "bytes": 137437,
+    "srcBytes": 26791936
+  },
+  {
+    "frame": "idaho-falls",
+    "loc": "Idaho Falls, Idaho",
+    "size": "full",
+    "fmt": "webp",
+    "w": 1920,
+    "h": 1080,
+    "bytes": 466574,
+    "srcBytes": 24854528
+  },
+  {
+    "frame": "idaho-falls",
+    "loc": "Idaho Falls, Idaho",
+    "size": "full",
+    "fmt": "jpg",
+    "w": 1920,
+    "h": 1080,
+    "bytes": 435459,
+    "srcBytes": 24854528
+  },
+  {
+    "frame": "idaho-falls",
+    "loc": "Idaho Falls, Idaho",
+    "size": "thumb",
+    "fmt": "webp",
+    "w": 800,
+    "h": 450,
+    "bytes": 106900,
+    "srcBytes": 24854528
+  },
+  {
+    "frame": "idaho-falls",
+    "loc": "Idaho Falls, Idaho",
+    "size": "thumb",
+    "fmt": "jpg",
+    "w": 800,
+    "h": 450,
+    "bytes": 101865,
+    "srcBytes": 24854528
+  }
+]
