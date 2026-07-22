@@ -159,3 +159,105 @@ h1, h2, h3,
 .wp-block-template-part .wp-block-group.has-color-2-background-color p {
 	color: var(--uplinksync-white);
 }
+
+/* ---------------------------------------------------------------------------
+ * Section 4/5 — Header (***-128).
+ *
+ * PROBLEM (measured live against uplinksync.com/):
+ * The horizontal UplinkSync lockup served by the uplinksync-header-logo
+ * mu-plugin is a LIGHT wordmark (dominant #e0e0e0, mean opaque luminance
+ * 200/255) drawn for a DARK background. The theme paints the header bar with
+ * its `has-color-1-background-color` preset = near-white #f4f5f8, so the logo
+ * lands at 1.21:1 — far below the WCAG 3:1 minimum for a graphic. Effectively
+ * invisible, which is exactly what the owner reported.
+ *
+ * FIX: repaint the header bar to brand navy-900 (#173258 — the SAME color-2
+ * the footer uses above), so header and footer are visually consistent and the
+ * light logo reads at 9.74:1 (dominant) / 7.68:1 (mean luminance). Two knock-on
+ * effects are handled in the same rule so we don't trade an invisible logo for
+ * invisible navigation:
+ *
+ *   1. Nav + site-title text flips to white. Dark ink (#0d141a) on navy is
+ *      1.44:1 (invisible); white on navy is 12.86:1. This mirrors the footer's
+ *      light treatment above, so the two ends of the page match.
+ *   2. The Contact CTA pill is inverted to a WHITE fill with a NAVY label (see
+ *      the uplinksync-homepage-nav-ctas mu-plugin, which owns the injected
+ *      pill's inline style). White pill vs navy = 12.86:1 as a component, navy
+ *      label on white = 12.86:1 — well clear of the 3:1 a UI component needs and
+ *      the 4.5:1 for its text, and visually distinct from the accent-600 body
+ *      buttons so the header CTA still reads as the primary action.
+ *
+ * The theme's header template part is a wp-block-group carrying
+ * `hostinger-ai-menu has-color-1-background-color` inside <header class="site-
+ * header wp-block-template-part">. We scope to that group under .site-header so
+ * ONLY the header bar is repainted — the color-1 preset is used elsewhere on
+ * the page (e.g. body sections) and must not be touched. !important beats the
+ * preset's own !important background/color declarations.
+ * ------------------------------------------------------------------------- */
+.site-header .wp-block-group.hostinger-ai-menu.has-color-1-background-color {
+	background-color: var(--navy-900) !important; /* logo 9.74:1, matches footer */
+}
+/* Light text throughout the header bar: site-title, nav links, and any
+   preset text-color the theme attached (has-color-3-color on the title,
+   has-color2-color on the nav). */
+.site-header .hostinger-ai-menu,
+.site-header .hostinger-ai-menu a,
+.site-header .hostinger-ai-menu .wp-block-site-title,
+.site-header .hostinger-ai-menu .wp-block-site-title a,
+.site-header .hostinger-ai-menu .wp-block-navigation,
+.site-header .hostinger-ai-menu .wp-block-navigation a,
+.site-header .hostinger-ai-menu .wp-block-navigation__container a,
+.site-header .hostinger-ai-menu .wp-block-navigation-item__label {
+	color: var(--uplinksync-white) !important; /* 12.86:1 on navy — matches footer */
+}
+/* The mobile menu toggle / close icons are drawn with currentColor; keep them
+   visible on navy. */
+.site-header .hostinger-ai-menu .wp-block-navigation__responsive-container-open svg,
+.site-header .hostinger-ai-menu .wp-block-navigation__responsive-container-close svg {
+	fill: var(--uplinksync-white);
+}
+/* The injected Contact CTA pill (uplinksync-nav-cta) is emitted by the nav
+   mu-plugin with an inline accent style (background-color:#2F6FC4;color:#FFFFFF).
+   On the navy bar that accent fill is only 2.57:1 against the background — below
+   the 3:1 a UI component needs — so INVERT it to a white pill with a navy label.
+   A stylesheet !important beats the element's inline (non-important) style, so we
+   override both background and colour here rather than depending on the plugin's
+   markup. This also keeps the treatment intact across the two nav mu-plugins
+   (homepage-only and the sitewide ***-126 one), which emit the same class. */
+.site-header .hostinger-ai-menu .uplinksync-nav-cta a {
+	background-color: var(--uplinksync-white) !important; /* white pill vs navy bar — 12.86:1 component */
+	color: var(--navy-900) !important;                    /* navy label on white — 12.86:1 */
+}
+/* The label lives in a child <span> that the broad header-text rule above
+   otherwise paints white; pin it navy so it is visible on the white pill. */
+.site-header .hostinger-ai-menu .uplinksync-nav-cta a .wp-block-navigation-item__label {
+	color: var(--navy-900) !important;
+}
+.site-header .hostinger-ai-menu .uplinksync-nav-cta a:hover,
+.site-header .hostinger-ai-menu .uplinksync-nav-cta a:focus {
+	background-color: var(--accent-teal) !important; /* teal hover — 7.86:1 vs navy bar, navy label 7.86:1 */
+	color: var(--navy-900) !important;
+}
+
+/* MOBILE OVERLAY EXCEPTION.
+ * The navy-header treatment above is for the INLINE desktop bar. Below the
+ * nav's responsive breakpoint the links collapse into a hamburger overlay,
+ * which the parent theme paints WHITE with dark text via its own !important
+ * rule (.wp-block-navigation__responsive-container.is-menu-open). Our white
+ * link/label colour would turn that overlay white-on-white and the white CTA
+ * pill would vanish against the white sheet. Re-assert legible colours inside
+ * the OPEN overlay only (higher specificity + later source order than the rules
+ * above), so the 375px menu stays readable: navy links on the white sheet
+ * (12.86:1), and a navy-filled Contact pill with a white label (12.86:1). */
+.site-header .hostinger-ai-menu .wp-block-navigation__responsive-container.is-menu-open a,
+.site-header .hostinger-ai-menu .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item__label {
+	color: var(--navy-900) !important; /* dark links on the white overlay sheet */
+}
+.site-header .hostinger-ai-menu .wp-block-navigation__responsive-container.is-menu-open .uplinksync-nav-cta a,
+.site-header .hostinger-ai-menu .wp-block-navigation__responsive-container.is-menu-open .uplinksync-nav-cta a .wp-block-navigation-item__label {
+	background-color: var(--navy-900) !important; /* white pill is invisible on the white sheet — fill navy */
+	color: var(--uplinksync-white) !important;    /* white label on navy — 12.86:1 */
+}
+.site-header .hostinger-ai-menu .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__responsive-container-close svg {
+	fill: var(--navy-900); /* close (X) icon dark on the white overlay */
+}
