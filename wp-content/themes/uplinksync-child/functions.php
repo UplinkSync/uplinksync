@@ -17,6 +17,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once get_stylesheet_directory() . '/inc/quote-form-seed.php';
 
 /**
+ * ***-186: register the [immich_share] shortcode that embeds curated Immich
+ * public share albums from media.uplinksync.com. Enforces owner constraints in
+ * code (share links only, host-locked, no NAS reach) so publishing a graded
+ * Landscape loop is a one-line content edit once ***-160 curation is done.
+ */
+require_once get_stylesheet_directory() . '/inc/immich-embed.php';
+
+/**
  * ***-99: restore correct asset resolution under a child theme.
  *
  * The parent theme (hostinger-ai-theme) was never written for child themes.

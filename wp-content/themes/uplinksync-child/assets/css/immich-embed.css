@@ -1,0 +1,29 @@
+/*
+ * ***-186: Immich public-share embed styling.
+ * Responsive, container-driven frame for [immich_share]. Keeps curated aerial
+ * loops edge-to-edge on mobile and constrained on wide viewports, matching the
+ * cinematic direction (small deliverable: ~6-10 graded loops, not a bulk dump).
+ */
+
+.uls-immich-share {
+	margin: var(--uls-space-lg, 2rem) 0;
+	width: 100%;
+}
+
+.uls-immich-share__frame {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 16 / 9; /* overridden inline per-embed */
+	overflow: hidden;
+	border-radius: var(--uls-radius, 8px);
+	background: var(--uls-color-surface-muted, #0b0f14);
+}
+
+.uls-immich-share__frame iframe {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	border: 0;
+	display: block;
+}
