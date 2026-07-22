@@ -194,6 +194,53 @@ function uplinksync_contact_social_rewrite( $html ) {
 
 	$html = uplinksync_contact_linkify_email( $html );
 
+	/* ---------------------------------------------------------------------
+	 * 4. FOOTER — the same untranslated parent-theme template leaks its raw
+	 *    i18n keys as visible text on every page: the four footer column
+	 *    headings render literally as "trans-menu", "trans-contacts",
+	 *    "trans-socials" and "trans-newsletter", and the copyright line reads
+	 *    "© trans-current-year trans-all-rights-reserved".
+	 *
+	 * These are the same defect class as the contact placeholders above, just
+	 * in a different part of the template, so they are repaired the same way.
+	 * The year is generated rather than hardcoded so the footer does not go
+	 * stale on 1 January.
+	 * ------------------------------------------------------------------- */
+	$html = str_replace(
+		array(
+			'trans-menu',
+			'trans-contacts',
+			'trans-socials',
+			'trans-newsletter',
+			'trans-current-year',
+			'trans-all-rights-reserved',
+		),
+		array(
+			'Menu',
+			'Contact',
+			'Follow Us',
+			'Newsletter',
+			gmdate( 'Y' ),
+			'All rights reserved.',
+		),
+		$html
+	);
+
+	// The WhatsApp icon points at the literal placeholder https://trans-whatsapp-number.
+	// The owner listed Facebook, Instagram and LinkedIn only, so there is no
+	// number to fill in. Same rule as Instagram/X/TikTok above: remove it rather
+	// than ship an icon that goes nowhere.
+	$html = preg_replace(
+		'#<li\b[^>]*class="[^"]*wp-social-link-whatsapp\b[^"]*"[^>]*>.*?</li>#is',
+		'',
+		$html
+	);
+	$html = preg_replace(
+		'#<a\b[^>]*href="[^"]*trans-whatsapp-number[^"]*"[^>]*>.*?</a>#is',
+		'',
+		$html
+	);
+
 	// LAST: exempt every mailto: on the finished page from edge obfuscation.
 	// Must stay last so it also covers anchors introduced above.
 	$html = uplinksync_email_exempt_mailtos( $html );
