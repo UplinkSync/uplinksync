@@ -151,25 +151,37 @@ function uplinksync_proof_trust_markup() {
 		array(
 			'value'     => 'Part 107',
 			'label'     => 'FAA-certified drone operations',
-			'confirmed' => false, // OWNER: confirm certificate is held/current
+			'confirmed' => true, // OWNER-CONFIRMED 2026-07-22: certificate held and current (earned 2025).
 		),
 		array(
-			'value'     => 'Serving since 20XX',
-			'label'     => 'Years in operation',
-			'confirmed' => false, // OWNER: confirm founding year
+			'value'     => '4 businesses',
+			'label'     => 'Supported across IT &amp; aerial work',
+			'confirmed' => true, // OWNER-CONFIRMED 2026-07-22: four client businesses.
+			// Client NAMES are deliberately withheld: the owner has not yet obtained
+			// permission to publish them. Publish the count only. When permission is
+			// granted, a named client-logo row is the single highest-value upgrade
+			// available to this section (see research_msp.md).
 		),
-		array(
-			'value'     => 'Same-day response',
-			'label'     => 'Response / SLA',
-			'confirmed' => false, // OWNER: confirm the honest claim to publish
-		),
+		/*
+		 * Founding year (2026) is CONFIRMED but deliberately NOT published.
+		 *
+		 * The company is roughly six months old. A "Serving since 2026" stat in a
+		 * band whose entire job is to signal an established firm invites exactly the
+		 * doubt we are trying to remove — it draws the eye to the one fact that
+		 * undercuts the goal. Nothing here is hidden dishonestly: age simply isn't
+		 * claimed either way, and the band leads with what IS strong and verifiable
+		 * (a real FAA certification, real clients, a real location).
+		 *
+		 * Credibility for a young firm comes from specificity and credentials, not
+		 * implied longevity. Revisit once there are a few years to point to.
+		 */
 	);
 
 	// Trust/credential bar (***-135 §5 proof/trust): Part 107 + data-security
 	// discipline + local roots + a named testimonial. Local roots are confirmed;
 	// the rest are owner-atomic and flagged.
 	$badges = array(
-		array( 'label' => 'FAA Part 107 — licensed drone ops', 'note' => 'OWNER: confirm cert current', 'confirmed' => false ),
+		array( 'label' => 'FAA Part 107 — licensed drone ops', 'note' => '', 'confirmed' => true ), // OWNER-CONFIRMED 2026-07-22: current.
 		array( 'label' => 'Data-security discipline on the ground', 'note' => '', 'confirmed' => true ),
 		array( 'label' => 'Local — Eastern Idaho roots', 'note' => '', 'confirmed' => true ),
 		array( 'label' => 'Client testimonial', 'note' => 'OWNER: confirm one permission-cleared quote', 'confirmed' => false ),
