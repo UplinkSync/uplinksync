@@ -5,30 +5,79 @@ include:
 
 variables:
   THEME_SLUG: "hostinger-ai-theme"
+  # render_smoke fails the MR if the rendered homepage body is smaller than this
+  # many bytes. The ***-132 incident shipped an HTTP-200 *empty* body (mu-plugin
+  # ob_start fatal); any real render is many KB, so 500 cleanly separates the two.
+  SMOKE_MIN_BYTES: "500"
+  # Optional: substring the ***-132 MR sets to its unified-narrative marker so the
+  # gate also proves the intended copy rendered (not just "non-empty"). Empty = skip.
+  SMOKE_EXPECT: ""
 
-# --- ***-140 partial unblock: publish the rendered preview homepage auth-free ---
-# The ci-templates review_smoke job captures the fully-rendered preview homepage
-# into .smoke-home.html from *inside* the preview container's network namespace,
-# so it bypasses Traefik basic-auth and the missing *.*** cert
-# SAN (***-140). The upstream template only uploads artifacts `when: on_failure`
-# and does not include the HTML itself, so QA can't reach the rendered markup
-# without preview ingress it currently cannot authenticate to.
+# ***-154: real-host render-verification gate for the homepage (***-132 unblocker).
 #
-# GitLab deep-merges a same-named job from an `include`, so this override replaces
-# only the `artifacts:` block and keeps the upstream `script:`/`rules:`/`needs:`.
-# Result: every MR pipeline uploads the rendered homepage as an always-on artifact,
-# handing the ***-137 QA gate the grep-able half of the uplinksync-web-design
-# pre-flight (no `trans-`, no `__cf_email__`, nav present, canonical links, no
-# `href="#"`, no `/product/*` or shop leaks) against the real rendered HTML — with
-# zero infra/Vault/cert change. Pixel checks (logo legibility, 375px h-scroll,
-# contrast) still need real preview ingress; those remain gated on ***-140/151.
-# Owned in *** by dirwin/claude-admin (I have Reporter there); doing
-# it here keeps it within this repo's Developer access and scoped to the QA target.
-review_smoke:
-  artifacts:
-    when: always
-    paths:
-      - .smoke-home.html
-      - .smoke-broken
-      - .smoke-assets
-    expire_in: 1 week
+# The MR preview is edge-gated by Vault basic-auth (***),
+# unreachable from an agent run env — so external QA of the rendered page is impossible.
+# This job renders the front page *inside* the already-running preview container instead,
+# bypassing the edge auth entirely, and fails the pipeline BEFORE merge if the body is
+# empty/undersized. It reproduces the exact incident class (ob_start callback fatal in a
+# mu-plugin, interacting with a sibling output buffer) because it drives the full front
+# controller via index.php with every mu-plugin buffer active — a real render, not a
+# local string transform (which is precisely what missed the ***-132 fatal).
+render_smoke:
+  stage: review
+  image: docker:27-cli
+  needs:
+    - job: review_deploy
+      artifacts: false
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  variables:
+    GIT_STRATEGY: none
+  script:
+    # Recompute the container name review_deploy created (project-id-prefixed slug,
+    # 58-char cap) so we exec into the same preview WordPress.
+    - export PREVIEW_SLUG="$(echo "$CI_PROJECT_ID-$CI_COMMIT_REF_SLUG" | cut -c1-58)"
+    - export PREVIEW_HOST="$PREVIEW_SLUG.$PREVIEW_DOMAIN"
+    - export WP_CTN="preview-$PREVIEW_SLUG-wordpress-1"
+    - echo "Rendering homepage in-process inside $WP_CTN (host $PREVIEW_HOST)"
+    # Emulate an HTTPS GET / so is_ssl() is true and WP does NOT canonical-redirect us
+    # away from the render; capture the full rendered body; a fatal in any mu-plugin
+    # output buffer surfaces as a non-zero exit / undersized body -> pipeline fails.
+    - |
+      docker exec \
+        -e PROBE_HOST="$PREVIEW_HOST" \
+        -e SMOKE_MIN_BYTES="$SMOKE_MIN_BYTES" \
+        -e SMOKE_EXPECT="$SMOKE_EXPECT" \
+        -u www-data -w /var/www/html "$WP_CTN" \
+        php -d display_errors=stderr -r '
+          $_SERVER["HTTP_HOST"]     = getenv("PROBE_HOST");
+          $_SERVER["SERVER_NAME"]   = getenv("PROBE_HOST");
+          $_SERVER["SERVER_PORT"]   = "443";
+          $_SERVER["HTTPS"]         = "on";
+          $_SERVER["REQUEST_URI"]   = "/";
+          $_SERVER["REQUEST_METHOD"]= "GET";
+          register_shutdown_function(function () {
+            $e = error_get_last();
+            if ($e && in_array($e["type"], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR], true)) {
+              fwrite(STDERR, "FAIL: fatal during homepage render: {$e["message"]} @ {$e["file"]}:{$e["line"]}\n");
+              exit(1);
+            }
+          });
+          ob_start();
+          require "index.php";
+          $html = ob_get_clean();
+          $len  = strlen($html);
+          $min  = (int) getenv("SMOKE_MIN_BYTES");
+          fwrite(STDERR, "rendered homepage: {$len} bytes (min {$min})\n");
+          if ($len < $min) {
+            fwrite(STDERR, "FAIL: homepage body {$len} bytes < {$min} — blank/undersized render (the ***-132 incident class).\n");
+            exit(1);
+          }
+          $expect = getenv("SMOKE_EXPECT");
+          if ($expect !== "" && strpos($html, $expect) === false) {
+            fwrite(STDERR, "FAIL: expected marker not found in rendered homepage: {$expect}\n");
+            exit(1);
+          }
+          fwrite(STDERR, "PASS: homepage rendered non-empty" . ($expect !== "" ? " and contains marker" : "") . ".\n");
+        '
+    - echo "render_smoke PASS — homepage renders a real, non-empty body on the preview host."
