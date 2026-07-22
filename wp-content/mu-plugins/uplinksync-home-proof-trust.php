@@ -175,6 +175,31 @@ function uplinksync_proof_trust_markup() {
 		array( 'label' => 'Client testimonial', 'note' => 'OWNER: confirm one permission-cleared quote', 'confirmed' => false ),
 	);
 
+	/*
+	 * LIVE-SAFETY FILTER (2026-07-22, owner-facing fix).
+	 *
+	 * The provisional-placeholder design was the right instinct — never publish an
+	 * invented number — but the placeholders reached production and real visitors
+	 * saw "[OWNER: confirm cert current]" inside the TRUST BAR. An unfinished-looking
+	 * credential strip damages the exact "established, trusted firm" perception this
+	 * section exists to create; worse than showing nothing.
+	 *
+	 * So: publish only confirmed items. Unconfirmed ones are withheld, not flagged
+	 * in public. Flip 'confirmed' => true (with the real value) as the owner supplies
+	 * each fact and it appears — no other change needed.
+	 *
+	 * The stat band needs at least 3 entries to read as a proof band; below that it
+	 * looks broken, so it is withheld entirely rather than rendered lopsided.
+	 */
+	$stats  = array_values( array_filter( $stats,  function ( $s ) { return ! empty( $s['confirmed'] ); } ) );
+	$badges = array_values( array_filter( $badges, function ( $b ) { return ! empty( $b['confirmed'] ); } ) );
+	if ( count( $stats ) < 3 ) {
+		$stats = array();
+	}
+	if ( ! $stats && ! $badges ) {
+		return '';
+	}
+
 	// NOTE: build the markup by string concatenation, NOT ob_start()/ob_get_clean().
 	// This function runs from inside uplinksync_proof_trust_rewrite(), which is
 	// itself an ob_start() output-handler callback (registered in
