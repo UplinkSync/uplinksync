@@ -1,22 +1,20 @@
 <?php
 /**
- * Plugin Name: UplinkSync — Home Hero + Proof Band + Trust Bar
- * Description: Rewrites the homepage hero to the approved positioning copy and injects a 4-stat proof band + credential/trust bar directly under it (***-136, sprint ***-129; copy source: Peitho's positioning foundation ***-135 §3–§5). Like the other UplinkSync homepage fixes, the hero markup is produced by the Hostinger AI theme + saved block content in the WP DB (NOT tracked files), so this mu-plugin rewrites the rendered document on the way out — keeping the change captured in-repo (deploys with wp-content), theme-independent, and small/verifiable. Confirmed facts render live; owner-atomic numbers Peitho flagged (Part 107 currency, years in operation, response/SLA, testimonial) render as obviously-provisional [OWNER: confirm] placeholders (dashed outline + "provisional" pill) so nothing reads as a fake-live claim. Swap placeholders for confirmed values in one pass as Doug supplies them.
- * Version: 1.0.0
+ * Plugin Name: UplinkSync — Home Proof Band + Trust Bar
+ * Description: Injects a 4-stat proof band + credential/trust bar directly under the homepage hero (***-136, sprint ***-129; copy source: Peitho's positioning foundation ***-135 §4–§5). As of ***-132 (2026-07-22) this plugin NO LONGER rewrites the hero copy — the approved H1/subhead/CTA now live in the Home page (ID 278) block content in the WP DB, so the runtime hero rewrite was retired as redundant layering. The proof band remains a runtime injection because its numbers (Part 107 currency, years in operation, response/SLA, testimonial) are owner-atomic and render as obviously-provisional [OWNER: confirm] placeholders (dashed outline + "provisional" pill) until Doug supplies confirmed values — nothing reads as a fake-live claim. It anchors on the theme's first solid section after the hero and is additive/idempotent (a no-op if the anchor is absent), so it cannot blank the page.
+ * Version: 2.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/**
- * Approved positioning copy (***-135 §3). Owner/CMO-authoritative — do not
- * re-derive or paraphrase.
+/*
+ * NOTE (***-132, 2026-07-22): the approved hero copy consts (H1/subhead/CTA)
+ * and the runtime hero-rewrite that used them were REMOVED — that copy now lives
+ * directly in the Home page (ID 278) block content in the WP DB. The authoritative
+ * source for the hero wording is ***-135 §3, carried by the page markup itself.
  */
-const UPLINKSYNC_HERO_H1  = 'Technology specialists who turn your systems and your site into clarity you can act on.';
-const UPLINKSYNC_HERO_SUB = 'From managed IT and automation to drone inspection and mapping, UplinkSync captures the data around your business — on the ground and in the air — and turns it into decisions you can make with confidence. One team, rooted in Eastern Idaho.';
-const UPLINKSYNC_HERO_CTA_LABEL = 'Talk to a specialist';
-const UPLINKSYNC_HERO_CTA_HREF  = 'https://uplinksync.com/contact/';
 
 /**
  * Scope guard: front-end GET, home page only. Mirrors the guard used by the
@@ -57,7 +55,12 @@ function uplinksync_proof_trust_rewrite( $html ) {
 		return $html;
 	}
 
-	$html = uplinksync_hero_rewrite( $html );
+	// Hero rewrite RETIRED (***-132, 2026-07-22): the approved hero H1, subhead,
+	// and "Talk to a specialist" → /contact/ CTA now live directly in the Home page
+	// (ID 278) block content in the WP DB, so rewriting them at runtime was redundant
+	// layering — exactly what ***-132 set out to remove. The uplinksync_hero_rewrite()
+	// call and function have been deleted; this buffer now ONLY injects the additive
+	// proof band + trust bar (whose numbers are owner-provisional and not yet in the DB).
 
 	// Idempotent for the injected band: the output buffer can run more than once.
 	if ( false === stripos( $html, 'uplinksync-proof-band' ) ) {
@@ -73,55 +76,6 @@ function uplinksync_proof_trust_rewrite( $html ) {
 		// Fallback: anchor not found → leave the document untouched (the band is
 		// additive, so its absence is safe).
 	}
-
-	return $html;
-}
-
-/**
- * Rewrite the theme's default hero (headline / subhead / single CTA) to the
- * approved positioning copy. Each target string occurs exactly once on `/`, so
- * whole-string swaps are unambiguous. Idempotent via a marker on the H1.
- */
-function uplinksync_hero_rewrite( $html ) {
-	if ( false !== stripos( $html, 'uplinksync-hero-copy' ) ) {
-		return $html; // already rewritten
-	}
-
-	// Headline — keep the theme's heading attributes, swap text + add marker.
-	$html = preg_replace(
-		'#(<h1\b[^>]*class=")([^"]*)("[^>]*>)\s*Reliable IT\s*(</h1>)#i',
-		'${1}${2} uplinksync-hero-copy${3}' . esc_html( UPLINKSYNC_HERO_H1 ) . '${4}',
-		$html,
-		1
-	);
-
-	// Subhead.
-	$html = str_replace(
-		'Keeping your business connected and secure every day.',
-		esc_html( UPLINKSYNC_HERO_SUB ),
-		$html
-	);
-
-	// Primary CTA: relabel "Consult Now" → "Talk to a specialist" and point the
-	// button at /contact/. Match the anchor by its label; rewrite the whole
-	// opening tag's href (whatever legacy value it carries) plus the text.
-	$html = preg_replace_callback(
-		'#<a\b([^>]*)>\s*Consult Now\s*</a>#i',
-		function ( $m ) {
-			$attrs = preg_replace(
-				'#\bhref="[^"]*"#i',
-				'href="' . esc_url( UPLINKSYNC_HERO_CTA_HREF ) . '"',
-				$m[1]
-			);
-			// If there was no href attribute, add one.
-			if ( false === stripos( $attrs, 'href=' ) ) {
-				$attrs .= ' href="' . esc_url( UPLINKSYNC_HERO_CTA_HREF ) . '"';
-			}
-			return '<a' . $attrs . '>' . esc_html( UPLINKSYNC_HERO_CTA_LABEL ) . '</a>';
-		},
-		$html,
-		1
-	);
 
 	return $html;
 }
