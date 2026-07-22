@@ -72,7 +72,10 @@ function uplinksync_homepage_nav_rewrite( $html ) {
 
 	$html = uplinksync_homepage_rewrite_ctas( $html );
 	$html = uplinksync_homepage_rewrite_dupe_products( $html );
-	$html = uplinksync_homepage_inject_primary_nav( $html );
+	// Primary-nav item injection moved to the site-wide uplinksync-primary-nav.php
+	// (***-126) so `/`, `/about/`, `/contact/`, `/services/` all render the same
+	// nav (About / Services / Contact). This plugin no longer injects nav items;
+	// it only rewrites the hero CTAs and duplicate product links on `/`.
 
 	return $html;
 }
@@ -137,60 +140,3 @@ function uplinksync_homepage_rewrite_dupe_products( $html ) {
 	return $html;
 }
 
-/**
- * Inject the primary-nav items (About, Contact) into the empty horizontal
- * navigation.
- *
- * The Hostinger AI theme renders a horizontal wp-block-navigation whose
- * responsive-container-content is empty (the site was built with no menu
- * assigned), so the header carries no About/Contact links at all. IA §3
- * requires both, with Contact rendered as the accent CTA.
- *
- * We locate the FIRST is-horizontal nav (the desktop primary bar) and fill its
- * empty content div with a proper wp-block-navigation__container list. The
- * Contact item gets an inline accent style (brand accent-600 #2F6FC4, white
- * text — the WCAG-AA interactive fill from the locked palette) so it reads as
- * the call-to-action button.
- *
- * Idempotent: if the marker class is already present the document is returned
- * unchanged (the output buffer can run more than once).
- */
-function uplinksync_homepage_inject_primary_nav( $html ) {
-	if ( false !== stripos( $html, 'uplinksync-primary-nav-injected' ) ) {
-		return $html; // already injected
-	}
-
-	$items =
-		'<ul class="wp-block-navigation__container is-layout-flex wp-block-navigation-is-layout-flex uplinksync-primary-nav-injected">'
-		. '<li class="wp-block-navigation-item wp-block-navigation-link">'
-		. '<a class="wp-block-navigation-item__content" href="' . esc_url( UPLINKSYNC_NAV_ABOUT ) . '">'
-		. '<span class="wp-block-navigation-item__label">About</span></a></li>'
-		. '<li class="wp-block-navigation-item wp-block-navigation-link uplinksync-nav-cta">'
-		. '<a class="wp-block-navigation-item__content" href="' . esc_url( UPLINKSYNC_NAV_CONTACT ) . '"'
-		. ' style="background-color:#2F6FC4;color:#FFFFFF;border-radius:50px;padding:0.4em 1.25em;">'
-		. '<span class="wp-block-navigation-item__label">Contact</span></a></li>'
-		. '</ul>';
-
-	// Match the first is-horizontal nav, then its (empty) responsive content
-	// div, and drop the item list inside it. Non-greedy up to the content div so
-	// we bind to the correct nav.
-	$pattern = '#(<nav\b[^>]*\bis-horizontal\b[^>]*>.*?<div class="wp-block-navigation__responsive-container-content"[^>]*>)(\s*)(</div>)#is';
-
-	$replaced = preg_replace(
-		$pattern,
-		'${1}' . $items . '${3}',
-		$html,
-		1,
-		$count
-	);
-
-	if ( $count && null !== $replaced ) {
-		return $replaced;
-	}
-
-	// Fallback: the horizontal nav's content div was not empty or not found in
-	// the expected shape. Rather than risk a mangled header, leave the document
-	// untouched — the hero CTAs above still give users working About/Contact
-	// paths, and this is logged for follow-up.
-	return $html;
-}
