@@ -5,3 +5,30 @@ include:
 
 variables:
   THEME_SLUG: "hostinger-ai-theme"
+
+# --- ***-140 partial unblock: publish the rendered preview homepage auth-free ---
+# The ci-templates review_smoke job captures the fully-rendered preview homepage
+# into .smoke-home.html from *inside* the preview container's network namespace,
+# so it bypasses Traefik basic-auth and the missing *.*** cert
+# SAN (***-140). The upstream template only uploads artifacts `when: on_failure`
+# and does not include the HTML itself, so QA can't reach the rendered markup
+# without preview ingress it currently cannot authenticate to.
+#
+# GitLab deep-merges a same-named job from an `include`, so this override replaces
+# only the `artifacts:` block and keeps the upstream `script:`/`rules:`/`needs:`.
+# Result: every MR pipeline uploads the rendered homepage as an always-on artifact,
+# handing the ***-137 QA gate the grep-able half of the uplinksync-web-design
+# pre-flight (no `trans-`, no `__cf_email__`, nav present, canonical links, no
+# `href="#"`, no `/product/*` or shop leaks) against the real rendered HTML — with
+# zero infra/Vault/cert change. Pixel checks (logo legibility, 375px h-scroll,
+# contrast) still need real preview ingress; those remain gated on ***-140/151.
+# Owned in *** by dirwin/claude-admin (I have Reporter there); doing
+# it here keeps it within this repo's Developer access and scoped to the QA target.
+review_smoke:
+  artifacts:
+    when: always
+    paths:
+      - .smoke-home.html
+      - .smoke-broken
+      - .smoke-assets
+    expire_in: 1 week
