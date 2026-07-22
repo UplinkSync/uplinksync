@@ -9,6 +9,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * ***-42: provision the CF7 quote forms + self-resolving shortcodes in code
+ * (see inc/quote-form-seed.php). Keeps the form definitions under version
+ * control instead of as hand-built wp-admin rows, and removes the dependency
+ * on a human dashboard step to create them.
+ */
+require_once get_stylesheet_directory() . '/inc/quote-form-seed.php';
+
+/**
  * ***-99: restore correct asset resolution under a child theme.
  *
  * The parent theme (hostinger-ai-theme) was never written for child themes.
@@ -185,14 +193,13 @@ add_filter( 'document_title_parts', 'uplinksync_child_drone_gallery_title' );
  * ***-42 / ***-99: quote form styling/behaviour, only where the form lives.
  * Markup is supplied by Contact Form 7 (installed on the host, not vendored).
  *
- * Live target is the WooCommerce product /product/managed-it-services/ (slug
- * "managed-it-services"). The original is_page() gate never matched it (it is a
- * product, not a Page) and also listed a non-existent /contact page. The
- * dedicated /contact page is tracked separately (issue 4cdcb7cc); its slug is
- * kept here so these assets load automatically once that page ships.
+ * Loads on the master-form page /contact (slug "contact"), the Managed IT
+ * services page /services/managed-it (slug "managed-it", host of the mini-form
+ * per spec §3), and the legacy WooCommerce product /product/managed-it-services/
+ * (slug "managed-it-services") which is kept for continuity.
  */
 function uplinksync_child_quote_form_assets() {
-	if ( ! uplinksync_child_is_singular_slug( array( 'contact', 'managed-it-services' ) ) ) {
+	if ( ! uplinksync_child_is_singular_slug( array( 'contact', 'managed-it', 'managed-it-services' ) ) ) {
 		return;
 	}
 	wp_enqueue_style(
