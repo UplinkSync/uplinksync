@@ -159,6 +159,20 @@ function uplinksync_child_enqueue_assets() {
 		array( 'uplinksync-brand' ),
 		uplinksync_child_asset_ver( 'assets/css/brand-blocks.css' )
 	);
+
+	/**
+	 * ***-133: cohesive imagery system. Styles the classes the
+	 * uplinksync-imagery-system mu-plugin tags onto front-end <img> elements —
+	 * the navy grade for retained IT/server stock and the crop framing for the
+	 * unified "ground + air" brand key art that replaced the off-brief stock.
+	 * Loaded last so image rules win over the brand-blocks layer.
+	 */
+	wp_enqueue_style(
+		'uplinksync-imagery-system',
+		get_stylesheet_directory_uri() . '/assets/css/imagery-system.css',
+		array( 'uplinksync-brand-blocks' ),
+		uplinksync_child_asset_ver( 'assets/css/imagery-system.css' )
+	);
 }
 add_action( 'wp_enqueue_scripts', 'uplinksync_child_enqueue_assets', 20 );
 

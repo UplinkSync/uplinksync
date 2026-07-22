@@ -1,0 +1,62 @@
+/*
+ * UplinkSync — Cohesive imagery system (***-133)
+ *
+ * Companion to the uplinksync-imagery-system mu-plugin, which tags front-end
+ * <img> elements at render time:
+ *   .uls-brand-media   — an OFF-brief stock photo swapped for the unified
+ *                        "ground + air" brand key art. Sub-modifiers
+ *                        --ground / --ops / --air crop the shared panorama so
+ *                        adjacent tiles read as one scene, not clones.
+ *   .uls-graded-media  — an ON-topic IT/server photo kept in place but pulled
+ *                        into ONE navy tone so the whole page reads as a single
+ *                        visual set instead of mixed stock.
+ *
+ * The brief's core finding (***-130 §4): the "template" feel came from
+ * tonally-inconsistent stock. Tonal consistency is what separates "established
+ * firm" from "starter page", so every retained photo is cooled toward the brand
+ * navy/electric-blue and every replaced one is the real brand art.
+ *
+ * Loaded after brand-blocks.css so these image rules win. Uses only the brand
+ * tokens already defined in tokens.css.
+ */
+
+/* ---------------------------------------------------------------------------
+ * Brand key art (replaced off-brief stock).
+ * The image is real brand art, so it needs no filter — just consistent framing
+ * that matches the site's card treatment (8px radius already applied by the
+ * theme in most slots; assert it so standalone swaps match).
+ * ------------------------------------------------------------------------- */
+.uls-brand-media {
+	object-fit: cover;
+	background-color: var(--navy-900); /* navy letterbox if the slot ratio differs */
+}
+
+/*
+ * Crop the shared panorama so a row of replaced tiles reads as one continuous
+ * scene: ground/servers on the left, operations in the centre, drone/air on the
+ * right. object-position slides the visible window across the same image.
+ * These only take effect where the slot constrains the image (cover blocks,
+ * fixed-ratio cards); a naturally-sized <img> is unaffected, which is fine.
+ */
+.uls-brand-media--ground { object-position: 15% 60%; } /* server rack + laptop */
+.uls-brand-media--ops    { object-position: 50% 50%; } /* operations centre    */
+.uls-brand-media--air    { object-position: 85% 25%; } /* drone / sky          */
+
+/* ---------------------------------------------------------------------------
+ * Navy grade (retained on-topic IT/server stock).
+ * A single, reversible CSS grade — no re-encoding of the source. Cools warm
+ * casts out and ties every photo to the brand's cool navy/blue register. Kept
+ * subtle so the photo stays readable and credible (not a heavy duotone):
+ *   - slight desaturate + brightness/contrast trim evens exposure across a set
+ *   - a navy tint via a blend layer would need an extra element; instead we lean
+ *     on hue-rotate toward blue + saturation control, which needs no wrapper.
+ * ------------------------------------------------------------------------- */
+.uls-graded-media {
+	filter: saturate(0.72) contrast(1.04) brightness(0.98) hue-rotate(-8deg);
+}
+
+/*
+ * Respect users who ask for reduced data/again: the grade is decorative polish,
+ * not information, so it is safe to keep under reduced-motion (no animation) —
+ * nothing to disable here, noted for future maintainers.
+ */
