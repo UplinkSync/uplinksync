@@ -96,6 +96,30 @@ function uplinksync_child_reroute_parent_assets( $src ) {
 add_filter( 'style_loader_src', 'uplinksync_child_reroute_parent_assets', 5 );
 add_filter( 'script_loader_src', 'uplinksync_child_reroute_parent_assets', 5 );
 
+/**
+ * ***-102 (cache-bust): version a child-owned asset by its file mtime.
+ *
+ * WHY: every child enqueue previously passed wp_get_theme()->get( 'Version' ),
+ * a STATIC '1.0.0' that never changes when a CSS/JS file's *content* changes.
+ * The site sits behind Cloudflare, whose edge cache key includes the ?ver=
+ * query string. With a frozen ?ver=1.0.0 the key never rotated, so after a
+ * content change (e.g. the MR !22 brand-layer redesign) the edge kept serving
+ * the STALE copy under Cache-Control: max-age=604800 — measured live as a
+ * cf-cache-status: HIT of the pre-redesign file hours after deploy. Visitors
+ * saw none of the fix. Keying the version on filemtime() rotates ?ver= the
+ * moment a file's bytes change, rotating the edge cache key with it, so a
+ * merge is visible immediately and future edits self-bust. Falls back to the
+ * theme version if the file is somehow unreadable.
+ *
+ * @param string $relative Path under the child theme root, e.g. 'assets/css/brand.css'.
+ * @return string Version string safe for wp_enqueue_style()/_script().
+ */
+function uplinksync_child_asset_ver( $relative ) {
+	$path = get_stylesheet_directory() . '/' . ltrim( $relative, '/' );
+	$mtime = @filemtime( $path );
+	return $mtime ? (string) $mtime : (string) wp_get_theme()->get( 'Version' );
+}
+
 function uplinksync_child_enqueue_assets() {
 	$parent_style = 'hostinger-ai-theme-style';
 
@@ -110,14 +134,14 @@ function uplinksync_child_enqueue_assets() {
 		'uplinksync-tokens',
 		get_stylesheet_directory_uri() . '/assets/css/tokens.css',
 		array( $parent_style ),
-		wp_get_theme()->get( 'Version' )
+		uplinksync_child_asset_ver( 'assets/css/tokens.css' )
 	);
 
 	wp_enqueue_style(
 		'uplinksync-brand',
 		get_stylesheet_directory_uri() . '/assets/css/brand.css',
 		array( 'uplinksync-tokens' ),
-		wp_get_theme()->get( 'Version' )
+		uplinksync_child_asset_ver( 'assets/css/brand.css' )
 	);
 
 	/**
@@ -133,7 +157,7 @@ function uplinksync_child_enqueue_assets() {
 		'uplinksync-brand-blocks',
 		get_stylesheet_directory_uri() . '/assets/css/brand-blocks.css',
 		array( 'uplinksync-brand' ),
-		wp_get_theme()->get( 'Version' )
+		uplinksync_child_asset_ver( 'assets/css/brand-blocks.css' )
 	);
 }
 add_action( 'wp_enqueue_scripts', 'uplinksync_child_enqueue_assets', 20 );
@@ -176,7 +200,7 @@ function uplinksync_child_drone_gallery_assets() {
 		'uplinksync-drone-gallery',
 		get_stylesheet_directory_uri() . '/assets/css/drone-gallery.css',
 		array( 'uplinksync-brand' ),
-		wp_get_theme()->get( 'Version' )
+		uplinksync_child_asset_ver( 'assets/css/drone-gallery.css' )
 	);
 }
 add_action( 'wp_enqueue_scripts', 'uplinksync_child_drone_gallery_assets', 21 );
@@ -206,14 +230,14 @@ function uplinksync_child_quote_form_assets() {
 		'uplinksync-quote-form',
 		get_stylesheet_directory_uri() . '/assets/css/quote-form.css',
 		array( 'uplinksync-brand' ),
-		wp_get_theme()->get( 'Version' )
+		uplinksync_child_asset_ver( 'assets/css/quote-form.css' )
 	);
 
 	wp_enqueue_script(
 		'uplinksync-quote-form',
 		get_stylesheet_directory_uri() . '/assets/js/quote-form.js',
 		array(),
-		wp_get_theme()->get( 'Version' ),
+		uplinksync_child_asset_ver( 'assets/js/quote-form.js' ),
 		true
 	);
 }
