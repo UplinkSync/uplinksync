@@ -28,3 +28,74 @@
 .uplinksync-drone-gallery img {
 	border-radius: 8px;
 }
+
+/* ===========================================================================
+ * ***-203: real cleared PropAIR "Landscape" aerials wired into the Air/drone
+ * section. Replaces the watermarked, licensing-gated placeholder galleries with
+ * the owner-cleared deliverables (hero reel + 5-still gallery + vertical social
+ * clips). Owner constraint: a VISIBLE "Aerial by UplinkSync — uplinksync.com"
+ * credit accompanies every published asset (video carries a burned-in credit
+ * too; stills carry it in EXIF — .uls-air-credit is the on-page caption).
+ * ========================================================================= */
+
+/* Cinematic hero reel — full-bleed, capped height, letterboxed navy. */
+.uls-air-hero {
+	margin-block: 0;
+}
+.uls-air-hero__video {
+	margin: 0 auto;
+	max-width: 1200px;
+}
+.uls-air-hero__video video {
+	display: block;
+	width: 100%;
+	height: auto;
+	max-height: 70vh;
+	object-fit: cover;
+	background-color: var(--navy-900, #0a1a3a);
+	border-radius: 10px;
+}
+
+/* Shared visible credit caption on every asset. */
+.uls-air-credit {
+	margin-top: 0.5rem;
+	font-size: 0.8rem;
+	letter-spacing: 0.02em;
+	color: var(--grey-600, #55607a);
+	text-align: center;
+}
+.uls-air-hero__video .uls-air-credit {
+	color: rgba(255, 255, 255, 0.82);
+}
+
+/* Still gallery — responsive grid, uniform card treatment. */
+.uls-air-gallery .uls-air-frame {
+	margin: 0;
+}
+.uls-air-gallery .uls-air-frame img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	object-fit: cover;
+	border-radius: 8px;
+}
+.uls-air-gallery .uls-air-credit {
+	text-align: left;
+}
+
+/* Vertical social clips — 9:16 tiles. */
+.uls-air-social .uls-air-social__item {
+	margin: 0;
+}
+.uls-air-social .uls-air-social__item video {
+	display: block;
+	width: 100%;
+	aspect-ratio: 9 / 16;
+	object-fit: cover;
+	border-radius: 8px;
+	background-color: var(--navy-900, #0a1a3a);
+}
+
+.uls-air-usage {
+	max-width: 60ch;
+}

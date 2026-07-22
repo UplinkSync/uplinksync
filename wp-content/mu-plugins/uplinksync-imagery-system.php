@@ -76,8 +76,11 @@ function uplinksync_imagery_asset_url( $relative ) {
  *   - 1649015931204  a 3D "BRANDING" text render
  *   - 1610994238985  a competitor help-desk (HelpDesk Heroes) screenshot
  *   - 1694340016914  a warm yellow-wall laptop shot (tonally off the navy brand)
- *   - 1563812964340 / 1529611934128 / 1523132797263 / 1681516582806 /
- *     1603928184083  generic drone product stock (no real work exists yet — B1)
+ *
+ * The generic drone product stock is handled separately (see
+ * uplinksync_imagery_aerial_map): as of ***-203 real cleared aerials exist,
+ * so those slots get an actual UplinkSync aerial still + a visible credit,
+ * rather than the composite key art.
  */
 function uplinksync_imagery_replace_map() {
 	$alt = 'UplinkSync technology specialists — managed IT on the ground and professional drone operations in the air.';
@@ -87,11 +90,6 @@ function uplinksync_imagery_replace_map() {
 		'1649015931204',
 		'1610994238985',
 		'1694340016914',
-		'1563812964340',
-		'1529611934128',
-		'1523132797263',
-		'1681516582806',
-		'1603928184083',
 	);
 	$map = array();
 	foreach ( $ids as $id ) {
@@ -99,6 +97,28 @@ function uplinksync_imagery_replace_map() {
 	}
 	return $map;
 }
+
+/**
+ * ***-203: generic drone-product stock ids -> a REAL cleared UplinkSync aerial
+ * still (the Palisades hero frame), each carrying a visible credit overlay. The
+ * owner cleared the `Landscape` shoots for public/marketing use with attribution
+ * required, so the Air side is no longer carried by placeholder key art. These
+ * ids are the drone slots previously covered by uplinksync_imagery_replace_map:
+ *   - 1563812964340 / 1529611934128 / 1523132797263 / 1681516582806 /
+ *     1603928184083  generic drone product stock (B1 gap now filled with real work)
+ */
+function uplinksync_imagery_aerial_ids() {
+	return array(
+		'1563812964340',
+		'1529611934128',
+		'1523132797263',
+		'1681516582806',
+		'1603928184083',
+	);
+}
+
+/** The visible credit required on every published aerial (owner constraint). */
+const UPLINKSYNC_IMAGERY_AERIAL_CREDIT = 'Aerial by UplinkSync — uplinksync.com';
 
 /** The generic hero background photo id (replaced with the key art, decorative). */
 const UPLINKSYNC_IMAGERY_HERO_ID = '1506927889921';
@@ -135,6 +155,14 @@ function uplinksync_imagery_rewrite( $html ) {
 
 	$replace_map = uplinksync_imagery_replace_map();
 
+	// ***-203: real cleared aerial still (Palisades hero) for the drone slots.
+	// Prefer WebP, fall back to progressive JPEG; bail to key art behaviour only
+	// if neither is deployed (handled per-tag below).
+	$aerial_ids = array_flip( uplinksync_imagery_aerial_ids() );
+	$aerial_jpg = uplinksync_imagery_asset_url( 'assets/media/aerials/stills/palisades-full.jpg' );
+	$aerial_webp = uplinksync_imagery_asset_url( 'assets/media/aerials/stills/palisades-full.webp' );
+	$aerial_src = $aerial_webp ?: $aerial_jpg;
+
 	// Crop cycle: the key art is a wide panorama (servers/ground on the left ->
 	// operations in the centre -> drone/air on the right). When several off-brief
 	// images sit next to each other (e.g. a card row), swapping every one to the
@@ -162,7 +190,7 @@ function uplinksync_imagery_rewrite( $html ) {
 	//    stock into one navy tone via a class.
 	$html = preg_replace_callback(
 		'#<img\b[^>]*>#i',
-		function ( $m ) use ( $replace_map, $keyart_med, $crop_cycle, &$crop_i ) {
+		function ( $m ) use ( $replace_map, $keyart_med, $crop_cycle, &$crop_i, $aerial_ids, $aerial_src ) {
 			$tag = $m[0];
 
 			// Which unsplash photo id (if any) does this img reference?
@@ -170,6 +198,36 @@ function uplinksync_imagery_rewrite( $html ) {
 				return $tag; // not an unsplash image — leave it (logo, testimonials, etc.)
 			}
 			$id = $idm[1];
+
+			// ***-203: drone-product stock -> a REAL cleared aerial still, with a
+			// visible credit overlay (owner constraint). Only when the aerial asset
+			// is actually deployed; otherwise fall through to the key-art path so a
+			// missing file never emits a broken image.
+			if ( isset( $aerial_ids[ $id ] ) && '' !== $aerial_src ) {
+				$alt = 'Aerial photograph by UplinkSync — professional drone operations. ' . UPLINKSYNC_IMAGERY_AERIAL_CREDIT . '.';
+
+				$tag = preg_replace( '#\ssrcset="[^"]*"#i', '', $tag );
+				$tag = preg_replace( '#\ssizes="[^"]*"#i', '', $tag );
+				$tag = preg_replace(
+					'#\ssrc="[^"]*"#i',
+					' src="' . esc_attr( $aerial_src ) . '"',
+					$tag,
+					1
+				);
+				if ( preg_match( '#\salt="#i', $tag ) ) {
+					$tag = preg_replace( '#\salt="[^"]*"#i', ' alt="' . esc_attr( $alt ) . '"', $tag, 1 );
+				} else {
+					$tag = preg_replace( '#<img\b#i', '<img alt="' . esc_attr( $alt ) . '"', $tag, 1 );
+				}
+				$tag = uplinksync_imagery_add_class( $tag, 'uls-air-media' );
+
+				// Wrap in an inline figure carrying the visible credit. Idempotent:
+				// the swapped <img> now points at the local aerial asset and no
+				// longer carries an unsplash id, so a second pass returns at the
+				// unsplash guard above and never re-wraps.
+				return '<span class="uls-air-media-wrap">' . $tag
+					. '<span class="uls-air-media-credit">' . esc_html( UPLINKSYNC_IMAGERY_AERIAL_CREDIT ) . '</span></span>';
+			}
 
 			if ( isset( $replace_map[ $id ] ) ) {
 				// OFF-brief -> unified key art.
