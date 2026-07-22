@@ -38,15 +38,18 @@
  * too; stills carry it in EXIF — .uls-air-credit is the on-page caption).
  * ========================================================================= */
 
-/* Cinematic hero reel — full-bleed, capped height, letterboxed navy. */
+/* Hero — full-bleed Palisades still, capped height, letterboxed navy. The
+   cinematic reel is served from biz-immich via [immich_share] (***-186), not
+   committed, so the committed hero is the high-res still; the reel lands in a
+   follow-up Immich-embed MR. */
 .uls-air-hero {
 	margin-block: 0;
 }
-.uls-air-hero__video {
+.uls-air-hero__still {
 	margin: 0 auto;
 	max-width: 1200px;
 }
-.uls-air-hero__video video {
+.uls-air-hero__still img {
 	display: block;
 	width: 100%;
 	height: auto;
@@ -64,7 +67,7 @@
 	color: var(--grey-600, #55607a);
 	text-align: center;
 }
-.uls-air-hero__video .uls-air-credit {
+.uls-air-hero__still .uls-air-credit {
 	color: rgba(255, 255, 255, 0.82);
 }
 

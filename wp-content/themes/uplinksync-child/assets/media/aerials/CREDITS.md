@@ -24,10 +24,19 @@ Developed from camera-original JPEG masters (gentle contrast/saturation/sharpen;
 
 Primary hero = Palisades `DJI_20250927094432_0023_D.JPG` (per WEBSITE_SHORTLIST.md).
 
-### Hero reel (`video/`)
-`uplinksync-air-hero-reel-1080p.mp4` — 36s, 1920×1080 @30fps, H.264, faststart. Six graded segments (Palisades ×4, Pocatello ×2) trimmed mid-clip from the original `DJI_*.MP4` masters (NOT the flagged `dji_fly_*_video_d_logm.MP4` re-exports). Fade in/out + persistent lower-third credit.
+> **Video hosting (owner decision, ***-186 / ***-203).** The hero reel and
+> social clips are **NOT committed** into this repo. Per the owner's call, site
+> video is served from biz-immich (`media.uplinksync.com`) via public share
+> links, embedded on the page with the `[immich_share]` shortcode — this keeps
+> tens of MB of video off Hostinger shared hosting and out of the deploy rsync.
+> Full-res masters stay on the writable mirror for licensing; the reel/social
+> embeds land in a follow-up content MR once the owner supplies the share URLs.
+> Only the stills (WebP + progressive JPEG) are committed here.
 
-### Social clips (`social/`) — 9:16 vertical, 1080×1920 @30fps
+### Hero reel (`video/`, served via Immich share — not committed)
+`uplinksync-air-hero-reel-1080p.mp4` — 36s, 1920×1080 @30fps, H.264, faststart. Six graded segments (Palisades ×4, Pocatello ×2) trimmed mid-clip from the original `DJI_*.MP4` masters (NOT the flagged `dji_fly_*_video_d_logm.MP4` re-exports). Fade in/out + persistent lower-third credit. Kept on the writable mirror; published as an Immich share embed.
+
+### Social clips (`social/`, served via Immich share — not committed) — 9:16 vertical, 1080×1920 @30fps
 - `uplinksync-air-palisades-reservoir-9x16.mp4`
 - `uplinksync-air-palisades-ridge-9x16.mp4`
 - `uplinksync-air-pocatello-playground-9x16.mp4`
