@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: UplinkSync — Homepage Nav & CTA Rewiring
- * Description: Rewires the homepage (`/`) primary nav and hero CTAs to the canonical IA pages, and drops the duplicate `-2` Woo product links (***-120, round-3 of ***-101). Like the other UplinkSync fixes, the homepage nav/hero markup is produced by the Hostinger AI theme + saved block content in the WP DB, NOT by tracked files, so a static edit cannot reach it. This mu-plugin rewrites the rendered document on the way out, keeping the fix captured in-repo (deploys with wp-content) and independent of the active theme. Server-side 301s for the legacy paths themselves live in uplinksync-canonical-redirects.php and uplinksync-drone-product-redirects.php; this plugin fixes the *links on the page* so users and crawlers never hit those redirects in the first place.
- * Version: 1.0.0
+ * Description: Rewires the homepage (`/`) primary nav, hero/body CTAs and drone cards to the canonical IA pages, strips `/product/*` commerce links, and drops the duplicate `-2` Woo product links (***-120, ***-125). Like the other UplinkSync fixes, the homepage nav/hero markup is produced by the Hostinger AI theme + saved block content in the WP DB, NOT by tracked files, so a static edit cannot reach it. This mu-plugin rewrites the rendered document on the way out, keeping the fix captured in-repo (deploys with wp-content) and independent of the active theme. Server-side 301s for the legacy paths themselves live in uplinksync-canonical-redirects.php and uplinksync-drone-product-redirects.php; this plugin fixes the *links on the page* so users and crawlers never hit those redirects in the first place.
+ * Version: 1.1.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -17,18 +17,32 @@ if ( ! defined( 'ABSPATH' ) ) {
  *   Start               /product/managed-it-support-2/         -> /services/managed-it/
  *   Get Help            /product/drone-inspection-service/     -> /contact/
  *   Learn More          /services-2/                           -> /services/
- *   Learn About Drones  /product/drone-photography-package/    -> /drone-services/
+ *   Learn About Drones  /drone-services/                       -> /services/
+ *
+ * Drone destination note (***-125): the home page's drone CTAs/cards link to
+ * `/drone-services/` and to three `/product/drone-*` commerce URLs. Live status:
+ *   /drone-services/                       301 -> /product/drone-services/
+ *   /product/drone-aerial-capture/         301 -> /drone-services/ (chains again)
+ *   /product/drone-inspection-service/     301 -> /drone-services/ (chains again)
+ *   /product/drone-aerial-package/         200  but still /product/*
+ * So `/drone-services/` is NOT yet a clean 200 — its DB-layer reversal to the
+ * gallery page (IA §2, ***-104) is still owned by the CTO and unshipped. Per
+ * this issue and the "no /product/* on the home page, shop stays hidden" rule,
+ * every drone CTA/card is routed to the canonical services overview `/services/`
+ * (200, no redirect hop, not /product/*). When the gallery page ships on
+ * /drone-services/ as a real 200, UPLINKSYNC_NAV_DRONE can point back at it.
  *
  * Duplicate `-2` Woo product tiles on the homepage product collection point at
  * the retired gallery products; the Phase-1 strategy is gallery-only, so they
- * go to /drone-services/ (same destination the drone-product redirect plugin
- * sends the real slugs to).
+ * are routed to the same canonical destination as the live drone links.
  */
 const UPLINKSYNC_NAV_ABOUT       = 'https://uplinksync.com/about/';
 const UPLINKSYNC_NAV_CONTACT     = 'https://uplinksync.com/contact/';
 const UPLINKSYNC_NAV_SERVICES    = 'https://uplinksync.com/services/';
 const UPLINKSYNC_NAV_MANAGED_IT  = 'https://uplinksync.com/services/managed-it/';
-const UPLINKSYNC_NAV_DRONE       = 'https://uplinksync.com/drone-services/';
+// Canonical drone destination while /drone-services/ still 301s: the services
+// overview, which itself covers drone photography/videography (200, non-/product/*).
+const UPLINKSYNC_NAV_DRONE       = 'https://uplinksync.com/services/';
 
 /**
  * Scope guard: front-end GET for the home page only. The nav/CTA defects are
@@ -78,25 +92,40 @@ function uplinksync_homepage_nav_rewrite( $html ) {
 }
 
 /**
- * Rewrite the hero / body CTA hrefs to their canonical destinations.
+ * Rewrite the hero / body CTA + drone-card links to their canonical destinations.
  *
- * Most legacy hrefs appear exactly once on the page, so a whole-URL swap is
- * unambiguous. The one exception is /product/drone-inspection-service/, which
- * is BOTH the "Get Help" CTA and a product-collection tile ("Drone Inspection
- * Service"). Only the CTA should become /contact/; the product tile is left to
- * the existing 301 (drone-product-redirects -> /drone-services/). So that one
- * is matched by its anchor label, not by URL.
+ * ***-125: the current home page's drone links are `/drone-services/` (the
+ * "Learn About Drones" CTA and the Aerial Capture / Aerial Package card wrappers)
+ * and three `/product/drone-*` commerce URLs (the card title links and their
+ * product-collection interactivity JSON). All of them either 301 or are `/product/*`,
+ * so all are routed to the canonical services overview `/services/`.
+ *
+ * Whole-URL replacement (not just `href="…"`) is deliberate so it also catches the
+ * product-collection block's interactivity JSON (`"permalink":"…"`) — the value the
+ * tile's `data-wp-on--click="viewProduct"` handler actually navigates to. Rewriting
+ * only the visible href would leave a click still hitting a `/product/*` 301 and
+ * would fail the self-check (`grep -c '/product/drone'` on `/` must be 0). Woo `"slug"`
+ * identifiers carry no trailing slash, so they never match these trailing-slashed
+ * whole-URL swaps and are left intact.
+ *
+ * The legacy ***-120 targets (about-4/services-2/…-support-2/…-surveillance-pro/
+ * …-photography-package) no longer appear on `/` — the saved block content drifted —
+ * but the swaps are kept as harmless defense-in-depth in case the DB content regresses.
  */
 function uplinksync_homepage_rewrite_ctas( $html ) {
-	// Label-scoped first (before any broad URL swap touches the shared slug):
-	// "Get Help" CTA -> /contact/.
-	$html = preg_replace(
-		'#(<a\b[^>]*\bhref=")https?://uplinksync\.com/product/drone-inspection-service/("[^>]*>\s*Get Help\s*</a>)#i',
-		'${1}' . UPLINKSYNC_NAV_CONTACT . '${2}',
-		$html
+	// Current (***-125) drone CTA/card destinations — every drone link -> /services/.
+	// Whole-URL swap covers both the visible href and the tile-click permalink JSON.
+	$drone_urls = array(
+		'https://uplinksync.com/drone-services/',
+		'https://uplinksync.com/product/drone-aerial-capture/',
+		'https://uplinksync.com/product/drone-aerial-package/',
+		'https://uplinksync.com/product/drone-inspection-service/',
 	);
+	foreach ( $drone_urls as $from ) {
+		$html = str_replace( $from, UPLINKSYNC_NAV_DRONE, $html );
+	}
 
-	// Unambiguous whole-URL swaps (each legacy target occurs once on `/`).
+	// Legacy ***-120 whole-URL swaps — no longer on `/`, kept as defense-in-depth.
 	$swaps = array(
 		'https://uplinksync.com/about-4/'                        => UPLINKSYNC_NAV_ABOUT,
 		'https://uplinksync.com/product/drone-surveillance-pro/' => UPLINKSYNC_NAV_CONTACT,
