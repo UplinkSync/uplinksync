@@ -256,3 +256,57 @@ function uplinksync_child_quote_form_assets() {
 	);
 }
 add_action( 'wp_enqueue_scripts', 'uplinksync_child_quote_form_assets', 21 );
+
+/**
+ * Motion layer — GSAP + ScrollTrigger, self-hosted.
+ *
+ * Deliberately NOT a plugin. GSAP became free for all uses in April 2025, so the
+ * cinematic toolkit costs nothing and belongs in the theme rather than adding
+ * weight and an update surface to a site we are actively slimming down (see the
+ * Elementor removal). Self-hosted rather than CDN: no third-party runtime
+ * dependency for a company that sells web design, and browser cache
+ * partitioning means a public CDN no longer buys a shared-cache benefit anyway.
+ *
+ * Loaded in the footer and deferred. ScrollTrigger depends on gsap, and
+ * motion.js depends on both, so the dependency array enforces order.
+ *
+ * ~46KB gzipped combined. That is a real cost, so it is only enqueued on the
+ * front end, and every effect is opt-in per element via data-uls-* attributes.
+ */
+function uplinksync_child_motion_assets() {
+	if ( is_admin() ) {
+		return;
+	}
+
+	wp_enqueue_style(
+		'uplinksync-motion',
+		get_stylesheet_directory_uri() . '/assets/css/motion.css',
+		array(),
+		uplinksync_child_asset_ver( '/assets/css/motion.css' )
+	);
+
+	wp_enqueue_script(
+		'gsap',
+		get_stylesheet_directory_uri() . '/assets/js/vendor/gsap.min.js',
+		array(),
+		uplinksync_child_asset_ver( '/assets/js/vendor/gsap.min.js' ),
+		array( 'strategy' => 'defer', 'in_footer' => true )
+	);
+
+	wp_enqueue_script(
+		'gsap-scrolltrigger',
+		get_stylesheet_directory_uri() . '/assets/js/vendor/ScrollTrigger.min.js',
+		array( 'gsap' ),
+		uplinksync_child_asset_ver( '/assets/js/vendor/ScrollTrigger.min.js' ),
+		array( 'strategy' => 'defer', 'in_footer' => true )
+	);
+
+	wp_enqueue_script(
+		'uplinksync-motion',
+		get_stylesheet_directory_uri() . '/assets/js/motion.js',
+		array( 'gsap', 'gsap-scrolltrigger' ),
+		uplinksync_child_asset_ver( '/assets/js/motion.js' ),
+		array( 'strategy' => 'defer', 'in_footer' => true )
+	);
+}
+add_action( 'wp_enqueue_scripts', 'uplinksync_child_motion_assets', 22 );

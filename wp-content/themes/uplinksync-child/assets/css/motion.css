@@ -1,0 +1,41 @@
+/**
+ * UplinkSync — motion support styles.
+ *
+ * The pre-animation hidden state is scoped to .uls-motion, which motion.js only
+ * adds when GSAP has actually loaded AND the visitor has not requested reduced
+ * motion. If the script fails, never loads, or is blocked, none of these rules
+ * apply and the content renders normally. Content must never depend on JS to
+ * become visible.
+ */
+
+.uls-motion [data-uls-reveal],
+.uls-motion [data-uls-stagger] > * {
+	opacity: 0;
+	will-change: opacity, transform;
+}
+
+/* Belt and braces: even with .uls-motion set, honour a reduced-motion request. */
+@media ( prefers-reduced-motion: reduce ) {
+	.uls-motion [data-uls-reveal],
+	.uls-motion [data-uls-stagger] > * {
+		opacity: 1 !important;
+		transform: none !important;
+		will-change: auto;
+	}
+	[data-uls-parallax] {
+		transform: none !important;
+	}
+}
+
+/* Full-bleed media wrapper for hero footage — the parallax target. */
+.uls-media-bleed {
+	position: relative;
+	overflow: clip;
+}
+.uls-media-bleed > video,
+.uls-media-bleed > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
