@@ -13,7 +13,15 @@
 				{ "slug": "grey-200", "color": "#E3E8ED", "name": "Grey 200 (borders/dividers)" },
 				{ "slug": "grey-600", "color": "#5B6672", "name": "Grey 600 (secondary text)" },
 				{ "slug": "black", "color": "#0A0A0A", "name": "Black (high-contrast text)" },
-				{ "slug": "white", "color": "#FFFFFF", "name": "White" }
+				{ "slug": "white", "color": "#FFFFFF", "name": "White" },
+
+				{ "slug": "dark",    "color": "#0d141a", "name": "***-192 compat: Dark (text on light)" },
+				{ "slug": "light",   "color": "#ffffff", "name": "Light (compat: light surface / text on dark)" },
+				{ "slug": "color1",  "color": "#f4f5f8", "name": "Color 1 (compat: light section background)" },
+				{ "slug": "color2",  "color": "#1e3155", "name": "Color 2 (compat: dark section background)" },
+				{ "slug": "color3",  "color": "#4673c6", "name": "Color 3 (compat: accent)" },
+				{ "slug": "contrast","color": "#0d141a", "name": "Contrast (compat: masked by brand-blocks button rule)" },
+				{ "slug": "grey",    "color": "#B8C0CC", "name": "Grey (compat: form borders)" }
 			],
 			"gradients": [
 				{

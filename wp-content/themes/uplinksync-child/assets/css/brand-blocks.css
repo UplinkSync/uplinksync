@@ -115,6 +115,47 @@ h1, h2, h3,
 }
 
 /* ---------------------------------------------------------------------------
+ * Section 5/8 — Hero section (***-192 migration).
+ *
+ * The homepage hero group previously carried the parent theme's
+ * `hostinger-ai-hero-for-online-store-2 hostinger-ai-background-image
+ * hostinger-ai-hero-opacity` classes. Those three parent classes supplied
+ * (a) a fixed, non-repeating background image and (b) a dark full-bleed scrim
+ * (`:after`, rgba(0,0,0,.6–.8)) that keeps the WHITE hero headline/subhead and
+ * CTA legible over the bright key-art. When ***-192 rewrites the DB block
+ * markup to neutral classes and flips the parent to Twenty Twenty-Five, those
+ * parent rules disappear — so the hero would lose its scrim and the white text
+ * would land on a bright photo (a legibility regression, not a blank page).
+ *
+ * We re-express the same behavior here, keyed on a neutral `uls-hero` class the
+ * rewritten block markup carries, so it survives the parent flip. The scrim is
+ * clamped to the brand navy band (matching the cover-overlay rule below) rather
+ * than the parent's flat black. Loaded from the child theme, so it is
+ * theme-independent and ships BEFORE the content rewrite (additive: no live
+ * block uses `uls-hero` until the rewrite lands).
+ * ------------------------------------------------------------------------- */
+.uls-hero {
+	position: relative;
+	background-size: cover;
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+}
+.uls-hero::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background-color: var(--navy-900); /* brand navy scrim, matches cover overlay */
+	opacity: 0.55;                     /* legibility band for white hero text */
+	z-index: 1;
+	pointer-events: none;
+}
+/* Hero inner content sits above the scrim. */
+.uls-hero > .wp-block-group {
+	position: relative;
+	z-index: 2;
+}
+
+/* ---------------------------------------------------------------------------
  * Section 4 — Content cards.
  * Service cards: white surface, 1px grey-200 border, 8px radius, no heavy
  * drop shadow. Bind onto the theme's service block classes.
