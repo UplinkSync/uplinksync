@@ -20,13 +20,20 @@ const UPLINKSYNC_CONTACT_PHONE_E164  = '+12089952704';
 /**
  * Owner-confirmed social profile URLs (***-104 wake comment, 2026-07-21).
  * Use verbatim — the Facebook value is a /people/<slug>/<id>/ profile link,
- * NOT a vanity page; do not "tidy" it or it 404s. Instagram is intentionally
- * absent: the owner has not supplied it, and IA policy is to render nothing at
- * all (no icon, no "#" href) rather than a link that goes nowhere. X/Twitter
- * and TikTok do not exist and are removed below.
+ * NOT a vanity page; do not "tidy" it or it 404s.
+ *
+ * Instagram supplied by the owner 2026-07-22 and is now published. It was
+ * deliberately absent before that: IA policy is to render nothing at all (no
+ * icon, no "#" href) rather than a link that goes nowhere. Note this URL could
+ * not be machine-verified -- Instagram serves an identical login wall (HTTP
+ * 200) for real and non-existent handles alike, so a status check proves
+ * nothing. It is owner-authoritative, not probe-confirmed.
+ *
+ * X/Twitter and TikTok do not exist and are removed below.
  */
-const UPLINKSYNC_SOCIAL_LINKEDIN = 'https://www.linkedin.com/company/uplinksync/';
-const UPLINKSYNC_SOCIAL_FACEBOOK = 'https://www.facebook.com/people/UplinkSync-LLC/61588243996549/';
+const UPLINKSYNC_SOCIAL_LINKEDIN  = 'https://www.linkedin.com/company/uplinksync/';
+const UPLINKSYNC_SOCIAL_FACEBOOK  = 'https://www.facebook.com/people/UplinkSync-LLC/61588243996549/';
+const UPLINKSYNC_SOCIAL_INSTAGRAM = 'https://www.instagram.com/uplinksyncllc/';
 
 /**
  * Rewrite the finished HTML document.
@@ -165,16 +172,28 @@ function uplinksync_contact_social_rewrite( $html ) {
 	//     rewrite the href of the <a> nested in the service <li>.
 	$html = uplinksync_social_set_href( $html, array( 'linkedin' ), UPLINKSYNC_SOCIAL_LINKEDIN );
 	$html = uplinksync_social_set_href( $html, array( 'facebook' ), UPLINKSYNC_SOCIAL_FACEBOOK );
+	$html = uplinksync_social_set_href( $html, array( 'instagram' ), UPLINKSYNC_SOCIAL_INSTAGRAM );
 
 	// (a2) LinkedIn was never in the theme's social list, so there is no href
 	//      for (a) to rewrite -- set_href can only edit an element that already
 	//      exists. Insert a LinkedIn <li> after Facebook when it is absent.
 	$html = uplinksync_social_ensure_linkedin( $html );
 
-	// (b) Remove Instagram (pending), plus X/Twitter and TikTok (do not exist).
+	// (a3) Same for Instagram -- the theme's social list has never contained an
+	//      Instagram item (the only "instagram" strings in the rendered page are
+	//      WordPress core's per-service CSS colour rules), so there is nothing
+	//      for (a) to repair and it has to be injected. Runs after LinkedIn so
+	//      it can anchor to it and the order reads Facebook, LinkedIn,
+	//      Instagram.
+	$html = uplinksync_social_ensure_instagram( $html );
+
+	// (b) Remove X/Twitter and TikTok -- those accounts do not exist.
+	//     Instagram was in this list until 2026-07-22; it MUST stay out of it
+	//     now, because this rule runs after (a3) and would delete the item we
+	//     just injected.
 	//     Drop the whole <li> in wp-block-social-links.
 	$html = preg_replace(
-		'#<li\b[^>]*class="[^"]*wp-social-link-(?:instagram|x|twitter|tiktok)\b[^"]*"[^>]*>.*?</li>#is',
+		'#<li\b[^>]*class="[^"]*wp-social-link-(?:x|twitter|tiktok)\b[^"]*"[^>]*>.*?</li>#is',
 		'',
 		$html
 	);
@@ -362,4 +381,44 @@ function uplinksync_social_set_href( $html, $services, $url ) {
 	$alt = implode( '|', array_map( 'preg_quote', $services ) );
 	$pattern = '#(<li\b[^>]*class="[^"]*wp-social-link-(?:' . $alt . ')\b[^"]*"[^>]*>.*?<a\b[^>]*\bhref=")[^"]*(")#is';
 	return preg_replace( $pattern, '${1}' . $url . '${2}', $html );
+}
+
+/**
+ * Insert an Instagram entry into each wp-block-social-links list that does not
+ * already have one, mirroring uplinksync_social_ensure_linkedin(). Placed after
+ * the LinkedIn item when present so the rendered order is Facebook, LinkedIn,
+ * Instagram. Idempotent: a list already containing wp-social-link-instagram is
+ * left alone, which matters because this output buffer can run more than once.
+ */
+function uplinksync_social_ensure_instagram( $html ) {
+	if ( false === stripos( $html, 'wp-block-social-links' ) ) {
+		return $html;
+	}
+	$svg = '<svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153a4.908 4.908 0 011.153 1.772c.247.637.415 1.363.465 2.428.047 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 01-1.153 1.772 4.915 4.915 0 01-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.047-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 01-1.772-1.153 4.904 4.904 0 01-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 011.153-1.772A4.897 4.897 0 015.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 5a5 5 0 100 10 5 5 0 000-10zm6.5-.25a1.25 1.25 0 10-2.5 0 1.25 1.25 0 002.5 0zM12 9a3 3 0 110 6 3 3 0 010-6z"></path></svg>';
+	$li  = '<li class="wp-social-link wp-social-link-instagram wp-block-social-link">'
+	     . '<a href="' . esc_url( UPLINKSYNC_SOCIAL_INSTAGRAM ) . '" class="wp-block-social-link-anchor"'
+	     . ' target="_blank" rel="noopener"><span class="screen-reader-text">Instagram</span>'
+	     . $svg . '</a></li>';
+
+	return preg_replace_callback(
+		'#(<ul\b[^>]*class="[^"]*wp-block-social-links[^"]*"[^>]*>)(.*?)(</ul>)#is',
+		static function ( $m ) use ( $li ) {
+			if ( false !== stripos( $m[2], 'wp-social-link-instagram' ) ) {
+				return $m[0]; // already present
+			}
+			// place it directly after the LinkedIn item when there is one
+			$inner = preg_replace(
+				'#(<li\b[^>]*class="[^"]*wp-social-link-linkedin\b[^"]*"[^>]*>.*?</li>)#is',
+				'${1}' . $li,
+				$m[2],
+				1,
+				$count
+			);
+			if ( ! $count ) {
+				$inner = $m[2] . $li; // no LinkedIn item: append
+			}
+			return $m[1] . $inner . $m[3];
+		},
+		$html
+	);
 }
