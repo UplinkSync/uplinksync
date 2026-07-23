@@ -17,17 +17,22 @@ const UPLINKSYNC_BOOK_ORIGIN = 'https://book.uplinksync.com';
 /**
  * Public event-type slugs the CTAs point at.
  *
- * PLACEHOLDERS (***-188 blocked-by ***-187): the two dedicated public event
- * types — an IT/consultation type and a UAV/drone type — are not yet published
- * on the instance (they 404 today). Until ***-187 returns the final public
- * slugs (e.g. `it-consult-...`, `uav-...`), both CTAs point at the known-live
- * `dirwin/30min` event type so the booking flow WORKS for a real visitor right
- * now. When the real slugs land, change ONLY these two constants — nothing else
- * in this file needs to move. Keep them slug-only (no origin, no leading slash);
- * the origin is prepended once in uplinksync_book_url().
+ * CONSULT — LIVE. Owner confirmed 2026-07-23 the instance is serving on
+ * book.uplinksync.com with booking verified. `dirwin/30min` is the real,
+ * owner-blessed consultation event type (probed HTTP 200); the "Book a
+ * consultation" CTA ships against it now.
+ *
+ * UAV — GATED OFF. No dedicated UAV/drone event type exists yet (uav/uav-service/
+ * drone/etc. all 404 on the live instance), and the owner has not yet made the
+ * UAV routing decision (dedicated qualify-first event type vs. interim reuse of
+ * the consult slug). The plan requires a dedicated UAV type with "Requires
+ * confirmation" ON. Until the owner returns a real UAV slug, the UAV CTA is NOT
+ * injected — see UPLINKSYNC_BOOK_UAV_ENABLED. To enable: set the real slug below
+ * and flip the flag to true (one commit, nothing else moves).
  */
-const UPLINKSYNC_BOOK_CONSULT_SLUG = 'dirwin/30min'; // TODO(***-187): swap -> it-consult-…
-const UPLINKSYNC_BOOK_UAV_SLUG     = 'dirwin/30min'; // TODO(***-187): swap -> uav-…
+const UPLINKSYNC_BOOK_CONSULT_SLUG = 'dirwin/30min'; // LIVE (owner-confirmed 2026-07-23)
+const UPLINKSYNC_BOOK_UAV_SLUG     = 'dirwin/30min'; // TODO(***-187): swap -> real uav- slug
+const UPLINKSYNC_BOOK_UAV_ENABLED  = false;          // flip true when a real UAV slug exists
 
 function uplinksync_book_url( $slug ) {
 	return UPLINKSYNC_BOOK_ORIGIN . '/' . ltrim( $slug, '/' );
@@ -101,7 +106,9 @@ function uplinksync_book_rewrite( $html ) {
 	}
 
 	$html = uplinksync_book_inject_consult( $html );
-	$html = uplinksync_book_inject_uav( $html );
+	if ( UPLINKSYNC_BOOK_UAV_ENABLED ) {
+		$html = uplinksync_book_inject_uav( $html );
+	}
 	$html = uplinksync_book_inject_runtime( $html );
 
 	return $html;
