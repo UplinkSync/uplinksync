@@ -157,20 +157,12 @@ h1, h2, h3,
 
 /* ---------------------------------------------------------------------------
  * Section 4 — Content cards.
- * Service cards: white surface, 1px grey-200 border, 8px radius, no heavy
- * drop shadow. Bind onto the theme's service block classes.
+ * ***-192: the `.hostinger-ai-service-*` selectors that formerly lived here
+ * were retired with the parent flip. They targeted a parent-theme service
+ * block that the content rewrite (steps 1–2) no longer emits — verified 0 live
+ * uses before removal — so the rules were dead. Service-card framing now rides
+ * on the neutral block markup + core styles. Removed rather than remapped.
  * ------------------------------------------------------------------------- */
-.hostinger-ai-service-image,
-.hostinger-ai-service-title,
-.hostinger-ai-service-description {
-	color: var(--navy-900);
-}
-.hostinger-ai-service-image {
-	border: var(--border-card);
-	border-radius: var(--radius-default);
-	box-shadow: none;
-	overflow: hidden;
-}
 
 /* ---------------------------------------------------------------------------
  * Section 3 — Spacing & rhythm.

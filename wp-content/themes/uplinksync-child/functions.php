@@ -129,19 +129,18 @@ function uplinksync_child_asset_ver( $relative ) {
 }
 
 function uplinksync_child_enqueue_assets() {
-	$parent_style = 'hostinger-ai-theme-style';
-
-	wp_enqueue_style(
-		$parent_style,
-		get_template_directory_uri() . '/style.css',
-		array(),
-		wp_get_theme( get_template() )->get( 'Version' )
-	);
-
+	/**
+	 * ***-192: parent is now Twenty Twenty-Five (a block theme), whose
+	 * style.css is a metadata stub — WordPress auto-loads TT5's presentation
+	 * from its theme.json, so there is no compiled parent stylesheet to enqueue
+	 * as a dependency. The former `hostinger-ai-theme-style` handle (and its
+	 * 16KB style.min.css) is retired with the flip. The brand layer below now
+	 * anchors on the WordPress-core block styles + this theme's theme.json.
+	 */
 	wp_enqueue_style(
 		'uplinksync-tokens',
 		get_stylesheet_directory_uri() . '/assets/css/tokens.css',
-		array( $parent_style ),
+		array(),
 		uplinksync_child_asset_ver( 'assets/css/tokens.css' )
 	);
 
