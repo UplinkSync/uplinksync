@@ -28,17 +28,10 @@
 <!-- /wp:html -->
 
 <!-- wp:group {"align":"full","className":"uls-air-hero","style":{"spacing":{"padding":{"top":"0","bottom":"0"}}},"backgroundColor":"navy-900","layout":{"type":"constrained","contentSize":"1200px"}} -->
-<div class="wp-block-group alignfull uls-air-hero has-navy-900-background-color has-background"><!-- The cinematic hero reel is hosted on biz-immich (media.uplinksync.com) per the owner's media-hosting decision (***-186/208) — served from Immich, not committed into wp-content. Immich sends X-Frame-Options:SAMEORIGIN + CSP frame-ancestors 'self', so the share cannot be iframed cross-origin; the Palisades poster below is a click-through to the reel on Immich (***-203). -->
-<!-- wp:html -->
-<figure class="wp-block-image uls-air-hero__reel uls-air-videocard">
-<a class="uls-air-videocard__link" href="https://media.uplinksync.com/share/_b-4s67XtAtfb48X7zHBot_WlLXccranYqYfqh-jnCcG4sW6aWp2TqqFku4-hfYYUSA" target="_blank" rel="noopener" aria-label="Watch the UplinkSync Air cinematic reel on media.uplinksync.com (opens in a new tab)">
-<picture><source type="image/webp" srcset="/wp-content/themes/uplinksync-child/assets/media/aerials/stills/palisades-hero.webp"><img class="uls-air-videocard__poster" src="/wp-content/themes/uplinksync-child/assets/media/aerials/stills/palisades-hero.jpg" alt="Cinematic aerial reel poster — Palisades Reservoir, Idaho. Aerial by UplinkSync." loading="eager" fetchpriority="high"/></picture>
-<span class="uls-air-videocard__play" aria-hidden="true">&#9654;</span>
-<span class="uls-air-videocard__label">Watch the cinematic reel</span>
-</a>
-<figcaption class="uls-air-credit">Aerial by UplinkSync — uplinksync.com · Cinematic reel, Idaho &amp; Utah</figcaption>
-</figure>
-<!-- /wp:html -->
+<div class="wp-block-group alignfull uls-air-hero has-navy-900-background-color has-background"><!-- ***-247/203: the cinematic hero reel is stored on biz-immich (media.uplinksync.com) and REFERENCED here as an inline HTML5 player. Its source is Immich's public per-asset playback endpoint (/api/assets/<id>/video/playback?key=<shareKey>), which streams video/mp4 (HTTP 206, range-seekable) to an anonymous request the share key authorises. It plays IN the page — no click-through to, and no framing of, the Immich app UI (X-Frame-Options is irrelevant to <video>). Poster is the watermarked Palisades hero still. See inc/immich-embed.php [immich_video]. -->
+<!-- wp:shortcode -->
+[immich_video asset="b688e5d2-aa13-49a8-9683-70400bd89196" share="https://media.uplinksync.com/share/_b-4s67XtAtfb48X7zHBot_WlLXccranYqYfqh-jnCcG4sW6aWp2TqqFku4-hfYYUSA" poster="/wp-content/themes/uplinksync-child/assets/media/aerials/stills/palisades-hero.jpg" ratio="16/9" class="uls-air-hero__reel uls-air-videocard" label="Aerial by UplinkSync — uplinksync.com · Cinematic reel, Idaho and Utah"]
+<!-- /wp:shortcode -->
 <figure class="wp-block-image uls-air-hero__still"><picture><source type="image/webp" srcset="/wp-content/themes/uplinksync-child/assets/media/aerials/stills/palisades-hero.webp"><img src="/wp-content/themes/uplinksync-child/assets/media/aerials/stills/palisades-hero.jpg" alt="Aerial hero frame of Palisades Reservoir, Idaho, at first light. Aerial by UplinkSync." fetchpriority="high"/></picture><figcaption class="uls-air-credit">Aerial by UplinkSync — uplinksync.com · Palisades Reservoir, Idaho</figcaption></figure></div>
 <!-- /wp:group -->
 
@@ -74,7 +67,7 @@
 <!-- /wp:group --></div>
 <!-- /wp:group -->
 
-<!-- Vertical / social clips (3× 9:16) hosted on biz-immich (***-186/208), owner-curated public shares from the cleared Landscape set (***-209). Immich blocks cross-origin framing (X-Frame-Options), so each is a poster click-through to media.uplinksync.com; credit is burned into each frame and repeated in a visible caption (***-203). -->
+<!-- Vertical / social clips (3× 9:16) stored on biz-immich (***-186/208), owner-curated public shares from the cleared Landscape set (***-209). Each is an inline HTML5 player streamed from Immich's public /video/playback endpoint (share-key authorised) — plays in-page, no navigation to the Immich app UI (***-247/203). Credit is burned into each frame and repeated in a visible caption below. -->
 <!-- wp:group {"align":"full","className":"uls-air-social","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|50"}}},"layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignfull uls-air-social" style="padding-top:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--50)"><!-- wp:heading {"level":2,"textColor":"navy-900"} -->
 <h2 class="wp-block-heading has-navy-900-color has-text-color">Vertical / social</h2>
@@ -86,12 +79,9 @@
 
 <!-- wp:group {"className":"uls-air-social-grid","layout":{"type":"grid","minimumColumnWidth":"18rem"}} -->
 <div class="wp-block-group uls-air-social-grid"><!-- wp:group {"className":"uls-air-social-item","layout":{"type":"default"}} -->
-<div class="wp-block-group uls-air-social-item"><!-- wp:html -->
-<a class="uls-air-videocard uls-air-videocard--9x16" href="https://media.uplinksync.com/share/0nvSX6X4yoadOQNUWD17pFYZ67a5lmxnf5hOpxIvPNOaJw94WdhY0c_s7S83Wgq6fOY" target="_blank" rel="noopener" aria-label="Watch this UplinkSync Air vertical clip on media.uplinksync.com (opens in a new tab)">
-<picture><source type="image/webp" srcset="/wp-content/themes/uplinksync-child/assets/media/aerials/stills/palisades-thumb.webp"><img class="uls-air-videocard__poster" src="/wp-content/themes/uplinksync-child/assets/media/aerials/stills/palisades-thumb.jpg" alt="Vertical aerial clip — Palisades Reservoir, Idaho. Aerial by UplinkSync." loading="lazy"/></picture>
-<span class="uls-air-videocard__play" aria-hidden="true">&#9654;</span>
-</a>
-<!-- /wp:html -->
+<div class="wp-block-group uls-air-social-item"><!-- wp:shortcode -->
+[immich_video asset="7be5a074-5852-430d-a2a3-ac70f97553e9" share="https://media.uplinksync.com/share/0nvSX6X4yoadOQNUWD17pFYZ67a5lmxnf5hOpxIvPNOaJw94WdhY0c_s7S83Wgq6fOY" poster="/wp-content/themes/uplinksync-child/assets/media/aerials/stills/palisades-thumb.jpg" ratio="9/16" class="uls-air-videocard uls-air-videocard--9x16" label=""]
+<!-- /wp:shortcode -->
 
 <!-- wp:paragraph {"className":"uls-air-credit","fontSize":"small"} -->
 <p class="uls-air-credit has-small-font-size">Palisades Reservoir, Idaho · Aerial by UplinkSync — uplinksync.com</p>
@@ -99,12 +89,9 @@
 <!-- /wp:group -->
 
 <!-- wp:group {"className":"uls-air-social-item","layout":{"type":"default"}} -->
-<div class="wp-block-group uls-air-social-item"><!-- wp:html -->
-<a class="uls-air-videocard uls-air-videocard--9x16" href="https://media.uplinksync.com/share/twvinN24QDAPlsz-lcH6-vN2EbBCPxOhIoQTrgtT6rLqRdcljOVZgofcAQCkm2D4DfE" target="_blank" rel="noopener" aria-label="Watch this UplinkSync Air vertical clip on media.uplinksync.com (opens in a new tab)">
-<picture><source type="image/webp" srcset="/wp-content/themes/uplinksync-child/assets/media/aerials/stills/palisades-thumb.webp"><img class="uls-air-videocard__poster" src="/wp-content/themes/uplinksync-child/assets/media/aerials/stills/palisades-thumb.jpg" alt="Vertical aerial clip — Palisades ridge, Idaho. Aerial by UplinkSync." loading="lazy"/></picture>
-<span class="uls-air-videocard__play" aria-hidden="true">&#9654;</span>
-</a>
-<!-- /wp:html -->
+<div class="wp-block-group uls-air-social-item"><!-- wp:shortcode -->
+[immich_video asset="cf524131-01cf-41cc-bcab-ecd4cb72ad9c" share="https://media.uplinksync.com/share/twvinN24QDAPlsz-lcH6-vN2EbBCPxOhIoQTrgtT6rLqRdcljOVZgofcAQCkm2D4DfE" poster="/wp-content/themes/uplinksync-child/assets/media/aerials/stills/palisades-thumb.jpg" ratio="9/16" class="uls-air-videocard uls-air-videocard--9x16" label=""]
+<!-- /wp:shortcode -->
 
 <!-- wp:paragraph {"className":"uls-air-credit","fontSize":"small"} -->
 <p class="uls-air-credit has-small-font-size">Palisades ridge, Idaho · Aerial by UplinkSync — uplinksync.com</p>
@@ -112,12 +99,9 @@
 <!-- /wp:group -->
 
 <!-- wp:group {"className":"uls-air-social-item","layout":{"type":"default"}} -->
-<div class="wp-block-group uls-air-social-item"><!-- wp:html -->
-<a class="uls-air-videocard uls-air-videocard--9x16" href="https://media.uplinksync.com/share/UgXWsDIyaPcYKRRlV7vqsYoNn2-ZkvUZJxJZ4w-mVVgataU-hWjMZGgZN41ia3huuh0" target="_blank" rel="noopener" aria-label="Watch this UplinkSync Air vertical clip on media.uplinksync.com (opens in a new tab)">
-<picture><source type="image/webp" srcset="/wp-content/themes/uplinksync-child/assets/media/aerials/stills/pocatello-thumb.webp"><img class="uls-air-videocard__poster" src="/wp-content/themes/uplinksync-child/assets/media/aerials/stills/pocatello-thumb.jpg" alt="Vertical aerial clip — Pocatello, Idaho. Aerial by UplinkSync." loading="lazy"/></picture>
-<span class="uls-air-videocard__play" aria-hidden="true">&#9654;</span>
-</a>
-<!-- /wp:html -->
+<div class="wp-block-group uls-air-social-item"><!-- wp:shortcode -->
+[immich_video asset="b7a3c631-d9eb-4bd9-a9dc-f51f316d096a" share="https://media.uplinksync.com/share/UgXWsDIyaPcYKRRlV7vqsYoNn2-ZkvUZJxJZ4w-mVVgataU-hWjMZGgZN41ia3huuh0" poster="/wp-content/themes/uplinksync-child/assets/media/aerials/stills/pocatello-thumb.jpg" ratio="9/16" class="uls-air-videocard uls-air-videocard--9x16" label=""]
+<!-- /wp:shortcode -->
 
 <!-- wp:paragraph {"className":"uls-air-credit","fontSize":"small"} -->
 <p class="uls-air-credit has-small-font-size">Pocatello, Idaho · Aerial by UplinkSync — uplinksync.com</p>
