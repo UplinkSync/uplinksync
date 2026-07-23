@@ -17,22 +17,19 @@ const UPLINKSYNC_BOOK_ORIGIN = 'https://book.uplinksync.com';
 /**
  * Public event-type slugs the CTAs point at.
  *
- * CONSULT — LIVE. Owner confirmed 2026-07-23 the instance is serving on
- * book.uplinksync.com with booking verified. `dirwin/30min` is the real,
- * owner-blessed consultation event type (probed HTTP 200); the "Book a
- * consultation" CTA ships against it now.
+ * CONSULT — LIVE, dedicated. The dedicated IT-consultation event type landed
+ * under ***-212 and is verified serving (probed HTTP 200). The "Book a
+ * consultation" CTA now points at the dedicated `dirwin/it-consult` slug
+ * instead of the generic `dirwin/30min`.
  *
- * UAV — GATED OFF. No dedicated UAV/drone event type exists yet (uav/uav-service/
- * drone/etc. all 404 on the live instance), and the owner has not yet made the
- * UAV routing decision (dedicated qualify-first event type vs. interim reuse of
- * the consult slug). The plan requires a dedicated UAV type with "Requires
- * confirmation" ON. Until the owner returns a real UAV slug, the UAV CTA is NOT
- * injected — see UPLINKSYNC_BOOK_UAV_ENABLED. To enable: set the real slug below
- * and flip the flag to true (one commit, nothing else moves).
+ * UAV — LIVE, dedicated. The dedicated UAV/drone event type landed under
+ * ***-212 (`dirwin/uav-service`, 60 min, probed HTTP 200) with buffers and
+ * booking fields inherited from the working config. The UAV CTA is now enabled
+ * and injected on the Air/drone surface. No pricing is surfaced (quote-only).
  */
-const UPLINKSYNC_BOOK_CONSULT_SLUG = 'dirwin/30min'; // LIVE (owner-confirmed 2026-07-23)
-const UPLINKSYNC_BOOK_UAV_SLUG     = 'dirwin/30min'; // TODO(***-187): swap -> real uav- slug
-const UPLINKSYNC_BOOK_UAV_ENABLED  = false;          // flip true when a real UAV slug exists
+const UPLINKSYNC_BOOK_CONSULT_SLUG = 'dirwin/it-consult';  // LIVE dedicated (***-212, HTTP 200)
+const UPLINKSYNC_BOOK_UAV_SLUG     = 'dirwin/uav-service'; // LIVE dedicated (***-212, HTTP 200)
+const UPLINKSYNC_BOOK_UAV_ENABLED  = true;                 // real UAV slug live — UAV CTA on
 
 function uplinksync_book_url( $slug ) {
 	return UPLINKSYNC_BOOK_ORIGIN . '/' . ltrim( $slug, '/' );
