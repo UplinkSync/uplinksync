@@ -7,7 +7,8 @@
     "w": 2560,
     "h": 1440,
     "bytes": 1361674,
-    "srcBytes": 56188928
+    "srcBytes": 56188928,
+    "watermarked": true
   },
   {
     "frame": "palisades",
@@ -17,7 +18,8 @@
     "w": 2560,
     "h": 1440,
     "bytes": 1121368,
-    "srcBytes": 56188928
+    "srcBytes": 56188928,
+    "watermarked": true
   },
   {
     "frame": "palisades",
@@ -27,7 +29,8 @@
     "w": 1920,
     "h": 1080,
     "bytes": 754678,
-    "srcBytes": 56188928
+    "srcBytes": 56188928,
+    "watermarked": true
   },
   {
     "frame": "palisades",
@@ -37,7 +40,8 @@
     "w": 1920,
     "h": 1080,
     "bytes": 628569,
-    "srcBytes": 56188928
+    "srcBytes": 56188928,
+    "watermarked": true
   },
   {
     "frame": "palisades",
@@ -47,7 +51,8 @@
     "w": 800,
     "h": 450,
     "bytes": 137230,
-    "srcBytes": 56188928
+    "srcBytes": 56188928,
+    "watermarked": false
   },
   {
     "frame": "palisades",
@@ -57,7 +62,8 @@
     "w": 800,
     "h": 450,
     "bytes": 120771,
-    "srcBytes": 56188928
+    "srcBytes": 56188928,
+    "watermarked": false
   },
   {
     "frame": "pocatello",
@@ -67,7 +73,8 @@
     "w": 1920,
     "h": 1080,
     "bytes": 812654,
-    "srcBytes": 29982720
+    "srcBytes": 29982720,
+    "watermarked": true
   },
   {
     "frame": "pocatello",
@@ -77,7 +84,8 @@
     "w": 1920,
     "h": 1080,
     "bytes": 668155,
-    "srcBytes": 29982720
+    "srcBytes": 29982720,
+    "watermarked": true
   },
   {
     "frame": "pocatello",
@@ -87,7 +95,8 @@
     "w": 800,
     "h": 450,
     "bytes": 159516,
-    "srcBytes": 29982720
+    "srcBytes": 29982720,
+    "watermarked": false
   },
   {
     "frame": "pocatello",
@@ -97,7 +106,8 @@
     "w": 800,
     "h": 450,
     "bytes": 135959,
-    "srcBytes": 29982720
+    "srcBytes": 29982720,
+    "watermarked": false
   },
   {
     "frame": "kaysville",
@@ -107,7 +117,8 @@
     "w": 1920,
     "h": 1080,
     "bytes": 739036,
-    "srcBytes": 28516352
+    "srcBytes": 28516352,
+    "watermarked": true
   },
   {
     "frame": "kaysville",
@@ -117,7 +128,8 @@
     "w": 1920,
     "h": 1080,
     "bytes": 641257,
-    "srcBytes": 28516352
+    "srcBytes": 28516352,
+    "watermarked": true
   },
   {
     "frame": "kaysville",
@@ -127,7 +139,8 @@
     "w": 800,
     "h": 450,
     "bytes": 166374,
-    "srcBytes": 28516352
+    "srcBytes": 28516352,
+    "watermarked": false
   },
   {
     "frame": "kaysville",
@@ -137,7 +150,8 @@
     "w": 800,
     "h": 450,
     "bytes": 143446,
-    "srcBytes": 28516352
+    "srcBytes": 28516352,
+    "watermarked": false
   },
   {
     "frame": "saratoga-springs",
@@ -147,7 +161,8 @@
     "w": 1920,
     "h": 1080,
     "bytes": 671566,
-    "srcBytes": 26791936
+    "srcBytes": 26791936,
+    "watermarked": true
   },
   {
     "frame": "saratoga-springs",
@@ -157,7 +172,8 @@
     "w": 1920,
     "h": 1080,
     "bytes": 603323,
-    "srcBytes": 26791936
+    "srcBytes": 26791936,
+    "watermarked": true
   },
   {
     "frame": "saratoga-springs",
@@ -167,7 +183,8 @@
     "w": 800,
     "h": 450,
     "bytes": 155072,
-    "srcBytes": 26791936
+    "srcBytes": 26791936,
+    "watermarked": false
   },
   {
     "frame": "saratoga-springs",
@@ -177,7 +194,8 @@
     "w": 800,
     "h": 450,
     "bytes": 137437,
-    "srcBytes": 26791936
+    "srcBytes": 26791936,
+    "watermarked": false
   },
   {
     "frame": "idaho-falls",
@@ -187,7 +205,8 @@
     "w": 1920,
     "h": 1080,
     "bytes": 466574,
-    "srcBytes": 24854528
+    "srcBytes": 24854528,
+    "watermarked": true
   },
   {
     "frame": "idaho-falls",
@@ -197,7 +216,8 @@
     "w": 1920,
     "h": 1080,
     "bytes": 435459,
-    "srcBytes": 24854528
+    "srcBytes": 24854528,
+    "watermarked": true
   },
   {
     "frame": "idaho-falls",
@@ -207,7 +227,8 @@
     "w": 800,
     "h": 450,
     "bytes": 106900,
-    "srcBytes": 24854528
+    "srcBytes": 24854528,
+    "watermarked": false
   },
   {
     "frame": "idaho-falls",
@@ -217,6 +238,7 @@
     "w": 800,
     "h": 450,
     "bytes": 101865,
-    "srcBytes": 24854528
+    "srcBytes": 24854528,
+    "watermarked": false
   }
 ]
