@@ -19,7 +19,7 @@ Developed from camera-original JPEG masters (gentle contrast/saturation/sharpen;
 | `palisades` (hero) | Palisades, Idaho — Mountainscape | hero 2560w, full 1920w, thumb 800w |
 | `pocatello` | Pocatello, Idaho — Brooklyn's Playground | full 1920w, thumb 800w |
 | `kaysville` | Kaysville, Utah | full 1920w, thumb 800w |
-| `soda-springs` | Soda Springs, Idaho | full 1920w, thumb 800w |
+| `saratoga-springs` | Saratoga Springs, Utah | full 1920w, thumb 800w |
 | `idaho-falls` | Idaho Falls, Idaho | full 1920w, thumb 800w |
 
 Primary hero = Palisades `DJI_20250927094432_0023_D.JPG` (per WEBSITE_SHORTLIST.md).
@@ -47,7 +47,7 @@ Center-cropped from 4K masters, graded, stacked credit at bottom.
 - Palisades: `/mnt/propair/Landscape/Mountainscapes/Palisades-Idaho_20250927/`
 - Pocatello: `/mnt/propair/Landscape/Cityscapes/ID-Pocatello_BrooklynsPlayground-20250927/`
 - Kaysville: `/mnt/propair/Landscape/Cityscapes/UT-Kaysville/`
-- Soda Springs: `/mnt/propair/Landscape/Cityscapes/UT-SodaSprings/`
+- Saratoga Springs: `/mnt/propair/Landscape/Cityscapes/UT-SaratogaSprings/`
 - Idaho Falls: `/mnt/propair/Landscape/Cityscapes/ID-IdahoFalls/`
 
 ## Develop/export tooling
