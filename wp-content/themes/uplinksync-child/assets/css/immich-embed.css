@@ -27,3 +27,29 @@
 	border: 0;
 	display: block;
 }
+
+/*
+ * ***-247/203: inline player for [immich_video]. The <video> streams from the
+ * Immich playback endpoint and plays in place — no click-through to the app UI.
+ * aspect-ratio is set inline per embed (16/9 hero, 9/16 vertical clips).
+ */
+.uls-immich-video {
+	margin: 0;
+	width: 100%;
+	overflow: hidden;
+	border-radius: var(--uls-radius, 10px);
+	background: var(--uls-color-surface-muted, #0b1b33);
+	line-height: 0;
+}
+
+.uls-immich-video__player {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	background: var(--uls-color-surface-muted, #0b1b33);
+}
+
+.uls-immich-video .uls-air-credit {
+	line-height: 1.3;
+}
