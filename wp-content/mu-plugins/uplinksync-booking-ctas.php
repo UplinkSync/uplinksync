@@ -84,17 +84,50 @@ function uplinksync_book_consult_markup() {
 }
 
 /**
- * The "Book UAV services" button markup for the Air/drone surface.
+ * The UAV booking block for the Air/drone surface — "consultation-first for new
+ * clients" (***-243).
+ *
+ * cal.com cannot tell a new visitor from a returning client, so the new-vs-
+ * returning rule the owner set ("UAV scheduling starts with a consultation
+ * UNLESS they're a returning customer") is expressed here in the CTA weighting:
+ *
+ *   - PRIMARY (full-weight button) → the free consultation (it-consult slug).
+ *     New clients land here first.
+ *   - SECONDARY (smaller text link) → direct UAV booking (uav-service slug) for
+ *     returning clients who already know the scope.
+ *
+ * A line of microcopy sets the weekend-default expectation without promising
+ * instant weekday booking (weekday shoots are arranged manually via the
+ * requiresConfirmation approval on the UAV event type). The existing "Request a
+ * quote" path is untouched. The block keeps the `uplinksync-book-uav` class so
+ * the injector stays idempotent, and every booking anchor keeps `uls-book-link`
+ * so the lazy cal.com Embed loader wires all of them.
  */
 function uplinksync_book_uav_markup() {
-	$url  = esc_url( uplinksync_book_url( UPLINKSYNC_BOOK_UAV_SLUG ) );
-	$slug = esc_attr( UPLINKSYNC_BOOK_UAV_SLUG );
-	return '<div class="wp-block-button uplinksync-book-cta uplinksync-book-uav">'
+	$consult_url  = esc_url( uplinksync_book_url( UPLINKSYNC_BOOK_CONSULT_SLUG ) );
+	$consult_slug = esc_attr( UPLINKSYNC_BOOK_CONSULT_SLUG );
+	$uav_url      = esc_url( uplinksync_book_url( UPLINKSYNC_BOOK_UAV_SLUG ) );
+	$uav_slug     = esc_attr( UPLINKSYNC_BOOK_UAV_SLUG );
+
+	return '<div class="uplinksync-book-cta uplinksync-book-uav uls-book-uav-group">'
+		// Primary: new clients start with a consultation.
+		. '<div class="wp-block-button uls-book-uav-primary">'
 		. '<a class="wp-block-button__link wp-element-button uls-book-link" '
-		. 'href="' . $url . '" '
-		. 'data-cal-link="' . $slug . '" '
+		. 'href="' . $consult_url . '" '
+		. 'data-cal-link="' . $consult_slug . '" '
+		. 'data-uls-book="uav-consult" '
+		. 'target="_blank" rel="noopener">New to UplinkSync? Start with a free consultation</a></div>'
+		// Secondary: returning clients book UAV service directly.
+		. '<p class="uls-book-uav-returning">Returning client? '
+		. '<a class="uls-book-link uls-book-uav-direct" '
+		. 'href="' . $uav_url . '" '
+		. 'data-cal-link="' . $uav_slug . '" '
 		. 'data-uls-book="uav" '
-		. 'target="_blank" rel="noopener">Book UAV services</a></div>';
+		. 'target="_blank" rel="noopener">Book UAV service</a></p>'
+		// Weekend-default expectation (no instant-weekday promise).
+		. '<p class="uls-book-uav-note">UAV field work is scheduled on weekends '
+		. '(weekday shoots by arrangement, ~2 weeks ahead).</p>'
+		. '</div>';
 }
 
 function uplinksync_book_rewrite( $html ) {
@@ -208,6 +241,13 @@ function uplinksync_book_inject_runtime( $html ) {
 		. 'background:transparent;padding:var(--wp--preset--spacing--30,12px) var(--wp--preset--spacing--70,32px);'
 		. 'text-decoration:none;cursor:pointer;line-height:1.2;font-weight:600;}'
 		. '.uplinksync-book-cta{display:inline-block;margin:8px 8px 8px 0;}'
+		// ***-243 — consultation-first UAV block: primary button full weight,
+		// returning-client link + weekend note at secondary/supporting weight.
+		. '.uls-book-uav-group{display:block;margin:8px 0;}'
+		. '.uls-book-uav-group .wp-block-button{display:inline-block;margin:0;}'
+		. '.uls-book-uav-returning{margin:10px 0 0;font-size:0.9375rem;opacity:0.85;}'
+		. '.uls-book-uav-direct{text-decoration:underline;cursor:pointer;font-weight:600;}'
+		. '.uls-book-uav-note{margin:6px 0 0;font-size:0.8125rem;opacity:0.7;}'
 		. '</style>';
 
 	// Lazy loader: on the first click of any .uls-book-link, load embed.js once,
