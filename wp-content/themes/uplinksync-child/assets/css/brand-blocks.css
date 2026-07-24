@@ -95,6 +95,31 @@ h1, h2, h3,
 	background-color: transparent;
 }
 
+/* DARK CONTEXT (***-263). The rule above only ever ran on light sections, so
+   it hard-codes a navy border. brand.css has always had the dark-context half
+   for the `uls-btn-*` utility classes, but the BLOCK binding never got one —
+   the comment above says "white outline on dark" and the CSS does not do it.
+   That went unnoticed while no outline button sat on a dark band; the Air
+   page's "License an image" button now closes the page inside the navy CTA
+   band, where a navy border is invisible (1.29:1 against the gradient) even
+   though the label is legible, so the control reads as bare text. The label
+   colour is already handled by the has-white-color preset (!important); this
+   supplies the matching border, and the accent-teal hover that brand.css uses
+   for the same situation (accent-600 on navy is 2.57:1 and fails AA). */
+.uls-bg-dark .wp-block-button.is-style-outline .wp-block-button__link,
+.uls-cta-band .wp-block-button.is-style-outline .wp-block-button__link {
+	border-color: var(--uplinksync-white);
+	color: var(--uplinksync-white);
+}
+.uls-bg-dark .wp-block-button.is-style-outline .wp-block-button__link:hover,
+.uls-bg-dark .wp-block-button.is-style-outline .wp-block-button__link:focus,
+.uls-cta-band .wp-block-button.is-style-outline .wp-block-button__link:hover,
+.uls-cta-band .wp-block-button.is-style-outline .wp-block-button__link:focus {
+	border-color: var(--accent-teal); /* 7.86:1 on navy-900 */
+	color: var(--accent-teal);
+	background-color: transparent;
+}
+
 /* ---------------------------------------------------------------------------
  * Section 5/8 — Hero overlay.
  * Cover blocks used as hero imagery get a subtle navy overlay (10–25%) so
