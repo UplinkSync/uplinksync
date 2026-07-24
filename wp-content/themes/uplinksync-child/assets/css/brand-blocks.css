@@ -224,6 +224,28 @@ h1, h2, h3,
 }
 
 /* ---------------------------------------------------------------------------
+ * ***-263 — the white seam between the page landmarks.
+ *
+ * WordPress emits `:where(.wp-site-blocks) > * { margin-block-start: 1.2rem }`,
+ * which puts a 1.2rem gap between the header template part, <main>, and the
+ * footer template part. The gap shows the page background, so on EVERY page
+ * there is a white band directly under the navy header bar and a second one
+ * directly above the navy footer — measured on / /about/ /services/ /contact/
+ * /drone-services/ and every legal page. It reads as a rendering fault rather
+ * than spacing, and it is the one visual break that is identical sitewide.
+ *
+ * Header, main and footer are each full-bleed bands carrying their own padding,
+ * so no gap is wanted between them. Scoped to the three top-level landmarks
+ * only — the 1.2rem rhythm between blocks INSIDE main is untouched.
+ * ------------------------------------------------------------------------- */
+.wp-site-blocks > .site-header,
+.wp-site-blocks > main,
+.wp-site-blocks > .site-footer {
+	margin-block-start: 0;
+	margin-block-end: 0;
+}
+
+/* ---------------------------------------------------------------------------
  * Section 4 — Footer.
  * Footer template part: navy background, white text. The theme renders it via
  * a color-2 preset group; pin it to brand navy-900 and force legible white
