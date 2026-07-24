@@ -87,6 +87,14 @@ h1, h2, h3,
 	background-image: none;
 	border: 2px solid var(--navy-900);
 	color: var(--navy-900);
+	/* The primary-button rule above normalises the radius to --radius-default,
+	   but it explicitly excludes outline buttons, so an outline button fell
+	   through to WordPress core's `:where(.wp-block-button__link){border-radius:
+	   9999px}` and rendered as a PILL. Visible on the Air page's CTA band, where
+	   the 8px "Request a shoot" primary sits directly beside a fully rounded
+	   "License an image" outline - two shapes for one pair of buttons. The
+	   core rule is zero-specificity, so this plain declaration wins. */
+	border-radius: var(--radius-default);
 }
 .wp-block-button.is-style-outline .wp-block-button__link:hover,
 .wp-block-button.is-style-outline .wp-block-button__link:focus {
