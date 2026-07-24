@@ -282,3 +282,46 @@
 .uls-hero, .uls-hero * {
 	animation: none !important;
 }
+
+/* FAQ accordion (***-303) — objection-removal Q&A on service pages.
+   Native <details>/<summary> so it is keyboard-operable with no JS.
+   Tokens only; AA-safe on the light band. */
+.uls-faq {
+	max-width: var(--content-max-width);
+}
+.uls-faq-item {
+	border: var(--border-card);
+	border-radius: var(--radius-default);
+	background: var(--uplinksync-white);
+	margin-bottom: var(--wp--preset--spacing--30, 1rem);
+}
+.uls-faq-item > summary {
+	list-style: none;
+	cursor: pointer;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1rem;
+	padding: 1rem 1.25rem;
+	font-weight: 600;
+	color: var(--navy-900);
+	line-height: 1.4;
+}
+.uls-faq-item > summary::-webkit-details-marker { display: none; }
+.uls-faq-item > summary::after {
+	content: "+";
+	font-size: 1.5em;
+	line-height: 1;
+	color: var(--accent-600);
+	flex: 0 0 auto;
+}
+.uls-faq-item[open] > summary::after { content: "\2013"; } /* en dash */
+.uls-faq-item > summary:focus-visible {
+	outline: 2px solid var(--accent-600);
+	outline-offset: 2px;
+}
+.uls-faq-answer {
+	padding: 0 1.25rem 1.25rem;
+	color: var(--navy-900);
+}
+.uls-faq-answer p { margin: 0; }
