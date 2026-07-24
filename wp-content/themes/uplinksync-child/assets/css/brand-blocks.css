@@ -328,6 +328,26 @@ h1, h2, h3,
 .site-header .wp-block-group.hostinger-ai-menu.has-color-1-background-color {
 	background-color: var(--navy-900) !important; /* logo 9.74:1, matches footer */
 }
+/* SEPARATION FROM THE PAGE (***-288).
+ * The header bar and the section directly beneath it are BOTH navy-900 on many
+ * pages (e.g. the homepage hero carries .uls-bg-dark = navy-900, and interior
+ * heroes use the same band), so the bar dissolves into the body and no longer
+ * reads as a distinct element — exactly what the owner reported. A drop shadow
+ * alone can't fix this: navy-on-navy leaves nothing for a shadow to fall
+ * against. So define the bar's lower edge two ways that together cover every
+ * section colour that can sit below it:
+ *   1. A 1px hairline on the header's bottom edge in a translucent light tint.
+ *      On a navy body it reads as a faint highlight seam; on a light body it
+ *      recedes but the shadow below takes over. Kept low-alpha so it's a subtle
+ *      separator, not a hard rule.
+ *   2. A soft downward shadow for lift. This does the visible work when a light
+ *      section sits below and adds depth generally, so the bar sits ABOVE the
+ *      page rather than in it.
+ * Scoped to the same header group as the navy repaint so nothing else moves. */
+.site-header .wp-block-group.hostinger-ai-menu.has-color-1-background-color {
+	border-bottom: 1px solid rgba(255, 255, 255, 0.14); /* highlight seam vs the navy hero below */
+	box-shadow: 0 2px 10px rgba(10, 10, 10, 0.22);       /* soft lift vs light sections below */
+}
 /* Light text throughout the header bar: site-title, nav links, and any
    preset text-color the theme attached (has-color-3-color on the title,
    has-color2-color on the nav). */
