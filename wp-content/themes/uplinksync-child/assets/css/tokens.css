@@ -22,6 +22,29 @@
 	--uplinksync-black: #0A0A0A;
 	--uplinksync-white: #FFFFFF;
 
+	/* ------------------------------------------------------------------
+	 * ***-263 — AS-BUILT surface tokens.
+	 *
+	 * The homepage / services / about / contact builds (the pages the owner
+	 * nominated as the house standard) paint their dark bands and cards with
+	 * hex values that were never tokenised: every card carried them as an
+	 * INLINE style, so each new section re-typed the palette by hand and the
+	 * values had already begun to drift (card radius shipped as both 8px and
+	 * 16px on the same page). These promote the as-built values to tokens so
+	 * new sections reference the system instead of re-typing it. Values are
+	 * transcribed from the live block content, NOT re-picked — nothing about
+	 * the current rendering changes.
+	 * ---------------------------------------------------------------- */
+	--navy-800: #1c355c;        /* elevated dark surface — cards on dark sections */
+	--navy-850: #102a4c;        /* deep dark band — alternate dark section (trust band) */
+	--navy-border: #2a4a72;     /* 1px hairline on dark cards */
+	--grey-250: #d6dde6;        /* 1px hairline on light cards */
+
+	/* Eyebrow (the small uppercase kicker above every H1). Previously
+	   re-declared as inline styles on each page — tokenised so it cannot drift. */
+	--fs-eyebrow: 14px;
+	--tracking-eyebrow: 0.12em;
+
 	/* Typography — Section 2. DM Sans is the closest bundled Hostinger-native
 	   geometric sans; it ships 400/500/700 weights only (no 600), so headings
 	   use 700 rather than the spec's 600 to avoid faux-bold synthesis. */
@@ -50,8 +73,18 @@
 	--gutter-mobile: 24px;
 
 	/* Shape */
-	--radius-default: 8px;
-	--border-card: 1px solid var(--grey-200);
+	--radius-default: 8px;      /* buttons, images, small chips */
+	--radius-card: 16px;        /* ***-263: as-built card radius on the standard pages */
+	--border-card: 1px solid var(--grey-250);
+	--border-card-dark: 1px solid var(--navy-border);
+
+	/* Card padding — transcribed from the as-built cards, which use the WordPress
+	   default spacing presets 50 (1.5rem) block / 40 (1rem) inline. */
+	--space-card-block: 1.5rem;
+	--space-card-inline: 1rem;
+
+	/* Long-form measure — legal pages and service copy (***-263). */
+	--measure-prose: 72ch;
 }
 
 /* Fluid type scale between mobile and desktop breakpoints */

@@ -26,7 +26,7 @@
 
 /* Keep the section calm: no oversized imagery, consistent card radius. */
 .uplinksync-drone-gallery img {
-	border-radius: 8px;
+	border-radius: var(--radius-default, 8px);
 }
 
 /* ===========================================================================
@@ -56,7 +56,10 @@
 	max-height: 70vh;
 	object-fit: cover;
 	background-color: var(--navy-900, #0a1a3a);
-	border-radius: 10px;
+	/* ***-263: was 10px — pinned to the house --radius-default so the Air page
+	   stops rendering three different corner radii (10px hero, 10px video card,
+	   8px gallery still) on one screen. */
+	border-radius: var(--radius-default, 8px);
 }
 
 /* Shared visible credit caption on every asset. */
@@ -80,23 +83,39 @@
 	width: 100%;
 	aspect-ratio: 16 / 9;
 	object-fit: cover;
-	border-radius: 8px;
+	border-radius: var(--radius-default, 8px);
 }
 .uls-air-gallery .uls-air-credit {
 	text-align: left;
 }
 
-/* Vertical social clips — 9:16 tiles. */
-.uls-air-social .uls-air-social__item {
+/* Vertical social clips — 9:16 tiles.
+   ***-263: the selectors here were `.uls-air-social__item` (BEM double
+   underscore) but the rendered markup emits `uls-air-social-item` (single
+   hyphen), so both rules were dead. Corrected to the class the page actually
+   ships; the aspect-ratio/​radius they assert already matched what the page's
+   own <style> block was doing, so this is a no-op visually and simply stops the
+   sheet lying about what it controls. */
+.uls-air-social .uls-air-social-item {
 	margin: 0;
 }
-.uls-air-social .uls-air-social__item video {
+.uls-air-social .uls-air-social-item video {
 	display: block;
 	width: 100%;
 	aspect-ratio: 9 / 16;
 	object-fit: cover;
-	border-radius: 8px;
+	border-radius: var(--radius-default, 8px);
 	background-color: var(--navy-900, #0a1a3a);
+}
+
+/* ***-263: credits inside a dark band. The base rule paints .uls-air-credit
+   in --grey-600, which is a light-section colour; when the Air page's section
+   rhythm was brought onto the house alternating pattern the vertical/social
+   band became dark, where grey-600 on navy is unreadable. Match the treatment
+   already used for the credit inside the dark hero. */
+.uls-bg-dark .uls-air-credit,
+.uls-air-social.uls-bg-dark .uls-air-credit {
+	color: rgba(255, 255, 255, 0.82);
 }
 
 .uls-air-usage {

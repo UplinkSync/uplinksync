@@ -40,12 +40,53 @@
 	color: var(--navy-900);
 }
 
-/* Cards — Section 4 */
+/* ---------------------------------------------------------------------------
+ * ***-263 — Eyebrow.
+ * The small uppercase kicker that sits above the H1 in every page hero. It was
+ * previously expressed only as inline block styles, re-typed page by page, so
+ * it could drift. Declared here so `uls-eyebrow` alone is enough; the existing
+ * pages keep their inline styles (identical values), new pages need none.
+ * ------------------------------------------------------------------------- */
+.uls-eyebrow {
+	font-size: var(--fs-eyebrow);
+	letter-spacing: var(--tracking-eyebrow);
+	text-transform: uppercase;
+	color: var(--accent-teal);
+	margin-top: 0;
+}
+.uls-bg-light .uls-eyebrow {
+	/* accent-teal is a dark-section colour (7.86:1 on navy-900); on a light
+	   section it fails AA, so light-context eyebrows use accent-600 (5.01:1). */
+	color: var(--accent-600);
+}
+
+/* ---------------------------------------------------------------------------
+ * Cards — Section 4 (rewritten ***-263).
+ *
+ * The former rule (white / grey-200 / 8px radius) never matched the site: every
+ * real card on the standard pages carries an INLINE style of #ffffff or #1c355c
+ * with a #d6dde6 or #2a4a72 hairline at 16px radius, and inline always wins, so
+ * this rule was dead AND contradicted the as-built look. It is now the tokenised
+ * transcription of what the standard pages actually render, and it is
+ * context-aware, so a card inside `uls-bg-dark` self-selects the dark surface.
+ * Existing inline-styled cards are unaffected (inline still wins, same values).
+ * ------------------------------------------------------------------------- */
 .uls-card {
 	background-color: var(--uplinksync-white);
 	border: var(--border-card);
-	border-radius: var(--radius-default);
+	border-radius: var(--radius-card);
 	box-shadow: none;
+	padding: var(--space-card-block) var(--space-card-inline);
+}
+.uls-bg-dark .uls-card,
+.uls-card.uls-card--dark {
+	background-color: var(--navy-800);
+	border: var(--border-card-dark);
+	color: var(--uplinksync-white);
+}
+.uls-bg-dark .uls-card h1, .uls-bg-dark .uls-card h2,
+.uls-bg-dark .uls-card h3, .uls-bg-dark .uls-card h4 {
+	color: var(--uplinksync-white);
 }
 
 /* Stat/proof block — Section 4, dark bg, accent numerals, use sparingly */
@@ -67,6 +108,86 @@
 	background-color: var(--navy-900);
 	color: var(--uplinksync-white);
 	text-align: center;
+}
+.uls-cta-band h1, .uls-cta-band h2, .uls-cta-band h3, .uls-cta-band p {
+	color: var(--uplinksync-white);
+}
+/* The band always centres its own buttons row, so a page author cannot ship a
+   left-aligned CTA band that reads as a different component (***-263). */
+.uls-cta-band .wp-block-buttons {
+	justify-content: center;
+}
+
+/* ---------------------------------------------------------------------------
+ * ***-263 — Long-form prose (`uls-prose`).
+ *
+ * The legal pages (/terms/, /privacy-policy/ and the five exhibits under
+ * /terms/) and the service detail pages carried NO layout component at all:
+ * raw headings and paragraphs at the template's default width with no section
+ * padding, no measure, and heading rhythm inherited from core. That is the
+ * single biggest visual break between them and the standard pages. `uls-prose`
+ * is the shared long-form component so those pages stop being one-offs.
+ *
+ * It only governs RHYTHM (measure, heading spacing, list and link treatment).
+ * Colour and section padding still come from `uls-bg-light` / `uls-section`, so
+ * a prose block inherits whichever band it is dropped into.
+ * ------------------------------------------------------------------------- */
+.uls-prose {
+	max-width: var(--measure-prose);
+}
+.uls-prose > * + * {
+	margin-top: 1.1em;
+}
+.uls-prose h2 {
+	margin-top: 2em;
+	margin-bottom: 0.6em;
+	line-height: 1.25;
+}
+.uls-prose h3 {
+	margin-top: 1.6em;
+	margin-bottom: 0.5em;
+	line-height: 1.3;
+}
+.uls-prose > h2:first-child,
+.uls-prose > h3:first-child {
+	margin-top: 0;
+}
+.uls-prose ul,
+.uls-prose ol {
+	padding-left: 1.4em;
+}
+.uls-prose li + li {
+	margin-top: 0.5em;
+}
+.uls-prose a {
+	color: var(--accent-600);
+	text-underline-offset: 0.18em;
+}
+.uls-bg-dark .uls-prose a {
+	color: var(--accent-teal);
+}
+.uls-prose table {
+	width: 100%;
+	border-collapse: collapse;
+}
+.uls-prose th,
+.uls-prose td {
+	border: var(--border-card);
+	padding: 0.6em 0.8em;
+	text-align: left;
+}
+
+/* Small "back to …" breadcrumb link used at the top of the legal exhibits, so
+   every exhibit offers the same route back to its parent page. */
+.uls-backlink {
+	display: inline-block;
+	font-size: var(--fs-small);
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	margin-bottom: var(--space-unit);
+}
+.uls-bg-dark .uls-backlink {
+	color: var(--accent-teal);
 }
 
 /* Buttons — Section 7 */
