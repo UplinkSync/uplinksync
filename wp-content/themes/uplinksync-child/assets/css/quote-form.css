@@ -19,10 +19,55 @@ form[id^="quote-form"] textarea {
 	border-radius: var( --radius-default, 6px );
 	width: 100%;
 	box-sizing: border-box;
+	/* UX SPRINT 2026-07-24 — the rule set the SIZE but never the FAMILY, and
+	   form controls do not inherit font-family from body: the UA stylesheet
+	   assigns its own. Measured live, every input/select on /contact rendered in
+	   ARIAL and the "How can we help?" textarea rendered in MONOSPACE, on a page
+	   whose every other word is DM Sans. Three typefaces on the site's single
+	   most important conversion surface. */
+	font-family: inherit;
+	color: var( --navy-900, #173258 );
+	background-color: var( --uplinksync-white, #fff );
 }
 
 form[id^="quote-form"] textarea {
 	min-height: 96px;
+}
+
+/* The select additionally arrived with the UA's grey chrome fill
+   (rgb(239,239,239)) while every text input beside it was white, so the one
+   field carrying a smart default looked disabled. Reset the appearance and
+   re-draw the chevron so it still reads as a menu. */
+form[id^="quote-form"] select {
+	appearance: none;
+	-webkit-appearance: none;
+	background-image: url( "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%235B6672' stroke-width='2' d='M1 1l5 5 5-5'/%3E%3C/svg%3E" );
+	background-repeat: no-repeat;
+	background-position: right 14px center;
+	padding-right: 38px;
+}
+
+/* Focus ring — the UA default outline was being drawn tight against the 8px
+   radius and was easy to miss on the light card. */
+form[id^="quote-form"] input:focus-visible,
+form[id^="quote-form"] select:focus-visible,
+form[id^="quote-form"] textarea:focus-visible {
+	outline: 2px solid var( --accent-600, #2F6FC4 );
+	outline-offset: 2px;
+	border-color: var( --accent-600, #2F6FC4 );
+}
+
+/* Required marker + legend (see inc/quote-form-seed.php). accent-600 is the
+   light-context interactive token — 5.01:1 on white, so the marker is legible
+   rather than the conventional low-contrast red. */
+form[id^="quote-form"] .uls-req {
+	color: var( --accent-600, #2F6FC4 );
+	font-weight: 700;
+}
+form[id^="quote-form"] .uls-form-legend {
+	font-size: var( --fs-small, 13px );
+	color: var( --grey-600, #5B6672 );
+	margin: 0 0 20px;
 }
 
 /* ***-263: brand the submit control.
@@ -38,10 +83,18 @@ form[id^="quote-form"] textarea {
 form[id^="quote-form"] button[type="submit"],
 form[id^="quote-form"] input[type="submit"],
 form[id^="quote-form"] .wpcf7-submit {
-	min-height: 44px;
+	/* UX SPRINT 2026-07-24 — sizing. The submit rendered 175x44 while every
+	   other primary button on the site renders ~276x69 (hero) at 18px. The one
+	   control that completes the site's only conversion was its SMALLEST
+	   button, tucked bottom-left of a 940px-tall card. It now matches the house
+	   primary's weight and, below 640px, spans the card so it cannot be missed
+	   or mis-tapped. */
+	min-height: 56px;
 	min-width: 44px;
-	padding: 12px 24px;
-	font-size: var( --fs-body-mobile, 16px );
+	padding: 16px 32px;
+	font-family: inherit;
+	font-weight: 500;
+	font-size: var( --fs-body-desktop, 18px );
 	background-color: var( --accent-600, #2F6FC4 );
 	background-image: none;
 	color: var( --uplinksync-white, #fff );
@@ -72,6 +125,15 @@ form[id^="quote-form"] .uls-field {
 
 	form[id^="quote-form"] .uls-field-row {
 		flex-direction: column;
+	}
+
+	/* Full-bleed submit on phones — a 175px button floated left of a full-width
+	   column of 44px fields is both a small target and visually detached from
+	   the form it completes. */
+	form[id^="quote-form"] input[type="submit"],
+	form[id^="quote-form"] button[type="submit"],
+	form[id^="quote-form"] .wpcf7-submit {
+		width: 100%;
 	}
 }
 

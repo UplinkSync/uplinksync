@@ -392,3 +392,248 @@ h1, h2, h3,
 .site-header .hostinger-ai-menu .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__responsive-container-close svg {
 	fill: var(--navy-900); /* close (X) icon dark on the white overlay */
 }
+
+/* ===========================================================================
+ * UX SPRINT 2026-07-24 — findings from a full desktop + mobile render pass of
+ * all 17 public pages (Chrome 150, 1440x900 and 390x844).
+ *
+ * Every fix below was invisible in code review and only surfaced by looking at
+ * the rendered page — the same lesson as ***-263's "CSS merged != CSS
+ * applied". Each block records what was MEASURED, not what was intended.
+ * ======================================================================== */
+
+/* ---------------------------------------------------------------------------
+ * 1. THE SECONDARY CTA WAS A SECOND PRIMARY ON 15 OF 17 PAGES.
+ *
+ * design-standard.md §4.3 fixes the CTA band at "one H2 and one primary button
+ * (a secondary outline button is permitted alongside)", and §4.4 says "Never
+ * two primary-style buttons competing in one section".
+ *
+ * Measured live, the "Book a consultation" button in the CTA band renders
+ * background-color: rgb(47,111,196) — identical accent-600 fill to the primary
+ * beside it — on /, /about/, /services/, /services/managed-it/, /services/web/,
+ * /services/web-2/, /services/automation/, /services/automation-2/, /terms/,
+ * all five /terms/ exhibits and /privacy-policy/. Fifteen pages end on two
+ * identical blue buttons, so the band states no preference and the eye has no
+ * primary action to land on.
+ *
+ * The cause is in the DB block markup, not this stylesheet: the outline rules
+ * above key on `.is-style-outline`, and these buttons never carry it. They do
+ * carry purpose-built classes — `.uplinksync-book-cta` on the wrapper and
+ * `.uls-book-link` on the link — so the INTENT is recorded in the markup even
+ * though the style name is missing. /drone-services/ is the one page that got
+ * `is-style-outline` into the DB, and it is the one page that renders the pair
+ * correctly; it is the reference for what the other fifteen should look like.
+ *
+ * Binding the existing class to the existing outline treatment fixes all
+ * fifteen with no page-content edits and no risk of a blank-page rollback.
+ *
+ * Specificity: the primary-fill rule above is (0,5,0) with !important
+ * (`.wp-block-button:not(.is-style-outline) > .wp-block-button__link:not(a):not(b)`).
+ * These selectors are also (0,5,0) and, being later in the same file, win the
+ * tie — but they are marked !important too, because the declarations they must
+ * beat are themselves !important.
+ * ------------------------------------------------------------------------- */
+.uls-cta-band .wp-block-button.uplinksync-book-cta > .wp-block-button__link.uls-book-link,
+.uls-bg-dark .wp-block-button.uplinksync-book-cta > .wp-block-button__link.uls-book-link {
+	background-color: transparent !important;
+	background-image: none !important;
+	border: 2px solid var(--uplinksync-white) !important; /* white outline on dark — §4.4 */
+	color: var(--uplinksync-white) !important;            /* 12.86:1 on navy-900 */
+	border-radius: var(--radius-default) !important;      /* 8px, not core's pill */
+}
+/* accent-600 on navy is 2.57:1 and fails AA, so the dark-context hover goes to
+   accent-teal (7.86:1) — the same pairing brand.css uses for `uls-btn-secondary`
+   and the outline rules above. */
+.uls-cta-band .wp-block-button.uplinksync-book-cta > .wp-block-button__link.uls-book-link:hover,
+.uls-cta-band .wp-block-button.uplinksync-book-cta > .wp-block-button__link.uls-book-link:focus,
+.uls-bg-dark .wp-block-button.uplinksync-book-cta > .wp-block-button__link.uls-book-link:hover,
+.uls-bg-dark .wp-block-button.uplinksync-book-cta > .wp-block-button__link.uls-book-link:focus {
+	background-color: transparent !important;
+	border-color: var(--accent-teal) !important;
+	color: var(--accent-teal) !important;
+}
+
+/* ---------------------------------------------------------------------------
+ * 2. FORM CONTROLS DID NOT INHERIT THE BRAND TYPEFACE — SITEWIDE.
+ *
+ * font-family is not inherited by form controls; the UA stylesheet assigns its
+ * own. Nothing in the theme ever said otherwise, so measured live the footer
+ * newsletter input on EVERY page renders in Arial while the label above it
+ * renders in DM Sans. quote-form.css fixes the two pages that load it; this is
+ * the sitewide half, so any form added later starts correct.
+ * ------------------------------------------------------------------------- */
+input,
+select,
+textarea,
+button {
+	font-family: inherit;
+}
+
+/* ---------------------------------------------------------------------------
+ * 3. THE FOOTER NEWSLETTER BUTTON WAS OFF-SYSTEM ON EVERY PAGE.
+ *
+ * Measured: background rgb(70,115,198) (#4673C6 — not a token; the nearest
+ * house value is accent-600 #2F6FC4) and border-radius 50px, i.e. a fully
+ * rounded pill, against the house 8px. It is the Hostinger Reach block painting
+ * itself from its own palette via `has-color-3-background-color`, which is
+ * emitted !important — the same class of failure ***-263 fixed on the
+ * block buttons, still live in the footer because the Reach block uses its own
+ * class names and was never bound.
+ *
+ * The result was a fourth button shape in the footer of all 17 pages, directly
+ * below CTA bands whose buttons are square-cornered accent-600.
+ * ------------------------------------------------------------------------- */
+.hostinger-reach-block-submit,
+button.hostinger-reach-block-submit,
+.wp-block-hostinger-reach-subscription-form .hostinger-reach-block-submit {
+	background-color: var(--accent-600) !important;
+	background-image: none !important;
+	color: var(--uplinksync-white) !important;
+	border: none !important;
+	border-radius: var(--radius-default) !important; /* 8px, kills the 50px pill */
+	/* !important on the sizing too: the block ships its own 40px box (measured
+	   height 40px, padding 1px 6px) at a weight a plain declaration loses to. */
+	min-height: 44px !important;                     /* was 40px — below the 44px target */
+	padding: 10px 16px !important;
+	font-size: var(--fs-body-mobile);
+	font-weight: 500;
+	cursor: pointer;
+	transition: background-color 0.15s ease;
+}
+.hostinger-reach-block-submit:hover,
+.hostinger-reach-block-submit:focus {
+	background-color: var(--navy-700) !important; /* darken-only, matches the house primary */
+}
+/* The matching input, so the pair reads as one control group rather than a
+   square field under a pill. */
+.hostinger-reach-block-input,
+.wp-block-hostinger-reach-subscription-form input[type="email"] {
+	border-radius: var(--radius-default);
+	min-height: 44px;
+	padding: 10px 12px;
+	border: 1px solid var(--grey-250);
+	box-sizing: border-box;
+}
+
+/* ---------------------------------------------------------------------------
+ * 4. THE FOOTER SITEMAP WAS UNREACHABLE ON MOBILE.
+ *
+ * Measured at 390px: the footer's `.wp-block-navigation__responsive-container`
+ * computes to `display:none; position:fixed`, all five links measure 0x0, and
+ * what the user actually gets under the "Menu" heading is a 24x24 hamburger
+ * that opens a full-screen overlay.
+ *
+ * That is correct behaviour for the HEADER nav and wrong for a footer: a footer
+ * menu is a sitemap, it is already at the bottom of the page, and collapsing it
+ * behind a second hamburger (identical to the header's, 300px below it) hides
+ * five links behind a tap for no space saving — the column is empty underneath.
+ * A phone visitor who scrolls to the footer sees a heading, an icon, and
+ * nothing else.
+ *
+ * Force the footer nav to render as the static vertical list it already is on
+ * desktop, and drop its toggle. Scoped to the footer so the header's overlay —
+ * which IS wanted — is untouched.
+ * ------------------------------------------------------------------------- */
+.wp-block-site-footer .wp-block-navigation__responsive-container,
+footer .wp-block-navigation__responsive-container {
+	display: block !important;
+	position: static !important;
+	background-color: transparent !important;
+	width: auto !important;
+	height: auto !important;
+	padding: 0 !important;
+	z-index: auto !important;
+	overflow: visible !important;
+}
+.wp-block-site-footer .wp-block-navigation__responsive-container-open,
+.wp-block-site-footer .wp-block-navigation__responsive-container-close,
+footer .wp-block-navigation__responsive-container-open,
+footer .wp-block-navigation__responsive-container-close {
+	display: none !important;
+}
+.wp-block-site-footer .wp-block-navigation__responsive-container .wp-block-navigation__container,
+footer .wp-block-navigation__responsive-container .wp-block-navigation__container {
+	display: flex !important;
+	flex-direction: column;
+	gap: 8px;
+}
+/* The links inherit the overlay's dark-on-white colours while it is treated as
+   a modal; on the navy footer they must stay white. */
+footer .wp-block-navigation__responsive-container a,
+footer .wp-block-navigation__responsive-container .wp-block-navigation-item__label {
+	color: var(--uplinksync-white) !important; /* 12.86:1 on navy-900 */
+}
+/* 44px minimum target for the now-visible footer links (they measured 29px). */
+footer .wp-block-navigation__container .wp-block-navigation-item__content {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+}
+
+/* ---------------------------------------------------------------------------
+ * 5. CARD CALL-TO-ACTIONS DID NOT ALIGN ACROSS A ROW.
+ *
+ * On /services/ the four "Learn more ->" links sit at four different heights
+ * (measured 695px, 714px, 715px and 753px from the top of the band) because
+ * each one simply follows a body paragraph of a different length. The cards are
+ * equal height, so the misalignment reads as a mistake rather than as rhythm,
+ * and the shorter cards end with a pocket of dead space under the link.
+ *
+ * Making the card a flex column and pushing its last child down pins every CTA
+ * to a common baseline, which is what the equal-height grid was for.
+ * ------------------------------------------------------------------------- */
+.uls-card {
+	display: flex;
+	flex-direction: column;
+}
+.uls-card > .wp-block-buttons:last-child,
+.uls-card > .wp-block-button:last-child {
+	margin-top: auto !important;
+	padding-top: 12px;
+}
+/* `:has()` is kept in its own rule on purpose: an unsupported selector
+   invalidates the WHOLE selector list it appears in, so folding this into the
+   list above would silently drop the two safe selectors as well.
+ *
+ * The `:has(a)` guard is load-bearing, not decoration: it is what stops this
+ * rule reaching the homepage service cards, whose last child is a plain
+ * description paragraph. Pushing THAT to the bottom would tear a gap open
+ * between the heading and its own body copy. Only a trailing link — a card
+ * CTA — gets pushed down.
+ *
+ * `!important` is required: measured without it, margin-top resolved to 0 and
+ * the four /services/ CTAs stayed at 916/892/916/964px. With it they land at
+ * 947/947/947/948px. */
+.uls-card > :last-child:has(a) {
+	margin-top: auto !important;
+	padding-top: 12px;
+}
+
+/* ---------------------------------------------------------------------------
+ * 6. TOUCH TARGETS BELOW 44px.
+ *
+ * The header account link measures 40x40 at 390px and the nav toggles 24x24,
+ * against the 44x44 minimum. Padding them up costs no layout because both sit
+ * in a flex row that is already taller than 44px.
+ *
+ * NOTE: `display` is deliberately NOT set here. Core toggles these two buttons
+ * between `display:none` and visible to decide whether the nav is a bar or a
+ * hamburger; forcing a display value would pin a hamburger onto the desktop
+ * header permanently. Only the box size is raised, which core's own display
+ * switching then continues to control.
+ * ------------------------------------------------------------------------- */
+.wc-block-customer-account__link {
+	min-width: 44px;
+	min-height: 44px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+.wp-block-navigation__responsive-container-open,
+.wp-block-navigation__responsive-container-close {
+	min-width: 44px;
+	min-height: 44px;
+	align-items: center;
+	justify-content: center;
+}
