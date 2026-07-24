@@ -165,6 +165,30 @@ h1, h2, h3,
  * ------------------------------------------------------------------------- */
 
 /* ---------------------------------------------------------------------------
+ * ***-263 — default `page` template H1 fallback.
+ *
+ * Pages that have not been given a canonical hero render their title through
+ * the default page template's `hostinger-ai-page-title` post-title block:
+ * centred, x-large, on the plain page background — a visibly different H1
+ * treatment from the eyebrow + xx-large white hero every standard page uses.
+ * The sprint converts the known laggards to the canonical hero, but any page
+ * added later defaults back to this block, so pin it to the brand family and
+ * the house H1 size/weight. That keeps a brand-new page merely PLAIN rather
+ * than off-brand, and it is inert on every page already converted (the block
+ * is not rendered by the no-title template).
+ * ------------------------------------------------------------------------- */
+.hostinger-ai-page-title {
+	font-family: var(--font-body) !important;
+	font-size: var(--fs-h1-mobile);
+	font-weight: var(--fw-h1);
+	line-height: 1.12;
+	color: var(--navy-900);
+}
+@media (min-width: 768px) {
+	.hostinger-ai-page-title { font-size: var(--fs-h1-desktop); }
+}
+
+/* ---------------------------------------------------------------------------
  * Section 3 — Spacing & rhythm.
  * Keep primary content columns within the 1200px max-width. Applied to the
  * theme's constrained-layout groups so wide sections read as centered content

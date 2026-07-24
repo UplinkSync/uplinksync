@@ -6,6 +6,10 @@
 			"palette": [
 				{ "slug": "navy-900", "color": "#173258", "name": "Navy 900 (primary dark)" },
 				{ "slug": "navy-700", "color": "#1F4375", "name": "Navy 700 (secondary dark surface)" },
+				{ "slug": "navy-800", "color": "#1c355c", "name": "Navy 800 (card surface on dark sections)" },
+				{ "slug": "navy-850", "color": "#102a4c", "name": "Navy 850 (deep dark band)" },
+				{ "slug": "navy-border", "color": "#2a4a72", "name": "Navy border (hairline on dark cards)" },
+				{ "slug": "grey-250", "color": "#d6dde6", "name": "Grey 250 (hairline on light cards)" },
 				{ "slug": "accent-500", "color": "#5697F3", "name": "Accent 500 (primary accent)" },
 				{ "slug": "accent-600", "color": "#2F6FC4", "name": "Accent 600 (interactive fill, WCAG AA with white text)" },
 				{ "slug": "accent-teal", "color": "#95D5DD", "name": "Accent Teal (secondary accent)" },
