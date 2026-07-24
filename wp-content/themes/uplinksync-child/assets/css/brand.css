@@ -132,8 +132,17 @@
  * Colour and section padding still come from `uls-bg-light` / `uls-section`, so
  * a prose block inherits whichever band it is dropped into.
  * ------------------------------------------------------------------------- */
-.uls-prose {
+/* Specificity note: WordPress core emits `.is-layout-constrained > .alignwide
+   { max-width: var(--wp--style--global--wide-size) }` (0,2,0). A bare
+   `.uls-prose` (0,1,0) LOSES to it, so the measure silently did nothing on the
+   legal pages, which are exactly the pages that need it. Matching core's
+   specificity and relying on source order (the child theme loads last) makes
+   the measure actually apply. */
+.uls-prose,
+.is-layout-constrained > .uls-prose {
 	max-width: var(--measure-prose);
+	margin-left: auto;
+	margin-right: auto;
 }
 .uls-prose > * + * {
 	margin-top: 1.1em;

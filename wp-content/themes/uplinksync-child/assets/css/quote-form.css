@@ -25,12 +25,39 @@ form[id^="quote-form"] textarea {
 	min-height: 96px;
 }
 
+/* ***-263: brand the submit control.
+ *
+ * The block-button binding in brand-blocks.css deliberately excludes
+ * [type="submit"] so it never touches WooCommerce checkout or plugin forms.
+ * The consequence was that the ONE primary action on /contact/ and
+ * /services/managed-it/ - "Send My Request" and "Get My Free Assessment" -
+ * rendered as the browser/CF7 default: grey chrome, square, nothing like the
+ * accent-600 primary button used on every other page. Scoped to the quote-form
+ * wrapper (this sheet only loads on those two pages), so no other form on the
+ * site is affected. */
 form[id^="quote-form"] button[type="submit"],
-form[id^="quote-form"] input[type="submit"] {
+form[id^="quote-form"] input[type="submit"],
+form[id^="quote-form"] .wpcf7-submit {
 	min-height: 44px;
 	min-width: 44px;
 	padding: 12px 24px;
 	font-size: var( --fs-body-mobile, 16px );
+	background-color: var( --accent-600, #2F6FC4 );
+	background-image: none;
+	color: var( --uplinksync-white, #fff );
+	border: none;
+	border-radius: var( --radius-default, 8px );
+	cursor: pointer;
+	transition: background-color 0.15s ease;
+}
+form[id^="quote-form"] button[type="submit"]:hover,
+form[id^="quote-form"] input[type="submit"]:hover,
+form[id^="quote-form"] .wpcf7-submit:hover,
+form[id^="quote-form"] button[type="submit"]:focus,
+form[id^="quote-form"] input[type="submit"]:focus,
+form[id^="quote-form"] .wpcf7-submit:focus {
+	background-color: var( --navy-700, #1F4375 );
+	color: var( --uplinksync-white, #fff );
 }
 
 form[id^="quote-form"] .uls-field {

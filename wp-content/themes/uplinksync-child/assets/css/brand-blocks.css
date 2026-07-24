@@ -95,6 +95,31 @@ h1, h2, h3,
 	background-color: transparent;
 }
 
+/* DARK CONTEXT (***-263). The rule above only ever ran on light sections, so
+   it hard-codes a navy border. brand.css has always had the dark-context half
+   for the `uls-btn-*` utility classes, but the BLOCK binding never got one —
+   the comment above says "white outline on dark" and the CSS does not do it.
+   That went unnoticed while no outline button sat on a dark band; the Air
+   page's "License an image" button now closes the page inside the navy CTA
+   band, where a navy border is invisible (1.29:1 against the gradient) even
+   though the label is legible, so the control reads as bare text. The label
+   colour is already handled by the has-white-color preset (!important); this
+   supplies the matching border, and the accent-teal hover that brand.css uses
+   for the same situation (accent-600 on navy is 2.57:1 and fails AA). */
+.uls-bg-dark .wp-block-button.is-style-outline .wp-block-button__link,
+.uls-cta-band .wp-block-button.is-style-outline .wp-block-button__link {
+	border-color: var(--uplinksync-white);
+	color: var(--uplinksync-white);
+}
+.uls-bg-dark .wp-block-button.is-style-outline .wp-block-button__link:hover,
+.uls-bg-dark .wp-block-button.is-style-outline .wp-block-button__link:focus,
+.uls-cta-band .wp-block-button.is-style-outline .wp-block-button__link:hover,
+.uls-cta-band .wp-block-button.is-style-outline .wp-block-button__link:focus {
+	border-color: var(--accent-teal); /* 7.86:1 on navy-900 */
+	color: var(--accent-teal);
+	background-color: transparent;
+}
+
 /* ---------------------------------------------------------------------------
  * Section 5/8 — Hero overlay.
  * Cover blocks used as hero imagery get a subtle navy overlay (10–25%) so
@@ -196,6 +221,47 @@ h1, h2, h3,
  * ------------------------------------------------------------------------- */
 .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
 	max-width: min(var(--content-max-width), 100%);
+}
+
+/* ---------------------------------------------------------------------------
+ * ***-263 — the white seam between the page landmarks.
+ *
+ * WordPress emits `:where(.wp-site-blocks) > * { margin-block-start: 1.2rem }`,
+ * which puts a 1.2rem gap between the header template part, <main>, and the
+ * footer template part. The gap shows the page background, so on EVERY page
+ * there is a white band directly under the navy header bar and a second one
+ * directly above the navy footer — measured on / /about/ /services/ /contact/
+ * /drone-services/ and every legal page. It reads as a rendering fault rather
+ * than spacing, and it is the one visual break that is identical sitewide.
+ *
+ * Header, main and footer are each full-bleed bands carrying their own padding,
+ * so no gap is wanted between them. Scoped to the three top-level landmarks
+ * only — the 1.2rem rhythm between blocks INSIDE main is untouched.
+ * ------------------------------------------------------------------------- */
+.wp-site-blocks > .site-header,
+.wp-site-blocks > main,
+.wp-site-blocks > .site-footer {
+	margin-block-start: 0;
+	margin-block-end: 0;
+}
+
+/* The same 1.2rem gap is emitted BETWEEN the full-bleed section bands inside
+ * main (`:root :where(.is-layout-constrained) > *`). It is invisible where a
+ * light band meets a dark one — it just reads as part of the light band — but
+ * between two dark bands, and between the CTA band and anything above it, it
+ * shows as a white line across an otherwise continuous dark field. Measured on
+ * /about/ (Certifications -> CTA band), /services/, / and every page the sprint
+ * rebuilt. Each band carries its own 70/70 or 80/80 padding, so the gap
+ * contributes nothing but the seam. Two-class selectors so this beats core's
+ * (0,1,0) rule on specificity rather than relying on load order. */
+.wp-block-group.uls-section,
+.wp-block-group.uls-cta-band,
+.wp-block-group.uls-bg-dark,
+.wp-block-group.uls-bg-light,
+.wp-block-group.uls-air-hero,
+.wp-block-group.uls-trust-band {
+	margin-block-start: 0;
+	margin-block-end: 0;
 }
 
 /* ---------------------------------------------------------------------------
