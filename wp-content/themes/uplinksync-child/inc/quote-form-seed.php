@@ -49,7 +49,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * to the stored CF7 posts on the next request after deploy.
  */
 if ( ! defined( 'UPLINKSYNC_QUOTE_FORM_VERSION' ) ) {
-	define( 'UPLINKSYNC_QUOTE_FORM_VERSION', '1' );
+	define( 'UPLINKSYNC_QUOTE_FORM_VERSION', '2' );
 }
 
 /**
@@ -63,22 +63,51 @@ if ( ! defined( 'UPLINKSYNC_QUOTE_NOTIFY_EMAIL' ) ) {
 /**
  * Master form CF7 template (spec §1). Field names/ids are the contract the
  * bundled JS/CSS select on — do not rename without updating those assets.
+ *
+ * UX SPRINT (2026-07-24) — three measured problems fixed here:
+ *
+ * 1. NO `autocomplete` ATTRIBUTES. Every field shipped without one, so no
+ *    browser or password manager could autofill a single value. This is the
+ *    "smart defaults" principle in its most literal form (ux-psychology-design
+ *    -guide.md §5 P0-2): the browser already knows the visitor's name, email,
+ *    phone and employer — asking them to retype it is pure friction we were
+ *    imposing for no reason. The tokens below are the WHATWG autofill field
+ *    names, which is what both browsers and password managers match on.
+ *
+ * 2. NO VISIBLE REQUIRED MARKER. All five of first-name, company-name,
+ *    your-email, phone and service-interest are `*` (required) in CF7, but the
+ *    rendered labels said nothing, so the only way to discover that Company and
+ *    Phone are mandatory was to fill the form in, submit, and be rejected.
+ *    Each required label now carries a marker plus a legend explaining it.
+ *
+ * 3. PLACEHOLDERS THAT ONLY ECHOED THE LABEL. "First Name" labelled a field
+ *    whose placeholder also read "First Name" — duplicate ink that adds no
+ *    information and leaves grey text sitting in every box, which reads as a
+ *    pre-filled form. Dropped on the four fields where it was an echo; kept on
+ *    the textarea, where it is the one placeholder that actually says something
+ *    the label does not.
+ *
+ * The submit label moves from "Send My Request" to "Get My Free Quote" so the
+ * button names the OUTCOME the visitor came for and matches the page's own H1
+ * ("Get a free quote."), rather than describing the mechanical act of sending.
  */
 function uplinksync_quote_master_form_template() {
 	return <<<'CF7'
-<div class="uls-quote-field"><label>First Name<br />
-[text* first-name placeholder "First Name"]</label></div>
+<p class="uls-form-legend"><span class="uls-req" aria-hidden="true">*</span> Required</p>
 
-<div class="uls-quote-field"><label>Company Name<br />
-[text* company-name placeholder "Company Name"]</label></div>
+<div class="uls-quote-field"><label>First Name <span class="uls-req" aria-hidden="true">*</span><br />
+[text* first-name autocomplete:given-name]</label></div>
 
-<div class="uls-quote-field"><label>Email<br />
-[email* your-email placeholder "Email"]</label></div>
+<div class="uls-quote-field"><label>Company Name <span class="uls-req" aria-hidden="true">*</span><br />
+[text* company-name autocomplete:organization]</label></div>
 
-<div class="uls-quote-field"><label>Phone<br />
-[tel* phone placeholder "Phone"]</label></div>
+<div class="uls-quote-field"><label>Email <span class="uls-req" aria-hidden="true">*</span><br />
+[email* your-email autocomplete:email]</label></div>
 
-<div class="uls-quote-field"><label>Service Interest<br />
+<div class="uls-quote-field"><label>Phone <span class="uls-req" aria-hidden="true">*</span><br />
+[tel* phone autocomplete:tel]</label></div>
+
+<div class="uls-quote-field"><label>Service Interest <span class="uls-req" aria-hidden="true">*</span><br />
 [select* service-interest id:service-interest "Managed IT Services" "Business Automation" "Web Development" "Drone Services" "Not Sure"]</label></div>
 
 <div class="uls-quote-field"><label>How can we help?<br />
@@ -86,7 +115,7 @@ function uplinksync_quote_master_form_template() {
 
 [text honeypot-field class:uls-honeypot autocomplete:off]
 
-[submit "Send My Request"]
+[submit "Get My Free Quote"]
 CF7;
 }
 
@@ -96,14 +125,16 @@ CF7;
  */
 function uplinksync_quote_mini_form_template() {
 	return <<<'CF7'
-<div class="uls-quote-field"><label>Name<br />
-[text* first-name placeholder "Name"]</label></div>
+<p class="uls-form-legend"><span class="uls-req" aria-hidden="true">*</span> Required</p>
 
-<div class="uls-quote-field"><label>Email<br />
-[email* your-email placeholder "Email"]</label></div>
+<div class="uls-quote-field"><label>Name <span class="uls-req" aria-hidden="true">*</span><br />
+[text* first-name autocomplete:name]</label></div>
 
-<div class="uls-quote-field"><label>Phone<br />
-[tel* phone placeholder "Phone"]</label></div>
+<div class="uls-quote-field"><label>Email <span class="uls-req" aria-hidden="true">*</span><br />
+[email* your-email autocomplete:email]</label></div>
+
+<div class="uls-quote-field"><label>Phone <span class="uls-req" aria-hidden="true">*</span><br />
+[tel* phone autocomplete:tel]</label></div>
 
 [hidden service-interest "Managed IT Services"]
 [text honeypot-field class:uls-honeypot autocomplete:off]
