@@ -40,9 +40,14 @@ const UPLINKSYNC_NAV_ABOUT       = 'https://uplinksync.com/about/';
 const UPLINKSYNC_NAV_CONTACT     = 'https://uplinksync.com/contact/';
 const UPLINKSYNC_NAV_SERVICES    = 'https://uplinksync.com/services/';
 const UPLINKSYNC_NAV_MANAGED_IT  = 'https://uplinksync.com/services/managed-it/';
-// Canonical drone destination while /drone-services/ still 301s: the services
-// overview, which itself covers drone photography/videography (200, non-/product/*).
-const UPLINKSYNC_NAV_DRONE       = 'https://uplinksync.com/services/';
+// Canonical drone destination. The gallery page now ships on /drone-services/
+// as a real 200 (***-104/***-253), so — exactly as this plugin always said
+// it would once that landed — the drone destination points back at it. Effect:
+// the retired /product/drone-* card links (which 301 to /drone-services/) route
+// straight to the live gallery with no redirect hop, and the front-page footer's
+// absolute /drone-services/ link is left intact instead of being rewritten to
+// /services/ (***-253: footer "Drone Services" was mis-resolving on `/`).
+const UPLINKSYNC_NAV_DRONE       = 'https://uplinksync.com/drone-services/';
 
 /**
  * Scope guard: front-end GET for the home page only. The nav/CTA defects are
