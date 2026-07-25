@@ -313,3 +313,48 @@ function uplinksync_quote_replace_placeholders( $content ) {
 	return $content;
 }
 add_filter( 'the_content', 'uplinksync_quote_replace_placeholders', 20 );
+
+/**
+ * ***-316: harden the spam-trap honeypot for accessibility.
+ *
+ * CF7 renders `[text honeypot-field class:uls-honeypot autocomplete:off]` as a
+ * plain `type="text"` input. quote-form.css offsets it off-screen (position:
+ * absolute; left:-9999px) so sighted users never see it, but an off-screen text
+ * input is still in the tab order and still announced by screen readers — an
+ * unlabelled field that traps keyboard focus and confuses assistive tech.
+ *
+ * CF7 form-tags can't emit `aria-hidden`/`tabindex`, so we post-process the
+ * rendered form HTML and add them to the honeypot input only (matched by its
+ * `uls-honeypot` class). `autocomplete="off"` is already set via the form-tag
+ * but we assert it here too so a single filter guarantees the full hardened set
+ * regardless of how the tag is authored. The bot-trap behaviour is unchanged:
+ * automated agents that ignore aria-hidden/tabindex still fill the field, and
+ * server-side validation still rejects any submission where it is non-empty.
+ */
+function uplinksync_quote_harden_honeypot( $html ) {
+	if ( false === strpos( $html, 'uls-honeypot' ) ) {
+		return $html;
+	}
+
+	return preg_replace_callback(
+		'/<input\b[^>]*\buls-honeypot\b[^>]*>/i',
+		function ( $matches ) {
+			$tag = $matches[0];
+
+			// Idempotent: only add attributes that aren't already present.
+			if ( false === stripos( $tag, 'aria-hidden' ) ) {
+				$tag = preg_replace( '/<input\b/i', '<input aria-hidden="true"', $tag, 1 );
+			}
+			if ( false === stripos( $tag, 'tabindex' ) ) {
+				$tag = preg_replace( '/<input\b/i', '<input tabindex="-1"', $tag, 1 );
+			}
+			if ( false === stripos( $tag, 'autocomplete' ) ) {
+				$tag = preg_replace( '/<input\b/i', '<input autocomplete="off"', $tag, 1 );
+			}
+
+			return $tag;
+		},
+		$html
+	);
+}
+add_filter( 'wpcf7_form_elements', 'uplinksync_quote_harden_honeypot', 20 );
