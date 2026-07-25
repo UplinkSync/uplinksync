@@ -2,7 +2,7 @@
 /**
  * Plugin Name: UplinkSync — Canonical URL Redirects
  * Description: Implements the ***-101 Information Architecture §2 redirect map (***-104). Points every legacy/duplicate URL at its true canonical destination instead of letting WordPress silently collapse it to `/`. Runs as an mu-plugin so it is theme-independent and captured in-repo (deploys with wp-content). Companion to uplinksync-drone-product-redirects.php, which handles the retired Woo drone products; this plugin covers the page-level slug corrections.
- * Version: 1.0.0
+ * Version: 1.1.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -15,6 +15,20 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Scope of THIS plugin (repo-capturable, path-level 301s):
  *   /about-4/    -> /about/      (WP auto-suffixed the original page; reclaim /about/)
  *   /services-2/ -> /services/   (same auto-suffix story for the services overview)
+ *   /services/web/        -> /services/web-2/          (***-270 item 3)
+ *   /services/automation/ -> /services/automation-2/   (***-270 item 3)
+ *
+ * ***-270 item 3 — duplicate service pages. `/services/web/` and
+ * `/services/web-2/` were byte-identical, as were `/services/automation/` and
+ * `/services/automation-2/`. Only the `-2` variants are linked from the
+ * `/services/` overview (verified live 2026-07-25), so the `-2` slugs are the
+ * canonical, wired destinations; the un-suffixed originals were orphaned but
+ * still publicly reachable and indexable. The owner accepted the 301 on
+ * ***-270; nothing is deleted, and the redirect is reversible by removing
+ * these two map entries. Direction (original -> -2) is deliberate: point the
+ * orphans at the pages the navigation already uses rather than re-pointing the
+ * live nav. These fire on template_redirect before the seeded page renders, so
+ * the redirect wins over the still-present duplicate Page.
  *
  * Deliberately NOT here, and why:
  *   - /contact/, /about/ returning 200: those are real Pages created in the WP
@@ -31,8 +45,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function uplinksync_canonical_redirect_map() {
 	return array(
-		'/about-4/'    => '/about/',
-		'/services-2/' => '/services/',
+		'/about-4/'                => '/about/',
+		'/services-2/'             => '/services/',
+		'/services/web/'           => '/services/web-2/',
+		'/services/automation/'    => '/services/automation-2/',
 	);
 }
 
