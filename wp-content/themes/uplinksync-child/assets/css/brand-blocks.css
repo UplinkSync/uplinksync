@@ -657,3 +657,32 @@ footer .wp-block-navigation__container .wp-block-navigation-item__content {
 	align-items: center;
 	justify-content: center;
 }
+
+/* ---------------------------------------------------------------------------
+ * 7. FOOTER LINKEDIN ICON FILL (***-311).
+ *
+ * PROBLEM (measured live against uplinksync.com/):
+ * The footer social row is `is-style-logos-only` with `has-icon-color` = white
+ * (#fff), so the block-rendered Facebook / Instagram / TikTok glyphs paint
+ * white on the navy-900 footer (12.86:1). The LinkedIn item is injected as raw
+ * <li> markup by the uplinksync-contact-and-social-fixes mu-plugin, so it never
+ * receives the block's icon-color styling and instead falls through to WordPress
+ * core's per-service default `.wp-social-link-linkedin{color:#0d66c2}`. The SVG
+ * fill is `currentColor`, so it renders #0D66C2 on navy-900 = 2.27:1 — fails
+ * WCAG 1.4.11 (>=3:1 for a UI graphic) AND leaks a third-party brand blue into
+ * the two-colour house system (white + navy). FB/IG/TikTok are already white.
+ *
+ * FIX: pin the injected LinkedIn glyph to the same white as its siblings so all
+ * four footer icons match and the third-party blue is removed. White on
+ * navy-900 = 12.86:1. Scoped to the footer social list only (four class
+ * specificity) so it outranks core's single-class rule without !important on
+ * the colour, and does not touch any other LinkedIn usage. currentColor drives
+ * the SVG; the explicit svg/path fill guards against core markup variants. */
+.site-footer .wp-block-social-links.has-icon-color .wp-social-link-linkedin,
+.site-footer .wp-block-social-links.has-icon-color .wp-social-link-linkedin a {
+	color: var(--uplinksync-white); /* drives currentColor */
+}
+.site-footer .wp-block-social-links.has-icon-color .wp-social-link-linkedin svg,
+.site-footer .wp-block-social-links.has-icon-color .wp-social-link-linkedin svg path {
+	fill: var(--uplinksync-white) !important; /* 12.86:1 on navy-900; matches FB/IG/TikTok */
+}
