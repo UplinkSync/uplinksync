@@ -292,6 +292,35 @@ h1, h2, h3,
 }
 
 /* ---------------------------------------------------------------------------
+ * Footer social links — tap-target size (***-312 / A11y-2, Resp-1).
+ *
+ * PROBLEM (measured live against uplinksync.com/): the footer social row is
+ * `is-style-logos-only`, and for that style WordPress core zeroes the anchor
+ * padding via a zero-specificity :where() rule
+ * (`:root :where(.wp-block-social-links.is-style-logos-only .wp-social-link a){padding:0}`).
+ * The glyph is 24px, so the clickable anchor collapses to ~24x24 at both
+ * desktop and 375px — below the WCAG 2.5.8 (AA) 44x44 minimum for a non-inline
+ * pointer target.
+ *
+ * FIX: pad the anchor out to a >=44x44 hit-area while the glyph stays 24px.
+ * Fixed once on the footer social component (not per icon, not inline) so it
+ * covers Facebook / Instagram / TikTok / the mu-plugin-injected LinkedIn <li>
+ * alike. Scoped under the footer template part / .site-footer to match the
+ * footer rules above, and carrying real (0,4,1) specificity so it beats core's
+ * :where() padding-0 without !important. box-sizing keeps the padding inside
+ * the 44px floor; centring holds the 24px glyph in the middle of the box. */
+.wp-block-template-part .wp-block-social-links.is-style-logos-only .wp-social-link .wp-block-social-link-anchor,
+.site-footer .wp-block-social-links.is-style-logos-only .wp-social-link .wp-block-social-link-anchor {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 44px;
+	min-height: 44px;
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+/* ---------------------------------------------------------------------------
  * Section 4/5 — Header (***-128).
  *
  * PROBLEM (measured live against uplinksync.com/):
