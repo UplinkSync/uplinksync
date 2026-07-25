@@ -186,7 +186,7 @@ function uplinksync_proof_trust_markup() {
 		. ".uplinksync-trust-bar{background:#F7F9FB;border-top:1px solid #E3E8ED;border-bottom:1px solid #E3E8ED;padding:24px;}\n"
 		. ".uplinksync-trust-bar__inner{max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:16px 32px;align-items:center;justify-content:center;}\n"
 		. ".uplinksync-trust-bar__badge{display:inline-flex;flex-direction:column;align-items:center;text-align:center;gap:4px;color:#5B6672;font-size:14px;font-weight:600;}\n"
-		. ".uplinksync-trust-bar__note{font-size:11px;font-weight:400;color:#5B6672;opacity:.85;border:1px dashed #95D5DD;border-radius:4px;padding:1px 6px;background:rgba(149,213,221,.06);}\n"
+		. ".uplinksync-trust-bar__note{font-size:11px;font-weight:400;color:#5B6672;opacity:.85;border:1px dashed #95D5DD;border-radius:var(--radius-default,8px);padding:1px 6px;background:rgba(149,213,221,.06);}\n"
 		. "@media (max-width:600px){.uplinksync-proof-band__value{font-size:30px;}}\n"
 		. '</style>' . "\n";
 

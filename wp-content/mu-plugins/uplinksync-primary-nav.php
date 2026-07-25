@@ -113,7 +113,7 @@ function uplinksync_primary_nav_items_markup() {
 		}
 
 		$style = $item['cta']
-			? ' style="background-color:#2F6FC4;color:#FFFFFF;border-radius:50px;padding:0.4em 1.25em;"'
+			? ' style="background-color:#2F6FC4;color:#FFFFFF;border-radius:999px;padding:0.4em 1.25em;"' // ***-315: single pill value (was 50px)
 			: '';
 
 		$lis .= '<li class="' . esc_attr( $classes ) . '">'

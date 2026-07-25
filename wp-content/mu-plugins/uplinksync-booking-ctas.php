@@ -237,7 +237,8 @@ function uplinksync_book_inject_runtime( $html ) {
 
 	$style = '<style id="uplinksync-book-cta-css">'
 		. '.uplinksync-book-cta .uls-book-link{'
-		. 'display:inline-block;border-radius:50px;border:2px solid currentColor;'
+		/* ***-315: single pill value (was 50px) */
+		. 'display:inline-block;border-radius:999px;border:2px solid currentColor;'
 		. 'background:transparent;padding:var(--wp--preset--spacing--30,12px) var(--wp--preset--spacing--70,32px);'
 		. 'text-decoration:none;cursor:pointer;line-height:1.2;font-weight:600;}'
 		. '.uplinksync-book-cta{display:inline-block;margin:8px 8px 8px 0;}'
