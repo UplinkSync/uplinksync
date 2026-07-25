@@ -22,7 +22,7 @@
 				{ "slug": "dark",    "color": "#0d141a", "name": "***-192 compat: Dark (text on light)" },
 				{ "slug": "light",   "color": "#ffffff", "name": "Light (compat: light surface / text on dark)" },
 				{ "slug": "color1",  "color": "#f4f5f8", "name": "Color 1 (compat: light section background)" },
-				{ "slug": "color2",  "color": "#1e3155", "name": "Color 2 (compat: dark section background)" },
+				{ "slug": "color2",  "color": "#173258", "name": "Color 2 (compat: dark section background — snapped to navy-900 per ***-308 Theme-2)" },
 				{ "slug": "color3",  "color": "#4673c6", "name": "Color 3 (compat: accent)" },
 				{ "slug": "contrast","color": "#0d141a", "name": "Contrast (compat: masked by brand-blocks button rule)" },
 				{ "slug": "grey",    "color": "#B8C0CC", "name": "Grey (compat: form borders)" }
