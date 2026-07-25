@@ -686,3 +686,38 @@ footer .wp-block-navigation__container .wp-block-navigation-item__content {
 .site-footer .wp-block-social-links.has-icon-color .wp-social-link-linkedin svg path {
 	fill: var(--uplinksync-white) !important; /* 12.86:1 on navy-900; matches FB/IG/TikTok */
 }
+
+/* ---------------------------------------------------------------------------
+ * ***-315 — STRAY 4px RADIUS + PILL STANDARDISATION.
+ *
+ * Two off-token radii shipped on every page:
+ *
+ *   1. THE 4px LIGHTBOX BUTTON. WordPress core's image-lightbox trigger
+ *      (`.wp-lightbox-container button`, the zoom-in control injected on every
+ *      image with lightbox enabled) hardcodes `border-radius:4px` — not a house
+ *      token (nearest is --radius-default 8px). It renders on the top-right of
+ *      lightbox images site-wide, a fifth radius value against 8/16/pill.
+ *
+ *   2. PILLS DECLARED AT THREE DIFFERENT VALUES. Fully-rounded elements had
+ *      drifted across 50px (header Contact CTA + booking CTAs, retokened at
+ *      their inline source), 9999px (core button/social/image-circle defaults)
+ *      and 999px (content chips). Pin every genuinely-round element to the one
+ *      --radius-pill token (999px) so the site ships a single pill value.
+ *
+ * After this, the radii emitted anywhere are a subset of
+ * {--radius-default 8px, --radius-card 16px, --radius-pill 999px}.
+ * ------------------------------------------------------------------------- */
+.wp-lightbox-container button {
+	border-radius: var(--radius-default); /* 8px — was core's off-token 4px */
+}
+
+/* Core ships these fully-rounded at 9999px; normalise to the single pill token.
+   Round social icons and the circle/rounded image styles stay visually round —
+   999px still fully rounds their small squares — but the value is now one. */
+.wp-block-social-link {
+	border-radius: var(--radius-pill);
+}
+:root :where(.wp-block-image.is-style-rounded img, .wp-block-image .is-style-rounded img),
+.wp-block-image.is-style-circle-mask img {
+	border-radius: var(--radius-pill);
+}

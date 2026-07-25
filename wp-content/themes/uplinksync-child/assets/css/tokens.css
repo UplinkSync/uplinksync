@@ -75,6 +75,9 @@
 	/* Shape */
 	--radius-default: 8px;      /* buttons, images, small chips */
 	--radius-card: 16px;        /* ***-263: as-built card radius on the standard pages */
+	--radius-pill: 999px;       /* ***-315: the single fully-rounded value — header
+	                               Contact CTA, booking CTAs, and content chips had
+	                               drifted across 50px / 999px / 9999px. */
 	--border-card: 1px solid var(--grey-250);
 	--border-card-dark: 1px solid var(--navy-border);
 
