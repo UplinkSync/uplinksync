@@ -89,6 +89,28 @@
 	color: var(--uplinksync-white);
 }
 
+/* ---------------------------------------------------------------------------
+ * Card radii — Section 4 / "Shape" (***-310).
+ *
+ * The standard pages had drifted back into mixed radii: the Services card
+ * imagery (`.uls-card-media`) and the Home consultation-path tiles shipped an
+ * inline 12px, and the Drone "what you receive" white cards shipped an inline
+ * 12px too — all off-token, next to the correct 16px, the exact "mixed radii on
+ * one page" smell design-standard.md forbids. The inline block radii have been
+ * stripped from the page/template markup; these rules re-declare the value once,
+ * from the token, so it can never drift per-page again.
+ *
+ *   media frames  → --radius-default (8px)   [design-standard "Shape": images]
+ *   air cards     → --radius-card    (16px)  [cards]
+ * ------------------------------------------------------------------------- */
+.uls-card-media,
+.uls-card-media img {
+	border-radius: var(--radius-default);
+}
+.uls-air-receive .wp-block-column.has-white-background-color {
+	border-radius: var(--radius-card);
+}
+
 /* Stat/proof block — Section 4, dark bg, accent numerals, use sparingly */
 .uls-stat-block {
 	background-color: var(--navy-900);
