@@ -1,42 +1,59 @@
 <?php
 /**
- * Plugin Name: UplinkSync — Homepage Band Rhythm Normalisation (***-270 item 1 / ***-329)
- * Description: One-shot, idempotent DATABASE migration that flips the 3rd homepage band
- *   (the "Ground and air, one team" reserved-photo band, immediately under the hero + trust
- *   strip) from `uls-bg-dark` -> `uls-bg-light` on Home page ID 278, so `/` follows the house
- *   section rhythm (design-standard.md §"Section rhythm": never >2 consecutive same-value bands;
- *   hero unit stays dark, CTA band stays dark). Owner-accepted decision "normalise homepage to
- *   the alternating light/dark rhythm" (***-270 checkbox, accepted 2026-07-24).
+ * Plugin Name: UplinkSync — Homepage Band Rhythm (***-270 item 1 / ***-329)
+ * Description: Homepage `/` (page ID 278) section-rhythm normalisation.
  *
- *   WHY A DB MIGRATION AND NOT A RUNTIME REWRITE: the band markup lives in the WP DB (Home page
- *   ID 278 post_content), not in the repo. Runtime output-buffer (ob_start) rewrites are BANNED
- *   here — they blanked production twice (see uplinksync-unified-services.php [DISABLED AGAIN]).
- *   This plugin registers NO output buffer and touches NO render path. It runs once on `init`,
- *   edits post_content via wp_update_post, records a version flag, and never runs again. It is
- *   the same repo-captured, credential-free DB-write idiom already proven safe by
- *   uplinksync-page-seeder.php (wp_insert_post on init).
+ *   HISTORY. v1.0.0/v1.1.0 were a one-shot DB migration that flipped the 3rd homepage band
+ *   (`uls-bg-dark` -> `uls-bg-light`) — the reserved "Ground and air, one team" owner-with-drone
+ *   photo band — so `/` followed the house alternating rhythm (design-standard.md §"Section
+ *   rhythm": never more than two consecutive same-value bands; a dark hero plus the dark band
+ *   immediately under it count as ONE unit; the hero unit and the CTA band stay dark).
  *
- *   FAIL-SAFE BY CONSTRUCTION: the migration only acts when it can PRECISELY and UNAMBIGUOUSLY
- *   locate the target band (unique marker text + exactly one enclosing dark group in the bounded
- *   window). On any mismatch — page missing, marker absent, already-light, multiple/zero dark
- *   class tokens in the window — it makes NO change and records the flag anyway so it never
- *   thrashes. It cannot blank the page: it does not participate in rendering, and a bad match is
- *   a no-op, not a partial write.
+ *   v2.0.0 (2026-07-28) — RETIRED TO A READ-ONLY NO-OP. The flip target no longer exists: the
+ *   reserved photo-slot placeholder band was removed from Home page 278 (dev-placeholder cleanup,
+ *   same date) — which deleted the exact band this migration flipped. Removing it changed the
+ *   page parity, and the homepage now satisfies §"Section rhythm" WITHOUT a flip. Current bands:
  *
- * Version: 1.0.0
+ *       1  uls-bg-dark  uls-section        (hero)            -.  "dark hero + the dark band
+ *       2  uls-bg-dark  uls-trust-band     (FAA/Part 107)    -'  immediately under it = ONE unit"
+ *       3  uls-bg-dark                     (Endpoint & aerial data)
+ *       4  uls-bg-light uls-section        (Ground and air, from one desk)
+ *       5  uls-bg-dark  uls-section        (UAV work scoped to your objectives)
+ *       6  uls-cta-band uls-gradient-dark  (CTA — stays dark by rule)
+ *
+ *   Value run under the unit rule: [hero+trust] = D, Endpoint = D  -> 2 consecutive (allowed);
+ *   Ground = L; UAV = D, CTA = D -> 2 consecutive (allowed). No run exceeds two -> COMPLIANT.
+ *
+ *   WHY NOT RE-TARGET THE FLIP TO ANOTHER BAND. No remaining dark band can be flipped to light by
+ *   a class-only migration: the hero unit and the CTA band must stay dark (rule), and the trust
+ *   strip and the Endpoint band both carry a DARK-optimised text palette (has-white-color /
+ *   has-grey-color / has-accent-teal-color) that would be unreadable on a light background.
+ *   Flipping either would need a full text-colour rewrite (mirroring the light band's
+ *   has-dark-color / has-accent-600-color treatment) — outside this migration's safe two-token
+ *   model and unsafe to apply blind without visual QA. The design's intended light break after
+ *   the masthead WAS the photo band; it returns when the owner supplies the real photo (a light
+ *   content band), not by re-colouring a dark content band. The residual within-dark tonal step
+ *   (trust strip #102a4c next to navy Endpoint) is not a light/dark rhythm violation and is a
+ *   trust-band CSS matter, out of scope for this dark<->light migration.
+ *
+ *   This file no longer writes post_content at all. It is a read-only guard: it records the
+ *   one-shot flag so the already-deployed v1.x flip pass is superseded and never runs a stale
+ *   flip, and it exposes pure helpers (band map + compliance check) used by the regression test.
+ *   It registers NO output buffer and touches NO render path, so it cannot blank the page.
+ *
+ * Version: 2.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-const UPLINKSYNC_HOME_RHYTHM_VERSION = '1.0.0';
+const UPLINKSYNC_HOME_RHYTHM_VERSION = '2.0.0';
 const UPLINKSYNC_HOME_RHYTHM_OPTION  = 'uplinksync_home_rhythm_version';
 
 /**
- * The Home page. ID 278 is authoritative (***-270 spec), but we resolve by the
- * front-page setting first and only fall back to 278, so a re-pointed front page
- * still migrates the right post.
+ * The Home page. ID 278 is authoritative (***-270 spec), but resolve by the
+ * front-page setting first so a re-pointed front page is still evaluated.
  */
 function uplinksync_home_rhythm_target_post_id() {
 	$front = (int) get_option( 'page_on_front' );
@@ -47,93 +64,133 @@ function uplinksync_home_rhythm_target_post_id() {
 }
 
 /**
- * Perform the single-band flip on a block-markup string.
+ * Extract the ordered background value ('dark'|'light') of each TOP-LEVEL band
+ * from block markup. A "band" is a depth-1 `wp:group` whose block-comment
+ * className carries a rhythm token:
+ *   - uls-bg-light                                    -> 'light'
+ *   - uls-bg-dark | uls-gradient-dark | uls-cta-band  -> 'dark' (CTA reads dark)
+ * Depth-1 groups without a rhythm token are structural wrappers and are skipped.
+ * Nested inner groups (depth > 1) are never counted.
  *
- * Strategy (deliberately conservative):
- *   1. Locate the unique target-band marker. The 3rd band is the reserved
- *      owner-with-drone photo band; its "Ground and air, one team" heading and
- *      "owner-with-drone shot" caption appear nowhere else on the page.
- *   2. Find the nearest `<!-- wp:group ` block-opening comment BEFORE the marker
- *      — that is the band's group wrapper.
- *   3. In the bounded window [group-open .. marker], require EXACTLY two
- *      `uls-bg-dark` tokens (the className in the block-comment JSON + the class
- *      on the wrapper <div>). Anything else => ambiguous => abort (no-op).
- *   4. Replace those two tokens with `uls-bg-light`. Nothing else is touched.
- *
- * @return array{changed:bool, reason:string, content:string}
+ * @param string $content Block markup.
+ * @return string[] Ordered list of 'dark'/'light'.
  */
-function uplinksync_home_rhythm_flip( $content ) {
+function uplinksync_home_rhythm_band_values( $content ) {
+	$values = array();
 	if ( ! is_string( $content ) || '' === $content ) {
-		return array( 'changed' => false, 'reason' => 'empty-content', 'content' => $content );
+		return $values;
 	}
-
-	// Unique marker for the 3rd band. Prefer the caption text (most specific);
-	// fall back to the heading. Both are unique to this band.
-	$marker_pos = stripos( $content, 'owner-with-drone shot' );
-	if ( false === $marker_pos ) {
-		$marker_pos = stripos( $content, 'Ground and air, one team' );
+	if ( ! preg_match_all( '/<!--\s*(\/?)wp:group\b([^>]*?)-->/s', $content, $m, PREG_SET_ORDER ) ) {
+		return $values;
 	}
-	if ( false === $marker_pos ) {
-		return array( 'changed' => false, 'reason' => 'marker-not-found', 'content' => $content );
+	$depth = 0;
+	foreach ( $m as $tok ) {
+		$closing = ( '/' === $tok[1] );
+		if ( $closing ) {
+			$depth--;
+			continue;
+		}
+		$depth++;
+		if ( 1 !== $depth ) {
+			continue; // only top-level groups are bands
+		}
+		$attrs = $tok[2];
+		$cls   = '';
+		if ( preg_match( '/"className"\s*:\s*"([^"]*)"/', $attrs, $cm ) ) {
+			$cls = strtolower( $cm[1] );
+		}
+		if ( false !== strpos( $cls, 'uls-bg-light' ) ) {
+			$values[] = 'light';
+		} elseif (
+			false !== strpos( $cls, 'uls-bg-dark' ) ||
+			false !== strpos( $cls, 'uls-gradient-dark' ) ||
+			false !== strpos( $cls, 'uls-cta-band' )
+		) {
+			$values[] = 'dark';
+		}
+		// else: structural top-level wrapper with no rhythm token -> not a band.
 	}
-
-	// Nearest group-opening block comment before the marker.
-	$group_open = strripos( substr( $content, 0, $marker_pos ), '<!-- wp:group ' );
-	if ( false === $group_open ) {
-		return array( 'changed' => false, 'reason' => 'group-open-not-found', 'content' => $content );
-	}
-
-	$before = substr( $content, 0, $group_open );
-	$window = substr( $content, $group_open, $marker_pos - $group_open );
-	$after  = substr( $content, $marker_pos );
-
-	// Already normalised? (idempotency / re-run safety)
-	if ( false === stripos( $window, 'uls-bg-dark' ) && false !== stripos( $window, 'uls-bg-light' ) ) {
-		return array( 'changed' => false, 'reason' => 'already-light', 'content' => $content );
-	}
-
-	// Require exactly the two expected dark tokens (comment className + div class).
-	$dark_count = substr_count( strtolower( $window ), 'uls-bg-dark' );
-	if ( 2 !== $dark_count ) {
-		return array( 'changed' => false, 'reason' => 'ambiguous-dark-count:' . $dark_count, 'content' => $content );
-	}
-
-	// Case-preserving replace of the two tokens in the bounded window only.
-	$new_window = str_replace( 'uls-bg-dark', 'uls-bg-light', $window );
-	if ( $new_window === $window ) {
-		return array( 'changed' => false, 'reason' => 'no-substitution', 'content' => $content );
-	}
-
-	return array( 'changed' => true, 'reason' => 'flipped', 'content' => $before . $new_window . $after );
+	return $values;
 }
 
+/**
+ * Apply the design-standard "hero unit" merge: a dark hero followed immediately
+ * by a dark band counts as one unit (the second reads as part of the hero).
+ * Concretely: if the first two bands are both dark, collapse them to one.
+ *
+ * @param string[] $values
+ * @return string[]
+ */
+function uplinksync_home_rhythm_apply_hero_unit( array $values ) {
+	if ( count( $values ) >= 2 && 'dark' === $values[0] && 'dark' === $values[1] ) {
+		array_splice( $values, 1, 1 );
+	}
+	return $values;
+}
+
+/**
+ * Longest run of consecutive identical values.
+ *
+ * @param string[] $values
+ * @return int
+ */
+function uplinksync_home_rhythm_max_run( array $values ) {
+	$max  = 0;
+	$run  = 0;
+	$prev = null;
+	foreach ( $values as $v ) {
+		$run  = ( $v === $prev ) ? $run + 1 : 1;
+		$prev = $v;
+		if ( $run > $max ) {
+			$max = $run;
+		}
+	}
+	return $max;
+}
+
+/**
+ * True when the homepage satisfies §"Section rhythm": after collapsing the hero
+ * unit, no more than two consecutive bands share the same value.
+ *
+ * @param string $content Block markup.
+ * @return bool
+ */
+function uplinksync_home_rhythm_is_compliant( $content ) {
+	$values = uplinksync_home_rhythm_apply_hero_unit( uplinksync_home_rhythm_band_values( $content ) );
+	if ( count( $values ) < 2 ) {
+		return true; // nothing to alternate
+	}
+	return uplinksync_home_rhythm_max_run( $values ) <= 2;
+}
+
+/**
+ * Read-only evaluation. NEVER writes post_content (the flip is retired). Returns
+ * a small status array for the caller/tests; the one-shot flag is recorded by
+ * maybe_run() regardless so no stale v1.x flip can run.
+ *
+ * @return array{acted:bool, compliant:bool, reason:string}
+ */
 function uplinksync_home_rhythm_run() {
 	$post_id = uplinksync_home_rhythm_target_post_id();
 	$post    = get_post( $post_id );
 	if ( ! ( $post instanceof WP_Post ) || 'page' !== $post->post_type ) {
-		return; // Target missing — no-op (flag still recorded by caller so we don't thrash).
+		return array( 'acted' => false, 'compliant' => true, 'reason' => 'target-missing' );
 	}
-
-	$result = uplinksync_home_rhythm_flip( $post->post_content );
-	if ( empty( $result['changed'] ) ) {
-		return; // No-op on any non-exact match.
-	}
-
-	// wp_update_post sanitises via KSES for the post author's caps; run as an edit
-	// that preserves everything else. We only changed two class tokens.
-	wp_update_post(
-		array(
-			'ID'           => $post_id,
-			'post_content' => $result['content'],
-		),
-		true
+	$compliant = uplinksync_home_rhythm_is_compliant( $post->post_content );
+	// Retired: we do not mutate content. If a future edit ever reintroduced a >2
+	// run, this guard surfaces it (reason) for a human — it does not auto-flip,
+	// because the only remaining dark bands need a text-palette rewrite, not a
+	// class swap, and that must not be applied blind.
+	return array(
+		'acted'     => false,
+		'compliant' => $compliant,
+		'reason'    => $compliant ? 'compliant-no-flip-needed' : 'non-compliant-needs-manual-review',
 	);
 }
 
 /**
- * One-shot guard. The flip is itself idempotent (re-running finds 'already-light'
- * and no-ops), so this guard is belt-and-suspenders: it stops the pass from
- * re-reading the post on every request once applied.
+ * One-shot flag. Bumping VERSION re-arms it once so the retired-flip status
+ * supersedes the deployed v1.x pass; the run itself makes no write.
  */
 function uplinksync_home_rhythm_maybe_run() {
 	if ( get_option( UPLINKSYNC_HOME_RHYTHM_OPTION ) === UPLINKSYNC_HOME_RHYTHM_VERSION ) {
