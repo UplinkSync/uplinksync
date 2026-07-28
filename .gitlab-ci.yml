@@ -81,3 +81,35 @@ render_smoke:
           fwrite(STDERR, "PASS: homepage rendered non-empty" . ($expect !== "" ? " and contains marker" : "") . ".\n");
         '
     - echo "render_smoke PASS — homepage renders a real, non-empty body on the preview host."
+
+# ***: forbidden-hex guard. The footer LinkedIn glyph must use the house white
+# token (var(--uplinksync-white)); the raw third-party brand blue #0d66c2 / #0a66c2
+# must never be hard-coded in this theme's own CSS (it fails WCAG 1.4.11 on navy and
+# leaks a third-party colour into the two-colour house system). This keeps the
+# ***-311 fix from silently regressing. Vendored libraries are excluded.
+lint_forbidden_hex:
+  stage: review
+  image: python:3-alpine
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  script:
+    # Strip CSS comments first, then flag the forbidden hex only where it is used as
+    # a real declaration value (documented mentions inside /* ... */ are allowed).
+    - |
+      python3 - <<'PY'
+      import re, sys, glob
+      bad = re.compile(r'#0[da]66c2', re.I)
+      hits = []
+      for f in glob.glob('wp-content/themes/uplinksync-child/assets/css/**/*.css', recursive=True):
+          src = open(f, encoding='utf-8', errors='replace').read()
+          src = re.sub(r'/\*.*?\*/', '', src, flags=re.S)   # drop comments
+          for i, line in enumerate(src.splitlines(), 1):
+              if bad.search(line):
+                  hits.append(f'{f}:{i}: {line.strip()}')
+      if hits:
+          sys.stderr.write('FAIL: forbidden LinkedIn brand-blue hex (#0d66c2/#0a66c2) used in child-theme CSS.\n')
+          sys.stderr.write('Use var(--uplinksync-white) for the footer glyph (see brand-blocks.css §7).\n')
+          sys.stderr.write('\n'.join(hits) + '\n')
+          sys.exit(1)
+      print('PASS: no forbidden LinkedIn brand-blue hex used in child-theme CSS.')
+      PY
