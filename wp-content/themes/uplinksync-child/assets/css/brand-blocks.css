@@ -716,6 +716,26 @@ footer .wp-block-navigation__container .wp-block-navigation-item__content {
 	fill: var(--uplinksync-white) !important; /* 12.86:1 on navy-900; matches FB/IG/TikTok */
 }
 
+/* *** (regression-hardening): the rule above is scoped through `.has-icon-color`,
+ * which the footer social <ul> only carries while the block keeps its icon-color
+ * attribute. A Site-Editor rebuild that re-saves the footer template part can drop
+ * that class and silently re-expose core's #0d66c2 default on the mu-plugin-injected
+ * LinkedIn <li>. This companion rule pins the footer LinkedIn glyph to the house
+ * white independent of `.has-icon-color` (white-on-navy is always the correct footer
+ * treatment), so the third-party blue cannot come back through that path.
+ *
+ * DENYLIST: the raw hex #0d66c2 (and #0a66c2) must never appear in this theme's own
+ * CSS — always use var(--uplinksync-white) for the footer glyph. The `lint_forbidden_hex`
+ * CI job (.gitlab-ci.yml) fails the MR if either literal is reintroduced here. */
+.site-footer .wp-block-social-links .wp-social-link-linkedin,
+.site-footer .wp-block-social-links .wp-social-link-linkedin a {
+	color: var(--uplinksync-white);
+}
+.site-footer .wp-block-social-links .wp-social-link-linkedin svg,
+.site-footer .wp-block-social-links .wp-social-link-linkedin svg path {
+	fill: var(--uplinksync-white) !important;
+}
+
 /* ---------------------------------------------------------------------------
  * ***-315 — STRAY 4px RADIUS + PILL STANDARDISATION.
  *
