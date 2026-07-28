@@ -294,9 +294,11 @@ function uplinksync_quote_replace_placeholders( $content ) {
 		return $content;
 	}
 
+	// Gutenberg wraps the placeholder comment in <p class="wp-block-paragraph">,
+	// so the opening tag may carry attributes — match <p ...> not just bare <p>.
 	if ( false !== strpos( $content, '***-42 master quote form' ) ) {
 		$content = preg_replace(
-			'/<p><!--\s****-42 master quote form.*?-->\s*<\/p>/s',
+			'/<p\b[^>]*><!--\s****-42 master quote form.*?-->\s*<\/p>/s',
 			uplinksync_quote_form_shortcode( array() ),
 			$content
 		);
@@ -304,7 +306,7 @@ function uplinksync_quote_replace_placeholders( $content ) {
 
 	if ( false !== strpos( $content, '***-42 mini quote form' ) ) {
 		$content = preg_replace(
-			'/<p><!--\s****-42 mini quote form.*?-->\s*<\/p>/s',
+			'/<p\b[^>]*><!--\s****-42 mini quote form.*?-->\s*<\/p>/s',
 			uplinksync_quote_form_mini_shortcode( array() ),
 			$content
 		);
