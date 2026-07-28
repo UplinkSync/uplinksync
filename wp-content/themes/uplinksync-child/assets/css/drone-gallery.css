@@ -121,3 +121,119 @@
 .uls-air-usage {
 	max-width: 60ch;
 }
+
+/* ===========================================================================
+ * "See it in motion" — poster-over-video overlay.
+ *
+ * The section ships the reel (.uls-air-hero__reel, the inline Immich <video>)
+ * and a separate still (.uls-air-hero__still) as two figures. air-hero.js moves
+ * the still INTO the reel figure and wraps it in a .uls-air-hero__cover button;
+ * these rules lay that cover exactly over the 16/9 video box so the picture sits
+ * ON the paused video as a click-to-play poster, and fade it out on play.
+ *
+ * These are enhancement-only: without JS neither .uls-air-hero__cover nor
+ * .is-playing exists, so nothing below changes the un-enhanced page.
+ * ========================================================================= */
+.uls-air-hero__reel {
+	position: relative;
+}
+
+.uls-air-hero__cover {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	display: block;
+	cursor: pointer;
+	background: transparent;
+	border-radius: inherit;
+	overflow: hidden;
+	/* Sits above the <video> so it reads as the poster and takes the click. */
+	z-index: 2;
+	transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* The relocated still figure fills the cover; drop its own margins/caption. */
+.uls-air-hero__still--overlay {
+	position: absolute;
+	inset: 0;
+	margin: 0;
+	max-width: none;
+}
+.uls-air-hero__still--overlay picture,
+.uls-air-hero__still--overlay img {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+.uls-air-hero__still--overlay img {
+	object-fit: cover;
+	max-height: none;
+	border-radius: 0;
+}
+/* The reel keeps its own visible "Aerial by UplinkSync" credit below the video,
+   so the still's duplicate caption is redundant once it becomes the cover. */
+.uls-air-hero__cover .uls-air-credit {
+	display: none;
+}
+
+/* Play affordance centred on the cover. Mirrors the .uls-air-videocard__play
+   token the page already defines, but scoped here so the overlay is
+   self-sufficient if that inline style ever changes. */
+.uls-air-hero__cover .uls-air-videocard__play {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 72px;
+	height: 72px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(11, 27, 51, 0.66);
+	border: 2px solid rgba(255, 255, 255, 0.9);
+	border-radius: 50%;
+	pointer-events: none;
+	transition: background 0.18s ease, transform 0.18s ease;
+}
+/* Triangle glyph drawn in CSS so it needs no font/emoji. */
+.uls-air-hero__cover .uls-air-videocard__play::before {
+	content: "";
+	width: 0;
+	height: 0;
+	margin-left: 5px;
+	border-style: solid;
+	border-width: 13px 0 13px 21px;
+	border-color: transparent transparent transparent #fff;
+}
+.uls-air-hero__cover:hover .uls-air-videocard__play,
+.uls-air-hero__cover:focus-visible .uls-air-videocard__play {
+	background: rgba(11, 27, 51, 0.85);
+	transform: translate(-50%, -50%) scale(1.06);
+}
+.uls-air-hero__cover:focus-visible {
+	outline: 3px solid var(--focus-ring, #7cc4ff);
+	outline-offset: 3px;
+}
+
+/* On play, dismiss the cover and let the native <video> controls take over. */
+.uls-air-hero__reel.is-playing .uls-air-hero__cover {
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.uls-air-hero__cover,
+	.uls-air-hero__cover .uls-air-videocard__play {
+		transition: none;
+	}
+	.uls-air-hero__cover:hover .uls-air-videocard__play,
+	.uls-air-hero__cover:focus-visible .uls-air-videocard__play {
+		transform: translate(-50%, -50%);
+	}
+}

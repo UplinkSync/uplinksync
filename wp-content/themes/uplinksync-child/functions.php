@@ -223,6 +223,17 @@ function uplinksync_child_drone_gallery_assets() {
 		array( 'uplinksync-brand' ),
 		uplinksync_child_asset_ver( 'assets/css/drone-gallery.css' )
 	);
+
+	// "See it in motion" poster-over-video overlay. Vanilla, no dependency,
+	// deferred in the footer; enhancement-only, so a load failure leaves the
+	// native <video poster> + the separate still exactly as they render today.
+	wp_enqueue_script(
+		'uplinksync-air-hero',
+		get_stylesheet_directory_uri() . '/assets/js/air-hero.js',
+		array(),
+		uplinksync_child_asset_ver( 'assets/js/air-hero.js' ),
+		array( 'strategy' => 'defer', 'in_footer' => true )
+	);
 }
 add_action( 'wp_enqueue_scripts', 'uplinksync_child_drone_gallery_assets', 21 );
 
