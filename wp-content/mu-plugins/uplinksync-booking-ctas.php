@@ -170,8 +170,12 @@ function uplinksync_book_modal_markup() {
 	// prefilled with the scope note via data-cal-config (see the click handler).
 	$it_slug  = esc_attr( UPLINKSYNC_BOOK_CONSULT_SLUG );
 	$uav_slug = esc_attr( UPLINKSYNC_BOOK_UAV_SLUG );
-	$it_cfg   = esc_attr( wp_json_encode( array( 'notes' => uplinksync_book_it_notes() ) ) );
-	$uav_cfg  = esc_attr( wp_json_encode( array( 'notes' => uplinksync_book_uav_notes() ) ) );
+	// *** #10: it-consult and uav-service now use STRUCTURED booking fields. The
+	// static chooser paths have no per-user answers, so the scope prompt goes into
+	// the freeform "notes-extra" slug; the structured selects (goal / site-type …)
+	// are left for the visitor to pick in the cal.com pop-up.
+	$it_cfg   = esc_attr( wp_json_encode( array( 'notes-extra' => uplinksync_book_it_notes() ) ) );
+	$uav_cfg  = esc_attr( wp_json_encode( array( 'notes-extra' => uplinksync_book_uav_notes() ) ) );
 
 	return '<div class="uls-book-modal" id="uls-book-modal" role="dialog" aria-modal="true" '
 		. 'aria-labelledby="uls-book-modal-title" aria-describedby="uls-book-modal-desc" hidden>'
@@ -375,18 +379,39 @@ function uplinksync_book_inject_runtime( $html ) {
 		. 'window.Cal("init",{origin:"' . $origin . '"});'
 		. 'loaded=true;loading=false;var q=queue.slice();queue=[];q.forEach(function(f){f();});'
 		. '}'
-		// *** #4: prefill helper — read the estimator fields at click time so the
-		// "Book a time" pop-up arrives with the visitor context already filled in.
-		. 'function ulsEstPrefill(){'
+		// *** #4/#10: prefill helper — read the estimator fields at click time and
+		// map them to the STRUCTURED cal.com field slugs for the target event type,
+		// so the pop-up arrives with the visitor context already filled in.
+		//   UAV (dirwin/uav-service): site-type · deliverables · timeline · notes-extra
+		//   IT  (dirwin/it-consult)  : goal · current-setup · timeline · user-count · notes-extra
+		// Values (not labels) are sent for the select fields. Slugs with no captured
+		// answer are omitted so the visitor fills them in the pop-up. name/email are
+		// cal.com's standard prefill keys and always pass through.
+		. 'function ulsEstPrefill(slug){'
 		. 'function v(id){var el=document.getElementById(id);return el?(el.value||"").trim():"";}'
 		. 'function st(id){var el=document.getElementById(id);return el&&el.selectedIndex>=0?el.options[el.selectedIndex].text.trim():"";}'
-		. 'var svc=st("uls-est-line"),mi=v("uls-est-miles"),tm=st("uls-est-timing");'
-		. 'var L=["Estimate request from uplinksync.com:"];'
-		. 'if(svc&&svc.indexOf("Choose")===-1)L.push("• Service: "+svc);'
-		. 'if(mi)L.push("• Distance from Idaho Falls: "+mi+" miles");'
-		. 'if(tm&&tm.indexOf("Choose")===-1)L.push("• Timing: "+tm);'
-		. 'var c={notes:L.join("\\n")};'
-		. 'var nm=v("uls-est-name"),em=v("uls-est-email");if(nm)c.name=nm;if(em)c.email=em;return c;}'
+		. 'var lineVal=v("uls-est-line"),lineTxt=st("uls-est-line"),mi=v("uls-est-miles"),tm=st("uls-est-timing");'
+		. 'var extra=[];if(lineTxt&&lineTxt.indexOf("Choose")===-1)extra.push("Service: "+lineTxt);'
+		. 'if(mi)extra.push("Distance from Idaho Falls: "+mi+" miles");'
+		. 'var noteX=extra.length?("Estimate from uplinksync.com — "+extra.join(" · ")):"";'
+		. 'var c={};var nm=v("uls-est-name"),em=v("uls-est-email");if(nm)c.name=nm;if(em)c.email=em;'
+		. 'var isUav=(slug||"").indexOf("uav-service")>=0;'
+		. 'if(isUav){'
+		. 'var stMap={real_estate:"residential-roof",mapping:"land-acreage",inspection:"commercial-building",tower:"other"};'
+		. 'var dlMap={real_estate:["photos","video"],mapping:["orthomosaic"],inspection:["inspection-report"],tower:["inspection-report"]};'
+		. 'if(stMap[lineVal])c["site-type"]=stMap[lineVal];'
+		. 'if(dlMap[lineVal])c["deliverables"]=dlMap[lineVal];'
+		. 'if(tm&&tm.indexOf("Choose")===-1)c["timeline"]=tm;'
+		. 'if(noteX)c["notes-extra"]=noteX;'
+		. '}else{'
+		// IT/Web (it-consult): the drone estimator does not capture goal/current-setup/
+		// user-count, so pass timeline + a context notes-extra; those selects stay for
+		// the visitor. (A dedicated IT estimate flow would map service→goal VALUE
+		// [new-website/helpdesk/security/cloud-m365/networking/other], scope→current-setup,
+		// size→user-count.)
+		. 'if(tm&&tm.indexOf("Choose")===-1)c["timeline"]=tm;'
+		. 'if(noteX)c["notes-extra"]=noteX;'
+		. '}return c;}'
 		// Any [data-cal-link] element opens the cal.com POP-UP (not a new page),
 		// merging: base layout, a static data-cal-config JSON prefill, and (for the
 		// estimator button) the live estimate prefill. Falls back to the href if the
@@ -399,7 +424,7 @@ function uplinksync_book_inject_runtime( $html ) {
 		. 'var cfg={layout:"month_view"};'
 		. 'var raw=a.getAttribute("data-cal-config");'
 		. 'if(raw){try{var pc=JSON.parse(raw);for(var k in pc){cfg[k]=pc[k];}}catch(e2){}}'
-		. 'if(a.getAttribute("data-cal-prefill")==="estimate"){var ep=ulsEstPrefill();for(var k2 in ep){cfg[k2]=ep[k2];}}'
+		. 'if(a.getAttribute("data-cal-prefill")==="estimate"){var ep=ulsEstPrefill(slug);for(var k2 in ep){cfg[k2]=ep[k2];}}'
 		. 'try{e.preventDefault();boot(function(){'
 		. 'window.Cal("modal",{calLink:slug,config:cfg});'
 		. '});}catch(err){if(a.href){window.location.href=a.href;}}'

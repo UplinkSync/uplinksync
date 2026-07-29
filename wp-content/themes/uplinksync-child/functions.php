@@ -417,3 +417,16 @@ function uplinksync_child_split_horizon_assets() {
 	);
 }
 add_action( 'wp_enqueue_scripts', 'uplinksync_child_split_horizon_assets', 22 );
+
+/**
+ * *** (post-MR!93 fix): product/shop pages showed the breadcrumb TWICE. The
+ * house store templates (single-product.html / archive-product.html) render the
+ * styled block breadcrumb (`wp:woocommerce/breadcrumbs`), and WooCommerce's classic
+ * hook (`woocommerce_breadcrumb` on `woocommerce_before_main_content`) renders a
+ * second, unstyled one. Drop the classic hook so exactly ONE — the styled block —
+ * remains. Reversible (delete this block); a no-op if the classic hook isn't bound.
+ */
+function uplinksync_child_dedupe_wc_breadcrumb() {
+	remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20 );
+}
+add_action( 'init', 'uplinksync_child_dedupe_wc_breadcrumb', 20 );
