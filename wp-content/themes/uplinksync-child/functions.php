@@ -237,6 +237,34 @@ function uplinksync_child_drone_gallery_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'uplinksync_child_drone_gallery_assets', 21 );
 
+/**
+ * *** #4: Estimate-as-modal + cal.com pop-up booking. Loads where the estimator
+ * lives — the /services/ and /contact/ pages. The JS is DOM-only (moves the
+ * estimator into an accessible modal and adds a "Book a time" button that carries
+ * data-cal-link/data-cal-prefill); the cal.com pop-up itself is opened by the
+ * booking-CTAs mu-plugin runtime, which also loads on estimator pages. Enhancement
+ * only — without JS the estimator renders inline exactly as before.
+ */
+function uplinksync_child_estimate_book_assets() {
+	if ( ! uplinksync_child_is_singular_slug( array( 'services', 'contact' ) ) ) {
+		return;
+	}
+	wp_enqueue_style(
+		'uplinksync-estimate-book',
+		get_stylesheet_directory_uri() . '/assets/css/estimate-book.css',
+		array( 'uplinksync-brand' ),
+		uplinksync_child_asset_ver( 'assets/css/estimate-book.css' )
+	);
+	wp_enqueue_script(
+		'uplinksync-estimate-book',
+		get_stylesheet_directory_uri() . '/assets/js/estimate-book.js',
+		array(),
+		uplinksync_child_asset_ver( 'assets/js/estimate-book.js' ),
+		array( 'strategy' => 'defer', 'in_footer' => true )
+	);
+}
+add_action( 'wp_enqueue_scripts', 'uplinksync_child_estimate_book_assets', 21 );
+
 function uplinksync_child_drone_gallery_title( $title_parts ) {
 	if ( uplinksync_child_is_singular_slug( 'drone-services' ) ) {
 		return array( 'title' => 'Drone Photography & Inspection Services | UplinkSync' );
