@@ -117,6 +117,15 @@
 		var ctl = wireModal( built.modal );
 		trigger.addEventListener( 'click', function () { ctl.open( trigger ); } );
 
+		// Pre-existing on-page CTAs anchored at #uls-estimator (e.g. the lower
+		// "Prefer a ballpark first? — Get your instant estimate" link) used to
+		// scroll to the inline estimator. Now that the estimator lives in this
+		// modal, those anchors would dead-link to a hidden element, so re-point
+		// them at the pop-up: exactly one estimate flow, no broken href.
+		document.querySelectorAll( 'a[href="#uls-estimator"]' ).forEach( function ( a ) {
+			a.addEventListener( 'click', function ( e ) { e.preventDefault(); ctl.open( a ); } );
+		} );
+
 		// "Book a time" -> cal.com pop-up (opened by the mu-plugin handler),
 		// prefilled from the estimator fields (data-cal-prefill="estimate").
 		// Drone projects route to the uav-service event type.
