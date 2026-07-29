@@ -388,3 +388,32 @@ function uplinksync_child_motion_assets() {
 	);
 }
 add_action( 'wp_enqueue_scripts', 'uplinksync_child_motion_assets', 22 );
+
+/**
+ * "The Split Horizon" homepage (concept: docs/website-redesign/homepage-wow-concept-2026-07-28.md).
+ * Front page only. CSS is scoped under .uls-splith (no leakage); JS is DOM-only,
+ * deferred, and a no-op without .uls-splith. Type stays DM Sans (the live font) —
+ * the concept's Manrope/Fira are deliberately not introduced. The hero "Get a fast
+ * estimate" buttons carry uls-consult-trigger + data-uls-book-open, so the booking
+ * mu-plugin injects and opens the existing cal.com chooser modal (no duplicate
+ * modal system).
+ */
+function uplinksync_child_split_horizon_assets() {
+	if ( ! is_front_page() ) {
+		return;
+	}
+	wp_enqueue_style(
+		'uplinksync-split-horizon',
+		get_stylesheet_directory_uri() . '/assets/css/split-horizon.css',
+		array( 'uplinksync-brand' ),
+		uplinksync_child_asset_ver( 'assets/css/split-horizon.css' )
+	);
+	wp_enqueue_script(
+		'uplinksync-split-horizon',
+		get_stylesheet_directory_uri() . '/assets/js/split-horizon.js',
+		array(),
+		uplinksync_child_asset_ver( 'assets/js/split-horizon.js' ),
+		array( 'strategy' => 'defer', 'in_footer' => true )
+	);
+}
+add_action( 'wp_enqueue_scripts', 'uplinksync_child_split_horizon_assets', 22 );
