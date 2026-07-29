@@ -184,6 +184,38 @@ function uplinksync_child_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'uplinksync_child_enqueue_assets', 20 );
 
 /**
+ * ***-178: WooCommerce store house-brand layer.
+ *
+ * The site-wide brand layer (brand-blocks.css) deliberately excludes WooCommerce
+ * — its button rule is scoped `:not(.wc-block-components-button):not([type="submit"])`
+ * and its header states the scope is kept narrow to avoid disturbing shop chrome.
+ * The result was that the shop grid, the product single (which renders the classic
+ * `woocommerce/legacy-template` markup), and cart/checkout all fell through to the
+ * WooCommerce / core-block DEFAULTS — off-brand typography, buttons, price and
+ * spacing against an otherwise cinematic-dark, DM Sans, navy-tokened site.
+ *
+ * woocommerce.css binds the house tokens/components onto both the classic and
+ * block Woo markup. It is gated to store contexts and enqueued after
+ * brand-blocks.css so it wins the cascade there and loads on no other page.
+ * Guarded with function_exists() so the theme is safe if WooCommerce is inactive.
+ */
+function uplinksync_child_woocommerce_assets() {
+	if ( ! function_exists( 'is_woocommerce' ) ) {
+		return;
+	}
+	if ( ! ( is_woocommerce() || is_cart() || is_checkout() || is_account_page() ) ) {
+		return;
+	}
+	wp_enqueue_style(
+		'uplinksync-woocommerce',
+		get_stylesheet_directory_uri() . '/assets/css/woocommerce.css',
+		array( 'uplinksync-brand-blocks' ),
+		uplinksync_child_asset_ver( 'assets/css/woocommerce.css' )
+	);
+}
+add_action( 'wp_enqueue_scripts', 'uplinksync_child_woocommerce_assets', 21 );
+
+/**
  * ***-99: match a singular view by slug across post types.
  *
  * The conditional assets below were originally gated on is_page( 'slug' ), but

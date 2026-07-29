@@ -1,0 +1,332 @@
+/*
+ * UplinkSync brand layer — WooCommerce store chrome (***-178).
+ *
+ * WHY THIS FILE EXISTS
+ * --------------------
+ * The four site-wide sheets (tokens / brand / brand-blocks / imagery-system)
+ * DELIBERATELY exclude WooCommerce: brand-blocks.css scopes its button rule with
+ * `:not(.wc-block-components-button):not([type="submit"])` and its own header
+ * states the scope is "narrow ... to avoid disturbing WooCommerce shop chrome."
+ * The consequence measured on the live store: every store surface — the shop
+ * grid (archive-product), the product single (which renders
+ * `woocommerce/legacy-template {"template":"single-product"}`, i.e. classic Woo
+ * markup), and cart / checkout — paints in the WooCommerce / core-block DEFAULT
+ * typography, buttons, price and spacing. Against a site that is otherwise
+ * cinematic-dark, DM Sans, navy-tokened with a hero + CTA band on every page,
+ * the store reads as a generic bolt-on. That is the owner's "extremely generic /
+ * product pages don't have the correct themes" gate.
+ *
+ * This sheet binds the house design-standard.md / visual-system.md rules onto
+ * the classes WooCommerce actually emits — BOTH the classic legacy-template
+ * markup (`.woocommerce div.product`, `.single_add_to_cart_button`, `.price`,
+ * `.woocommerce-tabs`) AND the block markup (`.wc-block-*`,
+ * `.wp-block-woocommerce-*`) used by the archive product-collection. It is
+ * enqueued only on store contexts (is_woocommerce / is_cart / is_checkout) after
+ * brand-blocks.css, so it wins the cascade there and touches nothing off-store.
+ *
+ * TOKENS ONLY. Every value below references a var() from tokens.css. Contrast:
+ * store pages are LIGHT-context, so interactive fills use --accent-600 (5.01:1
+ * with white), text uses --navy-900, secondary uses --grey-600 — never
+ * --accent-500 (decorative, 2.95:1) for text or fills carrying a label.
+ *
+ * Content rule (design-standard.md §7): NO fabricated proof, prices, badges or
+ * testimonials are introduced here. This is presentation only — it restyles
+ * whatever product content already exists.
+ */
+
+/* ---------------------------------------------------------------------------
+ * 1. TYPOGRAPHY — pull all store text onto the house family.
+ * brand-blocks binds DM Sans onto h1/h2/h3 and .wp-block-heading, but Woo emits
+ * a lot of non-heading, non-block text (price, meta, tabs, buttons, form labels)
+ * that fell through to the parent theme's element font. Pin the store subtree.
+ * ------------------------------------------------------------------------- */
+.woocommerce,
+.woocommerce-page,
+.wp-block-woocommerce-cart,
+.wp-block-woocommerce-checkout,
+.wc-block-components-product-name,
+.wc-block-components-product-price {
+	font-family: var(--font-body);
+}
+
+.woocommerce div.product .product_title,
+.woocommerce div.product h1.entry-title {
+	font-family: var(--font-body);
+	font-weight: var(--fw-h1);
+	color: var(--navy-900);
+	font-size: var(--fs-h2-mobile);
+}
+@media (min-width: 768px) {
+	.woocommerce div.product .product_title,
+	.woocommerce div.product h1.entry-title {
+		font-size: var(--fs-h2-desktop);
+	}
+}
+
+/* Section headings inside the store (Related products, tab panels, cart totals,
+   "Additional information") — house H2/H3, navy. */
+.woocommerce .related > h2,
+.woocommerce .upsells > h2,
+.woocommerce .cart_totals > h2,
+.woocommerce .cross-sells > h2,
+.woocommerce-checkout h3,
+.woocommerce-order-received h2 {
+	font-family: var(--font-body);
+	font-weight: var(--fw-h3);
+	color: var(--navy-900);
+}
+
+/* ---------------------------------------------------------------------------
+ * 2. PRICE — the single most "default WooCommerce" element on the page.
+ * House it as a confident navy figure in the brand family. (Range pricing is an
+ * owner content decision — this only styles whatever the product already shows.)
+ * ------------------------------------------------------------------------- */
+.woocommerce div.product p.price,
+.woocommerce div.product span.price,
+.woocommerce ul.products li.product .price,
+.wc-block-components-product-price,
+.wp-block-woocommerce-product-price {
+	color: var(--navy-900);
+	font-family: var(--font-body);
+	font-weight: 700;
+}
+.woocommerce div.product p.price {
+	font-size: var(--fs-h3-desktop);
+}
+/* "From"/range prefixes and struck original prices step back to secondary. */
+.woocommerce div.product p.price del,
+.woocommerce div.product span.price del,
+.wc-block-components-product-price del {
+	color: var(--grey-600);
+	font-weight: 400;
+	opacity: 1;
+}
+.woocommerce div.product p.price ins,
+.wc-block-components-product-price ins {
+	text-decoration: none;
+}
+
+/* Sale flash — recolour core's default green/pink pill to the house accent.
+   Does not create a badge; only restyles one the product already carries. */
+.woocommerce span.onsale,
+.wc-block-components-product-sale-badge {
+	background-color: var(--accent-600);
+	color: var(--uplinksync-white);
+	border-radius: var(--radius-pill);
+	font-family: var(--font-body);
+	font-weight: 700;
+	min-height: 0;
+	line-height: 1.4;
+}
+
+/* ---------------------------------------------------------------------------
+ * 3. BUTTONS — house primary (accent-600 fill, white label, 8px, darken-only
+ * hover). Covers classic add-to-cart, block product-button, and every generic
+ * `.woocommerce .button` (cart, checkout, "View cart", "Place order").
+ * brand-blocks.css explicitly opts these out, so there is no conflict to beat —
+ * plain declarations here are the first brand rule they receive.
+ * ------------------------------------------------------------------------- */
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button,
+.woocommerce #respond input#submit,
+.woocommerce a.button.alt,
+.woocommerce button.button.alt,
+.woocommerce input.button.alt,
+.woocommerce .single_add_to_cart_button,
+.wc-block-components-button:not(.is-link),
+.wp-block-woocommerce-product-button .wp-block-button__link,
+.wc-block-cart__submit-button,
+.wc-block-components-checkout-place-order-button {
+	background-color: var(--accent-600);
+	background-image: none;
+	color: var(--uplinksync-white);
+	border: 0;
+	border-radius: var(--radius-default);
+	font-family: var(--font-body);
+	font-weight: 700;
+	box-shadow: none;
+	transition: background-color 0.15s ease;
+	text-transform: none;
+}
+.woocommerce a.button:hover,
+.woocommerce button.button:hover,
+.woocommerce input.button:hover,
+.woocommerce #respond input#submit:hover,
+.woocommerce a.button.alt:hover,
+.woocommerce button.button.alt:hover,
+.woocommerce input.button.alt:hover,
+.woocommerce .single_add_to_cart_button:hover,
+.woocommerce a.button:focus-visible,
+.woocommerce button.button:focus-visible,
+.wc-block-components-button:not(.is-link):hover,
+.wp-block-woocommerce-product-button .wp-block-button__link:hover,
+.wc-block-cart__submit-button:hover,
+.wc-block-components-checkout-place-order-button:hover {
+	background-color: var(--navy-700);
+	color: var(--uplinksync-white);
+	transform: none;
+}
+
+/* Secondary / low-emphasis actions ("View cart" confirmation link, block
+   outline product buttons) → house outline: navy border + label on light. */
+.woocommerce a.added_to_cart,
+.wp-block-woocommerce-product-button .wp-block-button__link.is-style-outline,
+.wc-block-components-product-button .is-style-outline .wp-block-button__link {
+	background-color: transparent;
+	background-image: none;
+	color: var(--navy-900);
+	border: 2px solid var(--navy-900);
+	border-radius: var(--radius-default);
+	font-family: var(--font-body);
+	font-weight: 700;
+}
+.woocommerce a.added_to_cart:hover,
+.wp-block-woocommerce-product-button .wp-block-button__link.is-style-outline:hover,
+.wc-block-components-product-button .is-style-outline .wp-block-button__link:hover {
+	color: var(--accent-600);
+	border-color: var(--accent-600);
+	background-color: transparent;
+}
+
+/* Quantity stepper — align the input to the house field shape. */
+.woocommerce .quantity .qty,
+.wc-block-components-quantity-selector {
+	border: 1px solid var(--grey-250);
+	border-radius: var(--radius-default);
+	color: var(--navy-900);
+	font-family: var(--font-body);
+}
+
+/* ---------------------------------------------------------------------------
+ * 4. PRODUCT CARDS — the shop grid (both the block product-collection and any
+ * classic `ul.products`). House card = white fill, grey-250 hairline, 16px
+ * radius, no shadow (design-standard.md §4.2). Give the image an 8px frame and
+ * the title the house link colour.
+ * ------------------------------------------------------------------------- */
+.woocommerce ul.products li.product,
+.wc-block-product-template .wc-block-product,
+.wp-block-woocommerce-product-template li.product {
+	background-color: var(--uplinksync-white);
+	border: var(--border-card);
+	border-radius: var(--radius-card);
+	box-shadow: none;
+	padding: var(--space-card-block) var(--space-card-inline);
+	overflow: hidden;
+}
+.woocommerce ul.products li.product a img,
+.wc-block-product-template .wc-block-components-product-image img,
+.wp-block-woocommerce-product-image img {
+	border-radius: var(--radius-default);
+}
+.woocommerce ul.products li.product .woocommerce-loop-product__title,
+.wc-block-components-product-name {
+	color: var(--navy-900);
+	font-family: var(--font-body);
+	font-weight: 700;
+}
+.woocommerce ul.products li.product a:hover .woocommerce-loop-product__title,
+.wc-block-components-product-name:hover {
+	color: var(--accent-600);
+}
+
+/* ---------------------------------------------------------------------------
+ * 5. STORE CHROME — breadcrumbs, results count, sorting, notices.
+ * These are the small default-Woo tells that read as "template".
+ * ------------------------------------------------------------------------- */
+.woocommerce .woocommerce-breadcrumb,
+.wc-block-breadcrumbs,
+.woocommerce-products-header,
+.woocommerce .woocommerce-result-count,
+.wc-block-product-collection__product-count {
+	color: var(--grey-600);
+	font-family: var(--font-body);
+	font-size: var(--fs-small-desktop);
+}
+.woocommerce .woocommerce-breadcrumb a,
+.wc-block-breadcrumbs a {
+	color: var(--accent-600);
+}
+
+.woocommerce .woocommerce-ordering select,
+.wc-block-catalog-sorting select,
+.wp-block-woocommerce-catalog-sorting select,
+.woocommerce-page select {
+	border: 1px solid var(--grey-250);
+	border-radius: var(--radius-default);
+	color: var(--navy-900);
+	font-family: var(--font-body);
+	background-color: var(--uplinksync-white);
+}
+
+/* Store notices (added-to-cart, coupon, errors) — swap the default lime/yellow
+   info bar for the house palette; keep error red for accessibility semantics. */
+.woocommerce-message,
+.woocommerce-info,
+.wc-block-components-notice-banner.is-info {
+	border-top-color: var(--accent-600);
+	background-color: var(--grey-50);
+	color: var(--navy-900);
+	font-family: var(--font-body);
+}
+.woocommerce-message::before,
+.woocommerce-info::before {
+	color: var(--accent-600);
+}
+.woocommerce-message a,
+.woocommerce-info a {
+	color: var(--accent-600);
+}
+
+/* ---------------------------------------------------------------------------
+ * 6. PRODUCT TABS (classic single-product) — description / additional info /
+ * reviews. Default Woo renders them as grey rounded "folder" tabs; flatten to a
+ * house underline nav in navy.
+ * ------------------------------------------------------------------------- */
+.woocommerce div.product .woocommerce-tabs ul.tabs::before {
+	border-bottom-color: var(--grey-250);
+}
+.woocommerce div.product .woocommerce-tabs ul.tabs li {
+	background-color: transparent;
+	border: 0;
+	border-radius: 0;
+	border-bottom: 2px solid transparent;
+}
+.woocommerce div.product .woocommerce-tabs ul.tabs li a {
+	color: var(--grey-600);
+	font-family: var(--font-body);
+	font-weight: 700;
+}
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active {
+	background-color: transparent;
+	border-bottom-color: var(--accent-600);
+}
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active a {
+	color: var(--navy-900);
+}
+.woocommerce div.product .woocommerce-tabs ul.tabs li::before,
+.woocommerce div.product .woocommerce-tabs ul.tabs li::after {
+	display: none;
+}
+
+/* Gallery frame — match the house 8px media radius. */
+.woocommerce div.product .woocommerce-product-gallery__image img,
+.woocommerce div.product div.images img {
+	border-radius: var(--radius-default);
+}
+
+/* ---------------------------------------------------------------------------
+ * 7. CART / CHECKOUT tables and links — hairlines and link colour to the house.
+ * ------------------------------------------------------------------------- */
+.woocommerce table.shop_table,
+.woocommerce table.shop_table td,
+.woocommerce table.shop_table th,
+.wc-block-cart-items,
+.wc-block-cart-items__row {
+	border-color: var(--grey-250);
+	font-family: var(--font-body);
+}
+.woocommerce a:not(.button):not(.wp-block-button__link),
+.wc-block-components-product-metadata a {
+	color: var(--accent-600);
+}

@@ -1,7 +1,7 @@
 <!-- wp:template-part {"slug":"header","theme":"hostinger-ai-theme"} /-->
 
-<!-- wp:group {"tagName":"main","layout":{"inherit":true,"type":"constrained"}} -->
-<main class="wp-block-group"><!-- wp:woocommerce/breadcrumbs /-->
+<!-- wp:group {"tagName":"main","className":"uls-bg-light uls-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"backgroundColor":"grey-50","layout":{"inherit":true,"type":"constrained"}} -->
+<main class="wp-block-group uls-bg-light uls-section has-grey-50-background-color has-background" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:woocommerce/breadcrumbs /-->
 
     <!-- wp:query-title {"type":"archive","showPrefix":false,"align":"wide"} /-->
 
@@ -21,7 +21,7 @@
 
         <!-- wp:woocommerce/product-price {"isDescendentOfQueryLoop":true,"textAlign":"center","fontSize":"small","style":{"spacing":{"margin":{"bottom":"1rem"}}}} /-->
 
-        <!-- wp:woocommerce/product-button {"textAlign":"center","isDescendentOfQueryLoop":true,"className":"is-style-outline","fontSize":"small","style":{"spacing":{"margin":{"bottom":"1rem"}},"border":{"radius":"25px"}}} /-->
+        <!-- wp:woocommerce/product-button {"textAlign":"center","isDescendentOfQueryLoop":true,"fontSize":"small","style":{"spacing":{"margin":{"bottom":"1rem"}},"border":{"radius":"8px"}}} /-->
         <!-- /wp:woocommerce/product-template -->
 
         <!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"center"}} -->
@@ -44,6 +44,24 @@
         <!-- /wp:group -->
         <!-- /wp:woocommerce/product-collection-no-results --></div>
     <!-- /wp:woocommerce/product-collection --></main>
+<!-- /wp:group -->
+
+<!-- ***-178: house CTA band immediately before the footer (design-standard.md
+     §4.3). Navy-wash gradient, white H2, single primary accent CTA. -->
+<!-- wp:group {"align":"full","className":"uls-cta-band uls-gradient-dark","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"gradient":"navy-wash","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignfull uls-cta-band uls-gradient-dark has-navy-wash-gradient-background has-background" style="padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:heading {"textAlign":"center","level":2,"textColor":"white"} -->
+<h2 class="wp-block-heading has-text-align-center has-white-color has-text-color">Not sure where to start?</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center","textColor":"white"} -->
+<p class="has-text-align-center has-white-color has-text-color">Tell us what your business needs and we'll help you scope it — no obligation.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+<div class="wp-block-buttons"><!-- wp:button {"backgroundColor":"accent-600","textColor":"white"} -->
+<div class="wp-block-button"><a class="wp-block-button__link has-white-color has-accent-600-background-color has-text-color has-background wp-element-button" href="/contact/">Get an estimate</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons --></div>
 <!-- /wp:group -->
 
 <!-- wp:template-part {"slug":"footer","theme":"hostinger-ai-theme","tagName":"footer"} /-->
