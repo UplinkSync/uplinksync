@@ -10,7 +10,13 @@
  * direct-UAV link entirely (direct UAV booking must not be publicly linked; the UAV path now lives
  * only inside the modal, whose UAV choice routes to uav-service — requiresConfirmation=true).
  *
- * Version: 2.0.0
+ * v2.1.0 (2026-07-28, *** #4): the CTA chooser paths and the estimator "Book a time" button
+ *   now open the cal.com POP-UP (Cal("modal")) with prefill (scope note; estimator context) instead
+ *   of navigating to a booking page. The click handler matches any [data-cal-link] element, merges
+ *   data-cal-config JSON prefill, and computes an estimate prefill for data-cal-prefill="estimate".
+ *   The runtime also loads on estimator pages (uls-estimator).
+ *
+ * Version: 2.1.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -157,8 +163,15 @@ function uplinksync_book_uav_markup() {
  * JS (focus trap, Esc, overlay close, return focus, reduced-motion).
  */
 function uplinksync_book_modal_markup() {
+	// Real booking URLs (with the scope note) remain as the no-JS fallback href.
 	$it_url  = esc_url( uplinksync_book_url_with_notes( UPLINKSYNC_BOOK_CONSULT_SLUG, uplinksync_book_it_notes() ) );
 	$uav_url = esc_url( uplinksync_book_url_with_notes( UPLINKSYNC_BOOK_UAV_SLUG, uplinksync_book_uav_notes() ) );
+	// *** #4: with JS, each choice opens the cal.com POP-UP (not a new page),
+	// prefilled with the scope note via data-cal-config (see the click handler).
+	$it_slug  = esc_attr( UPLINKSYNC_BOOK_CONSULT_SLUG );
+	$uav_slug = esc_attr( UPLINKSYNC_BOOK_UAV_SLUG );
+	$it_cfg   = esc_attr( wp_json_encode( array( 'notes' => uplinksync_book_it_notes() ) ) );
+	$uav_cfg  = esc_attr( wp_json_encode( array( 'notes' => uplinksync_book_uav_notes() ) ) );
 
 	return '<div class="uls-book-modal" id="uls-book-modal" role="dialog" aria-modal="true" '
 		. 'aria-labelledby="uls-book-modal-title" aria-describedby="uls-book-modal-desc" hidden>'
@@ -167,12 +180,12 @@ function uplinksync_book_modal_markup() {
 		. '<button type="button" class="uls-book-modal__close" data-uls-book-close="1" aria-label="Close">&#215;</button>'
 		. '<h2 class="uls-book-modal__title" id="uls-book-modal-title">Start with a free consultation</h2>'
 		. '<p class="uls-book-modal__desc" id="uls-book-modal-desc">Which kind of consultation is this? '
-		. 'Pick a path and we&#8217;ll open a booking page with a short scope form already started to guide the conversation.</p>'
+		. 'Pick a path and we&#8217;ll open a booking pop-up with a short scope form already started to guide the conversation.</p>'
 		. '<div class="uls-consult-paths">'
-		. '<a class="uls-consult-path" href="' . $it_url . '" target="_blank" rel="noopener">'
+		. '<a class="uls-consult-path" href="' . $it_url . '" data-cal-link="' . $it_slug . '" data-cal-config="' . $it_cfg . '" target="_blank" rel="noopener">'
 		. '<span class="uls-path-title">IT / Web services</span>'
 		. '<span class="uls-path-sub">Websites, systems &amp; help-desk, security, cloud / M365, networking.</span></a>'
-		. '<a class="uls-consult-path" href="' . $uav_url . '" target="_blank" rel="noopener">'
+		. '<a class="uls-consult-path" href="' . $uav_url . '" data-cal-link="' . $uav_slug . '" data-cal-config="' . $uav_cfg . '" target="_blank" rel="noopener">'
 		. '<span class="uls-path-title">UAV / drone project</span>'
 		. '<span class="uls-path-sub">Mapping, inspection, marketing footage, progress records.</span></a>'
 		. '</div></div></div>';
@@ -289,10 +302,12 @@ function uplinksync_book_inject_uav( $html ) {
  * blocks render. With JS disabled the CTA remains a working booking link.
  */
 function uplinksync_book_inject_runtime( $html ) {
-	// Present if any embed CTA (.uls-book-link) OR the consultation-modal trigger
-	// is on the page. Either needs this runtime (the modal + its controller).
+	// Present if any embed CTA (.uls-book-link), the consultation-modal trigger, OR
+	// the estimator (whose JS-added "Book a time" button opens a cal.com pop-up) is
+	// on the page. Any of them needs this runtime (the loader + click handler).
 	$has_cta = ( false !== strpos( $html, 'uls-book-link' ) )
-		|| ( false !== strpos( $html, 'uls-consult-trigger' ) );
+		|| ( false !== strpos( $html, 'uls-consult-trigger' ) )
+		|| ( false !== strpos( $html, 'uls-estimator' ) );
 	if ( ! $has_cta ) {
 		return $html;
 	}
@@ -360,14 +375,34 @@ function uplinksync_book_inject_runtime( $html ) {
 		. 'window.Cal("init",{origin:"' . $origin . '"});'
 		. 'loaded=true;loading=false;var q=queue.slice();queue=[];q.forEach(function(f){f();});'
 		. '}'
+		// *** #4: prefill helper — read the estimator fields at click time so the
+		// "Book a time" pop-up arrives with the visitor context already filled in.
+		. 'function ulsEstPrefill(){'
+		. 'function v(id){var el=document.getElementById(id);return el?(el.value||"").trim():"";}'
+		. 'function st(id){var el=document.getElementById(id);return el&&el.selectedIndex>=0?el.options[el.selectedIndex].text.trim():"";}'
+		. 'var svc=st("uls-est-line"),mi=v("uls-est-miles"),tm=st("uls-est-timing");'
+		. 'var L=["Estimate request from uplinksync.com:"];'
+		. 'if(svc&&svc.indexOf("Choose")===-1)L.push("• Service: "+svc);'
+		. 'if(mi)L.push("• Distance from Idaho Falls: "+mi+" miles");'
+		. 'if(tm&&tm.indexOf("Choose")===-1)L.push("• Timing: "+tm);'
+		. 'var c={notes:L.join("\\n")};'
+		. 'var nm=v("uls-est-name"),em=v("uls-est-email");if(nm)c.name=nm;if(em)c.email=em;return c;}'
+		// Any [data-cal-link] element opens the cal.com POP-UP (not a new page),
+		// merging: base layout, a static data-cal-config JSON prefill, and (for the
+		// estimator button) the live estimate prefill. Falls back to the href if the
+		// SDK throws. No pricing is ever surfaced by this flow.
 		. 'document.addEventListener("click",function(e){'
-		. 'var a=e.target&&e.target.closest?e.target.closest(".uls-book-link"):null;'
+		. 'var a=e.target&&e.target.closest?e.target.closest("[data-cal-link]"):null;'
 		. 'if(!a)return;'
 		. 'if(e.metaKey||e.ctrlKey||e.shiftKey||e.button===1)return;'
 		. 'var slug=a.getAttribute("data-cal-link");if(!slug)return;'
+		. 'var cfg={layout:"month_view"};'
+		. 'var raw=a.getAttribute("data-cal-config");'
+		. 'if(raw){try{var pc=JSON.parse(raw);for(var k in pc){cfg[k]=pc[k];}}catch(e2){}}'
+		. 'if(a.getAttribute("data-cal-prefill")==="estimate"){var ep=ulsEstPrefill();for(var k2 in ep){cfg[k2]=ep[k2];}}'
 		. 'try{e.preventDefault();boot(function(){'
-		. 'window.Cal("modal",{calLink:slug,config:{layout:"month_view"}});'
-		. '});}catch(err){window.location.href=a.href;}'
+		. 'window.Cal("modal",{calLink:slug,config:cfg});'
+		. '});}catch(err){if(a.href){window.location.href=a.href;}}'
 		. '},false);'
 		. '})();'
 		// ---- Consultation chooser modal controller (accessible dialog) ----

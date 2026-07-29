@@ -1,0 +1,88 @@
+/**
+ * UplinkSync — Estimate/booking modal styling (*** #4).
+ * Self-sufficient copy of the .uls-book-modal system (so the estimator modal does
+ * not depend on the booking mu-plugin's injected <style> being present) plus the
+ * wider panel the estimator form needs and the trigger button. House palette;
+ * responsive; prefers-reduced-motion honoured.
+ */
+
+/* Trigger buttons (estimator) reuse the site pill treatment. */
+.uls-est-trigger-wrap { display: inline-block; margin: 8px 0; }
+.uls-est-trigger {
+	display: inline-block;
+	border-radius: 999px;
+	border: 2px solid currentColor;
+	background: transparent;
+	padding: var(--wp--preset--spacing--30, 12px) var(--wp--preset--spacing--70, 32px);
+	font: inherit;
+	color: inherit;
+	font-weight: 600;
+	line-height: 1.2;
+	cursor: pointer;
+}
+
+/* Modal shell (mirrors uplinksync-booking-ctas.php .uls-book-modal). */
+.uls-book-modal[hidden] { display: none; }
+.uls-book-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 100000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+}
+.uls-book-modal__overlay { position: absolute; inset: 0; background: rgba(6, 15, 32, 0.72); }
+.uls-book-modal__panel {
+	position: relative;
+	width: 100%;
+	max-width: 560px;
+	max-height: calc(100vh - 40px);
+	overflow: auto;
+	background: var(--navy-850, #14294a);
+	color: #ffffff;
+	border: 1px solid #2a4a72;
+	border-radius: 12px;
+	padding: 28px 24px 24px;
+	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+}
+.uls-book-modal__panel:focus { outline: none; }
+.uls-book-modal__close {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	width: 44px;
+	height: 44px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: transparent;
+	border: 0;
+	color: #ffffff;
+	font-size: 26px;
+	line-height: 1;
+	cursor: pointer;
+	border-radius: 8px;
+	z-index: 1;
+}
+.uls-book-modal__close:hover,
+.uls-book-modal__close:focus-visible { color: #95D5DD; outline: none; }
+body.uls-book-modal-open { overflow: hidden; }
+
+/* The estimator is a full form, so its modal is wider and the estimator card
+   inside drops its own outer chrome (the modal panel provides the surface). */
+.uls-est-modal .uls-book-modal__panel { max-width: 760px; }
+.uls-est-modal #uls-estimator {
+	margin: 0;
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+	padding: 4px 0 0;
+}
+.uls-est-modal #uls-estimator,
+.uls-est-modal #uls-estimator * { color: #ffffff; }
+.uls-est-book { margin-top: 12px; }
+
+@media (prefers-reduced-motion: reduce) {
+	.uls-book-modal, .uls-book-modal * { transition: none !important; animation: none !important; }
+}
