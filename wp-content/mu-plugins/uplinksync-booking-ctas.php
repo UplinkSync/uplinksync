@@ -1,8 +1,16 @@
 <?php
 /**
  * Plugin Name: UplinkSync — Booking CTAs + cal.com Embed (***-188)
- * Description: Adds two cal.com booking CTAs to the public site — "Book a consultation" next to the top-of-funnel "Talk to a specialist" / "Request a quote" affordances, and "Book UAV services" on the Air/drone surface. The self-hosted cal.com instance is canonical at https://book.uplinksync.com (***-187). CTAs are real <a href> links (progressive enhancement: no-JS visitors and crawlers get a working booking page), upgraded on click to an inline cal.com modal via the free Embed SDK. The SDK (book.uplinksync.com/embed/embed.js) is lazy-loaded only on first CTA click, so it never blocks page render. No pricing is surfaced anywhere in the booking flow (owner quote-only directive), and the existing "Request a quote" path is left fully intact — booking augments it, it does not replace it. Like the other UplinkSync fixes, the hero/drone markup is produced by the Hostinger AI theme + saved block content in the WP DB (not tracked files), so this mu-plugin rewrites the rendered document on the way out.
- * Version: 1.0.0
+ * Description: Adds cal.com booking affordances to the public site — a "Book a consultation" button next to the top-of-funnel "Talk to a specialist" / "Request a quote" CTA (upgraded on click to an inline cal.com Embed modal), and a single "Book a free consultation" button on the homepage Air/drone surface that opens an accessible chooser MODAL (IT/Web vs UAV) routing to the correct scheduling form with a pre-filled scope note. The self-hosted cal.com instance is canonical at https://book.uplinksync.com (***-187). The Embed SDK is lazy-loaded only on the first embed-CTA click, so it never blocks render; the chooser modal needs no SDK (its two paths are real booking links). No pricing is surfaced anywhere (owner quote-only directive), and the "Request a quote" path is untouched. The hero/drone markup is produced by the Hostinger AI theme + saved block content in the WP DB (not tracked files), so this mu-plugin rewrites the rendered document on the way out.
+ *
+ * v2.0.0 (2026-07-28, owner-approved): the Air/drone block used to be a <details> CTA DROPDOWN
+ * ("New to UplinkSync? Start with a free consultation") plus a separate "Returning client? Book
+ * UAV service" DIRECT link. Replaced the dropdown with a single button -> accessible modal
+ * (focus trap, Esc, overlay close, return focus, reduced-motion), and REMOVED the returning-client
+ * direct-UAV link entirely (direct UAV booking must not be publicly linked; the UAV path now lives
+ * only inside the modal, whose UAV choice routes to uav-service — requiresConfirmation=true).
+ *
+ * Version: 2.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -84,50 +92,90 @@ function uplinksync_book_consult_markup() {
 }
 
 /**
- * The UAV booking block for the Air/drone surface — "consultation-first for new
- * clients" (***-243).
+ * Pre-filled "scope form" notes appended to each booking URL as ?notes=… so the
+ * booking page opens with a short intake already started, guiding the first
+ * conversation. Kept as small helpers so the button block and the modal share
+ * one source of truth. (UTF-8 — em dash + bullets — is intentional.)
+ */
+function uplinksync_book_it_notes() {
+	return "IT / Web services consultation \xE2\x80\x94 a few details to guide our conversation:\n"
+		. "\xE2\x80\xA2 Goal (new website, systems/help-desk support, security, cloud/M365, networking):\n"
+		. "\xE2\x80\xA2 Current setup & main pain points:\n"
+		. "\xE2\x80\xA2 Rough timeline / any deadlines:\n"
+		. "\xE2\x80\xA2 Approx. users or devices involved:\n"
+		. "\xE2\x80\xA2 Anything else we should know:";
+}
+function uplinksync_book_uav_notes() {
+	return "UAV / drone project consultation \xE2\x80\x94 a few details to guide our conversation:\n"
+		. "\xE2\x80\xA2 Project type (mapping, inspection, marketing footage, progress records):\n"
+		. "\xE2\x80\xA2 Site location & approx. size / acreage:\n"
+		. "\xE2\x80\xA2 Deliverables needed (stills, video, orthomosaic, reports):\n"
+		. "\xE2\x80\xA2 Target date / seasonal timing:\n"
+		. "\xE2\x80\xA2 Anything else we should know:";
+}
+
+/** Booking URL for a slug with a pre-filled scope-form note. */
+function uplinksync_book_url_with_notes( $slug, $notes ) {
+	return uplinksync_book_url( $slug ) . '?notes=' . rawurlencode( $notes );
+}
+
+/**
+ * The UAV/consultation block for the homepage Air/drone surface.
  *
- * cal.com cannot tell a new visitor from a returning client, so the new-vs-
- * returning rule the owner set ("UAV scheduling starts with a consultation
- * UNLESS they're a returning customer") is expressed here in the CTA weighting:
+ * *** (2026-07-28, owner-approved): the previous "New to UplinkSync? Start with
+ * a free consultation" affordance was a <details> CTA DROPDOWN with an IT/Web-vs-UAV
+ * path choice, plus a separate "Returning client? Book UAV service" link that
+ * booked the UAV event type directly. Owner decision:
+ *   1. Replace the dropdown with a SINGLE button that opens a POPUP/MODAL asking
+ *      IT/Web vs UAV, then routes to the correct cal.com scheduling form.
+ *   2. REMOVE the "Returning client? Book UAV service" direct link entirely —
+ *      direct UAV booking must not be publicly linked. The UAV path now lives
+ *      only inside the modal (its choice routes to the uav-service form, which is
+ *      requiresConfirmation=true so the owner approves every booking anyway).
  *
- *   - PRIMARY (full-weight button) → the free consultation (it-consult slug).
- *     New clients land here first.
- *   - SECONDARY (smaller text link) → direct UAV booking (uav-service slug) for
- *     returning clients who already know the scope.
- *
- * A line of microcopy sets the weekend-default expectation without promising
- * instant weekday booking (weekday shoots are arranged manually via the
- * requiresConfirmation approval on the UAV event type). The existing "Request a
- * quote" path is untouched. The block keeps the `uplinksync-book-uav` class so
- * the injector stays idempotent, and every booking anchor keeps `uls-book-link`
- * so the lazy cal.com Embed loader wires all of them.
+ * This markup is now just the button (the dialog trigger). The modal itself is a
+ * single page-global element injected once by uplinksync_book_inject_runtime(),
+ * so it is not duplicated per surface. `uplinksync-book-uav` is kept for injector
+ * idempotency. The trigger degrades: with JS off it is an inert button, and the
+ * modal's two paths are real <a href> booking links (progressive enhancement for
+ * the actual scheduling step, notes pre-filled).
  */
 function uplinksync_book_uav_markup() {
-	$consult_url  = esc_url( uplinksync_book_url( UPLINKSYNC_BOOK_CONSULT_SLUG ) );
-	$consult_slug = esc_attr( UPLINKSYNC_BOOK_CONSULT_SLUG );
-	$uav_url      = esc_url( uplinksync_book_url( UPLINKSYNC_BOOK_UAV_SLUG ) );
-	$uav_slug     = esc_attr( UPLINKSYNC_BOOK_UAV_SLUG );
-
-	return '<div class="uplinksync-book-cta uplinksync-book-uav uls-book-uav-group">'
-		// Primary: new clients start with a consultation.
-		. '<div class="wp-block-button uls-book-uav-primary">'
-		. '<a class="wp-block-button__link wp-element-button uls-book-link" '
-		. 'href="' . $consult_url . '" '
-		. 'data-cal-link="' . $consult_slug . '" '
-		. 'data-uls-book="uav-consult" '
-		. 'target="_blank" rel="noopener">New to UplinkSync? Start with a free consultation</a></div>'
-		// Secondary: returning clients book UAV service directly.
-		. '<p class="uls-book-uav-returning">Returning client? '
-		. '<a class="uls-book-link uls-book-uav-direct" '
-		. 'href="' . $uav_url . '" '
-		. 'data-cal-link="' . $uav_slug . '" '
-		. 'data-uls-book="uav" '
-		. 'target="_blank" rel="noopener">Book UAV service</a></p>'
-		// Weekend-default expectation (no instant-weekday promise).
-		. '<p class="uls-book-uav-note">UAV field work is scheduled on weekends '
-		. '(weekday shoots by arrangement, ~2 weeks ahead).</p>'
+	return '<div class="uplinksync-book-cta uplinksync-book-uav uls-consult-block" data-uls-reveal data-uls-reveal-delay="0.16">'
+		. '<div class="wp-block-button uls-consult-trigger-wrap">'
+		. '<button type="button" '
+		. 'class="wp-block-button__link wp-element-button uls-consult-trigger" '
+		. 'data-uls-book-open="uls-book-modal" aria-haspopup="dialog" aria-controls="uls-book-modal">'
+		. 'Book a free consultation</button></div>'
 		. '</div>';
+}
+
+/**
+ * The consultation chooser modal (single, page-global). Two real booking links —
+ * IT/Web -> it-consult, UAV/drone -> uav-service — each with a pre-filled scope
+ * form. Hidden until the trigger opens it; accessible dialog wired by the runtime
+ * JS (focus trap, Esc, overlay close, return focus, reduced-motion).
+ */
+function uplinksync_book_modal_markup() {
+	$it_url  = esc_url( uplinksync_book_url_with_notes( UPLINKSYNC_BOOK_CONSULT_SLUG, uplinksync_book_it_notes() ) );
+	$uav_url = esc_url( uplinksync_book_url_with_notes( UPLINKSYNC_BOOK_UAV_SLUG, uplinksync_book_uav_notes() ) );
+
+	return '<div class="uls-book-modal" id="uls-book-modal" role="dialog" aria-modal="true" '
+		. 'aria-labelledby="uls-book-modal-title" aria-describedby="uls-book-modal-desc" hidden>'
+		. '<div class="uls-book-modal__overlay" data-uls-book-close="1"></div>'
+		. '<div class="uls-book-modal__panel" role="document" tabindex="-1">'
+		. '<button type="button" class="uls-book-modal__close" data-uls-book-close="1" aria-label="Close">&#215;</button>'
+		. '<h2 class="uls-book-modal__title" id="uls-book-modal-title">Start with a free consultation</h2>'
+		. '<p class="uls-book-modal__desc" id="uls-book-modal-desc">Which kind of consultation is this? '
+		. 'Pick a path and we&#8217;ll open a booking page with a short scope form already started to guide the conversation.</p>'
+		. '<div class="uls-consult-paths">'
+		. '<a class="uls-consult-path" href="' . $it_url . '" target="_blank" rel="noopener">'
+		. '<span class="uls-path-title">IT / Web services</span>'
+		. '<span class="uls-path-sub">Websites, systems &amp; help-desk, security, cloud / M365, networking.</span></a>'
+		. '<a class="uls-consult-path" href="' . $uav_url . '" target="_blank" rel="noopener">'
+		. '<span class="uls-path-title">UAV / drone project</span>'
+		. '<span class="uls-path-sub">Mapping, inspection, marketing footage, progress records.</span></a>'
+		. '</div></div></div>';
 }
 
 function uplinksync_book_rewrite( $html ) {
@@ -193,8 +241,9 @@ function uplinksync_book_inject_uav( $html ) {
 	if ( false !== strpos( $html, 'uplinksync-book-uav' ) ) {
 		return $html;
 	}
-	// Anchor on the "Scoped UAV work…" paragraph's closing </p>.
-	$pattern = '#(Scoped UAV work[^<]*</p>)#';
+	// Anchor immediately after the UAV capability pills group (…"Progress records"),
+	// which is where the block sits today. Non-greedy, first match only.
+	$pattern = '#(Progress records</p>\s*</div>)#';
 	$injected = preg_replace(
 		$pattern,
 		'$1' . uplinksync_book_uav_markup(),
@@ -204,6 +253,18 @@ function uplinksync_book_inject_uav( $html ) {
 	);
 	if ( null !== $injected && $count > 0 ) {
 		return $injected;
+	}
+	// Fallback: after the "Scoped UAV work…" intro paragraph.
+	$pattern_intro = '#(Scoped UAV work[^<]*</p>)#';
+	$injected_intro = preg_replace(
+		$pattern_intro,
+		'$1' . uplinksync_book_uav_markup(),
+		$html,
+		1,
+		$count_intro
+	);
+	if ( null !== $injected_intro && $count_intro > 0 ) {
+		return $injected_intro;
 	}
 
 	// Fallback: after the "Aerial Photography & Video" heading block's paragraph.
@@ -228,27 +289,52 @@ function uplinksync_book_inject_uav( $html ) {
  * blocks render. With JS disabled the CTA remains a working booking link.
  */
 function uplinksync_book_inject_runtime( $html ) {
-	$has_cta = ( false !== strpos( $html, 'uls-book-link' ) );
+	// Present if any embed CTA (.uls-book-link) OR the consultation-modal trigger
+	// is on the page. Either needs this runtime (the modal + its controller).
+	$has_cta = ( false !== strpos( $html, 'uls-book-link' ) )
+		|| ( false !== strpos( $html, 'uls-consult-trigger' ) );
 	if ( ! $has_cta ) {
+		return $html;
+	}
+	// Idempotency: never inject the runtime (or a second modal) twice.
+	if ( false !== strpos( $html, 'uplinksync-book-cta-js' ) ) {
 		return $html;
 	}
 	$origin = esc_js( UPLINKSYNC_BOOK_ORIGIN );
 	$embed  = esc_js( UPLINKSYNC_BOOK_ORIGIN . '/embed/embed.js' );
 
 	$style = '<style id="uplinksync-book-cta-css">'
-		. '.uplinksync-book-cta .uls-book-link{'
+		. '.uplinksync-book-cta .uls-book-link,.uplinksync-book-cta .uls-consult-trigger{'
 		/* ***-315: single pill value (was 50px) */
 		. 'display:inline-block;border-radius:999px;border:2px solid currentColor;'
 		. 'background:transparent;padding:var(--wp--preset--spacing--30,12px) var(--wp--preset--spacing--70,32px);'
-		. 'text-decoration:none;cursor:pointer;line-height:1.2;font-weight:600;}'
+		. 'text-decoration:none;cursor:pointer;line-height:1.2;font-weight:600;font:inherit;color:inherit;}'
 		. '.uplinksync-book-cta{display:inline-block;margin:8px 8px 8px 0;}'
-		// ***-243 — consultation-first UAV block: primary button full weight,
-		// returning-client link + weekend note at secondary/supporting weight.
-		. '.uls-book-uav-group{display:block;margin:8px 0;}'
-		. '.uls-book-uav-group .wp-block-button{display:inline-block;margin:0;}'
-		. '.uls-book-uav-returning{margin:10px 0 0;font-size:0.9375rem;opacity:0.85;}'
-		. '.uls-book-uav-direct{text-decoration:underline;cursor:pointer;font-weight:600;}'
-		. '.uls-book-uav-note{margin:6px 0 0;font-size:0.8125rem;opacity:0.7;}'
+		. '.uls-consult-block{margin:8px 0 0;}'
+		// Consultation chooser modal.
+		. '.uls-book-modal[hidden]{display:none;}'
+		. '.uls-book-modal{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;padding:20px;}'
+		. '.uls-book-modal__overlay{position:absolute;inset:0;background:rgba(6,15,32,0.72);}'
+		. '.uls-book-modal__panel{position:relative;width:100%;max-width:560px;max-height:calc(100vh - 40px);overflow:auto;'
+		. 'background:var(--navy-850,#14294a);color:#ffffff;border:1px solid #2a4a72;border-radius:12px;'
+		. 'padding:28px 24px 24px;box-shadow:0 20px 60px rgba(0,0,0,0.45);}'
+		. '.uls-book-modal__panel:focus{outline:none;}'
+		. '.uls-book-modal__close{position:absolute;top:8px;right:8px;width:44px;height:44px;display:inline-flex;'
+		. 'align-items:center;justify-content:center;background:transparent;border:0;color:#ffffff;font-size:26px;'
+		. 'line-height:1;cursor:pointer;border-radius:8px;}'
+		. '.uls-book-modal__close:hover,.uls-book-modal__close:focus-visible{color:#95D5DD;outline:none;}'
+		. '.uls-book-modal__title{margin:0 8px 8px 0;font-size:1.3rem;line-height:1.2;}'
+		. '.uls-book-modal__desc{margin:0 0 18px;font-size:0.9375rem;opacity:0.85;}'
+		. '.uls-book-modal .uls-consult-paths{display:flex;flex-wrap:wrap;gap:12px;}'
+		. '.uls-book-modal .uls-consult-path{flex:1 1 220px;display:block;border:1px solid #2a4a72;'
+		. 'border-radius:var(--radius-default,8px);background:#0d1f3a;padding:16px;text-decoration:none;color:#ffffff;'
+		. 'transition:border-color .2s ease,background .2s ease;}'
+		. '.uls-book-modal .uls-consult-path:hover,.uls-book-modal .uls-consult-path:focus-visible{'
+		. 'border-color:#3ec7d4;background:var(--navy-850,#14294a);outline:none;box-shadow:0 0 0 3px rgba(62,199,212,0.5);}'
+		. '.uls-book-modal .uls-path-title{display:block;font-weight:600;font-size:1rem;margin-bottom:4px;}'
+		. '.uls-book-modal .uls-path-sub{display:block;font-size:0.8125rem;opacity:0.75;line-height:1.35;}'
+		. 'body.uls-book-modal-open{overflow:hidden;}'
+		. '@media (prefers-reduced-motion: reduce){.uls-book-modal .uls-consult-path{transition:none;}}'
 		. '</style>';
 
 	// Lazy loader: on the first click of any .uls-book-link, load embed.js once,
@@ -283,7 +369,39 @@ function uplinksync_book_inject_runtime( $html ) {
 		. 'window.Cal("modal",{calLink:slug,config:{layout:"month_view"}});'
 		. '});}catch(err){window.location.href=a.href;}'
 		. '},false);'
+		. '})();'
+		// ---- Consultation chooser modal controller (accessible dialog) ----
+		// Opens on a [data-uls-book-open] trigger; focus trap; Esc + overlay +
+		// close-button dismiss; returns focus to the trigger; the two path links
+		// open the booking page (new tab) and close the modal. No SDK needed.
+		. '(function(){'
+		. 'var modal=document.getElementById("uls-book-modal");if(!modal)return;'
+		. 'var panel=modal.querySelector(".uls-book-modal__panel");var lastFocus=null;'
+		. 'function foci(){return Array.prototype.slice.call('
+		. 'modal.querySelectorAll("a[href],button:not([disabled]),[tabindex]:not([tabindex=\'-1\'])"))'
+		. '.filter(function(el){return el.offsetWidth||el.offsetHeight||el.getClientRects().length;});}'
+		. 'function openM(t){lastFocus=t||document.activeElement;modal.hidden=false;'
+		. 'document.body.classList.add("uls-book-modal-open");'
+		. 'var p=modal.querySelector(".uls-consult-path")||panel;if(p&&p.focus)p.focus();}'
+		. 'function closeM(){if(modal.hidden)return;modal.hidden=true;'
+		. 'document.body.classList.remove("uls-book-modal-open");'
+		. 'if(lastFocus&&lastFocus.focus){try{lastFocus.focus();}catch(e){}}}'
+		. 'document.addEventListener("click",function(e){'
+		. 'var o=e.target.closest?e.target.closest("[data-uls-book-open]"):null;'
+		. 'if(o){e.preventDefault();openM(o);return;}'
+		. 'if(e.target.closest&&e.target.closest("[data-uls-book-close]")){e.preventDefault();closeM();return;}'
+		. 'if(!modal.hidden&&e.target.closest&&e.target.closest(".uls-consult-path")){setTimeout(closeM,0);}'
+		. '},false);'
+		. 'document.addEventListener("keydown",function(e){'
+		. 'if(modal.hidden)return;'
+		. 'if(e.key==="Escape"||e.keyCode===27){e.preventDefault();closeM();return;}'
+		. 'if(e.key==="Tab"||e.keyCode===9){var f=foci();if(!f.length){e.preventDefault();return;}'
+		. 'var first=f[0],last=f[f.length-1];'
+		. 'if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}'
+		. 'else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}'
+		. 'else if(!modal.contains(document.activeElement)){e.preventDefault();first.focus();}}'
+		. '},false);'
 		. '})();</script>';
 
-	return str_ireplace( '</body>', $style . $script . '</body>', $html );
+	return str_ireplace( '</body>', $style . uplinksync_book_modal_markup() . $script . '</body>', $html );
 }
