@@ -1,9 +1,143 @@
 <!-- wp:template-part {"slug":"header","tagName":"header","className":"site-header"} /-->
 
 <!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"0","bottom":"0"}}},"layout":{"type":"default"}} -->
-<main class="wp-block-group" style="padding-top:0;padding-bottom:0">
-    <!-- wp:post-content {"lock":{"move":false,"remove":true},"layout":{"type":"constrained"}} /-->
-</main>
+<main class="wp-block-group" style="padding-top:0;padding-bottom:0"><!-- wp:html -->
+<div class="uls-splith">
+
+<!-- ============================ HERO ============================ -->
+<section class="hero" id="hero" aria-labelledby="hero-h1">
+  <canvas id="field" aria-hidden="true"></canvas>
+  <div class="seam" aria-hidden="true">
+    <div class="seam-line" id="seamLine"></div>
+    <span class="seam-node n1" id="node1"></span>
+    <span class="seam-node n2" id="node2"></span>
+  </div>
+  <div class="altitude t-air" aria-hidden="true">&#9650; AIR <span class="dim">·</span> UAV <span class="dim">/ 400 ft</span></div>
+  <div class="altitude t-gnd" aria-hidden="true">&#9660; GROUND <span class="dim">·</span> IT <span class="dim">/ your desks</span></div>
+
+  <div class="wrap hero-inner">
+    <div>
+      <p class="eyebrow" data-reveal style="--i:0">IT &amp; Drone · one team · Idaho Falls</p>
+      <h1 id="hero-h1" data-reveal style="--i:1">One team for your whole operation&nbsp;— <span class="gnd">ground</span> and <span class="air">air.</span></h1>
+      <p class="lede" data-reveal style="--i:2">The systems on your desks and the view from 400&nbsp;feet, run by the same people. We capture the data around your business — on the ground and in the air — and turn it into something you can act on.</p>
+      <div class="ctas" data-reveal style="--i:3">
+        <button type="button" class="btn btn-primary uls-consult-trigger" data-uls-book-open="uls-book-modal" aria-haspopup="dialog" aria-controls="uls-book-modal">Get a fast estimate <span class="arw">&rarr;</span></button>
+        <a class="btn btn-outline" href="/drone-services/">See the aerial work</a>
+      </div>
+    </div>
+    <div data-reveal style="--i:3">
+      <figure class="airframe">
+        <picture>
+          <source type="image/webp" srcset="/wp-content/themes/uplinksync-child/assets/media/aerials/stills/palisades-hero.webp">
+          <img src="/wp-content/themes/uplinksync-child/assets/media/aerials/stills/palisades-hero.jpg" alt="Aerial view of Palisades Reservoir, Idaho, at first light. Aerial by UplinkSync." fetchpriority="high" width="2560" height="1440">
+        </picture>
+        <span class="tag">Aerial · Palisades, ID</span>
+        <figcaption class="cap">Palisades Reservoir, Idaho &nbsp;·&nbsp; <b>Aerial by UplinkSync — uplinksync.com</b></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ground strip: the IT half, honestly token-only until real stills land (design-standard §7) -->
+<div class="ground-strip">
+  <div class="wrap">
+    <span class="ground-tag"><span class="dot"></span> Ground · endpoint / ops</span>
+    <div class="chips">
+      <span class="chip">Managed IT</span>
+      <span class="chip">Web &amp; hosting</span>
+      <span class="chip">Automation</span>
+      <span class="chip">Networking</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ TRUST ============================ -->
+<section class="band band-850" aria-labelledby="trust-h">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>Licensed &amp; certified</p>
+    <h2 id="trust-h" data-reveal style="--i:1">Real credentials. Local businesses.</h2>
+    <div class="trust-row">
+      <div class="trust" data-reveal style="--i:2"><div class="k">Airspace</div><h3>FAA Part 107</h3><p>Certified commercial drone pilot — legal to fly for hire.</p></div>
+      <div class="trust" data-reveal style="--i:3"><div class="k">Systems</div><h3>CompTIA A+</h3><p>Industry-certified IT support across hardware and endpoints.</p></div>
+      <div class="trust" data-reveal style="--i:4"><div class="k">Track record</div><h3>4 businesses served</h3><p>Local IT &amp; drone clients across eastern Idaho.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ PIPELINE ============================ -->
+<section class="band band-900" id="pipeline" aria-labelledby="pipe-h">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>The pipeline</p>
+    <div class="head">
+      <h2 id="pipe-h" data-reveal style="--i:1">IT and drone aren&rsquo;t two businesses. They&rsquo;re one pipeline.</h2>
+      <p class="sub" data-reveal style="--i:2">Ground telemetry and air imagery run the same four steps — captured, made usable, and put in your hands to act on.</p>
+    </div>
+    <div class="pipe">
+      <div class="stage" data-reveal style="--i:2"><div class="num"><span class="n">01</span> Capture <span class="flow"></span></div><h3>Endpoint &amp; aerial data</h3><p>Telemetry on the ground, high-resolution imagery in the air.</p></div>
+      <div class="stage" data-reveal style="--i:3"><div class="num"><span class="n">02</span> Process <span class="flow"></span></div><h3>Turn it usable</h3><p>Cleaned, graded, and structured for decisions — not raw dumps.</p></div>
+      <div class="stage" data-reveal style="--i:4"><div class="num"><span class="n">03</span> Deliver <span class="flow"></span></div><h3>Into your hands</h3><p>Reports, footage, and dashboards you can actually use.</p></div>
+      <div class="stage" data-reveal style="--i:5"><div class="num"><span class="n">04</span> Act</div><h3>We help you move</h3><p>Support and workflows that follow through after delivery.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ SERVICES ============================ -->
+<section class="band band-850" id="services" aria-labelledby="svc-h">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>Our services</p>
+    <h2 id="svc-h" data-reveal style="--i:1">Ground and air, from one desk.</h2>
+    <div class="svc-row">
+      <div class="svc" data-reveal style="--i:2"><span class="glow"></span><div class="layer">&#9660; Ground</div><h3>IT Managed Services</h3><p>Setup, support, and custom workflows that keep your systems quietly doing their job.</p></div>
+      <div class="svc" data-reveal style="--i:3"><span class="glow"></span><div class="layer">&#9660; Ground</div><h3>Web &amp; Hosting</h3><p>Fast, secure sites that stay up — built and maintained by the same team that runs your IT.</p></div>
+      <div class="svc" data-reveal style="--i:4"><span class="glow"></span><div class="layer">&#9650; Air</div><h3>Aerial Photo &amp; Video</h3><p>Marketing footage, documentation, and progress records from 400 feet.</p></div>
+      <div class="svc" data-reveal style="--i:5"><span class="glow"></span><div class="layer">&#9650; Air</div><h3>Site &amp; Asset Inspection</h3><p>Roofs and structures surveyed safer and faster than sending someone up a ladder.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ ESTIMATE / CONVERGE ============================ -->
+<section class="band band-950" id="estimate" aria-labelledby="est-h">
+  <div class="wrap">
+    <div class="converge">
+      <div>
+        <p class="eyebrow" data-reveal>Two doors, one desk</p>
+        <h2 id="est-h" data-reveal style="--i:1">Get a fast estimate — or book time directly.</h2>
+        <p class="sub" data-reveal style="--i:2">The estimate is a few taps, no page change, and no fabricated price. It hands off pre-filled to a scoped quote or a booking slot.</p>
+        <div class="doors">
+          <div class="door" data-reveal style="--i:3"><span class="ix">01 &rsaquo;</span><div><h3>Fast estimate</h3><p>Pick a service and a scope. You get what happens next and a typical turnaround.</p></div></div>
+          <div class="door" data-reveal style="--i:4"><span class="ix">02 &rsaquo;</span><div><h3>Already know what you need?</h3><p>Skip straight to booking a consultation — the same slots the estimate hands off to.</p></div></div>
+        </div>
+      </div>
+      <aside class="pass" data-reveal style="--i:3" aria-label="Estimate scoping">
+        <div class="top">
+          <div class="rt"><span>Uplink · Sync</span><span>Scope pass</span></div>
+          <h3>Scope it in a few taps.</h3>
+          <p>No account, no price surprise — just a plan and a turnaround you can plan around.</p>
+        </div>
+        <div class="bot">
+          <button type="button" class="btn btn-primary uls-consult-trigger" data-uls-book-open="uls-book-modal" aria-haspopup="dialog" aria-controls="uls-book-modal" style="justify-content:center">Get a fast estimate <span class="arw">&rarr;</span></button>
+          <div class="meta"><span>Seat · <b>you</b></span><span>Gate · <b>quote / booking</b></span><span>Fare · <b>free</b></span></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FINAL CTA ============================ -->
+<section class="band final" aria-labelledby="final-h">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal style="justify-content:center">Ground and air</p>
+    <h2 id="final-h" data-reveal style="--i:1">One team for the ground and the air.</h2>
+    <p data-reveal style="--i:2">The systems on your desks and the view from above, run by the same certified team.</p>
+    <div class="ctas" data-reveal style="--i:3">
+      <button type="button" class="btn btn-primary uls-consult-trigger" data-uls-book-open="uls-book-modal" aria-haspopup="dialog" aria-controls="uls-book-modal">Get a fast estimate <span class="arw">&rarr;</span></button>
+      <a class="btn btn-outline" href="/contact/">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+</div>
+<!-- /wp:html --></main>
 <!-- /wp:group -->
 
 <!-- wp:template-part {"slug":"footer","tagName":"footer","className":"site-footer"} /-->
