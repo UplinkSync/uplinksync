@@ -216,6 +216,50 @@ function uplinksync_child_woocommerce_assets() {
 add_action( 'wp_enqueue_scripts', 'uplinksync_child_woocommerce_assets', 21 );
 
 /**
+ * *** — trim WooCommerce/WooCommerce-Blocks stylesheets off brochure pages.
+ *
+ * WooCommerce ships several stylesheets that load site-wide by default
+ * (`woocommerce-layout`, `woocommerce-smallscreen`, `woocommerce-general`, and
+ * the WooCommerce-Blocks `wc-blocks-style` / `woocommerce-blocktheme`). On this
+ * site the store is a small part of the surface — the homepage, /services/,
+ * /about/, /contact/ and /drone-services/ are brochure pages that render no
+ * WooCommerce markup, yet they were still shipping the shop CSS (confirmed live
+ * 2026-07-29: wc-blocks-style, woocommerce-layout, -smallscreen, -blocktheme all
+ * enqueued on the homepage). This is dead weight and a latent shop-brand-leak
+ * surface on pages that never render a product.
+ *
+ * This runs only on NON-store contexts (the exact inverse of the store gate in
+ * uplinksync_child_woocommerce_assets) so cart/checkout/account/shop/product and
+ * product-taxonomy archives are untouched. Dequeue is presentation-only and
+ * cannot fatal or blank a page — worst case a stray Woo-styled element on a
+ * brochure page loses styling, and there are none. Fully reversible: delete this
+ * function + hook. Guarded with function_exists() so it no-ops when WooCommerce
+ * is inactive. Priority 100 so it runs after WooCommerce's own default-priority
+ * enqueues.
+ */
+function uplinksync_child_trim_brochure_commerce_assets() {
+	if ( ! function_exists( 'is_woocommerce' ) ) {
+		return;
+	}
+	// Leave every genuine store context alone.
+	if ( is_woocommerce() || is_cart() || is_checkout() || is_account_page() ) {
+		return;
+	}
+	$brochure_dequeue = array(
+		'woocommerce-general',
+		'woocommerce-layout',
+		'woocommerce-smallscreen',
+		'woocommerce-blocktheme',
+		'wc-blocks-style',
+		'wc-blocks-packages-style',
+	);
+	foreach ( $brochure_dequeue as $handle ) {
+		wp_dequeue_style( $handle );
+	}
+}
+add_action( 'wp_enqueue_scripts', 'uplinksync_child_trim_brochure_commerce_assets', 100 );
+
+/**
  * ***-99: match a singular view by slug across post types.
  *
  * The conditional assets below were originally gated on is_page( 'slug' ), but
