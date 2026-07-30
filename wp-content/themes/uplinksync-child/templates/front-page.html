@@ -1,11 +1,7 @@
 <!-- wp:template-part {"slug":"header","tagName":"header","className":"site-header"} /-->
 
 <!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"0","bottom":"0"}}},"layout":{"type":"default"}} -->
-<main class="wp-block-group" style="padding-top:0;padding-bottom:0"><!-- wp:shortcode -->
-[hero_loop heading_tag="h2" heading="Managed IT and drone services for the Mountain West." subheading="Local support, enterprise reliability — the systems on your desks and the view from 400 feet, run by the same certified team." cta_text="Get a fast estimate" cta_url="/contact/" cta2_text="See the aerial work" cta2_url="/drone-services/"]
-<!-- /wp:shortcode -->
-
-<!-- wp:html -->
+<main class="wp-block-group" style="padding-top:0;padding-bottom:0"><!-- wp:html -->
 <div class="uls-splith">
 
 <!-- ============================ HERO ============================ -->
@@ -31,10 +27,9 @@
     </div>
     <div data-reveal style="--i:3">
       <figure class="airframe">
-        <picture>
-          <source type="image/webp" srcset="/wp-content/themes/uplinksync-child/assets/media/aerials/stills/palisades-hero.webp">
-          <img src="/wp-content/themes/uplinksync-child/assets/media/aerials/stills/palisades-hero.jpg" alt="Aerial view of Palisades Reservoir, Idaho, at first light. Aerial by UplinkSync." fetchpriority="high" width="2560" height="1440">
-        </picture>
+        <!-- ***-391: the airframe still is now the poster/LCP frame for a decorative Palisades-dawn loop (Immich origin). Poster = the loop's first frame → seamless reveal, zero layout shift. Video is muted/loop/playsinline/autoplay, preload=none, aria-hidden; prefers-reduced-motion + JS-off both leave the poster showing. -->
+        <img src="/wp-content/themes/uplinksync-child/assets/media/hero/palisades-hero.jpg" alt="Aerial view of Palisades Reservoir, Idaho, at first light. Aerial by UplinkSync." fetchpriority="high" width="1920" height="1080" decoding="async">
+        <video class="uls-hero__video" data-hero-asset="3db7289f-3ee9-4f14-8a85-ab453968c276" preload="none" muted loop playsinline autoplay aria-hidden="true" tabindex="-1" poster="/wp-content/themes/uplinksync-child/assets/media/hero/palisades-hero.jpg"></video>
         <span class="tag">Aerial · Palisades, ID</span>
         <figcaption class="cap">Palisades Reservoir, Idaho &nbsp;·&nbsp; <b>Aerial by UplinkSync — uplinksync.com</b></figcaption>
       </figure>
