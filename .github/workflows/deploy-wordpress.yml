@@ -110,3 +110,21 @@ jobs:
           ssh -i ~/.ssh/deploy_key -p "${{ secrets.HOSTINGER_SSH_PORT }}" \
             "${{ secrets.HOSTINGER_SSH_USER }}@${{ secrets.HOSTINGER_SSH_HOST }}" \
             "command -v wp >/dev/null && cd '${{ vars.WP_ROOT }}' && { [ -n '${{ vars.PLUGIN_SLUG }}' ] && wp plugin activate '${{ vars.PLUGIN_SLUG }}'; wp cache flush; } || echo 'wp-cli not available; skipped'"
+
+      # ***-171: BLOCKING production-representative render smoke.
+      # The upstream GitLab `render_smoke` gate renders a clean-room preview
+      # (repo wp-content + clean DB, no live plugin stack) and PASSED on MR !38
+      # while prod served HTTP 200 with an empty <main> — two homepage outages
+      # in one class. This step hits the REAL just-deployed URL (real plugins,
+      # real DB, real caches) and fails the pipeline if any checked page is
+      # blank or structurally degraded, so a green deploy can no longer coexist
+      # with a blank prod. Runs on every site deploy (this step is sequential
+      # after the rsync + cache-flush above, so the deploy has already LANDED —
+      # no polling needed). Target defaults to the public prod URL; set a repo
+      # variable SMOKE_BASE_URL to override (e.g. a staging host) — the repo var
+      # wins when present.
+      - name: Production render smoke (blocking)
+        env:
+          SMOKE_BASE_URL: ${{ vars.SMOKE_BASE_URL || 'https://uplinksync.com' }}
+        run: |
+          tools/ci/prod_render_smoke.sh "$SMOKE_BASE_URL"

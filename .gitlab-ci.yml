@@ -146,3 +146,36 @@ lint_forbidden_hex:
           sys.exit(1)
       print('PASS: no forbidden LinkedIn brand-blue hex used in child-theme CSS.')
       PY
+
+# ***-396 (split from ***-171): production-REPRESENTATIVE post-deploy gate.
+# The `render_smoke` job above renders the homepage inside the PREVIEW container
+# (real front controller, but NOT the live auto-updated plugin stack or the real
+# production DB block content). On MR !38 a clean preview render PASSED while
+# production served HTTP 200 with an empty <main> — root cause of two homepage
+# outages in one class. This post-deploy job hits the REAL deployed URL (real
+# plugins, real DB, real caches) and fails the pipeline if any checked page is
+# blank/structurally degraded, so a green deploy can no longer coexist with a
+# blank prod. Additive to (not a replacement for) the pre-merge render_smoke.
+#
+# Runs in .post on every main pipeline as a live-prod health gate. NOTE: the
+# actual prod deploy is async (GitLab main -> GitHub push-mirror -> GitHub
+# Actions rsync), so this GitLab job cannot observe the exact moment THIS
+# deploy lands — the authoritative post-deploy gate for a given change is the
+# blocking "Production render smoke" step in the GitHub deploy workflow, which
+# is sequential right after the rsync + cache flush. This GitLab job is the
+# complementary always-on live-prod smoke.
+#
+# SMOKE_BASE_URL defaults to the public prod URL below; a project CI/CD
+# variable of the same name overrides it (UI variables outrank .gitlab-ci.yml),
+# so no owner action is required to arm the gate.
+prod_render_smoke:
+  stage: .post
+  image: registry.gitlab.com/gitlab-org/gitlab-build-images:debian-bookworm-ruby-3.2
+  variables:
+    SMOKE_BASE_URL: "https://uplinksync.com"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  before_script:
+    - command -v curl >/dev/null || (apt-get update && apt-get install -y curl)
+  script:
+    - tools/ci/prod_render_smoke.sh "$SMOKE_BASE_URL"
