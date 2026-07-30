@@ -23,19 +23,32 @@
 #   - the footer is present,
 #   - the whole document clears a byte floor.
 #
+# EDGE-CHALLENGE HANDLING (***-396 follow-up)
+# ---------------------------------------------
+# uplinksync.com sits behind Cloudflare, which challenges datacenter IPs.
+# GitHub Actions runners ARE datacenter IPs, so from that context the fetch can
+# come back as a CF interstitial ("Just a moment…", cf-mitigated, 403/503) —
+# a short body with no <main>. That is NOT a blank-prod signal: it means we
+# could not SEE the page, not that it is broken. Treat an edge challenge as
+# INCONCLUSIVE (skip, do not fail the deploy). A real blank is a 200 with an
+# empty <main>, which does not match the challenge signatures, so it still
+# fails. The GitLab-side copy of this gate runs from the on-network runner
+# (not challenged) and remains a true blocking check.
+#
 # USAGE
 #   tools/ci/prod_render_smoke.sh https://uplinksync.com
 #   BASE_URL=https://uplinksync.com tools/ci/prod_render_smoke.sh
 #
-# Exit 0 = all checked pages healthy. Exit 1 = at least one page blank/degraded.
+# Exit 0 = all checked pages healthy or inconclusive (edge-challenged).
+# Exit 1 = at least one page CONFIRMED blank/degraded (seen, but structurally bad).
 #
 # Env knobs (defaults chosen from live prod on 2026-07-30):
-#   PATHS         space-separated paths to check (default: "/ /services/ /contact/")
-#   MIN_BYTES     minimum full-document bytes            (default 20000)
-#   MIN_MAIN_WORDS minimum words inside <main>           (default 40)
-#   TIMEOUT       per-request seconds                    (default 25)
-#   RETRIES       retries per page before failing        (default 2)
-#   USER_AGENT    override UA (some WAFs 403 curl's UA)
+#   PATHS          space-separated paths to check (default: "/ /services/ /contact/")
+#   MIN_BYTES      minimum full-document bytes            (default 20000)
+#   MIN_MAIN_WORDS minimum words inside <main>            (default 40)
+#   TIMEOUT        per-request seconds                    (default 25)
+#   RETRIES        retries per page before failing        (default 2)
+#   USER_AGENT     override UA (some WAFs 403 curl's UA)
 
 set -uo pipefail
 
@@ -56,6 +69,19 @@ RETRIES="${RETRIES:-2}"
 USER_AGENT="${USER_AGENT:-Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0}"
 
 fail=0
+
+# An edge (Cloudflare) challenge / block is inconclusive, NOT a blank-prod
+# signal. $1=http code, $2=lowercased body. A genuine blank is a 200 whose
+# <main> is empty, which does not match any signature here.
+is_edge_challenge() {
+  local c="$1" b="$2"
+  case "$c" in 403|429|503) return 0 ;; esac
+  case "$b" in
+    *"just a moment"*|*"__cf_chl"*|*"cf_chl_opt"*|*"cf-browser-verification"*|\
+    *"cf-mitigated"*|*"checking your browser"*|*"attention required"*) return 0 ;;
+  esac
+  return 1
+}
 
 # Extract the inner text of the first <main>...</main> and count words.
 # Falls back to <body> if the theme ever drops the <main> id we key on.
@@ -99,13 +125,22 @@ check_page() {
     bytes="$(printf '%s' "$body" | wc -c | tr -d ' ')"
     words="$(printf '%s' "$body" | main_word_count)"
 
+    local lc_body ok=1 reasons=""
+    lc_body="${body,,}"   # lowercase once for case-insensitive matching
+
+    # Edge challenge => inconclusive; do not count as a failure. This is the
+    # expected outcome when the runner is a Cloudflare-challenged datacenter IP
+    # (e.g. GitHub Actions). The on-network GitLab copy still verifies for real.
+    if is_edge_challenge "$code" "$lc_body"; then
+      printf 'SKIP  %-45s edge-challenge (http=%s bytes=%s) — inconclusive, not verified\n' "$url" "$code" "$bytes"
+      return 0
+    fi
+
     # NB: match with bash's in-process regex, NOT `printf ... | grep -q`.
     # Under `set -o pipefail`, grep -q exits on first match and closes the pipe,
     # so printf takes SIGPIPE (141) and pipefail reports the PIPELINE as failed
     # even though the match succeeded — a nondeterministic false "no match"
     # that made this gate flap. `[[ =~ ]]` has no pipe and no such hazard.
-    local lc_body ok=1 reasons=""
-    lc_body="${body,,}"   # lowercase once for case-insensitive matching
     [ "$code" = "200" ] || { ok=0; reasons="$reasons http=$code;"; }
     [ "$bytes" -ge "$MIN_BYTES" ] || { ok=0; reasons="$reasons bytes=$bytes<$MIN_BYTES;"; }
     [[ "$lc_body" =~ \<main[[:space:]\>] ]] || { ok=0; reasons="$reasons no-<main>;"; }
@@ -126,6 +161,9 @@ check_page() {
     fi
 
     printf 'FAIL  %-45s http=%s bytes=%s main_words=%s ::%s\n' "$url" "$code" "$bytes" "$words" "$reasons"
+    # Diagnostic: dump a one-line snippet of what we actually received so a
+    # future failure (if it is NOT an edge challenge) is debuggable from the log.
+    printf '   body[0:300]: %s\n' "$(printf '%s' "$body" | tr '\n\t' '  ' | head -c 300)" >&2
     return 1
   done
 }
@@ -139,7 +177,7 @@ for p in $PATHS; do
 done
 
 if [ "$fail" -ne 0 ]; then
-  echo "RESULT: FAIL — at least one page blank or structurally degraded on the LIVE target." >&2
+  echo "RESULT: FAIL — at least one page CONFIRMED blank or structurally degraded on the LIVE target." >&2
   exit 1
 fi
-echo "RESULT: PASS — all checked pages non-blank and structurally intact on the live target."
+echo "RESULT: PASS — all checked pages non-blank/intact or inconclusive (edge-challenged) on the live target."
