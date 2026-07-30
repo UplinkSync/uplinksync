@@ -1,0 +1,170 @@
+/*
+ * ***-391 / ***-183 v2.0 — cinematic hero loop.
+ *
+ * Full-bleed hero: a poster image (the LCP) fills the frame; an optional silent
+ * background video sits on top of the poster and fades in only once hero.js has
+ * confirmed it can play. A navy scrim guarantees text contrast over any frame.
+ *
+ * Tokens (assets/css/tokens.css): --navy-1000 cinematic floor, --navy-900,
+ * --accent-teal, --accent-600, --uplinksync-white.
+ */
+
+.uls-hero {
+	position: relative;
+	display: flex;
+	align-items: center;
+	min-height: clamp(30rem, 68vh, 46rem);
+	overflow: hidden;
+	isolation: isolate;
+	background-color: var(--navy-1000, #0B1B33);
+	color: var(--uplinksync-white, #fff);
+}
+
+/* Media layer -------------------------------------------------------------- */
+
+.uls-hero__media {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+}
+
+.uls-hero__poster,
+.uls-hero__video {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+}
+
+/* The poster is the LCP and is always visible underneath. */
+.uls-hero__poster {
+	z-index: 0;
+}
+
+/* Video sits above the poster but starts transparent; hero.js adds
+   .is-playing once the loop is actually running, avoiding a black flash or a
+   poster/video swap jump. */
+.uls-hero__video {
+	z-index: 1;
+	opacity: 0;
+	transition: opacity 900ms ease;
+}
+
+.uls-hero__video.is-playing {
+	opacity: 1;
+}
+
+/* Navy scrim for legibility over any frame: darker at the bottom where the
+   copy sits, lighter at the top. */
+.uls-hero__scrim {
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+	background:
+		linear-gradient(
+			180deg,
+			rgba(11, 27, 51, 0.35) 0%,
+			rgba(11, 27, 51, 0.45) 45%,
+			rgba(11, 27, 51, 0.72) 100%
+		);
+}
+
+/* Content layer ------------------------------------------------------------ */
+
+.uls-hero__inner {
+	position: relative;
+	z-index: 3;
+	width: 100%;
+	max-width: 72rem;
+	margin: 0 auto;
+	padding: clamp(2rem, 6vw, 5rem) clamp(1.25rem, 5vw, 3.5rem);
+}
+
+.uls-hero__heading {
+	margin: 0 0 0.5em;
+	max-width: 20ch;
+	font-family: var(--font-heading, var(--font-body, sans-serif));
+	font-weight: 700;
+	font-size: clamp(2rem, 5.2vw, 3.75rem);
+	line-height: 1.05;
+	letter-spacing: -0.01em;
+	color: var(--uplinksync-white, #fff);
+	text-wrap: balance;
+	text-shadow: 0 1px 24px rgba(11, 27, 51, 0.45);
+}
+
+.uls-hero__sub {
+	margin: 0 0 1.75em;
+	max-width: 46ch;
+	font-size: clamp(1.05rem, 1.8vw, 1.375rem);
+	line-height: 1.5;
+	color: rgba(255, 255, 255, 0.92);
+	text-shadow: 0 1px 16px rgba(11, 27, 51, 0.4);
+}
+
+.uls-hero__cta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.85rem;
+}
+
+.uls-hero__btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.8rem 1.6rem;
+	border-radius: 0.5rem;
+	font-weight: 600;
+	font-size: 1.0625rem;
+	line-height: 1.2;
+	text-decoration: none;
+	transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.uls-hero__btn.is-primary {
+	background-color: var(--accent-600, #2F6FC4);
+	color: var(--uplinksync-white, #fff);
+	border: 2px solid var(--accent-600, #2F6FC4);
+}
+
+.uls-hero__btn.is-primary:hover,
+.uls-hero__btn.is-primary:focus-visible {
+	background-color: var(--accent-500-hover, #2E7EF0);
+	border-color: var(--accent-500-hover, #2E7EF0);
+	transform: translateY(-1px);
+}
+
+.uls-hero__btn.is-ghost {
+	background-color: rgba(255, 255, 255, 0.06);
+	color: var(--uplinksync-white, #fff);
+	border: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.uls-hero__btn.is-ghost:hover,
+.uls-hero__btn.is-ghost:focus-visible {
+	background-color: rgba(255, 255, 255, 0.16);
+	border-color: var(--uplinksync-white, #fff);
+	transform: translateY(-1px);
+}
+
+.uls-hero__btn:focus-visible {
+	outline: 3px solid var(--accent-teal, #95D5DD);
+	outline-offset: 3px;
+}
+
+/* Reduced motion: never show or animate the loop — poster only. --------- */
+@media (prefers-reduced-motion: reduce) {
+	.uls-hero__video {
+		display: none !important;
+	}
+	.uls-hero__video.is-playing {
+		opacity: 0 !important;
+	}
+}
+
+/* Author opt-out: [hero_loop motion="off"] renders a static hero. */
+.uls-hero.is-static .uls-hero__video {
+	display: none !important;
+}
