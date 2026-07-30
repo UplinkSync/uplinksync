@@ -2,17 +2,21 @@
  * ***-391 / ***-183 v2.0 — hero loop runtime.
  *
  * Enhancement-only. Without this script the hero renders a complete static
- * poster hero (the <video> stays at opacity 0 per hero.css). This script:
+ * poster hero (every `.uls-hero__video` stays at opacity 0 per hero.css). It
+ * drives ANY element with class `uls-hero__video`, wherever it lives — the
+ * standalone [hero_loop] section OR a loop integrated into the existing
+ * front-page hero's `.airframe` figure (consolidated single-hero placement).
+ *
+ * Guarantees:
  *   1. Respects prefers-reduced-motion: it never starts the video.
- *   2. Defers all video bytes: the <source> is set preload="none"; we only ask
- *      the browser to load/play once the hero is on screen (IntersectionObserver)
- *      and the tab is visible.
+ *   2. Defers all video bytes (preload="none"); only loads/plays once the video
+ *      is on screen (IntersectionObserver) and the tab is visible.
  *   3. Fades the video in (adds .is-playing) only after playback actually
  *      begins, so there is never a black flash or a poster/video jump.
- *   4. Optionally rotates through the curated loop set (data-hero-sources) so
- *      the hero is not a single repeating clip, swapping on each loop boundary.
+ *   4. Optionally rotates a curated loop set (data-hero-sources); with a single
+ *      <source> it just native-loops that one clip.
  *
- * Any failure (autoplay blocked, network error, decode error) leaves the poster
+ * Any failure (autoplay blocked, network/decode error) leaves the poster
  * showing — the hero degrades to a still image, never to a blank frame.
  */
 (function () {
@@ -20,14 +24,14 @@
 
 	var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 	if (reduce) {
-		return; // Poster-only. Do not touch the video at all.
+		return; // Poster-only. Do not touch any video.
 	}
 
-	function initHero(hero) {
-		var video = hero.querySelector('.uls-hero__video');
-		if (!video) {
+	function initVideo(video) {
+		if (!video || video.dataset.ulsHeroInit === '1') {
 			return;
 		}
+		video.dataset.ulsHeroInit = '1';
 
 		// Candidate loop URLs (JSON array). Fall back to the single baked <source>.
 		var sources = [];
@@ -42,6 +46,16 @@
 				sources = [s.getAttribute('src')];
 			}
 		}
+		// data-hero-asset carries only the Immich asset UUID; build the anonymous
+		// playback URL from the media host + public share key handed over by
+		// wp_localize_script (ulsHeroCfg) so the key never lives in a template.
+		if (!sources.length) {
+			var asset = (video.getAttribute('data-hero-asset') || '').trim();
+			var cfg = window.ulsHeroCfg;
+			if (asset && cfg && cfg.mediaBase && cfg.shareKey && /^[0-9a-f-]{36}$/i.test(asset)) {
+				sources = [cfg.mediaBase + '/api/assets/' + asset + '/video/playback?key=' + cfg.shareKey];
+			}
+		}
 		if (!sources.length) {
 			return; // Nothing to play — poster stays.
 		}
@@ -52,7 +66,7 @@
 		function reveal() {
 			if (!started) {
 				started = true;
-				hero.querySelector('.uls-hero__video').classList.add('is-playing');
+				video.classList.add('is-playing');
 			}
 		}
 
@@ -60,7 +74,7 @@
 			var p = video.play();
 			if (p && typeof p.then === 'function') {
 				p.then(reveal).catch(function () {
-					/* Autoplay blocked or interrupted: leave the poster showing. */
+					/* Autoplay blocked/interrupted: leave the poster showing. */
 				});
 			} else {
 				reveal();
@@ -69,7 +83,6 @@
 
 		function load(i) {
 			index = (i + sources.length) % sources.length;
-			// Only assign a real src now (deferred load), then play.
 			if (video.getAttribute('src') !== sources[index]) {
 				video.setAttribute('src', sources[index]);
 			}
@@ -77,9 +90,7 @@
 			tryPlay();
 		}
 
-		// Rotate to the next loop when this one ends (only meaningful if we have
-		// more than one). Because each clip is a seamless boomerang, we let it
-		// loop a couple of times before advancing so it does not feel frantic.
+		// Rotate to the next loop after a couple of plays (multi-source only).
 		if (sources.length > 1) {
 			video.loop = false;
 			var plays = 0;
@@ -96,7 +107,6 @@
 
 		video.addEventListener('playing', reveal);
 
-		// Pause work when the tab is hidden (saves battery/data).
 		document.addEventListener('visibilitychange', function () {
 			if (document.hidden) {
 				video.pause();
@@ -105,8 +115,6 @@
 			}
 		});
 
-		// Only begin when the hero scrolls into view (it is usually above the
-		// fold, so this fires immediately, but it protects hero-in-content uses).
 		function begin() {
 			load(0);
 		}
@@ -120,16 +128,16 @@
 					}
 				});
 			}, { rootMargin: '200px' });
-			io.observe(hero);
+			io.observe(video);
 		} else {
 			begin();
 		}
 	}
 
 	function ready() {
-		var heroes = document.querySelectorAll('.uls-hero');
-		for (var i = 0; i < heroes.length; i++) {
-			initHero(heroes[i]);
+		var vids = document.querySelectorAll('.uls-hero__video');
+		for (var i = 0; i < vids.length; i++) {
+			initVideo(vids[i]);
 		}
 	}
 
