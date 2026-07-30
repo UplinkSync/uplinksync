@@ -170,12 +170,16 @@ lint_forbidden_hex:
 # so no owner action is required to arm the gate.
 prod_render_smoke:
   stage: .post
-  image: registry.gitlab.com/gitlab-org/gitlab-build-images:debian-bookworm-ruby-3.2
+  # debian:bookworm-slim is a Docker Hub base image the runner can always pull
+  # (the previous gitlab-build-images tag no longer resolves and hard-failed the
+  # job before the script ran). It ships bash; curl + gawk are installed below.
+  image: debian:bookworm-slim
   variables:
     SMOKE_BASE_URL: "https://uplinksync.com"
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
   before_script:
-    - command -v curl >/dev/null || (apt-get update && apt-get install -y curl)
+    - apt-get update -qq
+    - apt-get install -y -qq --no-install-recommends curl ca-certificates gawk
   script:
     - tools/ci/prod_render_smoke.sh "$SMOKE_BASE_URL"
