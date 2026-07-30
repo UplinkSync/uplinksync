@@ -169,10 +169,18 @@ function uplinksync_hero_loop_shortcode( $atts ) {
 			'cta2_text'  => 'Explore services',
 			'cta2_url'   => '/services/',
 			'motion'     => 'on',
+			'heading_tag' => 'h1',
 		),
 		$atts,
 		'hero_loop'
 	);
+
+	// Heading element: bounded to h1/h2 so a placement above an existing page
+	// H1 can demote this heading and keep a single document H1 (SEO/a11y).
+	$heading_tag = strtolower( trim( (string) $atts['heading_tag'] ) );
+	if ( ! in_array( $heading_tag, array( 'h1', 'h2' ), true ) ) {
+		$heading_tag = 'h1';
+	}
 
 	uplinksync_hero_enqueue_assets();
 
@@ -217,7 +225,7 @@ function uplinksync_hero_loop_shortcode( $atts ) {
 	$inner  = '<div class="uls-hero__inner">';
 	$heading = sanitize_text_field( $atts['heading'] );
 	if ( '' !== $heading ) {
-		$inner .= '<h1 class="uls-hero__heading">' . esc_html( $heading ) . '</h1>';
+		$inner .= '<' . $heading_tag . ' class="uls-hero__heading">' . esc_html( $heading ) . '</' . $heading_tag . '>';
 	}
 	$sub = sanitize_text_field( $atts['subheading'] );
 	if ( '' !== $sub ) {
