@@ -1,0 +1,14 @@
+# ***-391: superseded commit only. This fingerprint is a PUBLIC Immich share
+# token that briefly appeared as a `?key=` URL literal in front-page.html in
+# commit 12fc2e6 (an earlier take on the hero-loop consolidation). That commit
+# was rewritten out of the branch (force-push); the LIVE tree no longer contains
+# the key in any URL form — the video now carries only the asset UUID and the
+# key is injected at render time from the UPLINKSYNC_HERO_SHARE_KEY define via
+# wp_localize_script. The token is NOT a credential: it authorises anonymous,
+# read-only playback of six curated public hero loops (same class of public
+# share token the [immich_share]/[immich_video] shortcodes already expose), and
+# it is served to every visitor's browser inside the video URL by design.
+# gitleaks --log-opts=--all still reaches the dead commit via its pipeline ref,
+# so this pins the historical finding only. Rotating the share key (Immich) will
+# make even this dead reference inert.
+12fc2e6c5e1ead65c60e3a9279f717052763ad3b:wp-content/themes/uplinksync-child/templates/front-page.html:generic-api-key:33
