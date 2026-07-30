@@ -137,6 +137,62 @@ form[id^="quote-form"] .uls-field {
 	}
 }
 
+/* ***-300 (R8) — progressive disclosure toggle for the optional
+ * "How can we help?" field. The button is only ever inserted by quote-form.js,
+ * so no-JS visitors never see it (they get the plain textarea). Styled as a
+ * quiet, text-forward control so it reads as an affordance, not a second
+ * primary action competing with the submit button. */
+form[id^="quote-form"] .uls-details-toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0 0 16px;
+	padding: 8px 4px;
+	min-height: 44px;
+	background: none;
+	border: none;
+	color: var( --accent-600, #2F6FC4 );
+	font-family: inherit;
+	font-size: var( --fs-body-mobile, 16px );
+	font-weight: 500;
+	text-align: left;
+	cursor: pointer;
+}
+form[id^="quote-form"] .uls-details-toggle:hover,
+form[id^="quote-form"] .uls-details-toggle:focus-visible {
+	color: var( --navy-700, #1F4375 );
+	text-decoration: underline;
+}
+form[id^="quote-form"] .uls-details-toggle:focus-visible {
+	outline: 2px solid var( --accent-600, #2F6FC4 );
+	outline-offset: 2px;
+}
+/* Disclosure triangle — rotates when the region is expanded. */
+form[id^="quote-form"] .uls-details-toggle::before {
+	content: "";
+	display: inline-block;
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 6px solid currentColor;
+	transform: rotate( -90deg );
+	transition: transform 0.15s ease;
+}
+form[id^="quote-form"] .uls-details-toggle[aria-expanded="true"]::before {
+	transform: rotate( 0deg );
+}
+@media ( prefers-reduced-motion: reduce ) {
+	form[id^="quote-form"] .uls-details-toggle::before {
+		transition: none;
+	}
+}
+/* The [hidden] attribute already collapses the region; this guards against any
+ * theme reset that sets display on the wrapper. */
+form[id^="quote-form"] .uls-optional-details[hidden] {
+	display: none;
+}
+
 /* Honeypot field — visually hidden, still reachable by bots, not by AT/tab order */
 form[id^="quote-form"] .uls-honeypot {
 	position: absolute;
