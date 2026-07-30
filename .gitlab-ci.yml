@@ -5,10 +5,16 @@ include:
 
 variables:
   THEME_SLUG: "hostinger-ai-theme"
-  # render_smoke fails the MR if the rendered homepage body is smaller than this
-  # many bytes. The ***-132 incident shipped an HTTP-200 *empty* body (mu-plugin
-  # ob_start fatal); any real render is many KB, so 500 cleanly separates the two.
+  # render_smoke floor for the WHOLE rendered document. A totally empty 200 is far
+  # under this; any real render is many KB. This is the cheap first gate only —
+  # ***-171 showed a document can clear a byte floor (bloated <head>) yet ship an
+  # EMPTY <body>, so the real assertion below is body-content-aware, not byte-only.
   SMOKE_MIN_BYTES: "500"
+  # ***-171: minimum VISIBLE body text (tags/script/style stripped) the homepage
+  # must render. The !38 incident returned HTTP 200 with chrome/head present but an
+  # empty <body> — a byte floor passed it. A real homepage carries thousands of chars;
+  # 200 cleanly separates a real page from a chrome-only/blank one without false reds.
+  SMOKE_MIN_BODY_TEXT: "200"
   # Optional: substring the ***-132 MR sets to its unified-narrative marker so the
   # gate also proves the intended copy rendered (not just "non-empty"). Empty = skip.
   SMOKE_EXPECT: ""
@@ -47,6 +53,7 @@ render_smoke:
       docker exec \
         -e PROBE_HOST="$PREVIEW_HOST" \
         -e SMOKE_MIN_BYTES="$SMOKE_MIN_BYTES" \
+        -e SMOKE_MIN_BODY_TEXT="$SMOKE_MIN_BODY_TEXT" \
         -e SMOKE_EXPECT="$SMOKE_EXPECT" \
         -u www-data -w /var/www/html "$WP_CTN" \
         php -d display_errors=stderr -r '
@@ -67,20 +74,46 @@ render_smoke:
           require "index.php";
           $html = ob_get_clean();
           $len  = strlen($html);
-          $min  = (int) getenv("SMOKE_MIN_BYTES");
-          fwrite(STDERR, "rendered homepage: {$len} bytes (min {$min})\n");
-          if ($len < $min) {
-            fwrite(STDERR, "FAIL: homepage body {$len} bytes < {$min} — blank/undersized render (the ***-132 incident class).\n");
-            exit(1);
-          }
-          $expect = getenv("SMOKE_EXPECT");
-          if ($expect !== "" && strpos($html, $expect) === false) {
-            fwrite(STDERR, "FAIL: expected marker not found in rendered homepage: {$expect}\n");
-            exit(1);
-          }
-          fwrite(STDERR, "PASS: homepage rendered non-empty" . ($expect !== "" ? " and contains marker" : "") . ".\n");
+
+          $min_bytes = (int) getenv("SMOKE_MIN_BYTES");
+          $min_text  = (int) getenv("SMOKE_MIN_BODY_TEXT");
+          $expect    = getenv("SMOKE_EXPECT");
+          $fail = function ($m) { fwrite(STDERR, "FAIL: " . $m . "\n"); exit(1); };
+          fwrite(STDERR, "rendered homepage: {$len} bytes\n");
+
+          // (a) render must COMPLETE: WP always emits a closing html tag; its absence
+          //     means a fatal cut the output buffer mid-render.
+          if (stripos($html, "</html>") === false) { $fail("render incomplete — no closing </html> (fatal mid-render / truncated buffer). {$len} bytes."); }
+
+          // (b) explicit white-screen / fatal signatures that can still return HTTP 200.
+          $sigs = ["There has been a critical error", "Error establishing a database connection", "Fatal error:", "Parse error:", "syntax error, unexpected", "Uncaught Error", "Uncaught TypeError", "Allowed memory size of", "Call to undefined function"];
+          foreach ($sigs as $s) { if (stripos($html, $s) !== false) { $fail("white-screen/fatal signature present: \"{$s}\"."); } }
+
+          // (c) whole-document floor (cheap catch for a totally empty 200).
+          if ($len < $min_bytes) { $fail("document {$len} bytes < {$min_bytes} — blank/undersized render (the ***-132 incident class)."); }
+
+          // (d) real BODY content — the !38 incident shipped chrome/head but an EMPTY
+          //     <body>. Count only VISIBLE body text (script/style/tags stripped).
+          $bs = stripos($html, "<body");
+          if ($bs === false) { $fail("no <body> element in render."); }
+          $bs = strpos($html, ">", $bs);
+          $be = stripos($html, "</body>");
+          if ($bs === false || $be === false || $be <= $bs) { $fail("malformed/empty <body> in render."); }
+          $body = substr($html, $bs + 1, $be - $bs - 1);
+          $body_wo = preg_replace("#<(script|style|noscript)\\b[^>]*>.*?</\\1>#is", " ", $body);
+          $text = trim(preg_replace("#\\s+#", " ", strip_tags($body_wo)));
+          $tlen = strlen($text);
+          if ($tlen < $min_text) { $fail("visible body text {$tlen} chars < {$min_text} — chrome-only / blank body (the exact production symptom on !38)."); }
+
+          // (e) structural proof of a real page (any one landmark).
+          if (!preg_match("#<h[1-3]\\b|<nav\\b|<main\\b|<header\\b#i", $body)) { $fail("no structural landmark (<h1-3>/<nav>/<main>/<header>) in body — not a real rendered page."); }
+
+          // (f) optional exact-copy marker (opt-in via SMOKE_EXPECT).
+          if ($expect !== "" && strpos($html, $expect) === false) { $fail("expected copy marker not found in rendered homepage: {$expect}"); }
+
+          fwrite(STDERR, "PASS: homepage rendered a real page — {$len} bytes, {$tlen} chars visible body text, landmark present" . ($expect !== "" ? ", marker found" : "") . ".\n");
         '
-    - echo "render_smoke PASS — homepage renders a real, non-empty body on the preview host."
+    - echo "render_smoke PASS — homepage renders a real, content-bearing body (not just a 200) on the preview host."
 
 # ***: forbidden-hex guard. The footer LinkedIn glyph must use the house white
 # token (var(--uplinksync-white)); the raw third-party brand blue #0d66c2 / #0a66c2
