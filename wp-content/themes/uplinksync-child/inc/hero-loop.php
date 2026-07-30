@@ -136,6 +136,24 @@ function uplinksync_hero_enqueue_assets() {
 			'in_footer' => true,
 		)
 	);
+
+	// Hand the media host + public share key to hero.js at render time so a
+	// `.uls-hero__video[data-hero-asset="<uuid>"]` in a template can carry only
+	// the asset UUID (never the key). The key stays in ONE place — the
+	// UPLINKSYNC_HERO_SHARE_KEY define above — so it never appears as a `key=…`
+	// URL literal in a version-controlled template. Localize once.
+	static $localized = false;
+	if ( ! $localized ) {
+		wp_localize_script(
+			'uplinksync-hero',
+			'ulsHeroCfg',
+			array(
+				'mediaBase' => 'https://' . ( defined( 'UPLINKSYNC_MEDIA_HOST' ) ? UPLINKSYNC_MEDIA_HOST : 'media.uplinksync.com' ),
+				'shareKey'  => UPLINKSYNC_HERO_SHARE_KEY,
+			)
+		);
+		$localized = true;
+	}
 }
 
 /**
