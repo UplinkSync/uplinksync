@@ -37,6 +37,10 @@
 	 * ---------------------------------------------------------------- */
 	--navy-800: #1c355c;        /* elevated dark surface — cards on dark sections */
 	--navy-850: #102a4c;        /* deep dark band — alternate dark section (trust band) */
+	--navy-1000: #0B1B33;       /* ***-335 — cinematic dark-navy floor (approved token per design docs).
+	                               Same value the split-horizon cinematic sheet carries locally as
+	                               --navy-950 (hero gradient floor / ground-strip); promoted here so the
+	                               approved --navy-1000 name is available system-wide. */
 	--navy-border: #2a4a72;     /* 1px hairline on dark cards */
 	--grey-250: #d6dde6;        /* 1px hairline on light cards */
 

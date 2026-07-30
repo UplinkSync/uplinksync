@@ -169,7 +169,11 @@
 .uls-splith .stage .num { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-teal); display: flex; align-items: center; gap: .6em; margin-bottom: 14px; }
 .uls-splith .stage .num .n { font-weight: 800; }
 .uls-splith .stage .flow { flex: 1; height: 1px; background: linear-gradient(90deg,var(--accent-teal),transparent); opacity: .4; }
-.uls-splith .stage h3 { font-size: 1.06rem; margin-bottom: 7px; letter-spacing: -.01em; }
+/* ***-359: the stage label is a <p class="stage-title"> (not <h3>) to avoid an
+   a11y heading-level skip; this rule reproduces the former h3 rendering exactly
+   (the shared .uls-splith h1,h2,h3 rule no longer applies to a <p>, and it must
+   also beat the .uls-splith .stage p color/size below). Visually identical. */
+.uls-splith .stage .stage-title { font-family: var(--font-display); font-weight: 800; color: #fff; line-height: 1.06; text-wrap: balance; font-size: 1.06rem; margin: 0 0 7px; letter-spacing: -.01em; }
 .uls-splith .stage p { color: var(--ink-300); font-size: .88rem; }
 
 /* services (hover micro-interactions) */
