@@ -47,8 +47,6 @@ function uplinksync_canonical_redirect_map() {
 	return array(
 		'/about-4/'                => '/about/',
 		'/services-2/'             => '/services/',
-		'/services/web/'           => '/services/web-2/',
-		'/services/automation/'    => '/services/automation-2/',
 	);
 }
 
