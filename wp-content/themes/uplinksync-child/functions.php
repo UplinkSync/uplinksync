@@ -25,6 +25,16 @@ require_once get_stylesheet_directory() . '/inc/quote-form-seed.php';
 require_once get_stylesheet_directory() . '/inc/immich-embed.php';
 
 /**
+ * ***-391 / ***-183 (plan v2.0): register the [hero_loop] shortcode + its
+ * priority-21 conditional asset enqueue. Reuses the anonymous Immich playback
+ * plumbing from immich-embed.php (loaded just above) to stream the curated,
+ * graded Landscape hero loops from media.uplinksync.com. Renders nothing until
+ * [hero_loop] is placed in content, so loading this file cannot change what the
+ * homepage renders on its own.
+ */
+require_once get_stylesheet_directory() . '/inc/hero-loop.php';
+
+/**
  * ***-99: restore correct asset resolution under a child theme.
  *
  * The parent theme (hostinger-ai-theme) was never written for child themes.
