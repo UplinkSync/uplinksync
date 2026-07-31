@@ -196,9 +196,15 @@ add_shortcode( 'uls_shop_catalog', function () {
 	.uls-shop .cta{margin-top:30px;background:linear-gradient(180deg,var(--navy),var(--navy-700,#1F4375));color:#fff;text-align:center;padding:56px 20px}
 	.uls-shop .cta h2{color:#fff;font-weight:700;font-size:clamp(24px,3.2vw,32px);margin:0 0 8px}
 	.uls-shop .cta p{color:#dbe6fb;margin:0 auto 20px;max-width:56ch}
-	.uls-shop .cta a{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;padding:12px 24px;border-radius:8px;min-height:44px;line-height:22px}
-	.uls-shop .cta a:hover{background:var(--navy-700,#1F4375)}
-	.uls-shop .cta a:focus-visible{outline:3px solid var(--accent-teal);outline-offset:2px}
+	.uls-shop .cta .cta-actions{display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:4px}
+	.uls-shop .cta .cta-actions p{margin:0}
+	.uls-shop .cta .uls-cta-primary{display:inline-flex;align-items:center;justify-content:center;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;padding:12px 24px;border-radius:8px;min-height:44px;line-height:22px;border:1.5px solid var(--accent)}
+	.uls-shop .cta .uls-cta-primary:hover{background:#fff;color:var(--navy);border-color:#fff}
+	.uls-shop .cta .uls-cta-primary:focus-visible{outline:3px solid var(--accent-teal);outline-offset:2px}
+	.uls-shop .cta .uplinksync-book-cta{margin:0}
+	.uls-shop .cta .uplinksync-book-cta .uls-book-link{display:inline-flex;align-items:center;justify-content:center;background:transparent;border:1.5px solid rgba(255,255,255,.6);color:#fff;text-decoration:none;font-weight:600;padding:12px 24px;border-radius:8px;min-height:44px;line-height:22px}
+	.uls-shop .cta .uplinksync-book-cta .uls-book-link:hover{background:#fff;border-color:#fff;color:var(--navy)}
+	.uls-shop .cta .uplinksync-book-cta .uls-book-link:focus-visible{outline:3px solid var(--accent-teal);outline-offset:2px}
 	@media(prefers-reduced-motion:reduce){.uls-shop *{transition:none!important}}
 	</style>
 
@@ -284,7 +290,10 @@ add_shortcode( 'uls_shop_catalog', function () {
 		<div class="cta">
 			<h2>Licensing something specific?</h2>
 			<p>Tell us the location and use and we&rsquo;ll scope it &mdash; commercial and large-format licensing on request.</p>
-			<a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Get in touch</a>
+			<div class="cta-actions">
+				<a class="uls-cta-primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Get in touch</a>
+				<div class="wp-block-button uplinksync-book-cta uplinksync-book-consult"><a class="wp-block-button__link wp-element-button uls-book-link" href="https://book.uplinksync.com/dirwin/it-consult" data-cal-link="dirwin/it-consult" data-uls-book="consult" target="_blank" rel="noopener">Book a consultation</a></div>
+			</div>
 		</div>
 		<?php endif; ?>
 	</div>
