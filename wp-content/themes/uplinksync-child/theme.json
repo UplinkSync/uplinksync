@@ -56,5 +56,8 @@
 	"templateParts": [
 		{ "name": "header", "title": "Header", "area": "header" },
 		{ "name": "footer", "title": "Footer", "area": "footer" }
+	],
+	"customTemplates": [
+		{ "name": "no-title", "title": "No Title (hero-led page)", "postTypes": [ "page" ] }
 	]
 }
