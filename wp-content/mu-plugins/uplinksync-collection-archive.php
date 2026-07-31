@@ -133,7 +133,7 @@ add_shortcode( 'uls_collection_archive', function () {
 	}
 	$floor      = ( null !== $min ) ? '$' . rtrim( rtrim( number_format( $min, 2, '.', '' ), '0' ), '.' ) : '';
 	$hero_bg    = 'linear-gradient(90deg,rgba(11,27,51,.86),rgba(11,27,51,.45))' . ( $hero_img ? ",url('" . esc_url( $hero_img ) . "')" : '' );
-	$prints_url = home_url( '/prints/' );
+	$prints_url = home_url( '/shop/' ); // /prints/ retired as a destination (owner 2026-07-30); point "All collections" at the full catalog.
 
 	ob_start();
 	?>
