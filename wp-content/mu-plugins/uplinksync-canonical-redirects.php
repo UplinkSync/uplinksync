@@ -2,7 +2,7 @@
 /**
  * Plugin Name: UplinkSync — Canonical URL Redirects
  * Description: Implements the ***-101 Information Architecture §2 redirect map (***-104). Points every legacy/duplicate URL at its true canonical destination instead of letting WordPress silently collapse it to `/`. Runs as an mu-plugin so it is theme-independent and captured in-repo (deploys with wp-content). Companion to uplinksync-drone-product-redirects.php, which handles the retired Woo drone products; this plugin covers the page-level slug corrections.
- * Version: 1.1.0
+ * Version: 1.2.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -17,6 +17,17 @@ if ( ! defined( 'ABSPATH' ) ) {
  *   /services-2/ -> /services/   (same auto-suffix story for the services overview)
  *   /services/web/        -> /services/web-2/          (***-270 item 3)
  *   /services/automation/ -> /services/automation-2/   (***-270 item 3)
+ *   /product-category/soda-springs/          -> /product-category/saratoga-springs/          (data correction 2026-07-30)
+ *   /product/soda-springs-aerial-view-no-01/ -> /product/saratoga-springs-aerial-view-no-01/ (data correction 2026-07-30)
+ *   /product/soda-springs-aerial-view-no-02/ -> /product/saratoga-springs-aerial-view-no-02/ (data correction 2026-07-30)
+ *   /product/soda-springs-aerial-view-no-03/ -> /product/saratoga-springs-aerial-view-no-03/ (data correction 2026-07-30)
+ *   /product/soda-springs-aerial-view-no-04/ -> /product/saratoga-springs-aerial-view-no-04/ (data correction 2026-07-30)
+ *
+ * "Soda Springs" -> "Saratoga Springs, UT" data correction (owner Doug, 2026-07-30):
+ * the location collection was mistyped "Soda Springs, ID"; the aerials are of
+ * Saratoga Springs, Utah. Titles/descriptions/category name/alt text were fixed
+ * in a prior pass; here we fix the URL slugs (category + 4 products) and 301 the
+ * now-public old slugs so they don't 404. Reversible by removing these entries.
  *
  * ***-270 item 3 — duplicate service pages. `/services/web/` and
  * `/services/web-2/` were byte-identical, as were `/services/automation/` and
@@ -47,6 +58,12 @@ function uplinksync_canonical_redirect_map() {
 	return array(
 		'/about-4/'                => '/about/',
 		'/services-2/'             => '/services/',
+		// "Soda Springs" -> "Saratoga Springs, UT" slug correction (owner Doug, 2026-07-30).
+		'/product-category/soda-springs/'          => '/product-category/saratoga-springs/',
+		'/product/soda-springs-aerial-view-no-01/' => '/product/saratoga-springs-aerial-view-no-01/',
+		'/product/soda-springs-aerial-view-no-02/' => '/product/saratoga-springs-aerial-view-no-02/',
+		'/product/soda-springs-aerial-view-no-03/' => '/product/saratoga-springs-aerial-view-no-03/',
+		'/product/soda-springs-aerial-view-no-04/' => '/product/saratoga-springs-aerial-view-no-04/',
 	);
 }
 
