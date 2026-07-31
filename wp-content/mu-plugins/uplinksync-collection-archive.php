@@ -51,7 +51,13 @@ add_filter( 'template_include', function ( $template ) {
 	if ( function_exists( 'is_product_category' ) && is_product_category() ) {
 		global $_wp_current_template_content, $_wp_current_template_id;
 		$_wp_current_template_content =
-			'<!-- wp:template-part {"slug":"header","tagName":"header"} /-->' .
+			// *** store polish (2026-07-30) fix #1: emit the header with the
+			// "site-header" className exactly as single-product.html/page.html do.
+			// Without it the header renders as a bare <header class="wp-block-template-part">
+			// and the navy-header repaint (Code Snippet #85), which is scoped under
+			// `.site-header`, misses it — so the collection/category header rendered
+			// white. Adding the class makes the existing navy repaint apply here too.
+			'<!-- wp:template-part {"slug":"header","tagName":"header","className":"site-header"} /-->' .
 			'<!-- wp:shortcode -->[uls_collection_archive]<!-- /wp:shortcode -->' .
 			'<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->';
 		if ( empty( $_wp_current_template_id ) ) {
@@ -121,7 +127,7 @@ add_shortcode( 'uls_collection_archive', function () {
 	<style>
 	.uls-carch{--bg:#f5f6fb;--panel:#fff;--ink:#0b1b33;--muted:#5a6685;--line:#e6eaf3;--navy:#0b1b33;--teal:#17b9ab;--accent:#3358e0;--disp:"Georgia","Iowan Old Style",serif;background:var(--bg);color:var(--ink)}
 	.uls-carch .wrap{max-width:1080px;margin:0 auto;padding:28px 20px 64px}
-	.uls-carch .note{font-size:12.5px;color:var(--muted);border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:10px 13px;margin-bottom:22px}
+	.uls-carch .note{font-size:11.5px;line-height:1.55;color:var(--muted);text-align:center;max-width:66ch;margin:34px auto 0;padding:0 6px;opacity:.9}
 	.uls-carch .back{display:inline-block;font-size:12.5px;color:var(--accent);text-decoration:none;margin-bottom:12px}
 	.uls-carch .back:hover{text-decoration:underline}
 	.uls-carch .hero{border-radius:16px;padding:26px 30px;background-size:cover;background-position:center;color:#fff;box-shadow:0 8px 26px rgba(11,27,51,.2)}
@@ -150,7 +156,6 @@ add_shortcode( 'uls_collection_archive', function () {
 	@media(prefers-reduced-motion:reduce){.uls-carch *{transition:none!important}}
 	</style>
 	<div class="uls-carch"><div class="wrap">
-		<div class="note">Prices shown are &ldquo;from&rdquo; floors. Watermarked previews are displayed; the clean full-resolution master is delivered on purchase.</div>
 		<a class="back" href="<?php echo esc_url( $prints_url ); ?>">&larr; All collections</a>
 		<div class="hero" style="background-image:<?php echo esc_attr( $hero_bg ); ?>">
 			<span class="h-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
@@ -190,6 +195,7 @@ add_shortcode( 'uls_collection_archive', function () {
 		<?php else : ?>
 			<div class="empty">No prints in this collection yet.</div>
 		<?php endif; ?>
+		<p class="note">Prices shown are &ldquo;from&rdquo; floors. Watermarked previews are displayed; the clean full-resolution master is delivered on purchase.</p>
 	</div></div>
 	<?php
 	wp_reset_postdata();
