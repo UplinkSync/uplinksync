@@ -116,8 +116,8 @@ add_shortcode( 'uls_collection_archive', function () {
 			// it to the master here (guarded — no-op if the snippet is deactivated,
 			// which cleanly reverts to the previous watermarked-but-working hero).
 			$hero_tid = get_post_thumbnail_id( $p->ID );
-			if ( function_exists( '***247_preview_to_master' ) ) {
-				$hero_map = ***247_preview_to_master();
+			if ( function_exists( 'uplaa247_preview_to_master' ) ) {
+				$hero_map = uplaa247_preview_to_master();
 				if ( isset( $hero_map[ $hero_tid ] ) ) {
 					$hero_tid = $hero_map[ $hero_tid ];
 				}
