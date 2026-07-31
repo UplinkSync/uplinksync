@@ -7,28 +7,28 @@ variables:
   THEME_SLUG: "hostinger-ai-theme"
   # render_smoke floor for the WHOLE rendered document. A totally empty 200 is far
   # under this; any real render is many KB. This is the cheap first gate only —
-  # ***-171 showed a document can clear a byte floor (bloated <head>) yet ship an
+  # showed a document can clear a byte floor (bloated <head>) yet ship an
   # EMPTY <body>, so the real assertion below is body-content-aware, not byte-only.
   SMOKE_MIN_BYTES: "500"
-  # ***-171: minimum VISIBLE body text (tags/script/style stripped) the homepage
-  # must render. The !38 incident returned HTTP 200 with chrome/head present but an
+  # minimum VISIBLE body text (tags/script/style stripped) the homepage
+  # must render. That incident returned HTTP 200 with chrome/head present but an
   # empty <body> — a byte floor passed it. A real homepage carries thousands of chars;
   # 200 cleanly separates a real page from a chrome-only/blank one without false reds.
   SMOKE_MIN_BODY_TEXT: "200"
-  # Optional: substring the ***-132 MR sets to its unified-narrative marker so the
+  # Optional: substring an MR can set to its unified-narrative marker so the
   # gate also proves the intended copy rendered (not just "non-empty"). Empty = skip.
   SMOKE_EXPECT: ""
 
-# ***-154: real-host render-verification gate for the homepage (***-132 unblocker).
+# real-host render-verification gate for the homepage.
 #
-# The MR preview is edge-gated by Vault basic-auth (***),
+# The MR preview is edge-gated by edge basic-auth,
 # unreachable from an agent run env — so external QA of the rendered page is impossible.
 # This job renders the front page *inside* the already-running preview container instead,
 # bypassing the edge auth entirely, and fails the pipeline BEFORE merge if the body is
 # empty/undersized. It reproduces the exact incident class (ob_start callback fatal in a
 # mu-plugin, interacting with a sibling output buffer) because it drives the full front
 # controller via index.php with every mu-plugin buffer active — a real render, not a
-# local string transform (which is precisely what missed the ***-132 fatal).
+# local string transform (which is precisely what missed the fatal).
 render_smoke:
   stage: review
   image: docker:27-cli
@@ -90,9 +90,9 @@ render_smoke:
           foreach ($sigs as $s) { if (stripos($html, $s) !== false) { $fail("white-screen/fatal signature present: \"{$s}\"."); } }
 
           // (c) whole-document floor (cheap catch for a totally empty 200).
-          if ($len < $min_bytes) { $fail("document {$len} bytes < {$min_bytes} — blank/undersized render (the ***-132 incident class)."); }
+          if ($len < $min_bytes) { $fail("document {$len} bytes < {$min_bytes} — blank/undersized render (a totally empty 200)."); }
 
-          // (d) real BODY content — the !38 incident shipped chrome/head but an EMPTY
+          // (d) real BODY content — that incident shipped chrome/head but an EMPTY
           //     <body>. Count only VISIBLE body text (script/style/tags stripped).
           $bs = stripos($html, "<body");
           if ($bs === false) { $fail("no <body> element in render."); }
@@ -103,7 +103,7 @@ render_smoke:
           $body_wo = preg_replace("#<(script|style|noscript)\\b[^>]*>.*?</\\1>#is", " ", $body);
           $text = trim(preg_replace("#\\s+#", " ", strip_tags($body_wo)));
           $tlen = strlen($text);
-          if ($tlen < $min_text) { $fail("visible body text {$tlen} chars < {$min_text} — chrome-only / blank body (the exact production symptom on !38)."); }
+          if ($tlen < $min_text) { $fail("visible body text {$tlen} chars < {$min_text} — chrome-only / blank body (chrome/head present, empty body)."); }
 
           // (e) structural proof of a real page (any one landmark).
           if (!preg_match("#<h[1-3]\\b|<nav\\b|<main\\b|<header\\b#i", $body)) { $fail("no structural landmark (<h1-3>/<nav>/<main>/<header>) in body — not a real rendered page."); }
@@ -115,11 +115,11 @@ render_smoke:
         '
     - echo "render_smoke PASS — homepage renders a real, content-bearing body (not just a 200) on the preview host."
 
-# ***: forbidden-hex guard. The footer LinkedIn glyph must use the house white
+# forbidden-hex guard. The footer LinkedIn glyph must use the house white
 # token (var(--uplinksync-white)); the raw third-party brand blue #0d66c2 / #0a66c2
 # must never be hard-coded in this theme's own CSS (it fails WCAG 1.4.11 on navy and
 # leaks a third-party colour into the two-colour house system). This keeps the
-# ***-311 fix from silently regressing. Vendored libraries are excluded.
+# fix from silently regressing. Vendored libraries are excluded.
 lint_forbidden_hex:
   stage: review
   image: python:3-alpine
@@ -147,10 +147,10 @@ lint_forbidden_hex:
       print('PASS: no forbidden LinkedIn brand-blue hex used in child-theme CSS.')
       PY
 
-# ***-396 (split from ***-171): production-REPRESENTATIVE post-deploy gate.
+# production-REPRESENTATIVE post-deploy gate.
 # The `render_smoke` job above renders the homepage inside the PREVIEW container
 # (real front controller, but NOT the live auto-updated plugin stack or the real
-# production DB block content). On MR !38 a clean preview render PASSED while
+# production DB block content). On a prior change a clean preview render PASSED while
 # production served HTTP 200 with an empty <main> — root cause of two homepage
 # outages in one class. This post-deploy job hits the REAL deployed URL (real
 # plugins, real DB, real caches) and fails the pipeline if any checked page is

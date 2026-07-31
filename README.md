@@ -54,6 +54,11 @@ Layer | Technologies
   <a href="https://uplinksync.com/shop/"><img src="https://img.shields.io/badge/Online%20Store-%2Fshop%2F-96588A?style=for-the-badge&logo=woocommerce&logoColor=white" alt="Online Store"></a>
 </p>
 
+
+## 📸 Screenshots
+
+<!-- TODO: add homepage, services, and online store (/shop/) screenshots here. -->
+
 ---
 
 <p align="center">
