@@ -109,7 +109,20 @@ add_shortcode( 'uls_collection_archive', function () {
 			}
 		}
 		if ( '' === $hero_img && has_post_thumbnail( $p->ID ) ) {
-			$hero_img = get_the_post_thumbnail_url( $p->ID, 'large' );
+			// ***-247 (2026-07-30): serve the CLEAN master for the hero, not the
+			// watermarked preview. The product's featured image is the watermarked
+			// preview attachment; Code Snippet #45 holds the preview->master map and
+			// only swaps SMALL sizes, so the 'large' hero was still watermarked. Map
+			// it to the master here (guarded — no-op if the snippet is deactivated,
+			// which cleanly reverts to the previous watermarked-but-working hero).
+			$hero_tid = get_post_thumbnail_id( $p->ID );
+			if ( function_exists( '***247_preview_to_master' ) ) {
+				$hero_map = ***247_preview_to_master();
+				if ( isset( $hero_map[ $hero_tid ] ) ) {
+					$hero_tid = $hero_map[ $hero_tid ];
+				}
+			}
+			$hero_img = wp_get_attachment_image_url( $hero_tid, 'large' );
 		}
 	}
 	if ( '' === $hero_img ) {
