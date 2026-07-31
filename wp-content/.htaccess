@@ -1,0 +1,28 @@
+# UPLAA-412 — block public download of un-watermarked full-resolution store masters.
+#
+# The /shop/ photo products expose an un-watermarked "-master-<hex>" attachment
+# whose bare/large renditions are directly downloadable by URL (strip the size
+# suffix), leaking the sellable full-res original. This lives in wp-content/
+# (not uploads/) on purpose: the site-deploy rsync EXCLUDES uploads/, but a
+# <FilesMatch> in wp-content/ cascades to every file under wp-content/uploads/.
+#
+# Scope is surgical: rules ONLY match the "-master-<hex>" stem. The watermarked
+# product-display images (<slug>.jpg, e.g. 001-city-idaho-falls*.jpg — NO
+# "-master-" stem) that power the product image + zoom/lightbox are never
+# matched, and the small square thumbnails the store actually shows from the
+# master (-100x100 gallery-nav, -300x300 shop-grid/related) are explicitly
+# re-allowed below. Reversible: delete this file / revert the commit.
+
+# 1) Deny every rendition of the un-watermarked master (bare full-res original,
+#    -scaled, and all -WxH renditions). None of these are displayed anywhere.
+<FilesMatch "-master-[0-9a-f]+(-[0-9]+x[0-9]+|-scaled)?\.(jpe?g|png|webp)$">
+    Require all denied
+</FilesMatch>
+
+# 2) Re-allow ONLY the small square thumbnails the store genuinely displays:
+#    -300x300 (shop grid + related products) and -100x100 (gallery nav strip).
+#    Listed AFTER the deny so the grant wins for these two sizes (Apache 2.4
+#    merges matching <FilesMatch> in order; last match wins).
+<FilesMatch "-master-[0-9a-f]+-(100x100|300x300)\.(jpe?g|png|webp)$">
+    Require all granted
+</FilesMatch>
