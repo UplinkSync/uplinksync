@@ -138,7 +138,12 @@ add_shortcode( 'uls_shop_catalog', function () {
 	ob_start();
 	?>
 	<style>
-	.uls-shop{--bg:#f5f6fb;--panel:#fff;--ink:#173258;--muted:#5B6672;--line:#d6dde6;--navy:#173258;--navy800:#1c355c;--teal:#17b9ab;--accent:#2F6FC4;--accent-teal:#95D5DD;background:var(--bg);color:var(--ink)}
+	.uls-shop{--bg:#f5f6fb;--panel:#fff;--ink:#173258;--muted:#5B6672;--line:#d6dde6;--navy:#173258;--navy800:#1c355c;--teal:#17b9ab;--accent:#2F6FC4;--accent-teal:#95D5DD;--uls-hdr:64px;background:var(--bg);color:var(--ink)}
+	/* Sticky filter toolbar sits BELOW the sticky site-header (Snippet #100).
+	   --uls-hdr = shrunk header height (~60px desktop / ~59px mobile) + a small
+	   buffer; the gap shows the same --bg so it reads seamless. z-index stays
+	   under the header's 999 so the header always wins if they ever meet. */
+	@media(max-width:782px){.uls-shop{--uls-hdr:62px}}
 	.uls-shop .wrap{max-width:1180px;margin:0 auto;padding:26px 20px 20px}
 	.uls-shop a{color:inherit}
 	/* Hero */
@@ -149,7 +154,7 @@ add_shortcode( 'uls_shop_catalog', function () {
 	.uls-shop .h-meta{margin-top:13px;font-size:13px;color:#c3d1ef;display:flex;flex-wrap:wrap;gap:9px;align-items:center}
 	.uls-shop .h-meta .d{opacity:.45}
 	/* Toolbar: filter chips + sort */
-	.uls-shop .toolbar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:14px 18px;align-items:center;justify-content:space-between;margin:20px 2px 6px;padding:12px 4px;background:linear-gradient(var(--bg),var(--bg) 70%,rgba(245,246,251,0))}
+	.uls-shop .toolbar{position:sticky;top:var(--uls-hdr);z-index:5;scroll-margin-top:calc(var(--uls-hdr) + 12px);display:flex;flex-wrap:wrap;gap:14px 18px;align-items:center;justify-content:space-between;margin:20px 2px 6px;padding:12px 4px;background:linear-gradient(var(--bg),var(--bg) 70%,rgba(245,246,251,0))}
 	.uls-shop .chips{display:flex;flex-wrap:wrap;gap:8px}
 	.uls-shop .chip{appearance:none;cursor:pointer;font:inherit;font-size:13px;font-weight:600;line-height:1;padding:9px 14px;min-height:36px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);transition:background .15s,border-color .15s,color .15s}
 	.uls-shop .chip:hover{border-color:var(--accent)}
@@ -161,7 +166,7 @@ add_shortcode( 'uls_shop_catalog', function () {
 	.uls-shop .sortwrap select{font:inherit;font-size:13px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 30px 8px 12px;min-height:36px;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235B6672' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center}
 	.uls-shop .sortwrap select:focus-visible{outline:3px solid var(--accent-teal);outline-offset:2px}
 	/* Section */
-	.uls-shop .coll{margin:22px 2px 6px;scroll-margin-top:76px}
+	.uls-shop .coll{margin:22px 2px 6px;scroll-margin-top:calc(var(--uls-hdr) + 76px)}
 	.uls-shop .coll.is-hidden{display:none}
 	.uls-shop .coll-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;padding:14px 0 12px;border-bottom:1px solid var(--line);margin-bottom:18px}
 	.uls-shop .coll-name{font-weight:700;font-size:clamp(20px,2.4vw,26px);letter-spacing:-.01em;color:var(--navy);margin:0}
