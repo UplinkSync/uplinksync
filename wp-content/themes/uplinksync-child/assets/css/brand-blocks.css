@@ -770,3 +770,30 @@ footer .wp-block-navigation__container .wp-block-navigation-item__content {
 .wp-block-image.is-style-circle-mask img {
 	border-radius: var(--radius-pill);
 }
+
+/* ---------------------------------------------------------------------------
+ * Visual-system drift patch — outline buttons hardcoding the OLD navy (UPLAA-426).
+ *
+ * Three secondary/outline buttons on /services/ ("Explore IT & operations",
+ * "Explore aerial services", "Estimate your project") carry an INLINE
+ * `border-color:#1E3155` — the pre-lock Hostinger-default navy that UPLAA-21
+ * first flagged as `color2 #1e3155`. The locked visual-system value is
+ * --navy-900 = #173258 (visual-system.md §1, §7 "Secondary: outline,
+ * --navy-900 border"). The two are visually near-identical, so this is a token
+ * drift, not a user-visible defect — but it re-introduces the exact pre-lock
+ * value and would spread as pages are copied.
+ *
+ * The correct fix is to strip the inline hex from the block markup and let the
+ * `.is-style-outline` binding above supply the token. That content lives in the
+ * WordPress DB (not this repo) and these buttons are NOT marked is-style-outline
+ * — they are plain wp-element-button + has-border-color with the colour inlined,
+ * so the outline rule never reaches them. Until the DB content is re-saved, this
+ * CSS remaps the drifted value to the token. It is deliberately keyed to the
+ * exact stale hex so it touches ONLY buttons still carrying the old inline
+ * colour and reads --navy-900, so a future palette change propagates and the
+ * rule self-heals (no match) once the inline hex is removed at source.
+ * `!important` is required to win over the inline style attribute. */
+.wp-block-button__link.has-border-color[style*="border-color:#1E3155"],
+.wp-block-button__link.has-border-color[style*="border-color:#1e3155"] {
+	border-color: var(--navy-900) !important; /* #173258 — locked */
+}
