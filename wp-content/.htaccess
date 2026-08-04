@@ -26,3 +26,24 @@
 <FilesMatch "-master-[0-9a-f]+-(100x100|300x300)\.(jpe?g|png|webp)$">
     Require all granted
 </FilesMatch>
+
+# 3) UPLAA-418 — re-allow ONLY the 768x432 web rendition of the FIVE cleared,
+#    watermark-free aerials that the public /drone-services/ gallery displays
+#    (Code Snippet 108 renders the collection tiles from the master's
+#    "medium_large" = 768x432). These five source files are intentionally public
+#    marketing imagery (UPLAA-159 / UPLAA-201 / UPLAA-217); their 403 was
+#    collateral from Rule 1, not intended confidentiality.
+#
+#    Scoped to the exact five master hashes AND only the 768x432 size, so the
+#    store deny stays airtight everywhere else: every OTHER master is still
+#    fully denied, and for these five the bare original, -scaled, and all larger
+#    renditions (1024x576, 1536x864, 2048x…) remain denied by Rule 1. Nothing
+#    sellable is exposed — 768x432 is a low-res web preview, not a deliverable.
+#      010-city-idaho-falls        -> 59481200e0bb577f
+#      030-city-pocatello          -> e204f40adcc85108
+#      035-city-kaysville          -> a2e0e6a5dc65a469
+#      039-city-soda-springs       -> d483a1839446c48b
+#      123-moun-palisades-reservoir-> ac2db056a2191d4b
+<FilesMatch "-master-(59481200e0bb577f|e204f40adcc85108|a2e0e6a5dc65a469|d483a1839446c48b|ac2db056a2191d4b)-768x432\.(jpe?g|png|webp)$">
+    Require all granted
+</FilesMatch>
