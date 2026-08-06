@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * so a re-run only creates pages that are genuinely missing — it never
  * duplicates or overwrites an existing page's edited content.
  */
-const UPLINKSYNC_PAGE_SEED_VERSION = '1.0.0';
+const UPLINKSYNC_PAGE_SEED_VERSION = '1.1.0'; // 1.1.0: +web-design, +hosting, +for/real-estate bundle (UPLAA-456).
 const UPLINKSYNC_PAGE_SEED_OPTION  = 'uplinksync_page_seed_version';
 
 /**
@@ -80,6 +80,61 @@ function uplinksync_page_seed_definitions() {
 			'title'  => 'Contact',
 			'parent' => 0,
 			'body'   => "<!-- wp:heading {\"level\":1} -->\n<h1>Get a Free Quote</h1>\n<!-- /wp:heading -->\n\n<!-- wp:paragraph -->\n<p>Local, human IT &amp; automation partners. Tell us what you are dealing with and we will be in touch within one business day.</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:paragraph -->\n<p><!-- ***-42 master quote form: insert [contact-form-7 id=\"...\" html_id=\"quote-form\"] here once the CF7 \"Master Quote Form\" entity exists (see docs/quote-form-build-guide.md §1). The quote-form.css/js in the child theme are already keyed to #quote-form. --></p>\n<!-- /wp:paragraph -->\n\n<!-- wp:heading {\"level\":2} -->\n<h2>Prefer to reach out directly?</h2>\n<!-- /wp:heading -->\n\n<!-- wp:paragraph -->\n<p>✉️ <a href=\"mailto:{$published_email}\">{$published_email}</a><br>\n📞 +1 (208) 995-2704</p>\n<!-- /wp:paragraph -->",
+		),
+
+		// --- Web design (top-level line landing page; ***-456) -----------------
+		// UPLAA-456: `/web-design/` previously 301-collapsed to `/` because no
+		// Page owned the slug. Seeding a real Page returns 200 and gives the
+		// web/hosting line a front door of its own (the homepage only had a
+		// combined "Web & Hosting" card). Distinct from /services/web/, which is
+		// the IT-catalogue child; this is the standalone marketing landing the
+		// converged decision (UPLAA-444) asked to un-bury.
+		array(
+			'slug'   => 'web-design',
+			'title'  => 'Web Design & Development',
+			'parent' => 0,
+			'body'   => "<!-- wp:heading {\"level\":1} -->\n<h1>Web design &amp; development</h1>\n<!-- /wp:heading -->\n\n<!-- wp:paragraph -->\n<p>Fast, secure, easy-to-run websites — designed, built, and hosted by the same local team that manages your IT. One number to call when it matters, no hand-offs between a designer, a host, and a support desk who have never spoken.</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:heading {\"level\":2} -->\n<h2>What you get</h2>\n<!-- /wp:heading -->\n\n<!-- wp:list -->\n<ul>\n<li>A site built for your business, not a template you have to fight.</li>\n<li>Hosting, backups, and security handled by us — see <a href=\"/hosting/\">Hosting</a>.</li>\n<li>Ongoing changes and support from a partner who picks up the phone.</li>\n</ul>\n<!-- /wp:list -->\n\n<!-- wp:paragraph -->\n<p><!-- ***-20 copy pending: portfolio proof. Smiles &amp; Service (smilesandservice.com) is a real build we can show as a case example — \"web + hosting for Smiles &amp; Service\" where the WORK is the proof — but it is a family business and must NOT be presented as an independent third-party testimonial (UPLAA-444 R). --></p>\n<!-- /wp:paragraph -->\n\n<!-- wp:paragraph -->\n<p><a href=\"/contact/#quote-form\">Get a free quote →</a></p>\n<!-- /wp:paragraph -->",
+		),
+
+		// --- Hosting (top-level line landing page; ***-456) --------------------
+		// UPLAA-456: un-301 `/hosting/`. Companion front door to /web-design/.
+		array(
+			'slug'   => 'hosting',
+			'title'  => 'Website Hosting & Care',
+			'parent' => 0,
+			'body'   => "<!-- wp:heading {\"level\":1} -->\n<h1>Hosting &amp; care</h1>\n<!-- /wp:heading -->\n\n<!-- wp:paragraph -->\n<p>Managed hosting from the team that built your site and manages your IT — backups, security updates, uptime monitoring, and a real person to call. Not a control panel and a ticket queue in another time zone.</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:heading {\"level\":2} -->\n<h2>What's included</h2>\n<!-- /wp:heading -->\n\n<!-- wp:list -->\n<ul>\n<li>Managed updates, backups, and security monitoring.</li>\n<li>One partner for site, hosting, and IT — see <a href=\"/web-design/\">Web design</a>.</li>\n<li>Local support that answers the phone.</li>\n</ul>\n<!-- /wp:list -->\n\n<!-- wp:paragraph -->\n<p><!-- ***-20 copy pending: plan tiers / price. Owner-gated (UPLAA-444: a stated price is a design goal but the numbers are the owner's to set). Leave price OUT until Doug provides it rather than inventing a figure. --></p>\n<!-- /wp:paragraph -->\n\n<!-- wp:paragraph -->\n<p><a href=\"/contact/#quote-form\">Get a free quote →</a></p>\n<!-- /wp:paragraph -->",
+		),
+
+		// --- \"For\" parent (namespaces the audience bundle pages; ***-456) -----
+		// Empty container so /for/real-estate/ resolves as a nested slug. Kept
+		// noindex-worthy and minimal; the audience pages under it are the real
+		// destinations. Future audience lanes (e.g. /for/martial-arts-academies/,
+		// UPLAA-457) attach here as children.
+		array(
+			'slug'   => 'for',
+			'title'  => 'Who we build for',
+			'parent' => 0,
+			'body'   => "<!-- wp:heading {\"level\":1} -->\n<h1>Who we build for</h1>\n<!-- /wp:heading -->\n\n<!-- wp:paragraph -->\n<p>Tailored engagements for the businesses we work with most.</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:list -->\n<ul>\n<li><a href=\"/for/real-estate/\">Real estate groups &amp; brokerages</a></li>\n</ul>\n<!-- /wp:list -->",
+		),
+
+		// --- For Real Estate (the buyable bundle; ***-456, ***-444) ------------
+		// THE core deliverable. The homepage's \"one pipeline\" line is being
+		// retired as an abstraction about the company's shape (Peitho, separate
+		// issue). Here the cross-line claim is LEGITIMATE because it is one buyer
+		// genuinely purchasing all four lines — site, hosting, IT, listing media.
+		// Say it as an engagement a brokerage can buy, concretely.
+		//
+		// PHOTOGRAPHY GAP (MEASURED, UPLAA-444 comment 1): /drone-services/ has
+		// ZERO property/listing imagery — 122 scenic prints, no property work. So
+		// there is NO real listing photo to place here. Per design-standard §7 /
+		// visual-system §5, the image component is deliberately LEFT OUT (no stock,
+		// no generated \"listing photos\") and the request is raised to the owner on
+		// the issue. The <!-- ***-456 photography pending --> marker holds its place.
+		array(
+			'slug'   => 'real-estate',
+			'title'  => 'For Real Estate',
+			'parent' => 'for',
+			'body'   => "<!-- wp:heading {\"level\":1} -->\n<h1>Everything a brokerage needs, from one desk</h1>\n<!-- /wp:heading -->\n\n<!-- wp:paragraph -->\n<p>Your website, your hosting, your day-to-day IT, and your listing photography and video — bought as one engagement, run by one local team. No stitching together a web designer, a host, an IT contractor, and a drone operator who have never met.</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:heading {\"level\":2} -->\n<h2>The four lines, as one engagement</h2>\n<!-- /wp:heading -->\n\n<!-- wp:list -->\n<ul>\n<li><strong>A website built to sell listings</strong> — designed and built for your agency. <a href=\"/web-design/\">Web design &amp; development →</a></li>\n<li><strong>Hosting &amp; care</strong> — managed, backed up, and monitored so it is never down when a buyer is looking. <a href=\"/hosting/\">Hosting →</a></li>\n<li><strong>IT support for the office</strong> — the phones, the machines, the accounts, handled locally. <a href=\"/services/managed-it/\">Managed IT →</a></li>\n<li><strong>Listing photography &amp; video</strong> — FAA Part 107 aerial and ground media for your listings. <a href=\"/drone-services/\">See drone &amp; listing media →</a></li>\n</ul>\n<!-- /wp:list -->\n\n<!-- wp:paragraph -->\n<p><!-- ***-456 photography pending: NO property/listing imagery exists yet (/drone-services/ is 122 scenic prints, zero property work — MEASURED, UPLAA-444). Do NOT substitute stock or generated listing photos. Insert a real listing photo/video gallery here once the owner supplies property media. Component intentionally omitted until then (design-standard §7 / visual-system §5). --></p>\n<!-- /wp:paragraph -->\n\n<!-- wp:heading {\"level\":2} -->\n<h2>What it costs and how fast</h2>\n<!-- /wp:heading -->\n\n<!-- wp:paragraph -->\n<p><!-- ***-20 / owner-gated: a stated price and a stated listing-media turnaround time are design goals (UPLAA-444) but are the owner's to set. Real-estate buyers shopping repeat volume specifically want per-listing pricing + turnaround SLA + coverage area (MEASURED gap in the booking flow). Leave these as a visible request rather than inventing numbers. --></p>\n<!-- /wp:paragraph -->\n\n<!-- wp:paragraph -->\n<p><a href=\"/contact/#quote-form\">Talk to a specialist about your brokerage →</a></p>\n<!-- /wp:paragraph -->",
 		),
 	);
 }
