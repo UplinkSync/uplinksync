@@ -111,6 +111,19 @@ jobs:
             "${{ secrets.HOSTINGER_SSH_USER }}@${{ secrets.HOSTINGER_SSH_HOST }}" \
             "command -v wp >/dev/null && cd '${{ vars.WP_ROOT }}' && { [ -n '${{ vars.PLUGIN_SLUG }}' ] && wp plugin activate '${{ vars.PLUGIN_SLUG }}'; wp cache flush; } || echo 'wp-cli not available; skipped'"
 
+      # UPLAA-426: `wp cache flush` above only clears the WP object cache.
+      # LiteSpeed keeps its own page-level HTML store that a remote PURGE
+      # request can't reach (refused, 400), so deploys were shipping while
+      # visitors kept getting stale pre-deploy HTML. Best effort: absent
+      # plugin or a failing command must never fail the deploy.
+      - name: Purge LiteSpeed page cache (best effort)
+        if: vars.WP_ROOT != ''
+        continue-on-error: true
+        run: |
+          ssh -i ~/.ssh/deploy_key -p "${{ secrets.HOSTINGER_SSH_PORT }}" \
+            "${{ secrets.HOSTINGER_SSH_USER }}@${{ secrets.HOSTINGER_SSH_HOST }}" \
+            "command -v wp >/dev/null && cd '${{ vars.WP_ROOT }}' && wp litespeed-purge all || echo 'wp-cli/LiteSpeed not available; skipped'"
+
       # ***-171: BLOCKING production-representative render smoke.
       # The upstream GitLab `render_smoke` gate renders a clean-room preview
       # (repo wp-content + clean DB, no live plugin stack) and PASSED on MR !38
