@@ -177,7 +177,8 @@ add_shortcode( 'uls_collection_archive', function () {
 			<div class="h-meta">
 				<span><?php echo esc_html( $count ); ?> prints</span>
 				<?php if ( $floor ) : ?><span class="d">&middot;</span><span>from <?php echo esc_html( $floor ); ?></span><?php endif; ?>
-				<span class="d">&middot;</span><span>Archival matte &amp; canvas</span>
+				<span class="d">&middot;</span><span>Full-resolution digital download</span>
+				<span class="d">&middot;</span><a href="<?php echo esc_url( home_url( '/image-license/' ) ); ?>" style="color:#c3d1ef;text-decoration:underline">Licensing</a>
 			</div>
 		</div>
 		<div class="toolbar"><span class="shown">Showing <?php echo esc_html( $count ); ?> of <?php echo esc_html( $count ); ?> prints</span><span class="sort">Sort: Featured</span></div>

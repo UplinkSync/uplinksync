@@ -56,6 +56,38 @@ function uls_shop_money( $n ) {
 }
 
 /**
+ * UPLAA-458 #4 — derive an ORIENTATION axis (landscape / portrait / square) from
+ * the product's featured-image dimensions. The store previously exposed only a
+ * PLACE taxonomy; orientation is the one non-place facet we can compute reliably
+ * from data we already have (image metadata), with no owner tagging required.
+ * Falls back to 'landscape' when metadata is missing (all current aerials are
+ * wide), so a card is never dropped from an orientation filter by accident.
+ */
+function uls_shop_orientation( $post_id ) {
+	$tid = get_post_thumbnail_id( $post_id );
+	if ( ! $tid ) {
+		return 'landscape';
+	}
+	$meta = wp_get_attachment_metadata( $tid );
+	if ( empty( $meta['width'] ) || empty( $meta['height'] ) ) {
+		return 'landscape';
+	}
+	$w = (int) $meta['width'];
+	$h = (int) $meta['height'];
+	if ( $h <= 0 ) {
+		return 'landscape';
+	}
+	$ratio = $w / $h;
+	if ( $ratio > 1.05 ) {
+		return 'landscape';
+	}
+	if ( $ratio < 0.95 ) {
+		return 'portrait';
+	}
+	return 'square';
+}
+
+/**
  * The sectioned catalog. Groups every published print by its LOCATION sub-category
  * (children of "Aerial Photography", id 22), renders a navy hero, a filter+sort
  * toolbar, and one house-card section per location. Filter/sort are client-side.
@@ -79,6 +111,9 @@ add_shortcode( 'uls_shop_catalog', function () {
 	$groups      = array();
 	$total       = 0;
 	$global_min  = null;
+	// UPLAA-458 #4 — tally orientation across the whole catalog so we only show an
+	// orientation chip when there is actually more than one orientation to filter.
+	$orient_tally = array( 'landscape' => 0, 'portrait' => 0, 'square' => 0 );
 	foreach ( (array) $terms as $t ) {
 		if ( empty( $t->term_id ) || 22 === (int) $t->term_id ) {
 			continue;
@@ -115,6 +150,10 @@ add_shortcode( 'uls_shop_catalog', function () {
 					$global_min = $price;
 				}
 			}
+			$o = uls_shop_orientation( $p->ID );
+			if ( isset( $orient_tally[ $o ] ) ) {
+				$orient_tally[ $o ]++;
+			}
 		}
 		$groups[] = array(
 			'term'    => $t,
@@ -134,6 +173,12 @@ add_shortcode( 'uls_shop_catalog', function () {
 
 	$loc_count = count( $groups );
 	$floor     = uls_shop_money( $global_min );
+
+	// Only offer orientation chips for orientations that actually exist, and only
+	// if there is more than one — a single-orientation catalog needs no filter.
+	$orient_labels    = array( 'landscape' => 'Landscape', 'portrait' => 'Portrait', 'square' => 'Square' );
+	$orient_available = array_filter( $orient_tally );
+	$show_orient      = count( $orient_available ) > 1;
 
 	ob_start();
 	?>
@@ -162,6 +207,15 @@ add_shortcode( 'uls_shop_catalog', function () {
 	.uls-shop .chip .n{opacity:.6;font-weight:600;margin-left:5px}
 	.uls-shop .chip[aria-pressed="true"] .n{opacity:.7}
 	.uls-shop .chip:focus-visible{outline:3px solid var(--accent-teal);outline-offset:2px}
+	.uls-shop .toolbar-right{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
+	.uls-shop .searchwrap{display:flex;align-items:center}
+	.uls-shop .uls-search{font:inherit;font-size:13px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 12px;min-height:36px;min-width:180px}
+	.uls-shop .uls-search:focus-visible{outline:3px solid var(--accent-teal);outline-offset:2px;border-color:var(--accent)}
+	.uls-shop .chips-orient{margin:6px 2px 2px;align-items:center;gap:8px}
+	.uls-shop .chips-label{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:2px}
+	.uls-shop .uls-noresults{margin:18px 2px;font-size:14px;color:var(--muted)}
+	.uls-shop .uls-noresults .uls-clear,.uls-shop .uls-clear{appearance:none;cursor:pointer;font:inherit;font-size:13px;font-weight:600;color:var(--accent);background:none;border:0;padding:0;text-decoration:underline}
+	.uls-shop .coll-head.is-empty{display:none}
 	.uls-shop .sortwrap{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
 	.uls-shop .sortwrap select{font:inherit;font-size:13px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 30px 8px 12px;min-height:36px;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235B6672' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center}
 	.uls-shop .sortwrap select:focus-visible{outline:3px solid var(--accent-teal);outline-offset:2px}
@@ -223,7 +277,8 @@ add_shortcode( 'uls_shop_catalog', function () {
 					<span><?php echo esc_html( $total ); ?> prints</span>
 					<?php if ( $loc_count ) : ?><span class="d">&middot;</span><span><?php echo esc_html( $loc_count ); ?> locations</span><?php endif; ?>
 					<?php if ( $floor ) : ?><span class="d">&middot;</span><span>from <?php echo esc_html( $floor ); ?></span><?php endif; ?>
-					<span class="d">&middot;</span><span>Archival matte &amp; canvas</span>
+					<span class="d">&middot;</span><span>Full-resolution digital download</span>
+					<span class="d">&middot;</span><a href="<?php echo esc_url( home_url( '/image-license/' ) ); ?>" style="color:#c3d1ef;text-decoration:underline">Licensing</a>
 				</div>
 			</div>
 
@@ -235,15 +290,36 @@ add_shortcode( 'uls_shop_catalog', function () {
 						<button type="button" class="chip" data-filter="<?php echo esc_attr( $g['term']->slug ); ?>" aria-pressed="false"><?php echo esc_html( $g['term']->name ); ?><span class="n"><?php echo esc_html( $g['count'] ); ?></span></button>
 					<?php endforeach; ?>
 				</div>
-				<label class="sortwrap">Sort
-					<select aria-label="Sort prints">
-						<option value="featured">Featured</option>
-						<option value="price-asc">Price: low to high</option>
-						<option value="price-desc">Price: high to low</option>
-						<option value="name-asc">Name: A to Z</option>
-					</select>
-				</label>
+				<div class="toolbar-right">
+					<?php /* UPLAA-458 #4 — search box (client-side, over product names). */ ?>
+					<div class="searchwrap">
+						<input type="search" class="uls-search" aria-label="Search prints by name" placeholder="Search prints&hellip;" autocomplete="off" />
+					</div>
+					<label class="sortwrap">Sort
+						<select aria-label="Sort prints">
+							<option value="featured">Featured</option>
+							<option value="price-asc">Price: low to high</option>
+							<option value="price-desc">Price: high to low</option>
+							<option value="name-asc">Name: A to Z</option>
+						</select>
+					</label>
+				</div>
 			</div>
+
+			<?php /* UPLAA-458 #4 — ORIENTATION axis (the store's first non-place facet).
+			   Rendered only when more than one orientation exists in the catalog. */ ?>
+			<?php if ( $show_orient ) : ?>
+			<div class="chips chips-orient" role="group" aria-label="Filter by orientation">
+				<span class="chips-label">Orientation</span>
+				<button type="button" class="chip chip-orient" data-orient="all" aria-pressed="true">All</button>
+				<?php foreach ( $orient_labels as $ok => $olabel ) :
+					if ( empty( $orient_available[ $ok ] ) ) { continue; } ?>
+					<button type="button" class="chip chip-orient" data-orient="<?php echo esc_attr( $ok ); ?>" aria-pressed="false"><?php echo esc_html( $olabel ); ?><span class="n"><?php echo esc_html( $orient_available[ $ok ] ); ?></span></button>
+				<?php endforeach; ?>
+			</div>
+			<?php endif; ?>
+
+			<p class="uls-noresults" hidden>No prints match your filters. <button type="button" class="uls-clear">Clear all</button></p>
 
 			<?php foreach ( $groups as $g ) :
 				$term  = $g['term'];
@@ -267,12 +343,13 @@ add_shortcode( 'uls_shop_catalog', function () {
 								: wc_placeholder_img( 'woocommerce_thumbnail' );
 							$pnum  = (float) $pr->get_price();
 							$pname = $pr->get_name();
+							$porient = uls_shop_orientation( $p->ID );
 							$classes = 'addbtn';
 							if ( $pr->is_purchasable() && $pr->is_in_stock() && ! $pr->is_type( 'variable' ) ) {
 								$classes .= ' add_to_cart_button ajax_add_to_cart';
 							}
 							?>
-							<div class="prod" data-coll="<?php echo esc_attr( $term->slug ); ?>" data-price="<?php echo esc_attr( $pnum ); ?>" data-name="<?php echo esc_attr( strtolower( $pname ) ); ?>" data-order="<?php echo esc_attr( $order ); ?>">
+							<div class="prod" data-coll="<?php echo esc_attr( $term->slug ); ?>" data-orient="<?php echo esc_attr( $porient ); ?>" data-price="<?php echo esc_attr( $pnum ); ?>" data-name="<?php echo esc_attr( strtolower( $pname ) ); ?>" data-order="<?php echo esc_attr( $order ); ?>">
 								<a class="pimg" href="<?php echo esc_url( $permalink ); ?>"><?php echo $img; // phpcs:ignore ?></a>
 								<div class="pinfo">
 									<span class="ptitle"><a href="<?php echo esc_url( $permalink ); ?>"><?php echo esc_html( $pname ); ?></a></span>
@@ -308,12 +385,46 @@ add_shortcode( 'uls_shop_catalog', function () {
 		var root=document.currentScript.previousElementSibling;
 		if(!root||!root.classList.contains('uls-shop')){root=document.querySelector('.uls-shop');}
 		if(!root)return;
-		var chips=[].slice.call(root.querySelectorAll('.chip'));
+		// Collection chips carry data-filter; orientation chips carry data-orient.
+		var collChips=[].slice.call(root.querySelectorAll('.chip[data-filter]'));
+		var orientChips=[].slice.call(root.querySelectorAll('.chip-orient'));
 		var sections=[].slice.call(root.querySelectorAll('.coll'));
 		var sortSel=root.querySelector('.sortwrap select');
-		function applyFilter(f){
-			chips.forEach(function(c){c.setAttribute('aria-pressed',c.dataset.filter===f?'true':'false');});
-			sections.forEach(function(s){s.classList.toggle('is-hidden',!(f==='all'||s.dataset.coll===f));});
+		var searchInput=root.querySelector('.uls-search');
+		var noResults=root.querySelector('.uls-noresults');
+		var clearBtn=root.querySelector('.uls-clear');
+		// UPLAA-458 #4 — combined filter state: place + orientation + free-text.
+		var state={coll:'all',orient:'all',q:''};
+
+		function apply(){
+			var q=state.q.trim().toLowerCase();
+			var anyVisible=false;
+			sections.forEach(function(sec){
+				var collMatch=(state.coll==='all'||sec.dataset.coll===state.coll);
+				var cards=[].slice.call(sec.querySelectorAll('.prod'));
+				var shownInSec=0;
+				cards.forEach(function(card){
+					var ok=collMatch
+						&&(state.orient==='all'||card.dataset.orient===state.orient)
+						&&(q===''||(card.dataset.name||'').indexOf(q)!==-1);
+					card.classList.toggle('is-hidden',!ok);
+					if(ok){shownInSec++;}
+				});
+				var secVisible=shownInSec>0;
+				sec.classList.toggle('is-hidden',!secVisible);
+				if(secVisible){anyVisible=true;}
+			});
+			if(noResults){noResults.hidden=anyVisible;}
+		}
+		function setColl(f){
+			state.coll=f;
+			collChips.forEach(function(c){c.setAttribute('aria-pressed',c.dataset.filter===f?'true':'false');});
+			apply();
+		}
+		function setOrient(o){
+			state.orient=o;
+			orientChips.forEach(function(c){c.setAttribute('aria-pressed',c.dataset.orient===o?'true':'false');});
+			apply();
 		}
 		function applySort(mode){
 			sections.forEach(function(sec){
@@ -328,8 +439,15 @@ add_shortcode( 'uls_shop_catalog', function () {
 				cards.forEach(function(c){grid.appendChild(c);});
 			});
 		}
-		chips.forEach(function(c){c.addEventListener('click',function(){applyFilter(c.dataset.filter);});});
+		collChips.forEach(function(c){c.addEventListener('click',function(){setColl(c.dataset.filter);});});
+		orientChips.forEach(function(c){c.addEventListener('click',function(){setOrient(c.dataset.orient);});});
 		if(sortSel){sortSel.addEventListener('change',function(){applySort(sortSel.value);});}
+		if(searchInput){searchInput.addEventListener('input',function(){state.q=searchInput.value;apply();});}
+		if(clearBtn){clearBtn.addEventListener('click',function(){
+			state.q='';if(searchInput){searchInput.value='';}
+			setColl('all');setOrient('all');
+			if(searchInput){searchInput.focus();}
+		});}
 	})();
 	</script>
 	<?php
