@@ -353,7 +353,7 @@ add_action( 'wp_enqueue_scripts', 'uplinksync_child_estimate_book_assets', 21 );
 
 function uplinksync_child_drone_gallery_title( $title_parts ) {
 	if ( uplinksync_child_is_singular_slug( 'drone-services' ) ) {
-		return array( 'title' => 'Drone Photography & Inspection Services | UplinkSync' );
+		return array( 'title' => 'Real Estate Drone Photo & Video | UplinkSync' );
 	}
 	return $title_parts;
 }

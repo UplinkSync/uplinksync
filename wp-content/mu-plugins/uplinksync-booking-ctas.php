@@ -112,10 +112,10 @@ function uplinksync_book_it_notes() {
 		. "\xE2\x80\xA2 Anything else we should know:";
 }
 function uplinksync_book_uav_notes() {
-	return "UAV / drone project consultation \xE2\x80\x94 a few details to guide our conversation:\n"
-		. "\xE2\x80\xA2 Project type (mapping, inspection, marketing footage, progress records):\n"
-		. "\xE2\x80\xA2 Site location & approx. size / acreage:\n"
-		. "\xE2\x80\xA2 Deliverables needed (stills, video, orthomosaic, reports):\n"
+	return "Aerial photo & video consultation \xE2\x80\x94 a few details to guide our conversation:\n"
+		. "\xE2\x80\xA2 Project type (listing / property media, event, progress records \xE2\x80\x94 or inspection / mapping):\n"
+		. "\xE2\x80\xA2 Property or site location & approx. size:\n"
+		. "\xE2\x80\xA2 Deliverables needed (photos, video reel \xE2\x80\x94 or inspection stills / reports):\n"
 		. "\xE2\x80\xA2 Target date / seasonal timing:\n"
 		. "\xE2\x80\xA2 Anything else we should know:";
 }
@@ -191,7 +191,7 @@ function uplinksync_book_modal_markup() {
 		. '<span class="uls-path-sub">Websites, systems &amp; help-desk, security, cloud / M365, networking.</span></a>'
 		. '<a class="uls-consult-path" href="' . $uav_url . '" data-cal-link="' . $uav_slug . '" data-cal-config="' . $uav_cfg . '" target="_blank" rel="noopener">'
 		. '<span class="uls-path-title">UAV / drone project</span>'
-		. '<span class="uls-path-sub">Mapping, inspection, marketing footage, progress records.</span></a>'
+		. '<span class="uls-path-sub">Listing photo &amp; video, events, progress records &mdash; inspection and mapping also available.</span></a>'
 		. '</div></div></div>';
 }
 
