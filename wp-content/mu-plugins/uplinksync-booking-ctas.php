@@ -16,7 +16,14 @@
  *   data-cal-config JSON prefill, and computes an estimate prefill for data-cal-prefill="estimate".
  *   The runtime also loads on estimator pages (uls-estimator).
  *
- * Version: 2.1.0
+ * v2.1.1 (2026-08-07, ***-449 fault 3): the "Book a consultation" injector no longer fires on
+ *   WooCommerce commerce surfaces (shop archive, single product, product cat/tag, cart, checkout,
+ *   account), and its /contact/-anchored fallback is now scoped to is_page('contact'). Previously
+ *   the /shop/ licensing block's own "Get in touch" -> /contact/ button matched that fallback and
+ *   got an IT-consult CTA injected beside it — offering a stock-image licensing buyer an IT
+ *   consultation on the personal namespace. Injector-side fix; the shop block was already correct.
+ *
+ * Version: 2.1.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -210,6 +217,39 @@ function uplinksync_book_rewrite( $html ) {
 }
 
 /**
+ * True on any WooCommerce commerce surface — the shop archive, single products,
+ * product category/tag archives, cart, checkout and account. An IT/Web
+ * "Book a consultation" CTA has no place on a stock-image licensing page, so the
+ * consult injector is suppressed here (***-449 fault 3): the /shop/ licensing
+ * block's own "Get in touch" -> /contact/ button was being matched by the
+ * fallback below and getting an IT-consult button injected beside it.
+ */
+function uplinksync_book_is_commerce_surface() {
+	if ( function_exists( 'is_shop' ) && is_shop() ) {
+		return true;
+	}
+	if ( function_exists( 'is_product' ) && is_product() ) {
+		return true;
+	}
+	if ( function_exists( 'is_product_category' ) && is_product_category() ) {
+		return true;
+	}
+	if ( function_exists( 'is_product_tag' ) && is_product_tag() ) {
+		return true;
+	}
+	if ( function_exists( 'is_cart' ) && is_cart() ) {
+		return true;
+	}
+	if ( function_exists( 'is_checkout' ) && is_checkout() ) {
+		return true;
+	}
+	if ( function_exists( 'is_account_page' ) && is_account_page() ) {
+		return true;
+	}
+	return false;
+}
+
+/**
  * Inject "Book a consultation" as a sibling button immediately after the
  * top-of-funnel "Talk to a specialist" CTA (which links to /contact/, the quote
  * path). Booking augments the quote CTA; the original anchor is untouched.
@@ -217,6 +257,12 @@ function uplinksync_book_rewrite( $html ) {
  */
 function uplinksync_book_inject_consult( $html ) {
 	if ( false !== strpos( $html, 'uplinksync-book-consult' ) ) {
+		return $html;
+	}
+	// ***-449 fault 3: never inject the IT/Web consult CTA on a commerce surface.
+	// The stock-image storefront is a licensing funnel, not an IT-services funnel;
+	// its own "Get in touch" -> /contact/ button must not sprout a consultation CTA.
+	if ( uplinksync_book_is_commerce_surface() ) {
 		return $html;
 	}
 	// Anchor on the "Talk to a specialist" button's own closing </a></div>, and
@@ -234,8 +280,13 @@ function uplinksync_book_inject_consult( $html ) {
 		return $injected;
 	}
 
-	// Fallback for surfaces without that button (e.g. the /contact/ page): place
-	// the consultation CTA next to the first /contact/ (quote) link's button.
+	// Fallback for the /contact/ page only: place the consultation CTA next to the
+	// first /contact/ (quote) link's button. Scoped to is_page('contact') so it
+	// can never latch onto an incidental /contact/ link on some other page (***-449:
+	// the /shop/ licensing block's "Get in touch" link previously triggered it).
+	if ( ! ( function_exists( 'is_page' ) && is_page( 'contact' ) ) ) {
+		return $html;
+	}
 	$pattern2 = '#(href="https://uplinksync\.com/contact/"[^>]*>[^<]*</a>\s*</div>)#';
 	$injected2 = preg_replace(
 		$pattern2,
