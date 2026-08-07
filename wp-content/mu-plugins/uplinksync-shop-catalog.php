@@ -297,7 +297,6 @@ add_shortcode( 'uls_shop_catalog', function () {
 			<p>Tell us the location and use and we&rsquo;ll scope it &mdash; commercial and large-format licensing on request.</p>
 			<div class="cta-actions">
 				<a class="uls-cta-primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Get in touch</a>
-				<div class="wp-block-button uplinksync-book-cta uplinksync-book-consult"><a class="wp-block-button__link wp-element-button uls-book-link" href="https://book.uplinksync.com/dirwin/it-consult" data-cal-link="dirwin/it-consult" data-uls-book="consult" target="_blank" rel="noopener">Book a consultation</a></div>
 			</div>
 		</div>
 		<?php endif; ?>
