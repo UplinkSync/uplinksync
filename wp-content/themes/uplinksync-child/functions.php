@@ -359,6 +359,22 @@ function uplinksync_child_drone_gallery_title( $title_parts ) {
 }
 add_filter( 'document_title_parts', 'uplinksync_child_drone_gallery_title' );
 
+/*
+ * UPLAA-452 fix: Rank Math (the active SEO plugin) renders the <title> and
+ * og:title itself and ignores document_title_parts, so the re-aimed drone
+ * title never reached production. Mirror the uplinksync-contact-seo.php
+ * precedent and feed Rank Math the same approved string on its own frontend
+ * filter so <title>, og:title and twitter:title stay in sync with core.
+ */
+add_filter(
+	'rank_math/frontend/title',
+	function ( $title ) {
+		return uplinksync_child_is_singular_slug( 'drone-services' )
+			? 'Real Estate Drone Photo & Video | UplinkSync'
+			: $title;
+	}
+);
+
 /**
  * ***-42 / ***-99: quote form styling/behaviour, only where the form lives.
  * Markup is supplied by Contact Form 7 (installed on the host, not vendored).
