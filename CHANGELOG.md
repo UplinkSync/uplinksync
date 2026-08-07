@@ -13,7 +13,10 @@ The format is loosely based on
 - Drone-services page: describe aerial capture as a plain, open service for
   real estate, inspection, and events — removed the "additional service for
   managed-IT clients and referrals" gating so a first-time buyer isn't told
-  the work is a side line.
+  the work is a side line. The live page body renders from the database, not
+  the file template, so this removal is applied by a credential-free init-time
+  DB migration (mu-plugin `uplinksync-drone-side-business-tell.php`) that
+  deploys with wp-content — the file-template edit alone never reached prod.
 
 ## [0.1.0] - 2026-07-31
 
