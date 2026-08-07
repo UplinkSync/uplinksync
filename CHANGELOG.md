@@ -9,6 +9,12 @@ The format is loosely based on
 
 ## [Unreleased]
 
+### Changed
+- Drone-services page: describe aerial capture as a plain, open service for
+  real estate, inspection, and events — removed the "additional service for
+  managed-IT clients and referrals" gating so a first-time buyer isn't told
+  the work is a side line.
+
 ## [0.1.0] - 2026-07-31
 
 ### Added
