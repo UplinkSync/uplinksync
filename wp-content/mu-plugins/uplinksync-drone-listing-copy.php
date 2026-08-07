@@ -44,14 +44,14 @@
  *   then, and (b) bumps the version so the already-latched prod option is superseded
  *   and the pass re-runs.
  *
- * Version: 1.1.0
+ * Version: 1.2.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-const UPLINKSYNC_DRONE_LISTING_COPY_VERSION = '1.1.0';
+const UPLINKSYNC_DRONE_LISTING_COPY_VERSION = '1.2.0';
 const UPLINKSYNC_DRONE_LISTING_COPY_OPTION  = 'uplinksync_drone_listing_copy_version';
 const UPLINKSYNC_DRONE_LISTING_COPY_APPLIED = 'uplinksync_drone_listing_copy_applied';
 
@@ -74,16 +74,18 @@ function uplinksync_drone_listing_copy_swaps() {
 		),
 
 		// --- "Aerial imagery" receive-card heading: name the primary offer clearly ------
+		//     NOTE (UPLAA-478): the live receive-card headings render as <h3>, not <h2>;
+		//     the earlier <h2> needles could never match. Corrected to <h3>.
 		array(
-			'>Aerial imagery</h2>',
-			'>Listing photo &amp; video</h2>',
+			'>Aerial imagery</h3>',
+			'>Listing photo &amp; video</h3>',
 		),
 
 		// --- Collapse the two supporting cards into one demoted "Also available" line.
 		//     Inspection-stills card heading -> the single supporting-services heading. ---
 		array(
-			'>Inspection stills</h2>',
-			'>Also available</h2>',
+			'>Inspection stills</h3>',
+			'>Also available</h3>',
 		),
 		array(
 			'Close-up frames of roofs, structures, and hard-to-reach infrastructure — clear detail for condition reports without putting anyone on a ladder.',
