@@ -37,14 +37,21 @@
  *   phrase, any owner rewrite of that phrase means the needle no longer matches and the
  *   swap is skipped. The migration records how many swaps applied (per version) for audit.
  *
- * Version: 1.0.0
+ *   UPLAA-474 (v1.1.0): the v1.0.0 guard latched the version option on prod after a
+ *   single pass that did NOT apply (page absent at init / object-cached stale body),
+ *   so the H1/body swaps never landed and never retried. This revision (a) latches
+ *   ONLY once the change has settled or is confirmed already present, retrying until
+ *   then, and (b) bumps the version so the already-latched prod option is superseded
+ *   and the pass re-runs.
+ *
+ * Version: 1.1.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-const UPLINKSYNC_DRONE_LISTING_COPY_VERSION = '1.0.0';
+const UPLINKSYNC_DRONE_LISTING_COPY_VERSION = '1.1.0';
 const UPLINKSYNC_DRONE_LISTING_COPY_OPTION  = 'uplinksync_drone_listing_copy_version';
 const UPLINKSYNC_DRONE_LISTING_COPY_APPLIED = 'uplinksync_drone_listing_copy_applied';
 
@@ -118,18 +125,35 @@ function uplinksync_drone_listing_copy_resolve() {
 	return null;
 }
 
+/**
+ * Run the swap pass.
+ *
+ * Returns TRUE only when the migration has SETTLED — it either applied at least
+ * one swap that persisted, or the page is confirmed already re-aimed (the lead
+ * H1 needle is gone AND its replacement is present). Returns FALSE when the pass
+ * could NOT settle: page not resolvable yet, source needles still present but no
+ * write stuck, or the write was reverted. The caller latches the one-shot version
+ * guard ONLY on TRUE, so a transient failure (page absent at init, object-cached
+ * stale post_content, a reverted write) is retried on a later request instead of
+ * being permanently latched after a single no-op pass — the root cause of
+ * UPLAA-474, where the guard latched against a page whose H1 swap never took.
+ */
 function uplinksync_drone_listing_copy_run() {
 	$page = uplinksync_drone_listing_copy_resolve();
 	if ( ! ( $page instanceof WP_Post ) ) {
 		update_option( UPLINKSYNC_DRONE_LISTING_COPY_APPLIED, 'page-absent' );
-		return;
+		return false;
 	}
+
+	$swaps   = uplinksync_drone_listing_copy_swaps();
+	$h1_from = $swaps[0][0];
+	$h1_to   = $swaps[0][1];
 
 	$content = $page->post_content;
 	$before  = $content;
 	$applied = 0;
 
-	foreach ( uplinksync_drone_listing_copy_swaps() as $swap ) {
+	foreach ( $swaps as $swap ) {
 		list( $needle, $replacement ) = $swap;
 		if ( '' !== $needle && false !== strpos( $content, $needle ) ) {
 			$content = str_replace( $needle, $replacement, $content );
@@ -137,10 +161,13 @@ function uplinksync_drone_listing_copy_run() {
 		}
 	}
 
-	// Nothing matched (already re-aimed, or owner-edited) => idempotent no-op.
+	// Nothing changed this pass. Distinguish "already re-aimed" (settle + latch)
+	// from "not yet" (do not latch; retry next request). The lead H1 swap is the
+	// sentinel: source gone AND replacement present == the migration already landed.
 	if ( $content === $before ) {
-		update_option( UPLINKSYNC_DRONE_LISTING_COPY_APPLIED, '0' );
-		return;
+		$already = ( false === strpos( $before, $h1_from ) ) && ( false !== strpos( $before, $h1_to ) );
+		update_option( UPLINKSYNC_DRONE_LISTING_COPY_APPLIED, $already ? 'already' : 'no-match' );
+		return $already;
 	}
 
 	wp_update_post(
@@ -150,18 +177,27 @@ function uplinksync_drone_listing_copy_run() {
 		),
 		true
 	);
-	update_option( UPLINKSYNC_DRONE_LISTING_COPY_APPLIED, (string) $applied );
+
+	// Confirm the write persisted — a filter or cache layer reverting it silently
+	// must NOT latch the guard. Re-read fresh from the DB, not the object cache.
+	clean_post_cache( $page->ID );
+	$fresh = get_post( $page->ID );
+	$stuck = ( $fresh instanceof WP_Post ) && ( false === strpos( $fresh->post_content, $h1_from ) );
+	update_option( UPLINKSYNC_DRONE_LISTING_COPY_APPLIED, $stuck ? (string) $applied : 'reverted' );
+	return $stuck;
 }
 
 /**
- * One-shot guard. The pass is itself idempotent (every needle is gone after the
- * first apply), so this avoids re-scanning post_content on every request.
+ * One-shot guard that latches ONLY once the migration has settled (see run()).
+ * Until then it re-attempts on each request — cheap: resolve one page + a few
+ * strpos checks. Once the version option is set the guard short-circuits.
  */
 function uplinksync_drone_listing_copy_maybe_run() {
 	if ( get_option( UPLINKSYNC_DRONE_LISTING_COPY_OPTION ) === UPLINKSYNC_DRONE_LISTING_COPY_VERSION ) {
 		return;
 	}
-	uplinksync_drone_listing_copy_run();
-	update_option( UPLINKSYNC_DRONE_LISTING_COPY_OPTION, UPLINKSYNC_DRONE_LISTING_COPY_VERSION );
+	if ( uplinksync_drone_listing_copy_run() ) {
+		update_option( UPLINKSYNC_DRONE_LISTING_COPY_OPTION, UPLINKSYNC_DRONE_LISTING_COPY_VERSION );
+	}
 }
 add_action( 'init', 'uplinksync_drone_listing_copy_maybe_run', 20 );
