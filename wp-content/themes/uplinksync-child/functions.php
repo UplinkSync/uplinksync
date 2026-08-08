@@ -324,12 +324,13 @@ function uplinksync_child_drone_gallery_assets() {
 add_action( 'wp_enqueue_scripts', 'uplinksync_child_drone_gallery_assets', 21 );
 
 /**
- * *** #4: Estimate-as-modal + cal.com pop-up booking. Loads where the estimator
- * lives — the /services/ and /contact/ pages. The JS is DOM-only (moves the
- * estimator into an accessible modal and adds a "Book a time" button that carries
- * data-cal-link/data-cal-prefill); the cal.com pop-up itself is opened by the
- * booking-CTAs mu-plugin runtime, which also loads on estimator pages. Enhancement
- * only — without JS the estimator renders inline exactly as before.
+ * Estimate-as-modal + on-page booking. Loads where the estimator lives — the
+ * /services/ and /contact/ pages. The JS is DOM-only (moves the estimator into an
+ * accessible modal and adds a "Book a time" button that opens the booking dialog
+ * on the UAV path, handing the estimator's answers across); the dialog and its
+ * inline cal.com embed live in the booking-CTAs mu-plugin runtime, which also
+ * loads on estimator pages. Enhancement only — without JS the estimator renders
+ * inline exactly as before.
  */
 function uplinksync_child_estimate_book_assets() {
 	if ( ! uplinksync_child_is_singular_slug( array( 'services', 'contact' ) ) ) {
@@ -465,8 +466,8 @@ add_action( 'wp_enqueue_scripts', 'uplinksync_child_motion_assets', 22 );
  * deferred, and a no-op without .uls-splith. Type stays DM Sans (the live font) —
  * the concept's Manrope/Fira are deliberately not introduced. The hero "Get a fast
  * estimate" buttons carry uls-consult-trigger + data-uls-book-open, so the booking
- * mu-plugin injects and opens the existing cal.com chooser modal (no duplicate
- * modal system).
+ * mu-plugin injects and opens the site's booking dialog — the intake form plus its
+ * inline cal.com embed (no duplicate modal system, and no navigation off-site).
  */
 function uplinksync_child_split_horizon_assets() {
 	if ( ! is_front_page() ) {
