@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: UplinkSync — Homepage Nav & CTA Rewiring
- * Description: Rewires the homepage (`/`) primary nav, hero/body CTAs and drone cards to the canonical IA pages, strips `/product/*` commerce links, and drops the duplicate `-2` Woo product links (***-120, ***-125). Like the other UplinkSync fixes, the homepage nav/hero markup is produced by the Hostinger AI theme + saved block content in the WP DB, NOT by tracked files, so a static edit cannot reach it. This mu-plugin rewrites the rendered document on the way out, keeping the fix captured in-repo (deploys with wp-content) and independent of the active theme. Server-side 301s for the legacy paths themselves live in uplinksync-canonical-redirects.php and uplinksync-drone-product-redirects.php; this plugin fixes the *links on the page* so users and crawlers never hit those redirects in the first place.
- * Version: 1.1.0
+ * Description: Rewires the homepage (`/`) primary nav, hero/body CTAs and drone cards to the canonical IA pages, strips `/product/*` commerce links, and drops the duplicate `-2` Woo product links (***-120, ***-125). Like the other UplinkSync fixes, the homepage nav/hero markup is produced by the Hostinger AI theme + saved block content in the WP DB, NOT by tracked files, so a static edit cannot reach it. This mu-plugin rewrites the rendered document on the way out, keeping the fix captured in-repo (deploys with wp-content) and independent of the active theme. Server-side 301s for the legacy paths themselves live in uplinksync-canonical-redirects.php and uplinksync-drone-product-redirects.php; this plugin fixes the *links on the page* so users and crawlers never hit those redirects in the first place. UPLAA-452 (v1.2.0): also re-aims the homepage quote-form path-chooser drone card, whose DB-stored sub-copy still led "Aerial photography, mapping & surveying, roof & structure inspection" — the exact industrial-first framing SHIP ORDER #7 demotes. The card copy lives in the same saved block content, unreachable by a tracked-file edit and 401-locked to REST, so it is corrected here on the same `/`-only output buffer.
+ * Version: 1.2.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -91,6 +91,7 @@ function uplinksync_homepage_nav_rewrite( $html ) {
 
 	$html = uplinksync_homepage_rewrite_ctas( $html );
 	$html = uplinksync_homepage_rewrite_dupe_products( $html );
+	$html = uplinksync_homepage_reaim_quickform( $html );
 	// Primary-nav item injection moved to the site-wide uplinksync-primary-nav.php
 	// (***-126) so `/`, `/about/`, `/contact/`, `/services/` all render the same
 	// nav (About / Services / Contact). This plugin no longer injects nav items;
@@ -172,5 +173,42 @@ function uplinksync_homepage_rewrite_dupe_products( $html ) {
 		$html = str_replace( $from, UPLINKSYNC_NAV_DRONE, $html );
 	}
 	return $html;
+}
+
+/**
+ * Re-aim the homepage quote-form path-chooser drone card (UPLAA-452, SHIP ORDER #7).
+ *
+ * The `/` quote form ("What kind of project can we help with?") offers two path
+ * cards. The drone card's sub-label still reads, verbatim from the saved block
+ * content in the WP DB:
+ *
+ *   Drone / UAV work
+ *   Aerial photography, mapping & surveying, roof & structure inspection.
+ *
+ * That is the industrial-first framing the ship order demotes: it leads on
+ * mapping / surveying / inspection and never mentions listing or property media.
+ * Every other surface was re-aimed on its own change — the drone page body
+ * (uplinksync-drone-listing-copy.php), the consultation path-chooser
+ * (uplinksync-booking-ctas.php: "Listing photo & video, events, progress
+ * records — inspection and mapping also available."), the estimator lead option
+ * ("Real-estate / property photography") — leaving this one card as the last
+ * inspection-first tell on the home page (MEASURED on cache-busted prod).
+ *
+ * The card copy is not in any tracked file (Hostinger theme + saved block content)
+ * and live REST is 401-locked to agents, so — exactly like the CTA/dupe swaps
+ * above — it is corrected on the way out. Single high-confidence substring match:
+ * the needle is the exact rendered bytes (including `&amp;`), so it either matches
+ * and is replaced or is absent and this is a NO-OP. It cannot restructure or blank
+ * the card. The wording mirrors the already-approved consultation path-chooser so
+ * the two entry points read consistently: creative lead, inspection/mapping demoted
+ * to one supporting clause (DEMOTE, do not delete — UPLAA-452 comment 1).
+ *
+ * OWNER EDITS WIN: any owner rewrite of the phrase means the needle no longer
+ * matches and the swap is skipped.
+ */
+function uplinksync_homepage_reaim_quickform( $html ) {
+	$from = 'Aerial photography, mapping &amp; surveying, roof &amp; structure inspection.';
+	$to   = 'Listing photo &amp; video, events, progress records &mdash; inspection and mapping also available.';
+	return str_replace( $from, $to, $html );
 }
 
