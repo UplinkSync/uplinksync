@@ -5,18 +5,19 @@
  * (overlay), not inline, and booking should be a cal.com pop-up carrying the
  * visitor's context so nothing is re-entered.
  *
- * SEPARATION OF CONCERNS: all cal.com pop-up behaviour (the lazy Embed loader, the
- * [data-cal-link] click handler, and the estimator prefill) lives in ONE place —
- * the uplinksync-booking-ctas.php mu-plugin — so there is a single Cal loader on
- * the page. THIS file only does the DOM work:
+ * SEPARATION OF CONCERNS: all cal.com behaviour (the lazy Embed loader, the
+ * booking dialog, and the inline embed) lives in ONE place — the
+ * uplinksync-booking-ctas.php mu-plugin — so there is a single Cal loader on the
+ * page. THIS file only does the DOM work:
  *
  *   1. Move the DB-authored estimator (#uls-estimator) into an accessible modal
  *      opened by a trigger button ("Estimate your project"). IDs are preserved,
  *      so the estimator's own inline logic keeps working unchanged.
- *   2. Add a "Book a time" button inside the estimator that carries
- *      data-cal-link="dirwin/uav-service" + data-cal-prefill="estimate"; the
- *      mu-plugin handler opens the cal.com pop-up, prefilled from the estimator
- *      fields, when it is clicked.
+ *   2. Add a "Book a time" button inside the estimator that opens the site's
+ *      booking dialog on the UAV path (data-uls-book-open + data-uls-book-intent),
+ *      handing the estimator's captured context across so nothing is re-entered.
+ *      Booking then completes INSIDE that dialog against team/uplinksync/* — it
+ *      never navigates to book.uplinksync.com.
  *
  * Pure progressive enhancement: with JS off the estimator stays inline exactly as
  * today. Accessibility mirrors the CTA chooser modal (role dialog + aria-modal,
@@ -126,18 +127,81 @@
 			a.addEventListener( 'click', function ( e ) { e.preventDefault(); ctl.open( a ); } );
 		} );
 
-		// "Book a time" -> cal.com pop-up (opened by the mu-plugin handler),
-		// prefilled from the estimator fields (data-cal-prefill="estimate").
-		// Drone projects route to the uav-service event type.
+		// "Book a time" -> the site's booking dialog on the UAV path. The dialog
+		// (mu-plugin) collects/holds the details and mounts the inline cal.com
+		// embed against team/uplinksync/uav-consult, so booking finishes on this
+		// page. This direct listener runs before the mu-plugin's delegated
+		// document handler, so the estimator context is already in the dialog's
+		// fields by the time it opens.
 		if ( ! est.querySelector( '.uls-est-book' ) ) {
 			var book = document.createElement( 'button' );
 			book.type = 'button';
 			book.className = 'uls-est-btn uls-est-btn--primary uls-est-book';
-			book.setAttribute( 'data-cal-link', 'dirwin/uav-service' );
-			book.setAttribute( 'data-cal-prefill', 'estimate' );
+			book.setAttribute( 'data-uls-book-open', 'uls-book-modal' );
+			book.setAttribute( 'data-uls-book-intent', 'uav' );
+			book.setAttribute( 'aria-haspopup', 'dialog' );
+			book.setAttribute( 'aria-controls', 'uls-book-modal' );
 			book.textContent = 'Book a time';
+			book.addEventListener( 'click', handoffEstimateContext );
 			var actions = est.querySelector( '.uls-est-actions' ) || built.panel;
 			actions.appendChild( book );
+		}
+	}
+
+	/**
+	 * Copy whatever the estimator captured into the booking dialog's fields, so
+	 * the visitor never retypes it. Only fills blanks — never clobbers something
+	 * the visitor already typed in the dialog.
+	 */
+	function handoffEstimateContext() {
+		function v( id ) { var el = document.getElementById( id ); return el ? ( el.value || '' ).trim() : ''; }
+		function label( id ) {
+			var el = document.getElementById( id );
+			if ( ! el || el.selectedIndex < 0 || ! el.options ) { return ''; }
+			var t = ( el.options[ el.selectedIndex ].text || '' ).trim();
+			return t.indexOf( 'Choose' ) === 0 ? '' : t;
+		}
+		function fill( id, value ) {
+			var el = document.getElementById( id );
+			if ( el && value && ! ( el.value || '' ).trim() ) { el.value = value; }
+		}
+
+		fill( 'uls-bk-name', v( 'uls-est-name' ) );
+		fill( 'uls-bk-email', v( 'uls-est-email' ) );
+
+		var bits = [];
+		var line = label( 'uls-est-line' );
+		var miles = v( 'uls-est-miles' );
+		var timing = label( 'uls-est-timing' );
+		if ( line ) { bits.push( 'Service: ' + line ); }
+		if ( miles ) { bits.push( 'Distance from Idaho Falls: ' + miles + ' miles' ); }
+		if ( timing ) { bits.push( 'Timing: ' + timing ); }
+		if ( bits.length ) {
+			fill( 'uls-bk-notes', 'Estimate from uplinksync.com — ' + bits.join( ' · ' ) );
+		}
+
+		// Map the estimator's service line onto the UAV event type's own fields.
+		var lineVal = v( 'uls-est-line' );
+		var siteType = {
+			real_estate: 'residential-roof',
+			mapping: 'land-acreage',
+			inspection: 'commercial-building',
+			tower: 'other'
+		}[ lineVal ];
+		fill( 'uls-bk-sitetype', siteType );
+
+		var deliverables = {
+			real_estate: [ 'photos', 'video' ],
+			mapping: [ 'orthomosaic' ],
+			inspection: [ 'inspection-report' ],
+			tower: [ 'inspection-report' ]
+		}[ lineVal ];
+		var boxes = document.querySelectorAll( 'input[name="uls-bk-deliverables"]' );
+		var anyChecked = Array.prototype.some.call( boxes, function ( b ) { return b.checked; } );
+		if ( deliverables && ! anyChecked ) {
+			Array.prototype.forEach.call( boxes, function ( b ) {
+				if ( deliverables.indexOf( b.value ) !== -1 ) { b.checked = true; }
+			} );
 		}
 	}
 
