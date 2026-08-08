@@ -183,3 +183,34 @@ prod_render_smoke:
     - apt-get install -y -qq --no-install-recommends curl ca-certificates gawk
   script:
     - tools/ci/prod_render_smoke.sh "$SMOKE_BASE_URL"
+
+# push-mirror health gate (UPLAA-446, follow-up to UPLAA-443).
+# Deploy path is GitLab main -> GitHub push-mirror -> GitHub Actions -> live prod.
+# In UPLAA-443 the GitLab push-mirror silently disabled and sat enabled:false for
+# SIX DAYS: every merge to main was a no-op on live prod and nothing alerted.
+#
+# The direct check (GET /projects/3/remote_mirrors) needs an api-scoped GitLab
+# token the runtime lacks (paperclip-push-only -> insufficient_scope). So instead
+# this job observes the mirror's EFFECT with zero elevated privilege: it compares
+# GitLab main's SHA against GitHub main's SHA (the GitHub mirror is readable with
+# an unauthenticated git ls-remote). Persistent divergence == the mirror stalled.
+#
+# Runs ONLY on SCHEDULED pipelines (not on merges — a just-merged commit races the
+# mirror push). Configure a pipeline schedule (Build -> Pipeline schedules, e.g.
+# every 2h on main). It never runs on MR/merge pipelines, so it cannot block deploys.
+#
+# ALERT DELIVERY: do NOT rely on GitLab email — it's dead on this estate (no
+# outbound mail since 2026-03-22). On a confirmed stall the script fires an
+# out-of-band push to $MIRROR_ALERT_URL (an ntfy topic URL or webhook). Set that
+# CI variable to arm the active alert; without it the job still fails (non-zero
+# exit shows red in the pipeline UI) and prints a loud warning, but nothing is
+# pushed. curl is added alongside git/bash so the push works from the alpine image.
+mirror_sync_check:
+  stage: .post
+  image: alpine:3.20
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+  before_script:
+    - apk add --no-cache git bash curl >/dev/null
+  script:
+    - bash tools/ci/mirror_sync_check.sh
