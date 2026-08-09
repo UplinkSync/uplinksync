@@ -58,7 +58,7 @@ if ( ! defined( 'UPLINKSYNC_HERO_SHARE_KEY' ) ) {
  */
 function uplinksync_hero_loops() {
 	return array(
-		array( 'asset' => '3db7289f-3ee9-4f14-8a85-ab453968c276', 'label' => 'Palisades Reservoir at dawn' ),
+		array( 'asset' => 'e50d2ac3-c7fb-4647-aca0-778faeca3e12', 'label' => 'Palisades Reservoir at dawn' ),
 		array( 'asset' => 'f0ef38d3-25c5-4072-8c64-7b88160b0869', 'label' => 'Palisades ridgeline' ),
 		array( 'asset' => 'a8297921-5a86-4086-b7c0-473655c7f649', 'label' => 'Palisades shoreline' ),
 		array( 'asset' => '6fb8df44-0cd7-458a-8b6c-7bfab73d2183', 'label' => 'Canyon in autumn' ),
