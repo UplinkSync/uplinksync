@@ -215,8 +215,11 @@ prod_render_smoke:
     - if: '$CI_COMMIT_BRANCH == "main"'
   before_script:
     - apt-get update -qq
-    # python3-minimal added for the JSON-LD validity assertion in prod_render_smoke.sh
-    - apt-get install -y -qq --no-install-recommends curl ca-certificates gawk python3-minimal
+    # python3 (NOT python3-minimal) for the JSON-LD validity assertion in
+    # prod_render_smoke.sh: Debian's python3-minimal ships WITHOUT the json
+    # module, so the checker crashed with ModuleNotFoundError on every page and
+    # reported it as invalid-json-ld - a false red across all of main.
+    - apt-get install -y -qq --no-install-recommends curl ca-certificates gawk python3
   script:
     - tools/ci/prod_render_smoke.sh "$SMOKE_BASE_URL"
 

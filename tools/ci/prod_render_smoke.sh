@@ -120,7 +120,12 @@ main_word_count() {
 # Exits 0 when all blocks parse (or none are present), 1 when any block is invalid.
 jsonld_ok() {
   printf '%s' "$1" | python3 -c '
-import sys, re, json
+import sys
+try:
+    import re, json
+except Exception as exc:                      # python3-minimal ships without json
+    sys.stderr.write("   json-ld CHECKER UNAVAILABLE (not a site defect): %s\n" % exc)
+    sys.exit(2)
 h = sys.stdin.read()
 blocks = re.findall(r"<script[^>]*application/ld\+json[^>]*>(.*?)</script>", h, re.S | re.I)
 for i, b in enumerate(blocks):
@@ -168,7 +173,16 @@ check_page() {
     [ "${words:-0}" -ge "$MIN_MAIN_WORDS" ] || { ok=0; reasons="$reasons main-words=$words<$MIN_MAIN_WORDS;"; }
     [[ "$lc_body" =~ \<h1[[:space:]\>] ]] || { ok=0; reasons="$reasons no-<h1>;"; }
     [[ "$lc_body" =~ site-footer|\<footer ]] || { ok=0; reasons="$reasons no-footer;"; }
-    jsonld_ok "$body" || { ok=0; reasons="$reasons invalid-json-ld;"; }
+    # 0 = parses, 1 = INVALID payload (real site defect), 2 = checker could not run.
+    # Kept distinct so a tooling gap is never misread as a corrupt page - on
+    # 2026-08-13 python3-minimal (no json module) made this report invalid-json-ld
+    # on every page, a false red that looked exactly like a real outage.
+    jsonld_rc=0; jsonld_ok "$body" || jsonld_rc=$?
+    case "$jsonld_rc" in
+      0) ;;
+      1) ok=0; reasons="$reasons invalid-json-ld;" ;;
+      *) ok=0; reasons="$reasons JSONLD-CHECKER-UNAVAILABLE(rc=$jsonld_rc,not-a-site-defect);" ;;
+    esac
 
     if [ "$ok" = 1 ]; then
       printf 'PASS  %-45s http=%s bytes=%s main_words=%s\n' "$url" "$code" "$bytes" "$words"
