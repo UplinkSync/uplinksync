@@ -134,6 +134,14 @@ for i, b in enumerate(blocks):
     except Exception as e:
         sys.stderr.write("   invalid ld+json block #%d: %s\n" % (i + 1, str(e)[:140]))
         sys.exit(1)
+# Report the positive case too. A silent pass cannot be told apart from a no-op:
+# if this regex ever stops matching, zero blocks would "succeed" and the gate
+# would be dead without anyone noticing - the exact green-means-nothing-checked
+# failure this assertion was added to prevent.
+if blocks:
+    sys.stderr.write("   json-ld: %d block(s) parsed OK\n" % len(blocks))
+else:
+    sys.stderr.write("   json-ld: NO ld+json blocks found - nothing asserted\n")
 sys.exit(0)
 '
 }
