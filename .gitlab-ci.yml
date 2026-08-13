@@ -126,6 +126,26 @@ render_smoke:
           // (f) optional exact-copy marker (opt-in via SMOKE_EXPECT).
           if ($expect !== "" && strpos($html, $expect) === false) { $fail("expected copy marker not found in rendered homepage: {$expect}"); }
 
+          // (g) STRUCTURED DATA must be PARSEABLE. Added after a live regression on
+          //     2026-08-13: a mu-plugin output-buffer rewrite converted a plain email
+          //     inside a JSON-LD string value into <a href="mailto:...">, whose
+          //     unescaped double quotes terminated the JSON string and made the ENTIRE
+          //     ld+json block invalid. Every assertion above still PASSED, because the
+          //     page rendered perfectly — only the JSON payload was corrupt. This is the
+          //     assertion that would have caught it before merge.
+          if (preg_match_all("#<script[^>]*application/ld\\+json[^>]*>(.*?)</script>#is", $html, $ldm)) {
+            foreach ($ldm[1] as $i => $blk) {
+              json_decode(trim($blk));
+              if (json_last_error() !== JSON_ERROR_NONE) {
+                $snippet = substr(preg_replace("#\\s+#", " ", trim($blk)), 0, 200);
+                $fail("JSON-LD block #" . ($i + 1) . " is INVALID (" . json_last_error_msg() . "). This usually means an output-buffer rewrite injected markup into a JSON string value. Starts: " . $snippet);
+              }
+            }
+            fwrite(STDERR, "json-ld: " . count($ldm[1]) . " block(s) parsed OK\n");
+          } else {
+            fwrite(STDERR, "json-ld: no ld+json blocks present (not asserted)\n");
+          }
+
           fwrite(STDERR, "PASS: homepage rendered a real page — {$len} bytes, {$tlen} chars visible body text, landmark present" . ($expect !== "" ? ", marker found" : "") . ".\n");
         '
     - echo "render_smoke PASS — homepage renders a real, content-bearing body (not just a 200) on the preview host."
@@ -195,7 +215,8 @@ prod_render_smoke:
     - if: '$CI_COMMIT_BRANCH == "main"'
   before_script:
     - apt-get update -qq
-    - apt-get install -y -qq --no-install-recommends curl ca-certificates gawk
+    # python3-minimal added for the JSON-LD validity assertion in prod_render_smoke.sh
+    - apt-get install -y -qq --no-install-recommends curl ca-certificates gawk python3-minimal
   script:
     - tools/ci/prod_render_smoke.sh "$SMOKE_BASE_URL"
 
