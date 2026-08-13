@@ -4,7 +4,22 @@ include:
     file: '/templates/wordpress-site.gitlab-ci.yml'
 
 variables:
-  THEME_SLUG: "hostinger-ai-theme"
+  # The site migrated off the hostinger-ai-theme parent onto Twenty Twenty-Five
+  # (style.css: "Template: twentytwentyfive"); the live theme is the child,
+  # uplinksync-child. This variable was never updated.
+  #
+  # It is consumed by ops/ci-templates wordpress-site.gitlab-ci.yml as
+  #   wp theme activate $THEME_SLUG || echo 'WARN: ... not activatable in preview'
+  # — a SOFT failure. So every MR preview has been trying to activate a theme
+  # that no longer exists, warning, and rendering on the container's default
+  # theme instead of the site's own. That is one more reason the review app has
+  # not been representative of production (see ecosystem-docs 114 §4.6, R1/R2):
+  # the render_smoke gate was not even exercising this theme.
+  #
+  # Pointing it at the real child theme makes previews render what production
+  # renders. Still soft-fail, so the worst case is the existing warning — no
+  # new failure mode.
+  THEME_SLUG: "uplinksync-child"
   # render_smoke floor for the WHOLE rendered document. A totally empty 200 is far
   # under this; any real render is many KB. This is the cheap first gate only —
   # showed a document can clear a byte floor (bloated <head>) yet ship an
