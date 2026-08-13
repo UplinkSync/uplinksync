@@ -35,6 +35,17 @@ require_once get_stylesheet_directory() . '/inc/immich-embed.php';
 require_once get_stylesheet_directory() . '/inc/hero-loop.php';
 
 /**
+ * Organization structured-data enrichment.
+ *
+ * Filters Rank Math's existing JSON-LD graph to fill in url/logo/telephone/
+ * email/sameAs/areaServed on the Organization node, which currently ships with
+ * nothing but a name. Adds no markup of its own and registers no output buffer,
+ * so it cannot affect what the page renders — it only enriches an existing
+ * <script type="application/ld+json"> payload. Reversible by removing this line.
+ */
+require_once get_stylesheet_directory() . '/inc/schema-organization.php';
+
+/**
  * ***-99: restore correct asset resolution under a child theme.
  *
  * The parent theme (hostinger-ai-theme) was never written for child themes.

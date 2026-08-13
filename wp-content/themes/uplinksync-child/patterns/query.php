@@ -21,7 +21,7 @@
 		<!-- /wp:spacer -->
 	<!-- /wp:post-template -->
 	<!-- wp:query-no-results -->
-	<!-- wp:paragraph --><p><?php esc_html_e( 'No results found.', 'hostinger-ai-theme'); ?></p><!-- /wp:paragraph -->
+	<!-- wp:paragraph --><p><?php esc_html_e( 'No results found.', 'uplinksync-child'); ?></p><!-- /wp:paragraph -->
 	<!-- /wp:query-no-results -->
 	<!-- wp:query-pagination {"paginationArrow":"arrow","layout":{"type":"flex","justifyContent":"space-between"}} -->
 	<!-- wp:query-pagination-previous /-->
