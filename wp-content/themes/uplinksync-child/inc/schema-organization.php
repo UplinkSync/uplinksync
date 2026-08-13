@@ -103,9 +103,28 @@ function uplinksync_child_enrich_organization_schema( $data ) {
 	if ( defined( 'UPLINKSYNC_CONTACT_PHONE_E164' ) ) {
 		$additions['telephone'] = UPLINKSYNC_CONTACT_PHONE_E164;
 	}
-	if ( defined( 'UPLINKSYNC_CONTACT_EMAIL' ) ) {
-		$additions['email'] = UPLINKSYNC_CONTACT_EMAIL;
-	}
+
+	/*
+	 * `email` is deliberately NOT emitted. Regression observed in production on
+	 * 2026-08-13 (deploy 8d4d0a04):
+	 *
+	 *   "email":"<!--email_off--><a href="mailto:contact@uplinksync.com">…</a><!--email_on-->"
+	 *
+	 * `uplinksync-contact-and-social-fixes.php` rewrites the finished HTML on the
+	 * way out, converting any plain email address into a linked, email_off-wrapped
+	 * anchor. It does not skip <script type="application/ld+json">, so the injected
+	 * markup's unescaped double quotes terminated the JSON string and made the
+	 * ENTIRE JSON-LD block unparseable — strictly worse than the thin-but-valid
+	 * Organization node it replaced.
+	 *
+	 * Removing the property is the low-risk fix: `email` is not required for
+	 * Organization, and `contactPoint.telephone` below still carries a contact route.
+	 *
+	 * The real defect is that an output-buffer rewriter edits inside <script> blocks.
+	 * Fixing THAT belongs in the mu-plugin and must be verified against
+	 * production-like state — that layer has blanked this homepage twice
+	 * (see ecosystem-docs 114 §4.6, and hard constraint H11).
+	 */
 
 	$same_as = array();
 	foreach ( array( 'UPLINKSYNC_SOCIAL_LINKEDIN', 'UPLINKSYNC_SOCIAL_FACEBOOK', 'UPLINKSYNC_SOCIAL_INSTAGRAM' ) as $const ) {
