@@ -112,6 +112,27 @@ main_word_count() {
   '
 }
 
+# Structured-data validity. Added after the 2026-08-13 regression in which a
+# mu-plugin output-buffer rewrite injected <a href="mailto:..."> into a JSON-LD
+# string value; the unescaped quotes terminated the string and made the WHOLE
+# ld+json block unparseable. Every existing assertion here still passed, because
+# the PAGE rendered fine -- only the JSON payload was corrupt.
+# Exits 0 when all blocks parse (or none are present), 1 when any block is invalid.
+jsonld_ok() {
+  printf '%s' "$1" | python3 -c '
+import sys, re, json
+h = sys.stdin.read()
+blocks = re.findall(r"<script[^>]*application/ld\+json[^>]*>(.*?)</script>", h, re.S | re.I)
+for i, b in enumerate(blocks):
+    try:
+        json.loads(b.strip())
+    except Exception as e:
+        sys.stderr.write("   invalid ld+json block #%d: %s\n" % (i + 1, str(e)[:140]))
+        sys.exit(1)
+sys.exit(0)
+'
+}
+
 check_page() {
   local url="$1" attempt=1 code body bytes words resp
   while : ; do
@@ -147,6 +168,7 @@ check_page() {
     [ "${words:-0}" -ge "$MIN_MAIN_WORDS" ] || { ok=0; reasons="$reasons main-words=$words<$MIN_MAIN_WORDS;"; }
     [[ "$lc_body" =~ \<h1[[:space:]\>] ]] || { ok=0; reasons="$reasons no-<h1>;"; }
     [[ "$lc_body" =~ site-footer|\<footer ]] || { ok=0; reasons="$reasons no-footer;"; }
+    jsonld_ok "$body" || { ok=0; reasons="$reasons invalid-json-ld;"; }
 
     if [ "$ok" = 1 ]; then
       printf 'PASS  %-45s http=%s bytes=%s main_words=%s\n' "$url" "$code" "$bytes" "$words"
