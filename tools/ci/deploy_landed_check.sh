@@ -27,8 +27,15 @@
 # is ample for a 2-hourly job); `curl` is replaced by busybox `wget`.
 #
 # EXIT CODES
-#   0  in sync, or marker not yet present (see GRACE), or GitHub unreadable
+#   0  CONFIRMED in sync. Nothing else exits 0 (UPLAA-QW15).
 #   1  CONFIRMED drift - production is serving a different commit than GitHub main
+#   2  INCONCLUSIVE - could not read GitHub main, or the marker is absent.
+#      NOTHING WAS CHECKED. Wired to `allow_failure: exit_codes` so the job shows
+#      AMBER rather than green. In scheduled pipeline 2543 this job went GREEN
+#      having read nothing at all (api.github.com was briefly unreachable from
+#      the runner, 20 minutes after it had reached it fine) - a result
+#      indistinguishable from a real pass. That conflation is exactly the trap
+#      this whole family of checks exists to avoid.
 #
 # ENV
 #   BASE_URL           production base (default https://uplinksync.com)
@@ -66,7 +73,8 @@ if [ -z "${gh_sha:-}" ]; then
   echo "WARN  could not read GitHub main (network, rate limit, or API shape change)." >&2
   echo "      Inconclusive - NOT failing, because an unreachable API says nothing" >&2
   echo "      about whether the deploy landed." >&2
-  exit 0
+  echo "      NOTHING WAS CHECKED. Exiting 2 (see UPLAA-QW15)." >&2
+  exit 2
 fi
 echo "   GitHub  main = $gh_sha"
 
@@ -86,8 +94,9 @@ done
 if [ -z "${prod_sha:-}" ]; then
   echo "WARN  deploy marker is ABSENT or unreachable at $MARKER_URL" >&2
   echo "      Expected once a site-mode deploy has run since UPLAA-QW8." >&2
-  echo "      Treated as inconclusive (exit 0) so this job does not cry wolf." >&2
-  exit 0
+  echo "      Inconclusive rather than a stall - this job does not cry wolf." >&2
+  echo "      NOTHING WAS CHECKED. Exiting 2 (see UPLAA-QW15)." >&2
+  exit 2
 fi
 
 echo "   prod    marker = $prod_sha"

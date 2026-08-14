@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 # mirror_sync_check.sh — catch a silent GitLab->GitHub push-mirror stall (UPLAA-446)
 #
 # WHY THIS EXISTS
@@ -40,9 +40,15 @@
 #   tools/ci/mirror_sync_check.sh [github_remote_url]
 #   GITHUB_MIRROR_URL=https://github.com/UplinkSync/uplinksync.git tools/ci/mirror_sync_check.sh
 #
-# Exit 0 = in sync, OR inconclusive (GitHub unreachable — can't verify, don't page).
+# Exit 0 = CONFIRMED in sync. Nothing else exits 0 (UPLAA-QW15).
 # Exit 1 = GitHub main CONFIRMED behind/diverged from GitLab main past the grace
 #          window — the mirror is very likely stalled; investigate now.
+# Exit 2 = INCONCLUSIVE — the check could not run (host unreachable, unparseable
+#          response). NOTHING WAS CHECKED. Wired to `allow_failure: exit_codes`
+#          so the job shows AMBER, not green: the pipeline is not blocked, but a
+#          monitor that verified nothing must never look identical to one that
+#          verified everything. That conflation is this project's most repeated
+#          defect (doc 114 section 16.5).
 #
 # Env knobs:
 #   GITHUB_MIRROR_URL  GitHub mirror repo (default the UplinkSync public mirror)
@@ -217,8 +223,9 @@ if [ -z "$gl" ] || [ "$gl" = "UNREACHABLE" ] || [ "$gl" = "NOBRANCH" ]; then
   GL_SOURCE="frozen"
 fi
 if [ -z "$gl" ]; then
-  echo "SKIP  cannot resolve GitLab $BRANCH SHA (origin unreachable and no CI_COMMIT_SHA) — inconclusive, not paging." >&2
-  exit 0
+  echo "SKIP  cannot resolve GitLab $BRANCH SHA (origin unreachable and no CI_COMMIT_SHA)." >&2
+  echo "      NOTHING WAS CHECKED - inconclusive, not paging. Exiting 2 (UPLAA-QW15)." >&2
+  exit 2
 fi
 echo "GitLab  $BRANCH = $gl  (source: $GL_SOURCE)"
 
@@ -226,8 +233,9 @@ attempt=0
 while : ; do
   gh="$(github_head)"
   if [ -z "$gh" ] || [ "$gh" = "UNREACHABLE" ]; then
-    echo "SKIP  GitHub mirror unreachable (no refs returned) — inconclusive, not paging." >&2
-    exit 0
+    echo "SKIP  GitHub mirror unreachable (no refs returned)." >&2
+    echo "      NOTHING WAS CHECKED - inconclusive, not paging. Exiting 2 (UPLAA-QW15)." >&2
+    exit 2
   fi
 
   # Host answered, but there is no such branch. That is NOT ambiguous and NOT a
@@ -313,8 +321,25 @@ while : ; do
       # Top-level "status" is at two-space indent; per-FILE "status" fields are
       # nested deeper, so anchoring to line start keeps them out.
       _rel=$(grep -o '^  "status": "[a-z]*"' "$_cmp" | head -1 | sed 's/.*: "\([a-z]*\)".*/\1/')
+      [ -z "$_rel" ] && _rel="unparseable"
     else
-      _rel="notfound"
+      # UPLAA-QW15: do NOT assume a failed request means 404.
+      #
+      # busybox wget exits non-zero for "404 Not Found" AND for "the network is
+      # down", and those demand OPPOSITE responses: a real 404 means the mirror
+      # never received the commit (page immediately), while a network failure
+      # means we learned nothing (must not page). QW14 conflated them, so a
+      # transient egress blip would have raised a false "mirror STALLED" alarm -
+      # and this runner's egress is exactly that flaky: deploy_landed_check
+      # failed to reach api.github.com in pipeline 2543 having reached it fine
+      # 20 minutes earlier.
+      #
+      # Probe a known-good endpoint on the SAME host to tell the two apart.
+      if wget -q -O /dev/null -T 20 "https://api.github.com/repos/${_api_repo}" 2>/dev/null; then
+        _rel="notfound"     # API reachable, so the compare result really is absent
+      else
+        _rel="unreachable"  # api.github.com is down for us; we know nothing
+      fi
     fi
     rm -f "$_cmp"
 
@@ -339,10 +364,16 @@ while : ; do
           "GitHub does not contain GitLab main $gl at all. Merges are not reaching production."
         exit 1
         ;;
+      unreachable)
+        echo "SKIP  api.github.com is unreachable from this runner, so the GitLab/GitHub" >&2
+        echo "      relationship could not be established. NOTHING WAS CHECKED - this is a" >&2
+        echo "      TOOLING failure, not a mirror failure. Exiting 2 (see UPLAA-QW15)." >&2
+        exit 2
+        ;;
       *)
         echo "SKIP  could not determine the relationship from the GitHub compare API" >&2
-        echo "      (unexpected status '$_rel') — inconclusive, not paging." >&2
-        exit 0
+        echo "      (unexpected status '$_rel'). NOTHING WAS CHECKED. Exiting 2." >&2
+        exit 2
         ;;
     esac
   fi
