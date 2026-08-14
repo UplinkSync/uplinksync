@@ -90,6 +90,16 @@ jobs:
             -e "ssh -i ~/.ssh/deploy_key -p ${{ secrets.HOSTINGER_SSH_PORT }}" \
             ./ "${{ secrets.HOSTINGER_SSH_USER }}@${{ secrets.HOSTINGER_SSH_HOST }}:${{ vars.REMOTE_PLUGIN_PATH }}/"
 
+      # UPLAA-QW8: stamp the commit being deployed into a web-readable file so the
+      # next step can PROVE it landed. Written into wp-content/ so the existing
+      # site-mode rsync carries it with everything else - no extra transfer, no
+      # extra credential. Not committed to the repo; generated per run.
+      - name: Stamp deploy marker (site mode)
+        if: vars.DEPLOY_MODE == 'site'
+        run: |
+          printf '%s\n' "$GITHUB_SHA" > wp-content/deploy-marker.txt
+          echo "stamped wp-content/deploy-marker.txt = $GITHUB_SHA"
+
       - name: Deploy (site mode — no deletions on live)
         if: vars.DEPLOY_MODE == 'site'
         run: |
@@ -123,6 +133,50 @@ jobs:
           ssh -i ~/.ssh/deploy_key -p "${{ secrets.HOSTINGER_SSH_PORT }}" \
             "${{ secrets.HOSTINGER_SSH_USER }}@${{ secrets.HOSTINGER_SSH_HOST }}" \
             "command -v wp >/dev/null && cd '${{ vars.WP_ROOT }}' && wp litespeed-purge all || echo 'wp-cli/LiteSpeed not available; skipped'"
+
+      # UPLAA-QW8: BLOCKING proof that THIS commit actually reached production.
+      #
+      # Why this exists: on 2026-08-14 the deploy failed at "Set up SSH" (transient
+      # ssh-keyscan failure) and nothing reached the host - yet the upstream GitLab
+      # pipeline was FULLY GREEN, including prod_render_smoke, because the site was
+      # up and simply serving the previous version. A re-run with no code change
+      # then succeeded, confirming it was transient. Every existing gate answers
+      # "does prod render?"; none answered "did MY change land?".
+      #
+      # The render smoke below CANNOT cover this: a stale-but-healthy site passes it.
+      # This step is deliberately ordered BEFORE it - verify the deploy landed, then
+      # verify what landed renders.
+      #
+      # Retries because Cloudflare/LiteSpeed/opcache can briefly serve the previous
+      # copy; a cache-busting query and no-cache headers are used on every attempt.
+      - name: Verify deploy landed (blocking)
+        if: vars.DEPLOY_MODE == 'site'
+        env:
+          SMOKE_BASE_URL: ${{ vars.SMOKE_BASE_URL || 'https://uplinksync.com' }}
+        run: |
+          set -u
+          url="${SMOKE_BASE_URL%/}/wp-content/deploy-marker.txt"
+          echo "expecting $GITHUB_SHA at $url"
+          for attempt in 1 2 3 4 5; do
+            got="$(curl -fsS -m 20 -H 'Cache-Control: no-cache' -H 'Pragma: no-cache' \
+                     "${url}?cb=${GITHUB_RUN_ID}-${attempt}" 2>/dev/null | tr -d '[:space:]' || true)"
+            if [ "$got" = "$GITHUB_SHA" ]; then
+              echo "PASS: production is serving $GITHUB_SHA (attempt $attempt)"
+              exit 0
+            fi
+            echo "attempt $attempt/5: got '${got:-<empty or unreachable>}'"
+            [ "$attempt" -lt 5 ] && sleep 10
+          done
+          echo "" >&2
+          echo "FAIL: production is NOT serving this commit." >&2
+          echo "  expected: $GITHUB_SHA" >&2
+          echo "  got     : ${got:-<empty or unreachable>}" >&2
+          echo "" >&2
+          echo "The deploy did not land. Do NOT trust a green upstream pipeline as" >&2
+          echo "evidence of deployment - prod_render_smoke passes on a stale site." >&2
+          echo "Check the rsync/SSH steps above; a transient ssh-keyscan failure has" >&2
+          echo "caused exactly this before and cleared on a plain re-run." >&2
+          exit 1
 
       # ***-171: BLOCKING production-representative render smoke.
       # The upstream GitLab `render_smoke` gate renders a clean-room preview

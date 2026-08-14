@@ -253,3 +253,23 @@ mirror_sync_check:
     - apk add --no-cache git bash curl >/dev/null
   script:
     - bash tools/ci/mirror_sync_check.sh
+
+# UPLAA-QW8: does production actually serve GitHub main?
+#
+# mirror_sync_check (above/below) covers GitLab -> GitHub. This covers the NEXT
+# hop, GitHub -> Hostinger, which had no monitoring at all until now. On
+# 2026-08-14 that hop failed (transient ssh-keyscan) while this very pipeline was
+# fully green - prod_render_smoke included - because the site was up and serving
+# the PREVIOUS version. Green here has never meant "deployed".
+#
+# Scheduled-only, like mirror_sync_check: a just-merged commit races the mirror
+# and the deploy, so running it on merges would produce false alarms.
+deploy_landed_check:
+  stage: .post
+  image: alpine:3.20
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+  before_script:
+    - apk add --no-cache git bash curl >/dev/null
+  script:
+    - bash tools/ci/deploy_landed_check.sh
