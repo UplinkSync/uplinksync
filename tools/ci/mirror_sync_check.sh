@@ -105,7 +105,16 @@ send_alert() {
   if command -v curl >/dev/null 2>&1; then
     # ntfy accepts a plain-text body plus optional Title/Priority/Tags headers;
     # a generic webhook simply receives the body. Both are satisfied by this POST.
-    if curl -fsS --max-time 15 \
+    # UPLAA-QW9: ntfy at ntfy.uplinksync.com runs auth-default-access=deny-all and
+    # ANONYMOUS PUBLISH IS REFUSED (verified 2026-08-14: anonymous POST -> 403,
+    # token POST -> 200). The Vault doc claiming an "everyone -> write-only"
+    # transition safety net is stale. Auth is supplied as a separate MASKED CI
+    # variable rather than embedded in the URL, because GitLab refuses to mask a
+    # value containing URL punctuation - so a URL-embedded token would sit in the
+    # project settings and job logs UNMASKED.
+    auth_hdr=()
+    [ -n "${NTFY_ALERT_TOKEN:-}" ] && auth_hdr=(-H "Authorization: Bearer ${NTFY_ALERT_TOKEN}")
+    if curl -fsS --max-time 15 "${auth_hdr[@]}" \
          -H "Title: $title" -H "Priority: urgent" -H "Tags: rotating_light,git" \
          -d "$body" "$MIRROR_ALERT_URL" >/dev/null 2>&1; then
       echo "ALERT sent to \$MIRROR_ALERT_URL." >&2

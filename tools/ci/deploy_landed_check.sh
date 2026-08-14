@@ -86,7 +86,14 @@ echo "'Deploy to WordPress host' run. A transient ssh-keyscan failure in" >&2
 echo "'Set up SSH' has caused exactly this and cleared on a plain re-run." >&2
 
 if [ -n "${MIRROR_ALERT_URL:-}" ] && command -v curl >/dev/null 2>&1; then
-  if curl -fsS --max-time 15 \
+  # UPLAA-QW9: ntfy runs auth-default-access=deny-all and ANONYMOUS PUBLISH IS
+  # REFUSED (verified 2026-08-14: anonymous POST -> 403, token POST -> 200).
+  # Auth is a separate MASKED CI variable rather than embedded in the URL,
+  # because GitLab refuses to mask a value containing URL punctuation - a
+  # URL-embedded token would sit in project settings and job logs UNMASKED.
+  auth_hdr=()
+  [ -n "${NTFY_ALERT_TOKEN:-}" ] && auth_hdr=(-H "Authorization: Bearer ${NTFY_ALERT_TOKEN}")
+  if curl -fsS --max-time 15 "${auth_hdr[@]}" \
        -H "Title: UplinkSync deploy STALLED" -H "Priority: urgent" -H "Tags: rotating_light,ship" \
        -d "Production is serving ${prod_sha:0:8}, GitHub main is ${gh_sha:0:8}. The GitHub->Hostinger deploy has not landed." \
        "$MIRROR_ALERT_URL" >/dev/null 2>&1; then
