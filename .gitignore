@@ -20,3 +20,6 @@ vendor/
 *.log
 .DS_Store
 Thumbs.db
+
+# Generated per-run by the deploy workflow (UPLAA-QW8); never committed.
+wp-content/deploy-marker.txt
