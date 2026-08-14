@@ -73,17 +73,37 @@ BRANCH="${BRANCH:-main}"
 RETRIES="${RETRIES:-3}"
 RETRY_SLEEP="${RETRY_SLEEP:-20}"
 
-# Authoritative GitLab main SHA. Inside a scheduled pipeline running on main,
-# $CI_COMMIT_SHA is the tip of GitLab main — the exact commit the mirror is
-# supposed to have pushed. Outside CI, fall back to ls-remote of the git origin
-# (or an explicit GITLAB_MAIN_URL) so the script is runnable/testable anywhere.
+# Authoritative GitLab main SHA — read LIVE.
+#
+# UPLAA-QW12 (2026-08-14): this previously preferred $CI_COMMIT_SHA, described as
+# "the tip of GitLab main". It is the tip only at PIPELINE-CREATION time, not at
+# JOB-EXECUTION time, and that difference produced a false page:
+#
+#   scheduled pipeline 2523 created 06:23 (checkout pinned at 44b28adb)
+#   owner merged !150 at 06:36            (GitLab main -> 97bdf347)
+#   job finally ran   at 06:39            (delayed by the slow apk this MR fixes)
+#   -> compared FROZEN 44b28adb against LIVE GitHub 97bdf347 and paged
+#      "mirror STUCK - merges are NOT reaching live prod"
+#
+# The mirror was perfectly healthy (enabled, last_error=None, synced 06:37:14):
+# GitHub was AHEAD of the stale local SHA, not behind. Comparing a frozen value
+# against a live one is not a sync check - both sides must be read at the same
+# instant. Note the failure direction: this gate cried WOLF, which is exactly
+# what erodes trust in the alert it exists to send.
 gitlab_head() {
   if [ -n "${GITLAB_MAIN_URL:-}" ]; then
     git ls-remote "$GITLAB_MAIN_URL" "refs/heads/$BRANCH" 2>/dev/null | awk 'NR==1{print $1}'
-  elif [ -n "${CI_COMMIT_SHA:-}" ] && [ "${CI_COMMIT_REF_NAME:-}" = "$BRANCH" ]; then
-    printf '%s\n' "$CI_COMMIT_SHA"
   else
     git ls-remote origin "refs/heads/$BRANCH" 2>/dev/null | awk 'NR==1{print $1}'
+  fi
+}
+
+# Last-resort only, and deliberately NOT trusted enough to page on. If the live
+# read fails we can no longer distinguish "mirror stalled" from "main moved
+# under us", so a mismatch downgrades to inconclusive rather than a false alarm.
+gitlab_head_frozen() {
+  if [ -n "${CI_COMMIT_SHA:-}" ] && [ "${CI_COMMIT_REF_NAME:-}" = "$BRANCH" ]; then
+    printf '%s\n' "$CI_COMMIT_SHA"
   fi
 }
 
@@ -129,11 +149,16 @@ send_alert() {
 echo "== mirror sync check :: GitLab main -> GitHub($GITHUB_MIRROR_URL) [$BRANCH] =="
 
 gl="$(gitlab_head)"
+GL_SOURCE="live"
 if [ -z "$gl" ]; then
-  echo "SKIP  cannot resolve GitLab $BRANCH SHA (no CI_COMMIT_SHA and origin unreachable) — inconclusive, not paging." >&2
+  gl="$(gitlab_head_frozen)"
+  GL_SOURCE="frozen"
+fi
+if [ -z "$gl" ]; then
+  echo "SKIP  cannot resolve GitLab $BRANCH SHA (origin unreachable and no CI_COMMIT_SHA) — inconclusive, not paging." >&2
   exit 0
 fi
-echo "GitLab  $BRANCH = $gl"
+echo "GitLab  $BRANCH = $gl  (source: $GL_SOURCE)"
 
 attempt=0
 while : ; do
@@ -156,7 +181,27 @@ while : ; do
     attempt=$((attempt+1))
     echo "diverged (GitHub=$gh != GitLab=$gl) — re-check $attempt/$RETRIES after ${RETRY_SLEEP}s (absorbing push race)" >&2
     sleep "$RETRY_SLEEP"
+    # Re-read the GitLab tip too. If main advanced while we were waiting (a merge
+    # mid-check), the previous value is stale and comparing against it would
+    # report a stall that never happened.
+    if [ "$GL_SOURCE" = "live" ]; then
+      gl_new="$(gitlab_head)"
+      if [ -n "$gl_new" ] && [ "$gl_new" != "$gl" ]; then
+        echo "  GitLab $BRANCH advanced mid-check: $gl -> $gl_new (re-basing comparison)" >&2
+        gl="$gl_new"
+      fi
+    fi
     continue
+  fi
+
+  # Only a live-vs-live comparison is trustworthy enough to page on.
+  if [ "$GL_SOURCE" != "live" ]; then
+    echo "GitHub  $BRANCH = $gh"
+    echo "SKIP  GitLab tip could only be read from the pipeline's FROZEN CI_COMMIT_SHA," >&2
+    echo "      which is the tip at pipeline-creation time, not now. GitHub=$gh differs," >&2
+    echo "      but 'mirror stalled' and 'main moved since this pipeline started' are" >&2
+    echo "      indistinguishable from here — inconclusive, deliberately not paging." >&2
+    exit 0
   fi
 
   echo "GitHub  $BRANCH = $gh"
