@@ -213,13 +213,34 @@ prod_render_smoke:
     SMOKE_BASE_URL: "https://uplinksync.com"
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
+  timeout: 20m
   before_script:
-    - apt-get update -qq
-    # python3 (NOT python3-minimal) for the JSON-LD validity assertion in
-    # prod_render_smoke.sh: Debian's python3-minimal ships WITHOUT the json
-    # module, so the checker crashed with ModuleNotFoundError on every page and
-    # reported it as invalid-json-ld - a false red across all of main.
-    - apt-get install -y -qq --no-install-recommends curl ca-certificates gawk python3
+    # UPLAA-QW12: bounded, retried install. On 2026-08-14 this job failed with
+    # "Unable to connect to deb.debian.org:80" - the runner's container egress
+    # is intermittently down, and an unbounded install turns that into either a
+    # hard red or (on a sibling job) a one-hour hang. Retry, then fail FAST and
+    # legibly so a tooling outage is never mistaken for a production defect.
+    #
+    # python3 (NOT python3-minimal): Debian's minimal build ships WITHOUT the
+    # json module, so the JSON-LD checker crashed with ModuleNotFoundError on
+    # every page and reported it as invalid-json-ld - a false red across main.
+    - |
+      ok=0
+      for attempt in 1 2 3; do
+        if timeout 150 apt-get update -qq >/dev/null 2>&1 \
+           && timeout 240 apt-get install -y -qq --no-install-recommends \
+                curl ca-certificates gawk python3 >/dev/null 2>&1; then
+          ok=1; break
+        fi
+        echo "apt attempt $attempt/3 failed or timed out (runner container egress); retrying" >&2
+        sleep 15
+      done
+      if [ "$ok" != 1 ]; then
+        echo "INFRA: could not install curl/gawk/python3 - runner container egress is down." >&2
+        echo "       This is a TOOLING failure, NOT a production defect. Production was" >&2
+        echo "       never checked; do not read this red as a site problem." >&2
+        exit 1
+      fi
   script:
     - tools/ci/prod_render_smoke.sh "$SMOKE_BASE_URL"
 
@@ -247,10 +268,25 @@ prod_render_smoke:
 mirror_sync_check:
   stage: .post
   image: alpine:3.20
+  # UPLAA-QW12: bound and retry the install. Unbounded `apk add` hung for an
+  # hour on a sibling job the same night; a monitoring job must fail fast and
+  # legibly rather than consume a runner slot.
+  timeout: 15m
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
   before_script:
-    - apk add --no-cache git bash curl >/dev/null
+    - |
+      ok=0
+      for attempt in 1 2 3; do
+        if timeout 120 apk add --no-cache git bash curl >/dev/null 2>&1; then ok=1; break; fi
+        echo "apk attempt $attempt/3 failed or timed out (runner container egress); retrying" >&2
+        sleep 10
+      done
+      if [ "$ok" != 1 ]; then
+        echo "INFRA: could not install git/bash/curl - runner container egress is down." >&2
+        echo "       This is a TOOLING failure, not a mirror failure. Nothing was checked." >&2
+        exit 1
+      fi
   script:
     - bash tools/ci/mirror_sync_check.sh
 
@@ -267,9 +303,14 @@ mirror_sync_check:
 deploy_landed_check:
   stage: .post
   image: alpine:3.20
+  # UPLAA-QW12: NO before_script on purpose. This job previously ran
+  # `apk add git bash curl`, which on 2026-08-14 hung for a FULL HOUR on the
+  # runner's flaky container egress and failed the pipeline - while
+  # mirror_sync_check in the SAME pipeline succeeded. The script was rewritten
+  # to POSIX sh using only busybox tools (wget/grep/sed) already present in
+  # alpine, so there is nothing left to install and that failure class is gone.
+  timeout: 10m
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
-  before_script:
-    - apk add --no-cache git bash curl >/dev/null
   script:
-    - bash tools/ci/deploy_landed_check.sh
+    - sh tools/ci/deploy_landed_check.sh
