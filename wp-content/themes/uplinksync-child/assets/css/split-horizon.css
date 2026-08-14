@@ -41,7 +41,15 @@
 	color: var(--ink-300);
 	line-height: 1.62;
 }
-.uls-splith .wrap { max-width: var(--sh-maxw); margin: 0 auto; padding: 0 24px; width: 100%; }
+/* box-sizing is REQUIRED here, not cosmetic: this rule sets width:100% AND
+   padding:0 24px. Under the default content-box model that computes to
+   100% + 48px, which overflowed the viewport by exactly 48px (measured
+   2026-08-13: scrollWidth 438 vs 390 viewport) and made the homepage scroll
+   sideways on every common phone width - iPhone 15 (390), SE (375), most
+   Android (360-412). Sibling sheets (brand-blocks.css, quote-form.css) already
+   set border-box; this file was simply missed. Also fixes .ground-strip .wrap
+   below, which inherits this rule's width. */
+.uls-splith .wrap { box-sizing: border-box; max-width: var(--sh-maxw); margin: 0 auto; padding: 0 24px; width: 100%; }
 .uls-splith img { max-width: 100%; }
 
 .uls-splith h1, .uls-splith h2, .uls-splith h3 {

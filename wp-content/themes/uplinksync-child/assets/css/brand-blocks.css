@@ -797,3 +797,30 @@ footer .wp-block-navigation__container .wp-block-navigation-item__content {
 .wp-block-button__link.has-border-color[style*="border-color:#1e3155"] {
 	border-color: var(--navy-900) !important; /* #173258 — locked */
 }
+
+/* ---------------------------------------------------------------------------
+ * WCAG 2.2 SC 2.5.8 Target Size (Minimum), AA — footer link lists.
+ *
+ * Measured 2026-08-13 at 390x844: 21 footer links render 18-21px tall, under
+ * the 24px minimum. All 21 are inside footer.site-footer (verified by DOM
+ * ancestry walk), so this rule is scoped there and cannot affect body content.
+ *
+ * WHY THE "INLINE" EXCEPTION DOES NOT APPLY: SC 2.5.8 exempts a target that is
+ * "in a sentence or whose size is otherwise constrained by the line-height of
+ * non-target text". These are footer navigation lists authored as <p> elements
+ * with <br> separators — each paragraph holds 3-5 links and NO surrounding
+ * prose. There is no sentence and no non-target text, so the exemption fails
+ * and these are genuine AA failures.
+ *
+ * inline-block (not inline-flex) is deliberate: inline-flex would stop long
+ * link text wrapping on narrow screens, which risks re-introducing the very
+ * horizontal overflow fixed in split-horizon.css. min-height enlarges the hit
+ * area without touching font-size or line-height, so the visual change is ~3px.
+ *
+ * The markup lives in the WordPress DATABASE (wp-block-columns template part),
+ * not in this repo, so CSS is the only repo-side lever available.
+ * ------------------------------------------------------------------------- */
+footer.site-footer p a {
+	display: inline-block;
+	min-height: 24px;
+}
