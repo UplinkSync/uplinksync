@@ -273,14 +273,78 @@ while : ; do
     continue
   fi
 
-  # Only a live-vs-live comparison is trustworthy enough to page on.
+  # Frozen source: resolve the ambiguity instead of giving up on it.
+  #
+  # UPLAA-QW14 (2026-08-14): QW12 made a frozen mismatch "inconclusive, not
+  # paging" because "mirror stalled" and "main moved under us" looked
+  # indistinguishable. The first green scheduled run then revealed the cost:
+  # the live GitLab read TIMES OUT inside CI, so the job runs permanently in
+  # frozen mode — and a gate that can never page is the same "passes while
+  # doing nothing" failure this project has already hit three times.
+  #
+  # Why the live read fails: $CI_REPOSITORY_URL carries the EXTERNAL
+  # gitlab.uplinksync.com host, which the runner container cannot reach (the
+  # documented hairpin problem — the runner clones via a clone_url override
+  # instead). It answers fine from outside, which is what made this look
+  # healthy.
+  #
+  # The ambiguity is resolvable WITHOUT any GitLab connectivity, because git
+  # history is a DAG and GitHub will tell us the relationship directly:
+  #
+  #   GET /repos/<o>/<r>/compare/<our-sha>...<branch>
+  #     "ahead"/"identical" -> GitHub CONTAINS our commit and has moved on or
+  #                            matches. The mirror is delivering. PASS.
+  #     "behind"/"diverged" -> GitHub is genuinely missing our history. STALL.
+  #     404                 -> GitHub has never seen our commit at all, which is
+  #                            the strongest possible stall signal.
+  #
+  # api.github.com is demonstrably reachable from this runner: deploy_landed_check
+  # uses it every run.
   if [ "$GL_SOURCE" != "live" ]; then
     echo "GitHub  $BRANCH = $gh"
-    echo "SKIP  GitLab tip could only be read from the pipeline's FROZEN CI_COMMIT_SHA," >&2
-    echo "      which is the tip at pipeline-creation time, not now. GitHub=$gh differs," >&2
-    echo "      but 'mirror stalled' and 'main moved since this pipeline started' are" >&2
-    echo "      indistinguishable from here — inconclusive, deliberately not paging." >&2
-    exit 0
+    echo "  GitLab tip is the pipeline's frozen CI_COMMIT_SHA; asking GitHub how the two relate." >&2
+
+    _api_repo="${GITHUB_API_REPO:-$(printf '%s' "$GITHUB_MIRROR_URL" | sed -e 's|.*github\.com[:/]||' -e 's|\.git$||')}"
+    _cmp="${TMPDIR:-/tmp}/msc_cmp.$$"
+    _rel=""
+    if wget -q -O "$_cmp" -T 25 \
+         "https://api.github.com/repos/${_api_repo}/compare/${gl}...${BRANCH}" 2>/dev/null \
+       && [ -s "$_cmp" ]; then
+      # Top-level "status" is at two-space indent; per-FILE "status" fields are
+      # nested deeper, so anchoring to line start keeps them out.
+      _rel=$(grep -o '^  "status": "[a-z]*"' "$_cmp" | head -1 | sed 's/.*: "\([a-z]*\)".*/\1/')
+    else
+      _rel="notfound"
+    fi
+    rm -f "$_cmp"
+
+    case "$_rel" in
+      ahead|identical)
+        echo "  GitHub $BRANCH is '$_rel' relative to $gl — it CONTAINS our commit." >&2
+        echo "RESULT: PASS — GitHub mirror contains GitLab main; push-mirror is delivering."
+        exit 0
+        ;;
+      behind|diverged)
+        echo "RESULT: FAIL — GitHub $BRANCH is '$_rel' relative to GitLab main." >&2
+        echo "  GitLab main : $gl" >&2
+        echo "  GitHub main : $gh" >&2
+        send_alert "UplinkSync mirror STALLED" \
+          "GitHub $BRANCH is $_rel relative to GitLab main $gl (GitHub at $gh). Merges are not reaching production."
+        exit 1
+        ;;
+      notfound)
+        echo "RESULT: FAIL — GitHub has never seen commit $gl (compare returned no result)." >&2
+        echo "  The push-mirror has not delivered this commit at all." >&2
+        send_alert "UplinkSync mirror STALLED" \
+          "GitHub does not contain GitLab main $gl at all. Merges are not reaching production."
+        exit 1
+        ;;
+      *)
+        echo "SKIP  could not determine the relationship from the GitHub compare API" >&2
+        echo "      (unexpected status '$_rel') — inconclusive, not paging." >&2
+        exit 0
+        ;;
+    esac
   fi
 
   echo "GitHub  $BRANCH = $gh"
