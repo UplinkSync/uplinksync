@@ -286,15 +286,22 @@ while : ; do
   # UPLAA-QW14 (2026-08-14): QW12 made a frozen mismatch "inconclusive, not
   # paging" because "mirror stalled" and "main moved under us" looked
   # indistinguishable. The first green scheduled run then revealed the cost:
-  # the live GitLab read TIMES OUT inside CI, so the job runs permanently in
-  # frozen mode — and a gate that can never page is the same "passes while
-  # doing nothing" failure this project has already hit three times.
+  # the live GitLab read had timed out, leaving the job in frozen mode — and a
+  # gate that cannot page is the same "passes while doing nothing" failure this
+  # project has already hit three times.
   #
-  # Why the live read fails: $CI_REPOSITORY_URL carries the EXTERNAL
-  # gitlab.uplinksync.com host, which the runner container cannot reach (the
-  # documented hairpin problem — the runner clones via a clone_url override
-  # instead). It answers fine from outside, which is what made this look
-  # healthy.
+  # CORRECTION (UPLAA-QW17): the original wording here said the live read fails
+  # "permanently". It does not — scheduled pipeline 2554 read it LIVE. The
+  # failure is INTERMITTENT, like every other symptom of this runner's egress.
+  # That does not weaken the case for this branch: a gate whose teeth depend on
+  # a flaky network read is toothless exactly when the network is bad, which is
+  # when a stall is most likely to go unnoticed.
+  #
+  # Why the live read fails when it does: $CI_REPOSITORY_URL carries the
+  # EXTERNAL gitlab.uplinksync.com host, which the runner container often cannot
+  # reach (the documented hairpin problem — the runner clones via a clone_url
+  # override instead). It answers fine from outside, which is what made this
+  # look healthy.
   #
   # The ambiguity is resolvable WITHOUT any GitLab connectivity, because git
   # history is a DAG and GitHub will tell us the relationship directly:
