@@ -99,6 +99,27 @@ add_action('rest_api_init', function () {
   ));
 });
 add_action('wp_footer', function(){
+  /*
+   * UPLAA-DRM-COND (2026-08-14): only ship the player where a reel exists.
+   *
+   * hls.min.js is 414 KB and was emitted on EVERY page view, while a
+   * video[data-uls-hls] element exists on exactly one page (/drone-services/).
+   * Measured on production: 0 such elements on /, /shop/, /contact/; 1 on
+   * /drone-services/. The init script self-guards (it returns when the
+   * selector matches nothing), so the wasted bytes were the library itself.
+   *
+   * The guard is is_page(), NOT a scan of $post->post_content: the <video>
+   * lives in the block TEMPLATE (wp_template 'page-drone-services'), and the
+   * page's post_content is EMPTY. A content scan would never match and would
+   * silently disable the reel.
+   *
+   * Filterable so the reel can move without editing this file:
+   *   add_filter( 'uls_drm_needs_player', '__return_true' );
+   */
+  $needs = is_page( 'drone-services' );
+  if ( ! apply_filters( 'uls_drm_needs_player', $needs ) ) {
+    return;
+  }
   $u = wp_upload_dir();
   $lib = esc_url(rtrim($u['baseurl'],'/').'/drm/hls.min.js');
   echo '<script src="'.$lib.'" id="uls-hls-lib"></script>'."\n";
