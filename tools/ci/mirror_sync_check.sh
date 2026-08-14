@@ -66,7 +66,8 @@
 # — it degrades safely, never blocks, and the non-zero exit still surfaces in the
 # pipeline UI. Set MIRROR_ALERT_URL as a CI variable to arm the out-of-band alert.
 
-set -uo pipefail
+# POSIX sh, busybox-only (UPLAA-QW13). No bash, no git, no curl — see ls_remote().
+set -u
 
 GITHUB_MIRROR_URL="${1:-${GITHUB_MIRROR_URL:-https://github.com/UplinkSync/uplinksync.git}}"
 BRANCH="${BRANCH:-main}"
@@ -90,11 +91,60 @@ RETRY_SLEEP="${RETRY_SLEEP:-20}"
 # against a live one is not a sync check - both sides must be read at the same
 # instant. Note the failure direction: this gate cried WOLF, which is exactly
 # what erodes trust in the alert it exists to send.
-gitlab_head() {
-  if [ -n "${GITLAB_MAIN_URL:-}" ]; then
-    git ls-remote "$GITLAB_MAIN_URL" "refs/heads/$BRANCH" 2>/dev/null | awk 'NR==1{print $1}'
+# Read one ref's SHA from a remote over git's SMART-HTTP transport, using nothing
+# but busybox wget.
+#
+# UPLAA-QW13 (2026-08-14): this used `git ls-remote`, which meant the job had to
+# `apk add git bash curl` first — and on 2026-08-14 that install failed three
+# times running (Alpine package CDN unreachable) while deploy_landed_check, in
+# the SAME pipeline, happily reached api.github.com and uplinksync.com over
+# HTTPS. General egress was fine; only the package mirror was down. A monitor
+# that cannot run without installing software fails for reasons that have
+# nothing to do with what it monitors, so the dependency is now gone entirely.
+#
+# `GET <repo>.git/info/refs?service=git-upload-pack` is the first half of a git
+# fetch and needs no git client: the body is pkt-lines of "<4-hex len><sha> <ref>".
+# Strip the length prefix and match the ref exactly (an anchored match, so
+# refs/heads/main cannot be satisfied by refs/heads/main-something).
+# Prints the SHA, or one of two sentinels. The distinction matters: an empty
+# result would conflate "cannot reach the host" (inconclusive, do not page) with
+# "the host is fine but the branch is GONE" — and a mirror that has lost its main
+# branch is precisely the UPLAA-443 silent-disable this job exists to catch, so
+# that case must page, not skip.
+#
+# A temp file rather than $(...) because the payload is binary: command
+# substitution strips NUL bytes, which is exactly the delimiter we split on.
+ls_remote() {
+  _repo=$(printf '%s' "$1" | sed 's/\.git$//')
+  _tmp="${TMPDIR:-/tmp}/msc_refs.$$"
+  wget -q -O "$_tmp" -T 25 "${_repo}.git/info/refs?service=git-upload-pack" 2>/dev/null
+  if [ ! -s "$_tmp" ]; then
+    rm -f "$_tmp"
+    printf 'UNREACHABLE\n'
+    return 0
+  fi
+  _sha=$(tr '\000' '\n' < "$_tmp" \
+    | sed 's/^[0-9a-f]\{4\}//' \
+    | grep "^[0-9a-f]\{40\} refs/heads/$2\$" \
+    | head -1 \
+    | cut -d' ' -f1)
+  rm -f "$_tmp"
+  if [ -n "$_sha" ]; then
+    printf '%s\n' "$_sha"
   else
-    git ls-remote origin "refs/heads/$BRANCH" 2>/dev/null | awk 'NR==1{print $1}'
+    printf 'NOBRANCH\n'
+  fi
+}
+
+gitlab_head() {
+  # $CI_REPOSITORY_URL already embeds gitlab-ci-token credentials, so this works
+  # against the private repo without handling a secret ourselves.
+  if [ -n "${GITLAB_MAIN_URL:-}" ]; then
+    ls_remote "$GITLAB_MAIN_URL" "$BRANCH"
+  elif [ -n "${CI_REPOSITORY_URL:-}" ]; then
+    ls_remote "$CI_REPOSITORY_URL" "$BRANCH"
+  else
+    ls_remote "$(git config --get remote.origin.url 2>/dev/null)" "$BRANCH"
   fi
 }
 
@@ -108,41 +158,51 @@ gitlab_head_frozen() {
 }
 
 github_head() {
-  git ls-remote "$GITHUB_MIRROR_URL" "refs/heads/$BRANCH" 2>/dev/null | awk 'NR==1{print $1}'
+  ls_remote "$GITHUB_MIRROR_URL" "$BRANCH"
 }
 
 # Fire an out-of-band push alert on a confirmed stall. Deliberately does NOT rely
 # on GitLab email (dead since 2026-03-22). Best-effort: a failed POST must not
 # change the script's exit code — the exit 1 is the primary, always-present signal.
 send_alert() {
-  local title="$1" body="$2"
+  _title="$1"; _body="$2"
   if [ -z "${MIRROR_ALERT_URL:-}" ]; then
     echo "WARN  MIRROR_ALERT_URL is unset — no out-of-band push alert sent. GitLab email is dead on this" >&2
     echo "      estate (since 2026-03-22), so the pipeline's non-zero exit is the ONLY signal right now." >&2
     echo "      Arm the push alert: set MIRROR_ALERT_URL (ntfy topic URL or webhook) as a CI variable." >&2
     return 0
   fi
-  if command -v curl >/dev/null 2>&1; then
-    # ntfy accepts a plain-text body plus optional Title/Priority/Tags headers;
-    # a generic webhook simply receives the body. Both are satisfied by this POST.
-    # UPLAA-QW9: ntfy at ntfy.uplinksync.com runs auth-default-access=deny-all and
-    # ANONYMOUS PUBLISH IS REFUSED (verified 2026-08-14: anonymous POST -> 403,
-    # token POST -> 200). The Vault doc claiming an "everyone -> write-only"
-    # transition safety net is stale. Auth is supplied as a separate MASKED CI
-    # variable rather than embedded in the URL, because GitLab refuses to mask a
-    # value containing URL punctuation - so a URL-embedded token would sit in the
-    # project settings and job logs UNMASKED.
-    auth_hdr=()
-    [ -n "${NTFY_ALERT_TOKEN:-}" ] && auth_hdr=(-H "Authorization: Bearer ${NTFY_ALERT_TOKEN}")
-    if curl -fsS --max-time 15 "${auth_hdr[@]}" \
-         -H "Title: $title" -H "Priority: urgent" -H "Tags: rotating_light,git" \
-         -d "$body" "$MIRROR_ALERT_URL" >/dev/null 2>&1; then
-      echo "ALERT sent to \$MIRROR_ALERT_URL." >&2
-    else
-      echo "WARN  push to \$MIRROR_ALERT_URL failed — the pipeline's non-zero exit remains the signal." >&2
-    fi
+  # ntfy accepts a plain-text body plus optional Title/Priority/Tags headers;
+  # a generic webhook simply receives the body. Both are satisfied by this POST.
+  # UPLAA-QW9: ntfy at ntfy.uplinksync.com runs auth-default-access=deny-all and
+  # ANONYMOUS PUBLISH IS REFUSED (verified 2026-08-14: anonymous POST -> 403,
+  # token POST -> 200). The Vault doc claiming an "everyone -> write-only"
+  # transition safety net is stale. Auth is supplied as a separate MASKED CI
+  # variable rather than embedded in the URL, because GitLab refuses to mask a
+  # value containing URL punctuation - so a URL-embedded token would sit in the
+  # project settings and job logs UNMASKED.
+  #
+  # UPLAA-QW13: busybox wget, not curl — this script no longer installs anything.
+  # busybox wget has no repeatable --header short form issue; each header is its
+  # own flag. --post-data makes it a POST.
+  if [ -n "${NTFY_ALERT_TOKEN:-}" ]; then
+    wget -q -O /dev/null -T 15 \
+      --header="Authorization: Bearer ${NTFY_ALERT_TOKEN}" \
+      --header="Title: $_title" \
+      --header="Priority: urgent" \
+      --header="Tags: rotating_light,git" \
+      --post-data="$_body" "$MIRROR_ALERT_URL" 2>/dev/null
   else
-    echo "WARN  curl not available — cannot push to \$MIRROR_ALERT_URL; relying on non-zero exit." >&2
+    wget -q -O /dev/null -T 15 \
+      --header="Title: $_title" \
+      --header="Priority: urgent" \
+      --header="Tags: rotating_light,git" \
+      --post-data="$_body" "$MIRROR_ALERT_URL" 2>/dev/null
+  fi
+  if [ $? -eq 0 ]; then
+    echo "ALERT sent to \$MIRROR_ALERT_URL." >&2
+  else
+    echo "WARN  push to \$MIRROR_ALERT_URL failed — the pipeline's non-zero exit remains the signal." >&2
   fi
 }
 
@@ -150,7 +210,9 @@ echo "== mirror sync check :: GitLab main -> GitHub($GITHUB_MIRROR_URL) [$BRANCH
 
 gl="$(gitlab_head)"
 GL_SOURCE="live"
-if [ -z "$gl" ]; then
+# UNREACHABLE or NOBRANCH both mean "no trustworthy live value" on the GitLab
+# side, so both fall back to the frozen SHA (which then cannot page — see below).
+if [ -z "$gl" ] || [ "$gl" = "UNREACHABLE" ] || [ "$gl" = "NOBRANCH" ]; then
   gl="$(gitlab_head_frozen)"
   GL_SOURCE="frozen"
 fi
@@ -163,9 +225,23 @@ echo "GitLab  $BRANCH = $gl  (source: $GL_SOURCE)"
 attempt=0
 while : ; do
   gh="$(github_head)"
-  if [ -z "$gh" ]; then
-    echo "SKIP  GitHub mirror unreachable (ls-remote returned nothing) — inconclusive, not paging." >&2
+  if [ -z "$gh" ] || [ "$gh" = "UNREACHABLE" ]; then
+    echo "SKIP  GitHub mirror unreachable (no refs returned) — inconclusive, not paging." >&2
     exit 0
+  fi
+
+  # Host answered, but there is no such branch. That is NOT ambiguous and NOT a
+  # network problem: the mirror has lost $BRANCH entirely, which is the
+  # UPLAA-443 signature in its most severe form. Page immediately — retrying
+  # cannot make a deleted branch reappear.
+  if [ "$gh" = "NOBRANCH" ]; then
+    echo "RESULT: FAIL — the GitHub mirror is reachable but has NO $BRANCH branch at all." >&2
+    echo "  GitLab $BRANCH : $gl" >&2
+    echo "  The push-mirror has almost certainly been disabled or reset. Check" >&2
+    echo "  GitLab -> Settings -> Repository -> Mirroring repositories." >&2
+    send_alert "UplinkSync mirror MISSING $BRANCH" \
+      "GitHub mirror is reachable but has no $BRANCH branch. GitLab $BRANCH is $gl. Deploys are NOT reaching production."
+    exit 1
   fi
 
   if [ "$gh" = "$gl" ]; then
@@ -186,6 +262,9 @@ while : ; do
     # report a stall that never happened.
     if [ "$GL_SOURCE" = "live" ]; then
       gl_new="$(gitlab_head)"
+      if [ "$gl_new" = "UNREACHABLE" ] || [ "$gl_new" = "NOBRANCH" ]; then
+        gl_new=""
+      fi
       if [ -n "$gl_new" ] && [ "$gl_new" != "$gl" ]; then
         echo "  GitLab $BRANCH advanced mid-check: $gl -> $gl_new (re-basing comparison)" >&2
         gl="$gl_new"

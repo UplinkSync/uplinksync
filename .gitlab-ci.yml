@@ -268,27 +268,19 @@ prod_render_smoke:
 mirror_sync_check:
   stage: .post
   image: alpine:3.20
-  # UPLAA-QW12: bound and retry the install. Unbounded `apk add` hung for an
-  # hour on a sibling job the same night; a monitoring job must fail fast and
-  # legibly rather than consume a runner slot.
-  timeout: 15m
+  # UPLAA-QW13: NO before_script. QW12 bounded and retried the `apk add`, which
+  # made the failure fast and legible - but the job still went red for a reason
+  # that had nothing to do with the mirror. On the first scheduled run after
+  # QW12 merged, all three apk attempts failed (Alpine package CDN unreachable)
+  # while deploy_landed_check in the SAME pipeline reached api.github.com and
+  # uplinksync.com fine. General egress was healthy; only the package mirror was
+  # down. So the script now speaks git's smart-HTTP protocol with busybox wget
+  # and installs nothing at all.
+  timeout: 10m
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
-  before_script:
-    - |
-      ok=0
-      for attempt in 1 2 3; do
-        if timeout 120 apk add --no-cache git bash curl >/dev/null 2>&1; then ok=1; break; fi
-        echo "apk attempt $attempt/3 failed or timed out (runner container egress); retrying" >&2
-        sleep 10
-      done
-      if [ "$ok" != 1 ]; then
-        echo "INFRA: could not install git/bash/curl - runner container egress is down." >&2
-        echo "       This is a TOOLING failure, not a mirror failure. Nothing was checked." >&2
-        exit 1
-      fi
   script:
-    - bash tools/ci/mirror_sync_check.sh
+    - sh tools/ci/mirror_sync_check.sh
 
 # UPLAA-QW8: does production actually serve GitHub main?
 #
