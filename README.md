@@ -1,9 +1,11 @@
 <!-- Header -->
 <p align="center">
-  <a href="https://uplinksync.com"><img src="https://img.shields.io/badge/UplinkSync-Technology%20%26%20Managed%20Services-2563EB?style=for-the-badge&logo=react&logoColor=white" alt="UplinkSync" height="34"></a>
+  <a href="https://uplinksync.com"><img src="https://uplinksync.com/wp-content/mu-plugins/uplinksync-header-logo/uplinksync-logo-transparent2.png" alt="UplinkSync" width="420"></a>
 </p>
 
-<h1 align="center">UplinkSync</h1>
+<p align="center">
+  <a href="https://uplinksync.com"><img src="https://img.shields.io/badge/UplinkSync-Technology%20%26%20Managed%20Services-2563EB?style=for-the-badge&logo=react&logoColor=white" alt="UplinkSync" height="34"></a>
+</p>
 
 <p align="center">
   <strong>Idaho-based technology company</strong><br>
