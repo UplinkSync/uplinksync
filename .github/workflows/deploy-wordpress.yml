@@ -113,7 +113,9 @@ jobs:
             --exclude 'jetpack-waf/' --exclude 'jpcrm-storage/' \
             --exclude 'object-cache.php' --exclude 'advanced-cache.php' \
             --exclude '*.dat' --exclude '.git*' \
-            --exclude 'plugins/' \
+            --include 'plugins/' \
+            --include 'plugins/uplinksync-site-code/***' \
+            --exclude 'plugins/*' \
             -e "ssh -i ~/.ssh/deploy_key -p ${{ secrets.HOSTINGER_SSH_PORT }}" \
             wp-content/ "${{ secrets.HOSTINGER_SSH_USER }}@${{ secrets.HOSTINGER_SSH_HOST }}:${{ vars.REMOTE_PLUGIN_PATH }}/"
 
