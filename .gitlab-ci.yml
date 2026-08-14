@@ -279,6 +279,14 @@ mirror_sync_check:
   timeout: 10m
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
+  # UPLAA-QW15: exit 2 = "the check could not run; NOTHING WAS CHECKED".
+  # allow_failure keeps the pipeline unblocked (a flaky runner must not gate
+  # merges) while showing the job AMBER, so an inconclusive run is visibly
+  # different from a verified pass. Going green having checked nothing is this
+  # project's single most repeated defect - doc 114 section 16.5.
+  allow_failure:
+    exit_codes:
+      - 2
   script:
     - sh tools/ci/mirror_sync_check.sh
 
@@ -304,5 +312,13 @@ deploy_landed_check:
   timeout: 10m
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
+  # UPLAA-QW15: exit 2 = "the check could not run; NOTHING WAS CHECKED".
+  # allow_failure keeps the pipeline unblocked (a flaky runner must not gate
+  # merges) while showing the job AMBER, so an inconclusive run is visibly
+  # different from a verified pass. Going green having checked nothing is this
+  # project's single most repeated defect - doc 114 section 16.5.
+  allow_failure:
+    exit_codes:
+      - 2
   script:
     - sh tools/ci/deploy_landed_check.sh
