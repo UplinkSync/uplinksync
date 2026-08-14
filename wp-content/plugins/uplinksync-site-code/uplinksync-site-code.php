@@ -3,7 +3,7 @@
  * Plugin Name:  UplinkSync Site Code
  * Description:  Version-controlled home for site behaviour that previously lived only as
  *               database rows in wp_snippets. See ecosystem-docs doc 120 (DR-004).
- * Version:      1.1.0
+ * Version:      1.2.0
  * Author:       UplinkSync
  * Requires PHP: 7.4
  *
@@ -36,6 +36,8 @@ function uls_site_code_manifest() {
 	return array(
 		array( 'id' => 112, 'priority' => 6, 'scope' => 'global', 'file' => '112-uls-drm-v1-encrypted-hls-hero-reel-endpoints-player.php' ), // ULS DRM v1 — encrypted-HLS hero reel (endpoints + play
 		array( 'id' => 45, 'priority' => 10, 'scope' => 'front-end', 'file' => '045-uplaa-247-store-clean-grid-thumbs-watermarked-enlarg.php' ), // UPLAA-247 Store: clean grid thumbs / watermarked enlar
+		array( 'id' => 91, 'priority' => 10, 'scope' => 'global', 'file' => '091-uplaa-366-allow-anon-woocommerce-store-api-checkout.php' ), // UPLAA-366 Allow anon WooCommerce Store API (checkout/S
+		array( 'id' => 120, 'priority' => 10, 'scope' => 'front-end', 'file' => '120-uplaa-p3-phase-3-ia-redirects-single-hop-external-sa.php' ), // UPLAA-P3 Phase 3 IA redirects (single-hop, external sa
 		array( 'id' => 108, 'priority' => 11, 'scope' => 'front-end', 'file' => '108-uplaa-drone-dynamic-browse-license-collection-tiles.php' ), // UPLAA Drone: dynamic browse-&-license collection tiles
 		array( 'id' => 77, 'priority' => 20, 'scope' => 'front-end', 'file' => '077-uplaa-277-hide-standalone-estimator-trigger-moved-in.php' ), // UPLAA-277 Hide standalone estimator trigger (moved int
 		array( 'id' => 79, 'priority' => 21, 'scope' => 'front-end', 'file' => '079-uplaa-281-vertical-rhythm-tighten-cta-bands-contact.php' ), // UPLAA-281 Vertical rhythm: tighten CTA bands + contact
