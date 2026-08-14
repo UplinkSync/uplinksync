@@ -3,7 +3,7 @@
  * Plugin Name:  UplinkSync Site Code
  * Description:  Version-controlled home for site behaviour that previously lived only as
  *               database rows in wp_snippets. See ecosystem-docs doc 120 (DR-004).
- * Version:      1.0.0
+ * Version:      1.1.0
  * Author:       UplinkSync
  * Requires PHP: 7.4
  *
@@ -34,13 +34,18 @@ defined( 'ABSPATH' ) || exit;
  */
 function uls_site_code_manifest() {
 	return array(
-		array( 'id' => 77, 'priority' => 20, 'scope' => 'front-end', 'file' => '077-uplaa-277-hide-standalone-estimator-trigger-moved-in.php' ), // UPLAA-277 Hide standalone estimator trigger (moved into 
-		array( 'id' => 79, 'priority' => 21, 'scope' => 'front-end', 'file' => '079-uplaa-281-vertical-rhythm-tighten-cta-bands-contact.php' ), // UPLAA-281 Vertical rhythm: tighten CTA bands + contact r
-		array( 'id' => 83, 'priority' => 21, 'scope' => 'front-end', 'file' => '083-uplaa-277-hide-reserved-real-photo-placeholder-secti.php' ), // UPLAA-277 Hide RESERVED/Real-photo placeholder sections 
-		array( 'id' => 109, 'priority' => 99, 'scope' => 'front-end', 'file' => '109-uplaa-shop-polish-cta-text-linkedin-icon-add-to-cart.php' ), // UPLAA /shop/ polish — CTA text, LinkedIn icon, add-to-ca
-		array( 'id' => 85, 'priority' => 100, 'scope' => 'front-end', 'file' => '085-uplaa-360-store-navy-header-on-woocommerce-product-c.php' ), // UPLAA-360 Store: navy header on WooCommerce/product/coll
-		array( 'id' => 92, 'priority' => 100, 'scope' => 'front-end', 'file' => '092-uplaa-store-polish-navy-empty-cart-start-shopping-bu.php' ), // UPLAA store polish: navy empty-cart "Start shopping" but
-		array( 'id' => 114, 'priority' => 105, 'scope' => 'front-end', 'file' => '114-uplaa-shop-card-redesign-kill-wpautop-deadspace-squa.php' ), // UPLAA /shop/ card redesign — kill wpautop deadspace, squ
+		array( 'id' => 112, 'priority' => 6, 'scope' => 'global', 'file' => '112-uls-drm-v1-encrypted-hls-hero-reel-endpoints-player.php' ), // ULS DRM v1 — encrypted-HLS hero reel (endpoints + play
+		array( 'id' => 45, 'priority' => 10, 'scope' => 'front-end', 'file' => '045-uplaa-247-store-clean-grid-thumbs-watermarked-enlarg.php' ), // UPLAA-247 Store: clean grid thumbs / watermarked enlar
+		array( 'id' => 108, 'priority' => 11, 'scope' => 'front-end', 'file' => '108-uplaa-drone-dynamic-browse-license-collection-tiles.php' ), // UPLAA Drone: dynamic browse-&-license collection tiles
+		array( 'id' => 77, 'priority' => 20, 'scope' => 'front-end', 'file' => '077-uplaa-277-hide-standalone-estimator-trigger-moved-in.php' ), // UPLAA-277 Hide standalone estimator trigger (moved int
+		array( 'id' => 79, 'priority' => 21, 'scope' => 'front-end', 'file' => '079-uplaa-281-vertical-rhythm-tighten-cta-bands-contact.php' ), // UPLAA-281 Vertical rhythm: tighten CTA bands + contact
+		array( 'id' => 83, 'priority' => 21, 'scope' => 'front-end', 'file' => '083-uplaa-277-hide-reserved-real-photo-placeholder-secti.php' ), // UPLAA-277 Hide RESERVED/Real-photo placeholder section
+		array( 'id' => 78, 'priority' => 99, 'scope' => 'front-end', 'file' => '078-uplaa-278-dequeue-woocommerce-assets-on-non-commerce.php' ), // UPLAA-278 Dequeue WooCommerce assets on non-commerce p
+		array( 'id' => 109, 'priority' => 99, 'scope' => 'front-end', 'file' => '109-uplaa-shop-polish-cta-text-linkedin-icon-add-to-cart.php' ), // UPLAA /shop/ polish — CTA text, LinkedIn icon, add-to-
+		array( 'id' => 110, 'priority' => 99, 'scope' => 'front-end', 'file' => '110-uplaa-drone-videos-no-download-guard-vertical-auto-l.php' ), // UPLAA drone videos — no-download guard + vertical auto
+		array( 'id' => 85, 'priority' => 100, 'scope' => 'front-end', 'file' => '085-uplaa-360-store-navy-header-on-woocommerce-product-c.php' ), // UPLAA-360 Store: navy header on WooCommerce/product/co
+		array( 'id' => 92, 'priority' => 100, 'scope' => 'front-end', 'file' => '092-uplaa-store-polish-navy-empty-cart-start-shopping-bu.php' ), // UPLAA store polish: navy empty-cart "Start shopping" b
+		array( 'id' => 114, 'priority' => 105, 'scope' => 'front-end', 'file' => '114-uplaa-shop-card-redesign-kill-wpautop-deadspace-squa.php' ), // UPLAA /shop/ card redesign — kill wpautop deadspace, s
 	);
 }
 
