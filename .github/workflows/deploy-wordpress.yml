@@ -49,7 +49,11 @@ jobs:
     if: vars.REMOTE_PLUGIN_PATH != ''
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      # actions/checkout@v5 runs on Node 24. v4 pinned Node 20, which GitHub
+      # deprecated (2025-09-19) and now force-runs on Node 24 anyway, emitting a
+      # warning on every deploy. This is the only action in this workflow, and it
+      # takes no inputs, so the bump is a drop-in.
+      - uses: actions/checkout@v5
 
       - name: Validate configuration
         run: |
