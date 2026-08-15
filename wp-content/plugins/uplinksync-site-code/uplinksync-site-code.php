@@ -3,7 +3,7 @@
  * Plugin Name:  UplinkSync Site Code
  * Description:  Version-controlled home for site behaviour that previously lived only as
  *               database rows in wp_snippets. See ecosystem-docs doc 120 (DR-004).
- * Version:      1.2.0
+ * Version:      1.3.0
  * Author:       UplinkSync
  * Requires PHP: 7.4
  *
@@ -34,6 +34,7 @@ defined( 'ABSPATH' ) || exit;
  */
 function uls_site_code_manifest() {
 	return array(
+		array( 'id' => 900, 'priority' => 5, 'scope' => 'global', 'file' => '900-uls-dr006-interim-client-media-authz.php' ), // DR-006 INTERIM client-media authz (M1 wp/v2/media, M2 Store API categories) — NOT a migrated row; native code, 9xx range
 		array( 'id' => 112, 'priority' => 6, 'scope' => 'global', 'file' => '112-uls-drm-v1-encrypted-hls-hero-reel-endpoints-player.php' ), // ULS DRM v1 — encrypted-HLS hero reel (endpoints + play
 		array( 'id' => 45, 'priority' => 10, 'scope' => 'front-end', 'file' => '045-uplaa-247-store-clean-grid-thumbs-watermarked-enlarg.php' ), // UPLAA-247 Store: clean grid thumbs / watermarked enlar
 		array( 'id' => 91, 'priority' => 10, 'scope' => 'global', 'file' => '091-uplaa-366-allow-anon-woocommerce-store-api-checkout.php' ), // UPLAA-366 Allow anon WooCommerce Store API (checkout/S
