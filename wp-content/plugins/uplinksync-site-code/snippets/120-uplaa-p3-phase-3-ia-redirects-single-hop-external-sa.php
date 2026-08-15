@@ -11,6 +11,9 @@
  * snippet 91 against the doc 118 F1 probe set, snippet 120 against its full
  * redirect map. Migrated VERBATIM.
  *
+ * Phase 2 step 2 (doc 124 5.2) adds PATH rules for the six retired duplicates
+ * that only had ID rules. The ID rules are kept as belt-and-braces.
+ *
  * The wp_snippets row is DEACTIVATED, not deleted - re-activating it in wp-admin
  * is the rollback and needs no deploy.
  */
@@ -54,6 +57,15 @@ add_action( 'template_redirect', function () {
 		'/services/martial-arts-academies' => '/martial-arts-academies/',
 		'/hosting'                         => '/services/hosting/',
 		'/web-design'                      => '/services/web/',
+		// Phase 2 step 2 (doc 124 5.2): the six retired duplicates that had no
+		// path rule. Needed BEFORE they are unpublished - the ID rules below
+		// stop firing once a page no longer resolves.
+		'/services/managed-it-3'           => '/services/managed-it/',
+		'/services/managed-it-4'           => '/services/managed-it/',
+		'/services/automation-2'           => '/services/automation/',
+		'/services/automation-3'           => '/services/automation/',
+		'/services/web-2'                  => '/services/web/',
+		'/services/web-3'                  => '/services/web/',
 	);
 
 	$target = isset( $by_path[ $path ] ) ? $by_path[ $path ] : '';
