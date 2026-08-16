@@ -922,15 +922,33 @@ footer.site-footer p a {
  * an inline declaration can only be beaten with !important. The natural size is
  * restored unchanged (802x132 at 44px tall = 267px wide) — this makes the
  * wordmark LARGER at every mobile width than it renders today; the asset is
- * untouched (H8). Below 480px it is capped at 36px tall so that logo + toggle
- * still share one row on a 360px screen — still 10px taller than today. */
+ * untouched (H8). It is stepped DOWN on narrow screens by the rule below so
+ * that row 1 can carry logo + phone + toggle — see the REVISION section. */
 .site-header .hostinger-ai-site-title img {
 	max-width: none !important;
 	max-height: 44px !important;
 	width: auto !important;
 	height: auto !important;
 }
-@media (max-width: 479px) {
+/* Stepped logo cap — arithmetic, not taste. The asset is 802x132, so its width
+ * is height x 6.076. Row 1 must hold logo + 8px + phone(44) + 8px + toggle(44)
+ * = logo + 104px inside the content box, which is the viewport less the
+ * theme's 2 x 30px global padding:
+ *
+ *   360px -> 300px box -> logo <= 196px -> <= 32.2px tall   -> cap 32px
+ *   390px -> 330px box -> logo <= 226px -> <= 37.2px tall   -> cap 36px
+ *   480px -> 420px box -> logo <= 316px -> <= 52.0px tall   -> 44px cap is free
+ *
+ * 430px is the awkward one: a 44px logo is 267px and 267+104 = 371 against a
+ * 370px box — one pixel over — so 430-479px stays on the 36px step rather than
+ * wrapping the toggle to a second row for the sake of 8px of wordmark.
+ * The asset itself is never altered or replaced (H8); only the render height
+ * changes, and it is still larger at 360px than the 26px the broken grid was
+ * producing before the collision fix. */
+@media (max-width: 389px) {
+	.site-header .hostinger-ai-site-title img { max-height: 32px !important; }
+}
+@media (min-width: 390px) and (max-width: 479px) {
 	.site-header .hostinger-ai-site-title img { max-height: 36px !important; }
 }
 /* Utility-nav labels must not break mid-phrase ("Client Hub", "Request a
@@ -964,19 +982,49 @@ footer.site-footer p a {
 	}
 }
 
-/* --- DOC 126 §6 ITEM 3 — the business phone number in the header --------- */
-/* +1 (208) 995-2704 — the number already published sitewide and in the
- * Organization JSON-LD ("telephone":"+12089952704"). Not a new claim.
+
+/* ===========================================================================
+ * DOC 126 §6 ITEM 3 + OWNER REVISION — THE HEADER PHONE, AND WHAT ROW 1 CARRIES
+ *
+ * WHY THIS SECTION WAS REWRITTEN. The collision fix above is correct and is
+ * kept verbatim. What followed it originally was a row-packing layer that tried
+ * to squeeze five interactive elements — logo, toggle, phone, Client Hub,
+ * Request a Quote — into a 300px-wide content box by shrinking type and gaps.
+ * It could not be done: the bar came out THREE rows and 147px tall at 360 and
+ * 390px, up from 113px, and the owner's review was that the header now reads as
+ * crowded and busy. Shrinking type was buying height at the cost of the two
+ * primary conversion targets, which is the wrong trade.
+ *
+ * THE DECIDED COMPOSITION (owner-approved; implemented, not re-litigated):
+ *
+ *   Row 1, wherever the hamburger is on (<= 899px), carries EXACTLY THREE
+ *   things — logo, a 44x44 icon-only phone, and the toggle. Nothing else.
+ *
+ *   "Request a Quote" and "Client Hub" move INTO the overlay, Quote first and
+ *   full-width, above the service navigation.
+ *
+ * HOW THE OVERLAY MOVE IS DONE — READ THIS BEFORE EDITING. The overlay's
+ * contents are NOT in template part 828. Part 828 only holds a reference,
+ * `wp:navigation {"ref":826}`; everything the overlay renders comes from the
+ * wp_navigation post 826. So "put Request a Quote first in the overlay" is
+ * physically impossible from CSS or from 828 — the two links had to be added to
+ * nav 826 itself, carrying `uls-overlay-only`, and they are hidden again at
+ * >= 900px where the utility nav still shows them in the bar. Below 900px the
+ * utility nav is hidden from the bar instead. Exactly one copy of each link is
+ * ever rendered, at every width, so nothing is announced twice.
+ * (Verified: post 826 is referenced by part 828 and by nothing else.)
+ *
+ * THE PHONE. +1 (208) 995-2704 — the number already published sitewide and in
+ * the Organization JSON-LD ("telephone":"+12089952704"). Not a new claim.
  * NO opening hours: the site publishes none anywhere and inventing them would
  * breach H1.
- * Markup lives in wp_template_part 828 (DB) as `.uls-header-phone`; it sits
- * between the main nav and the utility nav so that on mobile it wraps onto the
- * second row WITH "Client Hub" and "Request a Quote" rather than competing with
- * the toggle for row 1. It is never display:none, so it is reachable at every
- * width — a tel: link is the single most likely mobile action on this header.
+ * Markup lives in wp_template_part 828 (DB) as `.uls-header-phone`. It is the
+ * FIRST child of the nav wrapper, i.e. before the main-nav block, so that the
+ * visual order (logo, phone, toggle) is also the DOM order and therefore the
+ * focus order — no CSS `order` is used anywhere in this header, at any width.
  * Colour is the existing header ink (white on navy-900 = 12.86:1); hover is the
  * existing accent-teal (7.86:1 on navy-900). No new colour is introduced (H8).
- */
+ * ------------------------------------------------------------------------- */
 .site-header .uls-header-phone {
 	flex: 0 0 auto;
 	margin: 0;
@@ -989,7 +1037,9 @@ footer.site-footer p a {
 .site-header .uls-header-phone a {
 	display: inline-flex;
 	align-items: center;
-	min-height: 24px;             /* SC 2.5.8 target size, as the footer links */
+	justify-content: center;
+	gap: 0.4em;
+	min-height: 24px;
 	color: var(--uplinksync-white) !important;
 	text-decoration: none;
 	letter-spacing: 0.01em;
@@ -1004,79 +1054,178 @@ footer.site-footer p a {
 	outline-offset: 2px;
 	border-radius: 4px;
 }
-/* Inside the OPEN mobile overlay the sheet is white, so re-assert navy ink —
- * mirrors the overlay exception already defined for the nav links above. */
-.site-header .wp-block-navigation__responsive-container.is-menu-open .uls-header-phone a {
-	color: var(--navy-900) !important;
-}
+.site-header .uls-phone-icon { display: none; flex: 0 0 auto; }
 
-/* --- ROW PACKING ---------------------------------------------------------
- * Measured after the rules above: the collision, the "Client Hub" break and
- * the 282px 600-767px bar are all fixed, but the bar is taller than it needs to
- * be because the phone and the utility nav each claim their own wrapped row.
- * The content simply has to fit: at 390px the bar is 330px wide and must carry
- * the logo, the toggle, a phone number, "Client Hub" and "Request a Quote".
- * Two rows is the floor; three is avoidable. Trim the secondary row's type and
- * gaps — never the logo, never a colour, never a target size — so phone +
- * Client Hub + Request a Quote share ONE row from 390px up.
- * ------------------------------------------------------------------------ */
+/* --- ROW 1 = LOGO + PHONE ICON + TOGGLE, <= 899px ------------------------ */
+/* The icon-only swap is what makes three-things-on-one-row arithmetically
+ * possible; see the stepped logo cap above for the width budget.
+ *
+ * SC 2.5.8 / 2.5.5: the <a> itself is sized 44x44, not just padded — the box is
+ * measured in verification, not assumed.
+ * SC 2.5.3 Label in Name: in the icon-only state there is NO visible text, so
+ * the criterion is not engaged and the aria-label is free to read "Call
+ * UplinkSync at (208) 995-2704". At >= 900px the digits ARE visible, and the
+ * markup deliberately spells them with a normal space so that the visible
+ * string is contained in the accessible name character-for-character. (The
+ * previous revision used a non-breaking space in the visible text and a normal
+ * space in the aria-label, which is exactly the mismatch 2.5.3 is about;
+ * `white-space: nowrap` above is what keeps the number unbroken instead.) */
 @media (max-width: 899px) {
-	.site-header .hostinger-ai-menu-wrapper { column-gap: 10px; row-gap: 8px; }
-	.site-header .uls-header-phone { font-size: 0.875rem; }
-	.site-header .uplinksync-utility-nav { column-gap: 10px; gap: 10px; }
-	.site-header .hostinger-ai-menu .wp-block-navigation a[href*="/request-quote"] {
-		padding: 0.45rem 0.85rem !important;
+	.site-header .uls-phone-text { display: none; }
+	.site-header .uls-phone-icon { display: block; }
+	.site-header .uls-header-phone a {
+		min-width: 44px;
+		min-height: 44px;
+		gap: 0;
+		border-radius: 8px;
 	}
-}
-/* Desktop: shave the same secondary row so logo + nav + phone + utility hold a
- * single line on a standard 1280px viewport. */
-@media (min-width: 900px) {
-	.site-header .hostinger-ai-menu-wrapper { column-gap: 18px; row-gap: 6px; }
-	.site-header .uls-header-phone { font-size: 0.9rem; }
-	.site-header .uplinksync-utility-nav { column-gap: 14px; gap: 14px; }
-	.site-header .hostinger-ai-site-navigation .wp-block-navigation__container { gap: 14px; }
-}
-
-/* --- ROW PACKING, PASS 2 (measured) --------------------------------------
- * Pass 1 still left three rows on a phone (179px bar) and two on a 1280px
- * desktop, because phone(110) + utility(252) = 372 against a 330px content box
- * at 390px. Two levers, both cheap:
- *   - Phones (<=599px): take the secondary row to 0.8125rem with a tighter
- *     quote-pill inset so the phone number, "Client Hub" and "Request a Quote"
- *     hold ONE row from 390px up. 13px is well inside this theme's existing
- *     range (doc 126 §5 measures live copy at 9.92px) and the ink is unchanged
- *     white-on-navy at 12.86:1, so no contrast is spent buying the space.
- *   - The <=899px bar's 30px vertical padding is the other half of the height.
- *     14px keeps the 44px toggle the tallest thing in the row and brings the
- *     bar back near its pre-fix height, which matters because the bar is
- *     position:sticky and every pixel is taken off the reading area.
- * ------------------------------------------------------------------------ */
-@media (max-width: 899px) {
+	/* Row 1 is the only row: three items, one 8px gap between them. */
 	.site-header .hostinger-ai-menu-wrapper {
+		column-gap: 8px;
+		row-gap: 8px;
 		padding-top: 14px !important;
 		padding-bottom: 14px !important;
 	}
+	/* Client Hub + Request a Quote leave the bar entirely and are rendered by
+	 * nav 826 inside the overlay instead. */
+	.site-header .uplinksync-utility-nav { display: none !important; }
 }
-/* NOTE: the utility nav's own size is NOT reduced here. It carries WordPress's
- * `has-medium-font-size` preset class, which ships `font-size: ... !important`,
- * so a container rule is a no-op — and forcing past it would be the wrong call
- * anyway: it would buy ~32px of bar height by shrinking "Client Hub" and
- * "Request a Quote", the two primary conversion targets in the header, to 13px.
- * The bar carries three rows below 430px instead of two. That is the honest
- * cost of fitting five interactive elements into a 330px-wide bar. */
-@media (max-width: 599px) {
-	.site-header .uls-header-phone { font-size: 0.8125rem; }
-	.site-header .uplinksync-utility-nav { column-gap: 8px; gap: 8px; }
-	.site-header .hostinger-ai-menu-wrapper { column-gap: 8px; }
-	.site-header .hostinger-ai-menu .wp-block-navigation a[href*="/request-quote"] {
-		padding: 0.4rem 0.7rem !important;
+/* ...and the overlay copies are suppressed at >= 900px, where the utility nav
+ * is back in the bar. display:none also removes them from the accessibility
+ * tree, so neither link is ever duplicated to a screen reader. */
+@media (min-width: 900px) {
+	.site-header .uls-overlay-only { display: none !important; }
+}
+
+/* --- REQUEST A QUOTE, FULL WIDTH AND FIRST, INSIDE THE OVERLAY ----------- */
+/* The quote link is styled globally by the `uplaa-header-ux` snippet into a
+ * small inline pill with `!important` on display/padding/border-radius, which
+ * is right in a horizontal bar and wrong in a vertical sheet — it would read as
+ * demoted, and it is the primary conversion target. Re-assert it as a
+ * full-width action inside the open overlay only.
+ *
+ * COLOUR IS UNTOUCHED, and specifically it is NOT the teal bar pill: the rule
+ * at the top of this file already fills the CTA navy-900 with a white label
+ * inside `.is-menu-open`, because a teal-on-white pill would be washed out on
+ * the white sheet. Only geometry is changed below — width, padding, radius,
+ * font-size. Re-measured from rendered pixels: white on navy-900 = 12.86:1. */
+@media (max-width: 899px) {
+	/* MEASURED: core lays the overlay out as a column flex with
+	 * `align-items:flex-start`, so the <ul> shrinks to its widest label — 175px
+	 * inside a 330px sheet at 390px. A `width:100%` on the CTA therefore had
+	 * nothing to stretch into. Stretch the CONTENT wrapper first; everything
+	 * below it then has a full-width line box to fill. */
+	.site-header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__responsive-container-content {
+		align-items: stretch;
+	}
+	.site-header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__container {
+		align-items: stretch;
+		width: 100%;
+		gap: 0.35rem;
+	}
+	.site-header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item {
+		width: 100%;
+	}
+	.site-header .wp-block-navigation__responsive-container.is-menu-open .uplinksync-nav-cta {
+		margin-bottom: 0.25rem;
+	}
+	.site-header .wp-block-navigation__responsive-container.is-menu-open .uplinksync-nav-cta a[href*="/request-quote"] {
+		display: flex !important;
+		/* MEASURED: the anchor is content-box, so `width:100%` plus the pill's
+		 * 20px side padding pushed the button 40px past the sheet (right edge
+		 * 400 in a 390px viewport). border-box is what makes 100% mean 100%. */
+		box-sizing: border-box !important;
+		width: 100% !important;
+		justify-content: center !important;
+		border-radius: 10px !important;
+		padding: 0.95rem 1.25rem !important;
+		font-size: 1.0625rem !important;
+	}
+	/* Client Hub reads as the secondary action directly under it, and the
+	 * service navigation is separated by space alone — no new rule, no new
+	 * colour, nothing that touches H8. */
+	.site-header .wp-block-navigation__responsive-container.is-menu-open .uls-overlay-only:not(.uplinksync-nav-cta) {
+		margin-bottom: 0.6rem;
+	}
+	/* Overlay links get a real target box rather than a text-height one. */
+	.site-header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item > a {
+		min-height: 44px;
+		display: flex;
+		align-items: center;
+	}
+	/* FOCUS VISIBLE, RE-MEASURED. The snippet's focus ring is accent-500
+	 * #5697F3, which doc 126 §5 measures at 2.95:1 — that is fine against the
+	 * navy bar but the open overlay sheet is WHITE, where 2.95:1 misses the 3:1
+	 * non-text minimum (SC 1.4.11). Inside the open overlay the ring becomes
+	 * navy-900 on white = 12.86:1. Existing token, so no new colour (H8). */
+	.site-header .wp-block-navigation__responsive-container.is-menu-open a:focus-visible {
+		outline: 3px solid var(--navy-900) !important;
+		outline-offset: 2px !important;
+		border-radius: 6px;
+	}
+	/* The CTA needs a HIGHER-specificity selector than the one above, because
+	 * the `uplaa-header-ux` snippet rings the quote link with accent-500
+	 * #5697F3 at `!important` and (0,5,0). MEASURED by Tab-ing to it with a real
+	 * keyboard: the ring rendered #5697F3 at outline-offset 2px, i.e. drawn on
+	 * the WHITE sheet, where doc 126 §5 measures accent-500 at 2.95:1 — under
+	 * the 3:1 SC 1.4.11 needs for a focus indicator. This selector is (0,7,0)
+	 * and puts it back to navy-900 on white = 12.86:1. */
+	.site-header .hostinger-ai-menu .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation a[href*="/request-quote"]:focus-visible {
+		outline: 3px solid var(--navy-900) !important;
+		outline-offset: 2px !important;
+	}
+	/* The overlay's own close button sits on the white sheet and otherwise takes
+	 * the UA default dark ring, which is fine there — but pin it for parity. */
+	.site-header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__responsive-container-close:focus-visible {
+		outline: 3px solid var(--navy-900) !important;
+		outline-offset: 2px !important;
+		border-radius: 6px;
 	}
 }
-/* Desktop: 1280px is 10px short of a single row at an 18px gap, so take the
- * gap to 14px and the secondary row to 0.875rem. Verified by measurement at
- * 1280 and 1440; 1024 still wraps to two rows, which is correct — the content
- * genuinely does not fit and wrapping is the designed behaviour, not a defect. */
+
+/* --- FOCUS VISIBILITY ON THE NAVY BAR ITSELF (SC 2.4.7 / 1.4.11) ---------
+ * PRE-EXISTING DEFECT, found by Tab-ing the header with a real keyboard rather
+ * than by inspection. The logo link and the hamburger toggle carry no focus
+ * style of their own, so they fall back to the user-agent ring, which measures
+ * `rgb(16,16,16)` — near-black — against the navy-900 bar:
+ *
+ *     #101010 on #173258 = 1.44:1     (SC 1.4.11 needs 3:1)
+ *
+ * i.e. the keyboard focus indicator on two of the three things now on row 1 is
+ * effectively invisible. It was invisible before this work too, but row 1 is
+ * now exactly these three controls, so it is squarely in scope. Fixed with the
+ * accent-teal already used for the phone's ring: #95D5DD on #173258 = 7.86:1.
+ * This adds no new colour and changes no resting-state colour (H8). */
+.site-header .hostinger-ai-site-title a:focus-visible,
+.site-header .hostinger-ai-menu .wp-block-navigation__responsive-container-open:focus-visible {
+	outline: 3px solid var(--accent-teal) !important;
+	outline-offset: 2px !important;
+	border-radius: 6px;
+}
+
+/* --- DESKTOP (>= 900px) --------------------------------------------------
+ * The owner's note was "especially on smaller screens", so the desktop bar was
+ * measured too, and it is also busy — but for a different reason. Measured
+ * before this change: 176px tall at 900px (the content wraps to two rows) and
+ * 145px at 1280px on ONE row. Almost all of that is air: the wrapper carries
+ * `--wp--preset--spacing--50` = ~50px of padding top and bottom as an INLINE
+ * style, so 145px of sticky bar is holding a 44px logo.
+ *
+ * No hover-only submenu is introduced — doc 124 step 4 defers that as H7-gated
+ * work, and nothing here touches it. The only changes are vertical padding and
+ * gap, both layout-only:
+ *   - padding 50px -> 20px (inline style, so `!important` is required)
+ *   - column-gap 14px, which is what lets 900px hold a single row instead of
+ *     wrapping to two.
+ * ------------------------------------------------------------------------ */
 @media (min-width: 900px) {
-	.site-header .hostinger-ai-menu-wrapper { column-gap: 14px; }
+	.site-header .hostinger-ai-menu-wrapper {
+		padding-top: 20px !important;
+		padding-bottom: 20px !important;
+		column-gap: 14px;
+		row-gap: 6px;
+	}
 	.site-header .uls-header-phone { font-size: 0.875rem; }
+	.site-header .uplinksync-utility-nav { column-gap: 14px; gap: 14px; }
+	.site-header .hostinger-ai-site-navigation .wp-block-navigation__container { gap: 14px; }
 }
