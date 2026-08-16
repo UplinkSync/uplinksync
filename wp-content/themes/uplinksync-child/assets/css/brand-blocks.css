@@ -824,3 +824,259 @@ footer.site-footer p a {
 	display: inline-block;
 	min-height: 24px;
 }
+
+/* ===========================================================================
+ * DOC 126 §6 ITEMS 2 + 3 — MOBILE HEADER COLLISION, AND THE HEADER PHONE.
+ *
+ * MEASURED CAUSE (staging, Chromium 1228, 2026-08-15). Not theorised — the
+ * numbers are in the ticket.
+ *
+ *   `.hostinger-ai-menu-wrapper` is a block-editor GRID with columnCount:2, so
+ *   WordPress emits `grid-template-columns: repeat(2, minmax(0,1fr))` — two
+ *   columns of EXACTLY half the content box, whatever the content needs. At
+ *   390px that is 155.4px per column.
+ *
+ *   Column 2 holds `.hostinger-ai-site-navigation-wrapper`, a flex row with
+ *   `flex-wrap:nowrap` and `justify-content:flex-end`. Its contents are the
+ *   collapsed main-nav toggle (44px, fixed) + the utility nav (153px, and it
+ *   carries overlayMenu:"never" so it NEVER collapses to a hamburger at any
+ *   width) + a 19.2px gap = 216.2px of content in a 155.4px column.
+ *
+ *   A nowrap flex line that cannot shrink further overflows. Because the line
+ *   is justified to the END, the overflow spills out of the START (left) edge:
+ *   the last item stays flush right and everything before it is pushed left,
+ *   OUT of its own grid column and into the logo's. Measured at 390px:
+ *
+ *     logo group   x=30  -> right=185
+ *     toggle       x=143 -> right=187      <-- 42px inside the logo box
+ *
+ *   which is why the hamburger is drawn across the "n" of the wordmark and the
+ *   header reads as a rendering fault. Reproduced identically at 360 and 430px.
+ *
+ *   ⚠ WHY THIS WAS INVISIBLE TO CODE REVIEW AND TO OVERFLOW CHECKS: overflow
+ *   towards the START edge is not scrollable, so the container still reports
+ *   `scrollWidth === clientWidth === 155`. Nothing flags it. Only a rendered
+ *   bounding-box measurement finds it.
+ *
+ *   Two further consequences of the same fixed-half-width column, both listed
+ *   in doc 126 and both measured here:
+ *
+ *   (a) "Client Hub" wraps to two lines — and NOT only at 600-767px as doc 126
+ *       reports. It is squeezed to min-content at EVERY width measured, 360px
+ *       through 1280px (43-62px wide, 2 lines), because the utility nav is
+ *       always wider than half the bar.
+ *   (b) At 600-767px the main nav is past its own 600px collapse breakpoint, so
+ *       it renders inline — but inside a half-width column it stacks
+ *       vertically. Measured at 700px the header bar is 282px tall, which is
+ *       what pushes the logo out of the fold.
+ *   (c) The logo image carries an inline `max-width:100%`, so inside the
+ *       155.4px column it is scaled DOWN to 155px wide / 26px tall against its
+ *       natural 267x44. The wordmark is shrunk as well as struck through.
+ *
+ * THE FIX — replace the fixed 2-equal-column grid with a content-sized,
+ * wrapping flex row. This is a layout change only: no colour, no logo asset, no
+ * type change, nothing that touches H8.
+ *
+ *   1. The wrapper becomes `display:flex; flex-wrap:wrap`. Because it WRAPS,
+ *      the header no longer needs a hand-picked breakpoint for every device —
+ *      the utility nav drops to a second row precisely when, and only when, it
+ *      does not fit beside the logo. One rule covers 360px to 1440px.
+ *   2. `.hostinger-ai-site-navigation-wrapper` becomes `display:contents`, so
+ *      the main nav, the phone and the utility nav are direct flex items of the
+ *      bar and can wrap INDEPENDENTLY. Without this, the toggle and the utility
+ *      nav are welded into one un-wrappable box — the original defect. The
+ *      element is a presentational <div> with no role, so promoting its
+ *      children out of it changes no semantics.
+ *   3. The logo group takes `margin-right:auto`, so it holds the left edge and
+ *      everything else packs right, on every row.
+ *   4. `white-space:nowrap` on the utility-nav labels — this is what stops
+ *      "Client Hub" breaking, at every width, and it is safe precisely because
+ *      the row above it can now wrap instead.
+ *   5. Below 900px the main nav is forced back to its hamburger. Between 600
+ *      and 899px it would otherwise render inline and stack vertically (the
+ *      282px-tall bar above). This restores EXACTLY the <600px core state — the
+ *      same overlay, the same toggle, the same open/close JS — so no new
+ *      component is introduced and the a11y behaviour is the one already
+ *      shipping on phones.
+ * ------------------------------------------------------------------------- */
+.site-header .hostinger-ai-menu-wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-end;      /* wrapped rows align right, under the nav */
+	column-gap: clamp(12px, 2vw, 28px);
+	row-gap: 10px;
+}
+/* Logo group holds the left edge on row 1 and never shrinks. */
+.site-header .hostinger-ai-menu-wrapper > .wp-block-group:first-child {
+	flex: 0 0 auto;
+	margin-right: auto;
+}
+/* Promote the nav wrapper's children into the bar so they can wrap separately. */
+.site-header .hostinger-ai-site-navigation-wrapper {
+	display: contents;
+}
+/* The logo is emitted by the uplinksync-header-logo mu-plugin with an INLINE
+ * `max-height:44px;max-width:100%`. The inline max-width is what let the broken
+ * grid column scale it down to 26px tall, so it has to be overridden here, and
+ * an inline declaration can only be beaten with !important. The natural size is
+ * restored unchanged (802x132 at 44px tall = 267px wide) — this makes the
+ * wordmark LARGER at every mobile width than it renders today; the asset is
+ * untouched (H8). Below 480px it is capped at 36px tall so that logo + toggle
+ * still share one row on a 360px screen — still 10px taller than today. */
+.site-header .hostinger-ai-site-title img {
+	max-width: none !important;
+	max-height: 44px !important;
+	width: auto !important;
+	height: auto !important;
+}
+@media (max-width: 479px) {
+	.site-header .hostinger-ai-site-title img { max-height: 36px !important; }
+}
+/* Utility-nav labels must not break mid-phrase ("Client Hub", "Request a
+ * Quote"). Safe now that the row itself can wrap. */
+.site-header .uplinksync-utility-nav a,
+.site-header .uplinksync-utility-nav .wp-block-navigation-item__label,
+.site-header .uls-header-phone a {
+	white-space: nowrap;
+}
+/* Keep the wrapped utility row hard against the right edge. */
+.site-header .uplinksync-utility-nav {
+	flex: 0 0 auto;
+	justify-content: flex-end;
+}
+.site-header .hostinger-ai-site-navigation {
+	flex: 0 1 auto;
+	min-width: 0;
+}
+
+/* --- 5. Hamburger up to 899px ------------------------------------------- */
+/* Core ships `@media (min-width:600px)` rules that reveal the inline container
+ * and hide the toggle. Re-assert the sub-600px state for 600-899px. Same
+ * selectors core uses, so the state is identical to the one already shipping on
+ * phones — including `:not(.is-menu-open)`, so an OPEN overlay is untouched. */
+@media (min-width: 600px) and (max-width: 899px) {
+	.site-header .hostinger-ai-site-navigation .wp-block-navigation__responsive-container:not(.hidden-by-default):not(.is-menu-open) {
+		display: none;
+	}
+	.site-header .hostinger-ai-site-navigation .wp-block-navigation__responsive-container-open:not(.always-shown) {
+		display: flex;
+	}
+}
+
+/* --- DOC 126 §6 ITEM 3 — the business phone number in the header --------- */
+/* +1 (208) 995-2704 — the number already published sitewide and in the
+ * Organization JSON-LD ("telephone":"+12089952704"). Not a new claim.
+ * NO opening hours: the site publishes none anywhere and inventing them would
+ * breach H1.
+ * Markup lives in wp_template_part 828 (DB) as `.uls-header-phone`; it sits
+ * between the main nav and the utility nav so that on mobile it wraps onto the
+ * second row WITH "Client Hub" and "Request a Quote" rather than competing with
+ * the toggle for row 1. It is never display:none, so it is reachable at every
+ * width — a tel: link is the single most likely mobile action on this header.
+ * Colour is the existing header ink (white on navy-900 = 12.86:1); hover is the
+ * existing accent-teal (7.86:1 on navy-900). No new colour is introduced (H8).
+ */
+.site-header .uls-header-phone {
+	flex: 0 0 auto;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	font-size: 0.95rem;
+	font-weight: 600;
+	line-height: 1.1;
+}
+.site-header .uls-header-phone a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 24px;             /* SC 2.5.8 target size, as the footer links */
+	color: var(--uplinksync-white) !important;
+	text-decoration: none;
+	letter-spacing: 0.01em;
+}
+.site-header .uls-header-phone a:hover,
+.site-header .uls-header-phone a:focus {
+	color: var(--accent-teal) !important;   /* 7.86:1 on navy-900 */
+	text-decoration: underline;
+}
+.site-header .uls-header-phone a:focus-visible {
+	outline: 3px solid var(--accent-teal);
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+/* Inside the OPEN mobile overlay the sheet is white, so re-assert navy ink —
+ * mirrors the overlay exception already defined for the nav links above. */
+.site-header .wp-block-navigation__responsive-container.is-menu-open .uls-header-phone a {
+	color: var(--navy-900) !important;
+}
+
+/* --- ROW PACKING ---------------------------------------------------------
+ * Measured after the rules above: the collision, the "Client Hub" break and
+ * the 282px 600-767px bar are all fixed, but the bar is taller than it needs to
+ * be because the phone and the utility nav each claim their own wrapped row.
+ * The content simply has to fit: at 390px the bar is 330px wide and must carry
+ * the logo, the toggle, a phone number, "Client Hub" and "Request a Quote".
+ * Two rows is the floor; three is avoidable. Trim the secondary row's type and
+ * gaps — never the logo, never a colour, never a target size — so phone +
+ * Client Hub + Request a Quote share ONE row from 390px up.
+ * ------------------------------------------------------------------------ */
+@media (max-width: 899px) {
+	.site-header .hostinger-ai-menu-wrapper { column-gap: 10px; row-gap: 8px; }
+	.site-header .uls-header-phone { font-size: 0.875rem; }
+	.site-header .uplinksync-utility-nav { column-gap: 10px; gap: 10px; }
+	.site-header .hostinger-ai-menu .wp-block-navigation a[href*="/request-quote"] {
+		padding: 0.45rem 0.85rem !important;
+	}
+}
+/* Desktop: shave the same secondary row so logo + nav + phone + utility hold a
+ * single line on a standard 1280px viewport. */
+@media (min-width: 900px) {
+	.site-header .hostinger-ai-menu-wrapper { column-gap: 18px; row-gap: 6px; }
+	.site-header .uls-header-phone { font-size: 0.9rem; }
+	.site-header .uplinksync-utility-nav { column-gap: 14px; gap: 14px; }
+	.site-header .hostinger-ai-site-navigation .wp-block-navigation__container { gap: 14px; }
+}
+
+/* --- ROW PACKING, PASS 2 (measured) --------------------------------------
+ * Pass 1 still left three rows on a phone (179px bar) and two on a 1280px
+ * desktop, because phone(110) + utility(252) = 372 against a 330px content box
+ * at 390px. Two levers, both cheap:
+ *   - Phones (<=599px): take the secondary row to 0.8125rem with a tighter
+ *     quote-pill inset so the phone number, "Client Hub" and "Request a Quote"
+ *     hold ONE row from 390px up. 13px is well inside this theme's existing
+ *     range (doc 126 §5 measures live copy at 9.92px) and the ink is unchanged
+ *     white-on-navy at 12.86:1, so no contrast is spent buying the space.
+ *   - The <=899px bar's 30px vertical padding is the other half of the height.
+ *     14px keeps the 44px toggle the tallest thing in the row and brings the
+ *     bar back near its pre-fix height, which matters because the bar is
+ *     position:sticky and every pixel is taken off the reading area.
+ * ------------------------------------------------------------------------ */
+@media (max-width: 899px) {
+	.site-header .hostinger-ai-menu-wrapper {
+		padding-top: 14px !important;
+		padding-bottom: 14px !important;
+	}
+}
+/* NOTE: the utility nav's own size is NOT reduced here. It carries WordPress's
+ * `has-medium-font-size` preset class, which ships `font-size: ... !important`,
+ * so a container rule is a no-op — and forcing past it would be the wrong call
+ * anyway: it would buy ~32px of bar height by shrinking "Client Hub" and
+ * "Request a Quote", the two primary conversion targets in the header, to 13px.
+ * The bar carries three rows below 430px instead of two. That is the honest
+ * cost of fitting five interactive elements into a 330px-wide bar. */
+@media (max-width: 599px) {
+	.site-header .uls-header-phone { font-size: 0.8125rem; }
+	.site-header .uplinksync-utility-nav { column-gap: 8px; gap: 8px; }
+	.site-header .hostinger-ai-menu-wrapper { column-gap: 8px; }
+	.site-header .hostinger-ai-menu .wp-block-navigation a[href*="/request-quote"] {
+		padding: 0.4rem 0.7rem !important;
+	}
+}
+/* Desktop: 1280px is 10px short of a single row at an 18px gap, so take the
+ * gap to 14px and the secondary row to 0.875rem. Verified by measurement at
+ * 1280 and 1440; 1024 still wraps to two rows, which is correct — the content
+ * genuinely does not fit and wrapping is the designed behaviour, not a defect. */
+@media (min-width: 900px) {
+	.site-header .hostinger-ai-menu-wrapper { column-gap: 14px; }
+	.site-header .uls-header-phone { font-size: 0.875rem; }
+}
