@@ -73,11 +73,20 @@ jobs:
           fi
 
       - name: Set up SSH
+        env:
+          HOSTINGER_KNOWN_HOSTS: ${{ vars.HOSTINGER_KNOWN_HOSTS }}
         run: |
           install -m 700 -d ~/.ssh
           printf '%s\n' "${{ secrets.HOSTINGER_SSH_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -p "${{ secrets.HOSTINGER_SSH_PORT }}" "${{ secrets.HOSTINGER_SSH_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null
+          # Host keys are PINNED (repo Actions variable HOSTINGER_KNOWN_HOSTS), not
+          # fetched with ssh-keyscan: a scan trusts whatever answers, on every run.
+          if [ -z "$HOSTINGER_KNOWN_HOSTS" ]; then
+            echo "::error::HOSTINGER_KNOWN_HOSTS repo variable is empty - refusing to deploy without pinned host keys"
+            exit 1
+          fi
+          printf '%s\n' "$HOSTINGER_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
 
       - name: Build assets (if any)
         run: |
@@ -91,7 +100,7 @@ jobs:
           rsync -az --delete \
             --exclude '.git*' --exclude '.github' --exclude 'node_modules' \
             --exclude 'tests' --exclude 'infrastructure' --exclude '.claude' \
-            -e "ssh -i ~/.ssh/deploy_key -p ${{ secrets.HOSTINGER_SSH_PORT }}" \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts -p ${{ secrets.HOSTINGER_SSH_PORT }}" \
             ./ "${{ secrets.HOSTINGER_SSH_USER }}@${{ secrets.HOSTINGER_SSH_HOST }}:${{ vars.REMOTE_PLUGIN_PATH }}/"
 
       # UPLAA-QW8: stamp the commit being deployed into a web-readable file so the
@@ -116,14 +125,14 @@ jobs:
             --include 'plugins/' \
             --include 'plugins/uplinksync-site-code/***' \
             --exclude 'plugins/*' \
-            -e "ssh -i ~/.ssh/deploy_key -p ${{ secrets.HOSTINGER_SSH_PORT }}" \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts -p ${{ secrets.HOSTINGER_SSH_PORT }}" \
             wp-content/ "${{ secrets.HOSTINGER_SSH_USER }}@${{ secrets.HOSTINGER_SSH_HOST }}:${{ vars.REMOTE_PLUGIN_PATH }}/"
 
       - name: Activate plugin / flush caches (best effort)
         if: vars.WP_ROOT != ''
         continue-on-error: true
         run: |
-          ssh -i ~/.ssh/deploy_key -p "${{ secrets.HOSTINGER_SSH_PORT }}" \
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts -p "${{ secrets.HOSTINGER_SSH_PORT }}" \
             "${{ secrets.HOSTINGER_SSH_USER }}@${{ secrets.HOSTINGER_SSH_HOST }}" \
             "command -v wp >/dev/null && cd '${{ vars.WP_ROOT }}' && { [ -n '${{ vars.PLUGIN_SLUG }}' ] && wp plugin activate '${{ vars.PLUGIN_SLUG }}'; wp cache flush; } || echo 'wp-cli not available; skipped'"
 
@@ -136,7 +145,7 @@ jobs:
         if: vars.WP_ROOT != ''
         continue-on-error: true
         run: |
-          ssh -i ~/.ssh/deploy_key -p "${{ secrets.HOSTINGER_SSH_PORT }}" \
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts -p "${{ secrets.HOSTINGER_SSH_PORT }}" \
             "${{ secrets.HOSTINGER_SSH_USER }}@${{ secrets.HOSTINGER_SSH_HOST }}" \
             "command -v wp >/dev/null && cd '${{ vars.WP_ROOT }}' && wp litespeed-purge all || echo 'wp-cli/LiteSpeed not available; skipped'"
 
