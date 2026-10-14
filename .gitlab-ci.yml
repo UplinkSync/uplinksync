@@ -34,6 +34,23 @@ variables:
   # gate also proves the intended copy rendered (not just "non-empty"). Empty = skip.
   SMOKE_EXPECT: ""
 
+# owner_review_gate — CE substitute for "Require approval from code owners" (Premium-only).
+# Reads .gitlab/CODEOWNERS from the MR's TARGET branch and fails the MR pipeline unless the
+# owner (user id 2, dirwin) approved after the latest push whenever a code-owned path changed.
+# With "Pipelines must succeed" this blocks the merge; MRs touching only content/docs/CSS/
+# templates pass and may be merged by the Paperclip agent token when labelled `low-risk`
+# (docs/agent-merge-policy.md). OWNER_GATE_TOKEN = masked read_api CI variable.
+# After approving, the owner re-runs this job. Changing this job/file is itself code-owned.
+owner_review_gate:
+  stage: validate
+  image: python:3-alpine
+  needs: []
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  script:
+    - python3 tools/ci/owner_review_gate.py --selftest
+    - python3 tools/ci/owner_review_gate.py
+
 # real-host render-verification gate for the homepage.
 #
 # The MR preview is edge-gated by edge basic-auth,
