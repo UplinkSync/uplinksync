@@ -143,12 +143,13 @@ def selftest():
     owned = [".gitlab-ci.yml", ".gitlab/CODEOWNERS", ".github/workflows/deploy-wordpress.yml", "tools/ci/owner_review_gate.py",
              "scripts/x.sh", "deploy/a/b", "wp-config.php", "wp-config-sample.php", ".htaccess", ".htaccess.bk", ".env",
              "a/b/.env.local", "x/prod.env", "notes/my-secret-file.txt", "certs/site.pem", "wp-content/themes/uplinksync-child/functions.php",
-             "wp-content/themes/uplinksync-child/inc/hero-loop.php", "wp-content/mu-plugins/uplinksync-contact-seo.php",
+             "wp-content/themes/uplinksync-child/inc/hero-loop.php",
              "wp-content/plugins/jetpack/jetpack.php", "index.php", "xmlrpc.php", "wp-content/index.php", ".gitleaksignore", ".private/x"]
     low = ["docs/agent-merge-policy.md", "README.md", "CHANGELOG.md", "wp-content/themes/uplinksync-child/assets/css/brand.css",
            "wp-content/themes/uplinksync-child/patterns/query.php", "wp-content/themes/uplinksync-child/templates/home.html",
            "wp-content/themes/uplinksync-child/assets/js/hero.js", "snippets-export/README.md", "tools/photo-store/README.md",
-           "wp-content/themes/uplinksync-child/style.css", "wp-content/themes/uplinksync-child/theme.json"]
+           "wp-content/themes/uplinksync-child/style.css", "wp-content/themes/uplinksync-child/theme.json",
+           "wp-content/mu-plugins/uplinksync-contact-seo.php"]
     bad = [p for p in owned if not matches(rules, p)] + [p for p in low if matches(rules, p)]
     for p in bad:
         print("SELFTEST MISMATCH:", p, matches(rules, p))

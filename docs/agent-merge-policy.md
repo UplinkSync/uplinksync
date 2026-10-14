@@ -7,9 +7,10 @@ which act through the GitLab project access token `paperclip-agents-20261014` (r
 An agent may merge an MR into `main` only when **all** of the following are true:
 
 1. The MR has the label `low-risk`. Apply it only when the diff is page/post content, docs, CSS, fonts,
-   images, front-end JS, or block templates/parts/patterns.
+   images, front-end JS, block templates/parts/patterns, or must-use plugins under `wp-content/mu-plugins/`
+   (not code-owned since 2026-10-14, owner decision; they run on every request — keep them small and render-tested).
 2. The MR changes no path listed in `.gitlab/CODEOWNERS` (CI/deploy/automation, `.github/`, `tools/ci/`,
-   config and secrets, theme `functions.php` and `inc/`, `wp-content/mu-plugins/`, `wp-content/plugins/`,
+   config and secrets, theme `functions.php` and `inc/`, `wp-content/plugins/`,
    root/core PHP).
 3. The MR's head pipeline is green — including `owner_review_gate`, `php_lint`, the secret scans and
    `render_smoke`.

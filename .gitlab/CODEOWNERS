@@ -36,10 +36,10 @@
 *.pem
 *.key
 
-[Server-side PHP (theme code, mu-plugins, plugins, core)] @dirwin
+[Server-side PHP (theme code, plugins, core)] @dirwin
+# mu-plugins are NOT code-owned (owner decision 2026-10-14): wp-content/mu-plugins/ is low-risk by path.
 /wp-content/themes/**/functions.php
 /wp-content/themes/**/inc/
-/wp-content/mu-plugins/
 /wp-content/plugins/
 /wp-content/*.php
 /*.php
