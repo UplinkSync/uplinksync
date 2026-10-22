@@ -14,7 +14,7 @@
 	--navy-700: #1F4375;
 	--accent-500: #5697F3;
 	--accent-500-hover: #2E7EF0; /* accent-500 darkened for hover states, Section 7 */
-	--accent-600: #2F6FC4; /* interactive-fill variant of accent-500: white text on it meets WCAG AA (5.01:1); accent-500 itself is decorative-only (2.95:1) */
+	--accent-600: #2F6FC4; /* light-background link token: 4.75:1 on #F7F9FB, WCAG AA; accent-500 itself is decorative-only (2.95:1) */
 	--accent-teal: #95D5DD;
 	--grey-50: #F7F9FB;
 	--grey-200: #E3E8ED;
