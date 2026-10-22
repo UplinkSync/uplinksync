@@ -167,37 +167,74 @@ render_smoke:
         '
     - echo "render_smoke PASS — homepage renders a real, content-bearing body (not just a 200) on the preview host."
 
-# forbidden-hex guard. The footer LinkedIn glyph must use the house white
-# token (var(--uplinksync-white)); the raw third-party brand blue #0d66c2 / #0a66c2
-# must never be hard-coded in this theme's own CSS (it fails WCAG 1.4.11 on navy and
-# leaks a third-party colour into the two-colour house system). This keeps the
-# fix from silently regressing. Vendored libraries are excluded.
+# Off-token-value guard for the child theme's own CSS. Vendored libraries are excluded.
+# Comments are stripped first, so rationale and migration notes may still name the
+# forbidden values without creating false positives.
 lint_forbidden_hex:
   stage: review
   image: python:3-alpine
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
   script:
-    # Strip CSS comments first, then flag the forbidden hex only where it is used as
-    # a real declaration value (documented mentions inside /* ... */ are allowed).
+    # Keep this as one extensible gate: each entry supplies its own match, narrowly
+    # scoped exception (if any), and remediation.
     - |
       python3 - <<'PY'
       import re, sys, glob
-      bad = re.compile(r'#0[da]66c2', re.I)
+
+      CHECKS = (
+          (
+              'LinkedIn brand blue (#0d66c2/#0a66c2)',
+              re.compile(r'#0[da]66c2\b', re.I),
+              lambda line, match: False,
+              'Use var(--uplinksync-white) for the footer glyph (see brand-blocks.css section 7).',
+          ),
+          (
+              'deprecated navy (#1E3155)',
+              re.compile(r'#1e3155\b', re.I),
+              lambda line, match: False,
+              'Use var(--navy-900) (#173258).',
+          ),
+          (
+              'raw accent-500 (#5697F3)',
+              re.compile(r'#5697f3\b', re.I),
+              lambda line, match: bool(re.search(r'--accent-500\s*:\s*#5697f3\b', line, re.I)),
+              'Reference var(--accent-500) for decorative/large-text/fill/focus/active use; '
+              'use var(--accent-600) for links on light (4.75:1) and '
+              'var(--uplinksync-white) for body or label text on navy.',
+          ),
+          (
+              'off-token pill radius (9999px)',
+              re.compile(r'border-radius\s*:[^;{}]*\b9999px\b', re.I),
+              lambda line, match: False,
+              'Use var(--radius-pill) (999px).',
+          ),
+      )
+
       hits = []
       for f in glob.glob('wp-content/themes/uplinksync-child/assets/css/**/*.css', recursive=True):
           src = open(f, encoding='utf-8', errors='replace').read()
           src = re.sub(r'/\*.*?\*/', '', src, flags=re.S)   # drop comments
           for i, line in enumerate(src.splitlines(), 1):
-              if bad.search(line):
-                  hits.append(f'{f}:{i}: {line.strip()}')
+              for label, pattern, allowed, remediation in CHECKS:
+                  for match in pattern.finditer(line):
+                      if not allowed(line, match):
+                          hits.append((label, remediation, f'{f}:{i}: {line.strip()}'))
       if hits:
-          sys.stderr.write('FAIL: forbidden LinkedIn brand-blue hex (#0d66c2/#0a66c2) used in child-theme CSS.\n')
-          sys.stderr.write('Use var(--uplinksync-white) for the footer glyph (see brand-blocks.css §7).\n')
-          sys.stderr.write('\n'.join(hits) + '\n')
+          sys.stderr.write('FAIL: forbidden off-token value(s) used in child-theme CSS.\n')
+          for label, remediation, location in hits:
+              sys.stderr.write(f'- {label}: {location}\n  Remediation: {remediation}\n')
           sys.exit(1)
-      print('PASS: no forbidden LinkedIn brand-blue hex used in child-theme CSS.')
+      print('PASS: no forbidden off-token values used in child-theme CSS.')
       PY
+
+lint_mu_plugin_tests:
+  stage: review
+  image: php:8-cli
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  script:
+    - for test_file in wp-content/mu-plugins/tests/test-*.php; do php "$test_file"; done
 
 # production-REPRESENTATIVE post-deploy gate.
 # The `render_smoke` job above renders the homepage inside the PREVIEW container
