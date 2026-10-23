@@ -28,7 +28,12 @@
  * panel colour, so the indicator is 4.36:1 against navy and the navy separator is
  * 12.86:1 against white — both above the 3:1 non-text floor in both directions.
  *
- * Version: 3.0.0
+ * v3.0.1 (2026-10-22, UPL-884):
+ *   Give the database-resident guided quote flow's hidden scheduler fallback a
+ *   real server-rendered team booking URL. JavaScript still replaces it with
+ *   the selected service URL and prefill values when the flow is initialized.
+ *
+ * Version: 3.0.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -139,9 +144,48 @@ function uplinksync_book_rewrite( $html ) {
 	// Runs BEFORE the runtime injection so orphan anchors it converts still count
 	// as "a booking CTA is on this page" and pull the dialog + runtime in.
 	$html = uplinksync_book_adopt_orphan_links( $html );
+	// Runs after orphan adoption so this progressive-enhancement fallback remains
+	// a direct scheduler link rather than becoming another modal trigger.
+	$html = uplinksync_book_repair_quote_fallback( $html );
 	$html = uplinksync_book_inject_runtime( $html );
 
 	return $html;
+}
+
+/**
+ * Give the guided quote flow's database-resident fallback CTA a safe href.
+ *
+ * Snippet 82 emits this anchor on every page because the quote flow is mounted
+ * globally. Its JavaScript replaces the href with the selected IT/UAV event and
+ * prefill values, but the server-rendered value must also work if that setup is
+ * late or fails. Match the stable element id plus the exact placeholder href so
+ * unrelated fragment links are untouched. The replacement is idempotent.
+ *
+ * @param string $html Rendered document.
+ * @return string
+ */
+function uplinksync_book_repair_quote_fallback( $html ) {
+	if ( false === strpos( $html, 'qf-cal-fallback-link' ) ) {
+		return $html;
+	}
+
+	return preg_replace_callback(
+		'#<a\b(?=[^>]*\bid=(["\'])qf-cal-fallback-link\1)[^>]*>#i',
+		static function ( $matches ) {
+			$anchor = $matches[0];
+			if ( ! preg_match( '~\bhref=(["\'])#\1~i', $anchor ) ) {
+				return $anchor;
+			}
+
+			return preg_replace(
+				'~\bhref=(["\'])#\1~i',
+				'href="' . esc_url( uplinksync_book_url( UPLINKSYNC_BOOK_CONSULT_SLUG ) ) . '"',
+				$anchor,
+				1
+			);
+		},
+		$html
+	);
 }
 
 /**
