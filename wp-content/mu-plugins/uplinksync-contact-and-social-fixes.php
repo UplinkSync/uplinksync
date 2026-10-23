@@ -260,9 +260,17 @@ function uplinksync_contact_social_rewrite( $html ) {
 		$html
 	);
 
-	// LAST: exempt every mailto: on the finished page from edge obfuscation.
-	// Must stay last so it also covers anchors introduced above.
+	// Exempt every mailto: on the finished page from edge obfuscation.
+	// Runs after all contact anchors are introduced.
 	$html = uplinksync_email_exempt_mailtos( $html );
+
+	// UPL-944: run the location-neutral presentation as the final pass inside
+	// this already-proven outer document buffer. Do not open a competing buffer:
+	// nested whole-document callbacks have returned an empty HTTP 200 on this
+	// stack even when an in-process CLI render appeared healthy.
+	if ( function_exists( 'uplinksync_location_neutral_rewrite' ) ) {
+		$html = uplinksync_location_neutral_rewrite( $html );
+	}
 
 	return $html;
 }

@@ -10,39 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Only filter complete front-end HTML documents.
- *
- * @return bool
- */
-function uplinksync_location_neutral_should_filter() {
-	if ( is_admin() || wp_doing_ajax() || wp_is_json_request() ) {
-		return false;
-	}
-	if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
-		return false;
-	}
-	if ( is_feed() || is_embed() ) {
-		return false;
-	}
-	if ( isset( $_SERVER['REQUEST_METHOD'] ) && 'GET' !== strtoupper( $_SERVER['REQUEST_METHOD'] ) ) {
-		return false;
-	}
-	return true;
-}
-
-/**
- * Open the outermost buffer so this pass sees every other mu-plugin's finished
- * output. Existing buffers begin at priorities 0 and 1 and therefore unwind
- * before this one.
- */
-function uplinksync_location_neutral_start_buffer() {
-	if ( uplinksync_location_neutral_should_filter() ) {
-		ob_start( 'uplinksync_location_neutral_rewrite' );
-	}
-}
-add_action( 'template_redirect', 'uplinksync_location_neutral_start_buffer', -100 );
-
-/**
  * Replace approved, public-facing location phrases with neutral wording.
  *
  * This function receives visible text or a safe text attribute only. URLs,
@@ -345,7 +312,10 @@ function uplinksync_location_neutral_visible_fragment( $html ) {
 }
 
 /**
- * Finished-document rewrite.
+ * Finished-document rewrite. The established contact/social output buffer calls
+ * this function as its final content pass; this plugin deliberately does not
+ * open another output buffer because nested document callbacks previously
+ * produced empty HTTP responses on this stack.
  *
  * @param string $html Rendered HTML.
  * @return string
