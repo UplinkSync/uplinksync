@@ -1,0 +1,6 @@
+DMSans-latin-var.woff2     DM Sans (Latin subset, variable wght) - Copyright 2014 The DM Sans Project Authors
+Quicksand-latin-var.woff2  Quicksand (Latin subset, variable wght) - Copyright 2011 The Quicksand Project Authors
+DMSans-*Italic.woff2       DM Sans italics (static) - Copyright 2014 The DM Sans Project Authors
+
+All are licensed under the SIL Open Font License, Version 1.1 (https://openfontlicense.org).
+Variable Latin files were taken from Google Fonts (fonts.gstatic.com) on 2026-10-23.

@@ -1,59 +1,79 @@
 /*
- * UplinkSync design tokens — generated from visual-system.md (***-21), v1.1.
+ * UplinkSync design tokens — Quiet Light / logo palette ("One Navy"), owner-approved 2026-10-23.
  *
- * Color tokens are LOCKED as of ***-46: navy-900, accent-500, and accent-teal
- * are color-picked directly from the source logo (assets/images/uplinksync-logo.svg,
- * supplied 2026-07-12). navy-700 and accent-500-hover are derived tints/shades
- * (same relative lightness deltas as the prior provisional values) since the logo
- * itself doesn't define secondary-surface or hover shades.
+ * Source of truth: the brand design system tokens.json (Light / Daylight theme is the site
+ * default). theme.json carries the same values as presets (--wp--preset--color--*); this file
+ * keeps the LEGACY variable NAMES that the existing child-theme CSS consumes, re-pointed at the
+ * nearest new value, and adds the new semantic names. Change a value here and in theme.json
+ * together.
+ *
+ * Rules (from the palette brief):
+ *   - accent #0c5fc1 is the one action colour on light; accent-on-dark #7db3ff on navy.
+ *   - teal #93d1e8 is SIGNATURE ONLY: focus ring on dark, the 40x3px rule under section
+ *     headings, the active-nav underline. Never text or a fill on a light surface.
+ *   - brand-blue #579af6 is the logo blue: logo / large shapes on navy only.
+ *   - Royal (the old mid-blue) is retired: do not reintroduce it.
+ *   - State colours always ship with an icon AND a word.
  */
 
 :root {
-	/* Color tokens — Section 1 */
-	--navy-900: #173258;
-	--navy-700: #1F4375;
-	--accent-500: #5697F3;
-	--accent-500-hover: #2E7EF0; /* accent-500 darkened for hover states, Section 7 */
-	--accent-600: #2F6FC4; /* light-background link token: 4.75:1 on #F7F9FB, WCAG AA; accent-500 itself is decorative-only (2.95:1) */
-	--accent-teal: #95D5DD;
-	--grey-50: #F7F9FB;
-	--grey-200: #E3E8ED;
-	--grey-600: #5B6672;
-	--uplinksync-black: #0A0A0A;
-	--uplinksync-white: #FFFFFF;
+	/* ---- New semantic tokens (Light / Daylight) ---------------------------------------- */
+	--color-page: #f3f6fa;
+	--color-surface: #ffffff;
+	--color-surface-sunken: #eaeef4;
+	--color-surface-tint: #e2eeff;
+	--color-line: #dbe2eb;
+	--color-line-strong: #77879f;
+	--color-ink: #173258;
+	--color-ink-muted: #46628a;
+	--color-nav: #173258;
+	--color-hero: #173258;
+	--color-navy-800: #20406c;
+	--color-navy-950: #0a1f3c;
+	--color-on-dark: #fbfbfb;
+	--color-on-dark-muted: #b2c6e2;
+	--color-accent: #0c5fc1;
+	--color-accent-hover: #00499c;
+	--color-on-accent: #ffffff;
+	--color-accent-on-dark: #7db3ff;
+	--color-accent-on-dark-hover: #a4caff;
+	--color-on-accent-dark: #0a1f3c;
+	--color-teal: #93d1e8;
+	--color-brand-blue: #579af6;
+	--color-success: #0b7643;
+	--color-warning: #885700;
+	--color-danger: #ba2b2e;
+	--color-info: #0c5fc1;
+	--focus-ring-light: #0c5fc1;
+	--focus-ring-dark: #93d1e8;
 
-	/* ------------------------------------------------------------------
-	 * ***-263 — AS-BUILT surface tokens.
-	 *
-	 * The homepage / services / about / contact builds (the pages the owner
-	 * nominated as the house standard) paint their dark bands and cards with
-	 * hex values that were never tokenised: every card carried them as an
-	 * INLINE style, so each new section re-typed the palette by hand and the
-	 * values had already begun to drift (card radius shipped as both 8px and
-	 * 16px on the same page). These promote the as-built values to tokens so
-	 * new sections reference the system instead of re-typing it. Values are
-	 * transcribed from the live block content, NOT re-picked — nothing about
-	 * the current rendering changes.
-	 * ---------------------------------------------------------------- */
-	--navy-800: #1c355c;        /* elevated dark surface — cards on dark sections */
-	--navy-850: #102a4c;        /* deep dark band — alternate dark section (trust band) */
-	--navy-1000: #0B1B33;       /* ***-335 — cinematic dark-navy floor (approved token per design docs).
-	                               Same value the split-horizon cinematic sheet carries locally as
-	                               --navy-950 (hero gradient floor / ground-strip); promoted here so the
-	                               approved --navy-1000 name is available system-wide. */
-	--navy-border: #2a4a72;     /* 1px hairline on dark cards */
-	--grey-250: #d6dde6;        /* 1px hairline on light cards */
+	/* ---- Legacy names (kept: other CSS consumes them), re-pointed to the new palette ---- */
+	--navy-900: #173258;            /* = nav / ink (unchanged: it is the logo navy) */
+	--navy-700: #20406c;            /* -> navy-800 */
+	--accent-500: #579af6;          /* -> brand-blue (logo blue). Decorative / large shapes on navy only */
+	--accent-500-hover: #00499c;    /* -> accent-hover */
+	--accent-600: #0c5fc1;          /* -> accent (6.1:1 on white) */
+	--accent-teal: #93d1e8;         /* -> teal (signature only) */
+	--grey-50: #f3f6fa;             /* -> page */
+	--grey-200: #dbe2eb;            /* -> line */
+	--grey-600: #46628a;            /* -> ink-muted */
+	--uplinksync-black: #0a1f3c;    /* -> navy-950 */
+	--uplinksync-white: #ffffff;    /* -> surface / on-accent */
+	--navy-800: #20406c;            /* elevated dark surface -> navy-800 */
+	--navy-850: #0a1f3c;            /* deep dark band -> navy-950 */
+	--navy-1000: #0a1f3c;           /* cinematic floor -> navy-950 */
+	--navy-border: #46628a;         /* hairline on dark cards -> ink-muted */
+	--grey-250: #dbe2eb;            /* hairline on light cards -> line */
 
-	/* Eyebrow (the small uppercase kicker above every H1). Previously
-	   re-declared as inline styles on each page — tokenised so it cannot drift. */
+	/* Eyebrow (the small kicker above an H1). */
 	--fs-eyebrow: 14px;
-	--tracking-eyebrow: 0.12em;
+	--tracking-eyebrow: 0.04em;
 
-	/* Typography — Section 2. DM Sans is the closest bundled Hostinger-native
-	   geometric sans; it ships 400/500/700 weights only (no 600), so headings
-	   use 700 rather than the spec's 600 to avoid faux-bold synthesis. */
+	/* Typography. DM Sans (body, 400/500/600) + Quicksand (headings, 600/700), both
+	   self-hosted variable Latin woff2 declared in theme.json. */
 	--font-body: "DMSans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-	--fs-h1-mobile: 40px;
+	--font-display: "Quicksand", "DMSans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	--fs-h1-mobile: 36px;
 	--fs-h1-desktop: 56px;
 	--fs-h2-mobile: 28px;
 	--fs-h2-desktop: 36px;
@@ -63,64 +83,96 @@
 	--fs-body-desktop: 18px;
 	--fs-small: 13px;
 	--fs-small-desktop: 14px;
+	--fs-h1: clamp(2.25rem, 1.65rem + 2.47vw, 3.5rem);   /* 36 -> 56px */
+	--fs-h2: clamp(1.75rem, 1.51rem + 0.99vw, 2.25rem);  /* 28 -> 36px */
+	--fs-h3: clamp(1.25rem, 1.13rem + 0.49vw, 1.5rem);   /* 20 -> 24px */
+	--fs-body: clamp(1rem, 0.94rem + 0.25vw, 1.125rem);  /* 16 -> 18px */
 	--fw-h1: 700;
-	--fw-h2: 700; /* spec calls for 600; 700 used, see note above */
+	--fw-h2: 700;
 	--fw-h3: 700;
 	--fw-body: 400;
 	--lh-body: 1.6;
+	--measure: 65ch;
 
-	/* Spacing & rhythm — Section 3 */
+	/* Spacing & rhythm — 8px base */
 	--space-unit: 8px;
+	--space-1: 8px;
+	--space-2: 16px;
+	--space-3: 24px;
+	--space-4: 32px;
+	--space-5: 48px;
+	--space-6: 64px;
+	--space-7: 96px;
 	--section-padding-desktop: 96px;
-	--section-padding-mobile: 56px;
+	--section-padding-mobile: 64px;
 	--content-max-width: 1200px;
-	--gutter-mobile: 24px;
+	--gutter-mobile: 16px;
 
 	/* Shape */
-	--radius-default: 8px;      /* buttons, images, small chips */
-	--radius-card: 16px;        /* ***-263: as-built card radius on the standard pages */
-	--radius-pill: 999px;       /* ***-315: the single fully-rounded value — header
-	                               Contact CTA, booking CTAs, and content chips had
-	                               drifted across 50px / 999px / 9999px. */
+	--radius-default: 10px;     /* buttons, inputs, small chips */
+	--radius-card: 16px;        /* cards and row groups */
+	--radius-pill: 999px;       /* the single fully-rounded value */
 	--border-card: 1px solid var(--grey-250);
 	--border-card-dark: 1px solid var(--navy-border);
+	--tap-target: 44px;
 
-	/* Card padding — transcribed from the as-built cards, which use the WordPress
-	   default spacing presets 50 (1.5rem) block / 40 (1rem) inline. */
 	--space-card-block: 1.5rem;
 	--space-card-inline: 1rem;
 
-	/* Long-form measure — legal pages and service copy (***-263). */
-	--measure-prose: 72ch;
+	/* Long-form measure — legal pages and service copy. */
+	--measure-prose: 65ch;
 }
 
-/* Fluid type scale between mobile and desktop breakpoints */
+/* Fluid type scale (36->56 / 28->36 / 20->24 / body 16->18). */
 h1, .uls-h1 {
-	font-size: var(--fs-h1-mobile);
+	font-size: var(--fs-h1);
 	font-weight: var(--fw-h1);
 }
 h2, .uls-h2 {
-	font-size: var(--fs-h2-mobile);
+	font-size: var(--fs-h2);
 	font-weight: var(--fw-h2);
 }
 h3, .uls-h3 {
-	font-size: var(--fs-h3-mobile);
+	font-size: var(--fs-h3);
 	font-weight: var(--fw-h3);
 }
 body {
 	font-family: var(--font-body);
-	font-size: var(--fs-body-mobile);
+	font-size: var(--fs-body);
 	font-weight: var(--fw-body);
 	line-height: var(--lh-body);
 }
 small, .uls-small {
 	font-size: var(--fs-small);
 }
-
 @media (min-width: 768px) {
-	h1, .uls-h1 { font-size: var(--fs-h1-desktop); }
-	h2, .uls-h2 { font-size: var(--fs-h2-desktop); }
-	h3, .uls-h3 { font-size: var(--fs-h3-desktop); }
-	body { font-size: var(--fs-body-desktop); }
 	small, .uls-small { font-size: var(--fs-small-desktop); }
 }
+
+/* Interaction floor: 44px targets on buttons, a visible 2px focus ring with a 2px offset.
+   Accent ring on light surfaces; teal ring on navy surfaces. */
+.wp-element-button,
+.wp-block-button__link {
+	min-height: var(--tap-target);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+	outline: 2px solid var(--focus-ring-light);
+	outline-offset: 2px;
+}
+:where(
+	.has-nav-background-color,
+	.has-hero-background-color,
+	.has-navy-800-background-color,
+	.has-navy-950-background-color,
+	.has-navy-900-background-color,
+	.has-navy-700-background-color,
+	.has-navy-850-background-color,
+	.has-color-2-background-color,
+	.uls-on-dark
+) :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+	outline-color: var(--focus-ring-dark);
+}
+

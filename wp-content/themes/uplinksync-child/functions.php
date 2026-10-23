@@ -205,6 +205,25 @@ function uplinksync_child_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'uplinksync_child_enqueue_assets', 20 );
 
 /**
+ * Quiet Light type: preload the two most-used faces (DM Sans body, Quicksand headings).
+ * Both are self-hosted variable Latin woff2 declared as @font-face in theme.json, so the
+ * preload URL must match the URL WordPress emits there exactly (no ?ver) or the browser
+ * fetches the file twice. crossorigin is required for font preloads even same-origin.
+ */
+function uplinksync_child_preload_fonts() {
+	if ( is_admin() ) {
+		return;
+	}
+	foreach ( array( 'DMSans-latin-var.woff2', 'Quicksand-latin-var.woff2' ) as $font ) {
+		printf(
+			'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
+			esc_url( get_stylesheet_directory_uri() . '/assets/fonts/' . $font )
+		);
+	}
+}
+add_action( 'wp_head', 'uplinksync_child_preload_fonts', 1 );
+
+/**
  * ***-178: WooCommerce store house-brand layer.
  *
  * The site-wide brand layer (brand-blocks.css) deliberately excludes WooCommerce
