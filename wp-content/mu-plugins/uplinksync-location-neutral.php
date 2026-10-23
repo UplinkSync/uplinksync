@@ -138,7 +138,7 @@ function uplinksync_location_neutral_structural_rewrites( $html ) {
 		$html
 	);
 	$html = preg_replace(
-		'#(?:&#183;|&middot;|·)\s*UplinkSync LLC,\s*3100 N Lakeharbor Lane, Suite 176 \#508,\s*Boise, ID 83703,\s*United States\.?#iu',
+		'#(?:&\#183;|&middot;|·)\s*UplinkSync LLC,\s*3100 N Lakeharbor Lane, Suite 176 \#508,\s*Boise, ID 83703,\s*United States\.?#iu',
 		'',
 		$html
 	);
@@ -153,7 +153,7 @@ function uplinksync_location_neutral_structural_rewrites( $html ) {
 	// slightly different entity encoding than the exact block above.
 	$html = str_ireplace( '3100 N Lakeharbor Lane, Suite 176 #508', '', $html );
 	$html = preg_replace( '/\bBoise,?\s+(?:ID|Idaho)\s+83703\b/iu', '', $html );
-	$html = preg_replace( '#Business address:\s*(?:UplinkSync LLC,?\s*)?(?:,|&#183;|&middot;|\s|<br\s*/?>)*#iu', '', $html );
+	$html = preg_replace( '#Business address:\s*(?:UplinkSync LLC,?\s*)?(?:,|&\#183;|&middot;|\s|<br\s*/?>)*#iu', '', $html );
 
 	return $html;
 }
@@ -325,9 +325,15 @@ function uplinksync_location_neutral_fragment( $html ) {
 		return $html;
 	}
 
-	$html = uplinksync_location_neutral_structural_rewrites( $html );
-	$html = uplinksync_location_neutral_json_ld( $html );
-	$html = uplinksync_location_neutral_visible_html( $html );
+	$original = $html;
+	// preg_* returns NULL on a pattern/PCRE error; never let one failed rewrite blank a rendered block.
+	foreach ( array( 'uplinksync_location_neutral_structural_rewrites', 'uplinksync_location_neutral_json_ld', 'uplinksync_location_neutral_visible_html' ) as $step ) {
+		$next = $step( $html );
+		if ( ! is_string( $next ) || ( '' === $next && '' !== $html ) ) {
+			return $original;
+		}
+		$html = $next;
+	}
 	return $html;
 }
 

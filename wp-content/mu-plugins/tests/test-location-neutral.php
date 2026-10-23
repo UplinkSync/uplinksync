@@ -77,6 +77,17 @@ $service_out  = uplinksync_location_neutral_rewrite( $service_area );
 upl944_check( 'service area uses owner-directed neutral wording', false !== strpos( $service_out, 'serves clients remotely, with on-site work available by arrangement' ) );
 upl944_check( 'service area city list is removed', false === stripos( $service_out, 'Rexburg' ) && false === stripos( $service_out, 'Idaho' ) );
 
+// Regression (2026-10-23): an invalid '#'-delimited regex (unescaped "&#183;") made preg_replace return NULL and the
+// fragment filter blanked EVERY rendered block on staging, while the forbidden-word checks above still passed.
+upl944_check( 'rewrite returns non-empty HTML', is_string( $out ) && strlen( $out ) > 200 );
+upl944_check( 'no PCRE error after rewrite', PREG_NO_ERROR === preg_last_error(), preg_last_error_msg() );
+$dot     = '<html><body><main><p>Contact us anytime &#183; UplinkSync LLC, 3100 N Lakeharbor Lane, Suite 176 #508, Boise, ID 83703, United States.</p><p>Keep this sentence.</p></main></body></html>';
+$dot_out = uplinksync_location_neutral_rewrite( $dot );
+upl944_check( 'middot address line removed', false === stripos( $dot_out, 'Lakeharbor' ) );
+upl944_check( 'content around middot address kept', false !== strpos( $dot_out, 'Keep this sentence.' ) && false !== strpos( $dot_out, '<main>' ) );
+$frag = uplinksync_location_neutral_fragment( '<div class="wp-block-group"><p>Plain block with no location.</p></div>' );
+upl944_check( 'render_block fragment never blanks', false !== strpos( $frag, 'Plain block with no location.' ) );
+
 $twice = uplinksync_location_neutral_rewrite( $out );
 upl944_check( 'rewrite is idempotent', $twice === $out );
 
