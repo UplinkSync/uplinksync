@@ -140,18 +140,27 @@ function uplinksync_contact_social_rewrite( $html ) {
 	 * The untranslated menu template emits <a href="tel:trans-encoded_phone">
 	 * trans-contact_phone</a>. Handle both.
 	 * ------------------------------------------------------------------- */
-	$tel_anchor = '<a href="tel:' . UPLINKSYNC_CONTACT_PHONE_E164 . '">' . UPLINKSYNC_CONTACT_PHONE_HUMAN . '</a>';
+	if ( function_exists( 'uplinksync_location_neutral_fragment' ) ) {
+		// UPL-944: the owner directed the gated site to omit the location-signalling
+		// telephone until the business location is established. Drop both legacy
+		// forms here rather than injecting a number that a later buffer must undo.
+		$html = preg_replace( '/\(123\)\s*123\s*123\s?/', '', $html );
+		$html = preg_replace( '#<a\b[^>]*href="tel:trans-encoded_phone"[^>]*>.*?</a>#is', '', $html );
+		$html = str_replace( array( 'trans-contact_phone', 'trans-encoded_phone' ), '', $html );
+	} else {
+		$tel_anchor = '<a href="tel:' . UPLINKSYNC_CONTACT_PHONE_E164 . '">' . UPLINKSYNC_CONTACT_PHONE_HUMAN . '</a>';
 
-	// Placeholder in the block paragraph (bare text, optional trailing space).
-	$html = preg_replace( '/\(123\)\s*123\s*123\s?/', $tel_anchor, $html );
+		// Placeholder in the block paragraph (bare text, optional trailing space).
+		$html = preg_replace( '/\(123\)\s*123\s*123\s?/', $tel_anchor, $html );
 
-	// Untranslated menu template link target + label.
-	$html = str_replace( 'tel:trans-encoded_phone', 'tel:' . UPLINKSYNC_CONTACT_PHONE_E164, $html );
-	$html = str_replace(
-		array( 'trans-contact_phone', 'trans-encoded_phone' ),
-		UPLINKSYNC_CONTACT_PHONE_HUMAN,
-		$html
-	);
+		// Untranslated menu template link target + label.
+		$html = str_replace( 'tel:trans-encoded_phone', 'tel:' . UPLINKSYNC_CONTACT_PHONE_E164, $html );
+		$html = str_replace(
+			array( 'trans-contact_phone', 'trans-encoded_phone' ),
+			UPLINKSYNC_CONTACT_PHONE_HUMAN,
+			$html
+		);
+	}
 
 	/* ---------------------------------------------------------------------
 	 * 3. SOCIAL — owner-confirmed 2026-07-21 (***-104):
