@@ -140,18 +140,27 @@ function uplinksync_contact_social_rewrite( $html ) {
 	 * The untranslated menu template emits <a href="tel:trans-encoded_phone">
 	 * trans-contact_phone</a>. Handle both.
 	 * ------------------------------------------------------------------- */
-	$tel_anchor = '<a href="tel:' . UPLINKSYNC_CONTACT_PHONE_E164 . '">' . UPLINKSYNC_CONTACT_PHONE_HUMAN . '</a>';
+	if ( function_exists( 'uplinksync_location_neutral_fragment' ) ) {
+		// UPL-944: the owner directed the gated site to omit the location-signalling
+		// telephone until the business location is established. Drop both legacy
+		// forms here rather than injecting a number that a later buffer must undo.
+		$html = preg_replace( '/\(123\)\s*123\s*123\s?/', '', $html );
+		$html = preg_replace( '#<a\b[^>]*href="tel:trans-encoded_phone"[^>]*>.*?</a>#is', '', $html );
+		$html = str_replace( array( 'trans-contact_phone', 'trans-encoded_phone' ), '', $html );
+	} else {
+		$tel_anchor = '<a href="tel:' . UPLINKSYNC_CONTACT_PHONE_E164 . '">' . UPLINKSYNC_CONTACT_PHONE_HUMAN . '</a>';
 
-	// Placeholder in the block paragraph (bare text, optional trailing space).
-	$html = preg_replace( '/\(123\)\s*123\s*123\s?/', $tel_anchor, $html );
+		// Placeholder in the block paragraph (bare text, optional trailing space).
+		$html = preg_replace( '/\(123\)\s*123\s*123\s?/', $tel_anchor, $html );
 
-	// Untranslated menu template link target + label.
-	$html = str_replace( 'tel:trans-encoded_phone', 'tel:' . UPLINKSYNC_CONTACT_PHONE_E164, $html );
-	$html = str_replace(
-		array( 'trans-contact_phone', 'trans-encoded_phone' ),
-		UPLINKSYNC_CONTACT_PHONE_HUMAN,
-		$html
-	);
+		// Untranslated menu template link target + label.
+		$html = str_replace( 'tel:trans-encoded_phone', 'tel:' . UPLINKSYNC_CONTACT_PHONE_E164, $html );
+		$html = str_replace(
+			array( 'trans-contact_phone', 'trans-encoded_phone' ),
+			UPLINKSYNC_CONTACT_PHONE_HUMAN,
+			$html
+		);
+	}
 
 	/* ---------------------------------------------------------------------
 	 * 3. SOCIAL — owner-confirmed 2026-07-21 (***-104):
@@ -260,17 +269,9 @@ function uplinksync_contact_social_rewrite( $html ) {
 		$html
 	);
 
-	// Exempt every mailto: on the finished page from edge obfuscation.
-	// Runs after all contact anchors are introduced.
+	// LAST: exempt every mailto: on the finished page from edge obfuscation.
+	// Must stay last so it also covers anchors introduced above.
 	$html = uplinksync_email_exempt_mailtos( $html );
-
-	// UPL-944: run the location-neutral presentation as the final pass inside
-	// this already-proven outer document buffer. Do not open a competing buffer:
-	// nested whole-document callbacks have returned an empty HTTP 200 on this
-	// stack even when an in-process CLI render appeared healthy.
-	if ( function_exists( 'uplinksync_location_neutral_rewrite' ) ) {
-		$html = uplinksync_location_neutral_rewrite( $html );
-	}
 
 	return $html;
 }

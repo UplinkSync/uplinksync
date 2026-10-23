@@ -88,9 +88,9 @@ function uplinksync_proof_trust_rewrite( $html ) {
  * grey-600 #5B6672, white #FFFFFF. Proof section = dark navy, accent numerals,
  * white labels (visual-system §4). Trust bar = light strip below it.
  *
- * Values follow ***-135 §4/§5 exactly: only "Based in Eastern Idaho" is a
- * confirmed live stat (***-103). Part 107 currency, years in operation, and
- * response/SLA are owner-atomic — Peitho's instruction is to ship them as
+	 * UPL-944 replaces the former regional-location stat with the owner-directed
+	 * remote/on-site-by-arrangement posture. Part 107 currency, years in operation, and
+	 * response/SLA remain owner-atomic — Peitho's instruction is to ship them as
  * clearly-flagged placeholders, never invented digits. Confirmed values render
  * plainly; flagged values render inside .uplinksync-provisional.
  */
@@ -98,8 +98,8 @@ function uplinksync_proof_trust_markup() {
 	// 'confirmed' => plain live value; otherwise a provisional [OWNER: confirm].
 	$stats = array(
 		array(
-			'value'     => 'Eastern Idaho',
-			'label'     => 'Based in — Rexburg &amp; Idaho Falls',
+			'value'     => 'Remote-first',
+			'label'     => 'On-site — by arrangement',
 			'confirmed' => true,
 		),
 		array(
@@ -124,7 +124,7 @@ function uplinksync_proof_trust_markup() {
 		 * doubt we are trying to remove — it draws the eye to the one fact that
 		 * undercuts the goal. Nothing here is hidden dishonestly: age simply isn't
 		 * claimed either way, and the band leads with what IS strong and verifiable
-		 * (a real FAA certification, real clients, a real location).
+		 * (a real FAA certification and real clients).
 		 *
 		 * Credibility for a young firm comes from specificity and credentials, not
 		 * implied longevity. Revisit once there are a few years to point to.
@@ -132,12 +132,12 @@ function uplinksync_proof_trust_markup() {
 	);
 
 	// Trust/credential bar (***-135 §5 proof/trust): Part 107 + data-security
-	// discipline + local roots + a named testimonial. Local roots are confirmed;
+	// discipline + service posture + a named testimonial. The service posture is confirmed;
 	// the rest are owner-atomic and flagged.
 	$badges = array(
 		array( 'label' => 'FAA Part 107 — licensed drone ops', 'note' => '', 'confirmed' => true ), // OWNER-CONFIRMED 2026-07-22: current.
 		array( 'label' => 'Data-security discipline on the ground', 'note' => '', 'confirmed' => true ),
-		array( 'label' => 'Local — Eastern Idaho roots', 'note' => '', 'confirmed' => true ),
+		array( 'label' => 'Remote-first — on-site by arrangement', 'note' => '', 'confirmed' => true ),
 		array( 'label' => 'Client testimonial', 'note' => 'OWNER: confirm one permission-cleared quote', 'confirmed' => false ),
 	);
 

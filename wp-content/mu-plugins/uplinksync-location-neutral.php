@@ -315,16 +315,13 @@ function uplinksync_location_neutral_visible_html( $html ) {
 }
 
 /**
- * Finished-document rewrite. The established contact/social output buffer calls
- * this function as its final content pass; this plugin deliberately does not
- * open another output buffer because nested document callbacks previously
- * produced empty HTTP responses on this stack.
+ * Neutralise one rendered block/content fragment.
  *
- * @param string $html Rendered HTML.
+ * @param string $html Rendered fragment.
  * @return string
  */
-function uplinksync_location_neutral_rewrite( $html ) {
-	if ( ! is_string( $html ) || false === stripos( $html, '</body>' ) ) {
+function uplinksync_location_neutral_fragment( $html ) {
+	if ( ! is_string( $html ) || '' === $html ) {
 		return $html;
 	}
 
@@ -333,6 +330,24 @@ function uplinksync_location_neutral_rewrite( $html ) {
 	$html = uplinksync_location_neutral_visible_html( $html );
 	return $html;
 }
+
+/**
+ * Full-document compatibility wrapper used by standalone regression fixtures.
+ * Runtime rendering uses bounded WordPress block/content filters below; no new
+ * output buffer is registered.
+ *
+ * @param string $html Rendered HTML document.
+ * @return string
+ */
+function uplinksync_location_neutral_rewrite( $html ) {
+	if ( ! is_string( $html ) || false === stripos( $html, '</body>' ) ) {
+		return $html;
+	}
+	return uplinksync_location_neutral_fragment( $html );
+}
+
+add_filter( 'render_block', 'uplinksync_location_neutral_fragment', 999 );
+add_filter( 'the_content', 'uplinksync_location_neutral_fragment', 999 );
 
 /**
  * Last-priority SEO filters keep core, Rank Math and social metadata aligned.
