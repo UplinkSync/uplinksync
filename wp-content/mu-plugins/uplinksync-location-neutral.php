@@ -259,33 +259,36 @@ function uplinksync_location_neutral_json_ld( $html ) {
  * @return string
  */
 function uplinksync_location_neutral_visible_html( $html ) {
-	$protected = preg_split( '#(<(?:script|style)\b[^>]*>.*?</(?:script|style)>)#is', $html, -1, PREG_SPLIT_DELIM_CAPTURE );
-	foreach ( $protected as $protected_index => $fragment ) {
-		if ( preg_match( '#^<(?:script|style)\b#i', $fragment ) ) {
-			// Keep executable code and URLs byte-for-byte. The estimator's display
-			// label is the sole location-bearing JavaScript string in scope.
-			$protected[ $protected_index ] = str_replace( 'Distance from Idaho Falls:', 'Estimated travel:', $fragment );
-			continue;
-		}
-		$protected[ $protected_index ] = uplinksync_location_neutral_visible_fragment( $fragment );
-	}
-	return implode( '', $protected );
-}
-
-/**
- * Rewrite one HTML fragment known not to contain a script or style block.
- *
- * @param string $html HTML fragment.
- * @return string
- */
-function uplinksync_location_neutral_visible_fragment( $html ) {
 	$parts = preg_split( '#(<[^>]+>)#s', $html, -1, PREG_SPLIT_DELIM_CAPTURE );
+	if ( ! is_array( $parts ) ) {
+		return $html;
+	}
+
+	$protected = '';
 	foreach ( $parts as $index => $part ) {
 		if ( '' === $part ) {
 			continue;
 		}
 		if ( '<' !== $part[0] ) {
-			$parts[ $index ] = uplinksync_location_neutral_text( $part );
+			if ( 'script' === $protected ) {
+				// Keep executable code and URLs byte-for-byte. The estimator's
+				// display label is the sole location-bearing JavaScript string.
+				$parts[ $index ] = str_replace( 'Distance from Idaho Falls:', 'Estimated travel:', $part );
+			} elseif ( '' === $protected ) {
+				$parts[ $index ] = uplinksync_location_neutral_text( $part );
+			}
+			continue;
+		}
+
+		if ( preg_match( '#^</(script|style)\b#i', $part, $closing ) ) {
+			$protected = '';
+			continue;
+		}
+		if ( preg_match( '#^<(script|style)\b#i', $part, $opening ) ) {
+			$protected = strtolower( $opening[1] );
+			continue;
+		}
+		if ( '' !== $protected ) {
 			continue;
 		}
 
