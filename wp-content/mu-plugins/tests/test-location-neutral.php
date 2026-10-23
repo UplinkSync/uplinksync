@@ -72,6 +72,11 @@ $legal_out = uplinksync_location_neutral_rewrite( $legal );
 upl944_check( 'legal jurisdiction is neutral', false !== strpos( $legal_out, 'applicable law' ) && false !== strpos( $legal_out, 'court of competent jurisdiction' ) );
 upl944_check( 'legal address is removed', false === stripos( $legal_out, 'Lakeharbor' ) && false === stripos( $legal_out, 'Boise' ) );
 
+$service_area = '<html><body><p>UplinkSync serves the&nbsp;<strong>Rexburg–Idaho Falls–Blackfoot–Pocatello corridor and immediate surrounding areas</strong>.</p></body></html>';
+$service_out  = uplinksync_location_neutral_rewrite( $service_area );
+upl944_check( 'service area uses owner-directed neutral wording', false !== strpos( $service_out, 'serves clients remotely, with on-site work available by arrangement' ) );
+upl944_check( 'service area city list is removed', false === stripos( $service_out, 'Rexburg' ) && false === stripos( $service_out, 'Idaho' ) );
+
 $twice = uplinksync_location_neutral_rewrite( $out );
 upl944_check( 'rewrite is idempotent', $twice === $out );
 
