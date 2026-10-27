@@ -224,6 +224,67 @@ function uplinksync_child_preload_fonts() {
 add_action( 'wp_head', 'uplinksync_child_preload_fonts', 1 );
 
 /**
+ * Quiet Light (MR-B): the new header + footer template parts are site-wide, so their one
+ * small stylesheet loads on every front-end page. Everything in it is scoped to .uls-ql-*.
+ */
+function uplinksync_child_quiet_light_assets() {
+	wp_enqueue_style(
+		'uplinksync-quiet-light',
+		get_stylesheet_directory_uri() . '/assets/css/quiet-light.css',
+		array( 'uplinksync-tokens' ),
+		uplinksync_child_asset_ver( 'assets/css/quiet-light.css' )
+	);
+}
+add_action( 'wp_enqueue_scripts', 'uplinksync_child_quiet_light_assets', 23 );
+
+/**
+ * Quiet Light front page: templates/front-page.html now renders only the quiet-* patterns,
+ * so the previous homepage's presentation layers are dead weight there — and the legacy
+ * brand layers would fight the new markup (brand-blocks.css pins headings to DM Sans with
+ * !important). Dequeue them on the front page only; every other page is unchanged.
+ * The files themselves are removed in MR-C (chore/quiet-light-cleanup).
+ */
+function uplinksync_child_quiet_light_trim_front_page() {
+	if ( ! is_front_page() ) {
+		return;
+	}
+	// uplinksync-hero = the old airframe poster/video loop (inc/hero-loop.php); it also pulls
+	// brand.css back in as a dependency, so it must go with the brand layers.
+	foreach ( array( 'uplinksync-hero', 'uplinksync-brand', 'uplinksync-brand-blocks', 'uplinksync-imagery-system', 'uplinksync-split-horizon', 'uplinksync-motion' ) as $handle ) {
+		wp_dequeue_style( $handle );
+	}
+	foreach ( array( 'uplinksync-hero', 'uplinksync-split-horizon', 'uplinksync-motion', 'gsap-scrolltrigger', 'gsap' ) as $handle ) {
+		wp_dequeue_script( $handle );
+	}
+}
+add_action( 'wp_enqueue_scripts', 'uplinksync_child_quiet_light_trim_front_page', 99 );
+
+/**
+ * Quiet Light header logo: the Site Logo block in parts/header.html carries the class
+ * `uls-ql-logo`. Render it with the existing horizontal lockup shipped in the theme
+ * (identical bytes to mu-plugins/uplinksync-header-logo/uplinksync-logo-transparent2.png)
+ * instead of the DB custom_logo, so the header is the same on production and on an
+ * empty-database review app, and does not depend on a mu-plugin MR-C retires.
+ *
+ * @param string $block_content Rendered block.
+ * @param array  $block         Parsed block.
+ * @return string
+ */
+function uplinksync_child_quiet_light_logo( $block_content, $block ) {
+	$class = isset( $block['attrs']['className'] ) ? (string) $block['attrs']['className'] : '';
+	if ( false === strpos( $class, 'uls-ql-logo' ) ) {
+		return $block_content;
+	}
+	return sprintf(
+		'<div class="wp-block-site-logo uls-ql-logo"><a href="%1$s" class="custom-logo-link" rel="home"><img class="custom-logo" src="%2$s" width="802" height="132" alt="%3$s" decoding="async" fetchpriority="high"></a></div>',
+		esc_url( home_url( '/' ) ),
+		esc_url( get_stylesheet_directory_uri() . '/assets/images/uplinksync-logo-lockup.png' ),
+		esc_attr__( 'UplinkSync home', 'uplinksync-child' )
+	);
+}
+add_filter( 'render_block_core/site-logo', 'uplinksync_child_quiet_light_logo', 10, 2 );
+
+/**
  * ***-178: WooCommerce store house-brand layer.
  *
  * The site-wide brand layer (brand-blocks.css) deliberately excludes WooCommerce
