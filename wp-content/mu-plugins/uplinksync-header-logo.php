@@ -85,6 +85,13 @@ function uplinksync_logo_rewrite( $html ) {
 	if ( ! is_string( $html ) || false === stripos( $html, '</body>' ) ) {
 		return $html;
 	}
+	// Quiet Light guard (MR-B): skip when the Quiet Light header (parts/header.html) renders the logo itself via the
+	// Site Logo block, so there is no site-title to swap.
+	// Content-marker based, so it only ever skips documents that contain the new markup.
+	// Candidate for removal in MR-C (chore/quiet-light-cleanup).
+	if ( false !== strpos( $html, 'uls-ql-header' ) ) {
+		return $html;
+	}
 
 	$img = sprintf(
 		'<img src="%s" width="%d" height="%d" alt="%s" style="display:block;height:auto;width:auto;max-height:44px;max-width:100%%" decoding="async" fetchpriority="high" />',

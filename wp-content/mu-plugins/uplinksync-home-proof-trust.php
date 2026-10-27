@@ -54,6 +54,13 @@ function uplinksync_proof_trust_rewrite( $html ) {
 	if ( ! is_string( $html ) || false === stripos( $html, '</body>' ) ) {
 		return $html;
 	}
+	// Quiet Light guard (MR-B): skip when the Quiet Light front page carries its own credentials strip; injecting the
+	// legacy proof band would duplicate it in the old palette.
+	// Content-marker based, so it only ever skips documents that contain the new markup.
+	// Candidate for removal in MR-C (chore/quiet-light-cleanup).
+	if ( false !== strpos( $html, 'uls-ql-home' ) ) {
+		return $html;
+	}
 
 	// Hero rewrite RETIRED (***-132, 2026-07-22): the approved hero H1, subhead,
 	// and "Talk to a specialist" → /contact/ CTA now live directly in the Home page

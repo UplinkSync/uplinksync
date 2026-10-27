@@ -88,6 +88,13 @@ function uplinksync_homepage_nav_rewrite( $html ) {
 	if ( ! is_string( $html ) || false === stripos( $html, '</body>' ) ) {
 		return $html;
 	}
+	// Quiet Light guard (MR-B): skip when the Quiet Light front page (templates/front-page.html) is template-driven
+	// with canonical links already, so the legacy DB-content rewrites do not apply.
+	// Content-marker based, so it only ever skips documents that contain the new markup.
+	// Candidate for removal in MR-C (chore/quiet-light-cleanup).
+	if ( false !== strpos( $html, 'uls-ql-home' ) ) {
+		return $html;
+	}
 
 	$html = uplinksync_homepage_rewrite_ctas( $html );
 	$html = uplinksync_homepage_rewrite_dupe_products( $html );
