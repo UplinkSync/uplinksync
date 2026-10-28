@@ -57,9 +57,10 @@ add_filter( 'template_include', function ( $template ) {
 			// and the navy-header repaint (Code Snippet #85), which is scoped under
 			// `.site-header`, misses it — so the collection/category header rendered
 			// white. Adding the class makes the existing navy repaint apply here too.
-			'<!-- wp:template-part {"slug":"header","tagName":"header","className":"site-header"} /-->' .
+			'<!-- wp:template-part {"slug":"header","tagName":"header","className":"site-header uls-ql-site-header"} /-->' .
+			'<!-- wp:pattern {"slug":"uplinksync-child/hub-backbar"} /-->' .
 			'<!-- wp:shortcode -->[uls_collection_archive]<!-- /wp:shortcode -->' .
-			'<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->';
+			'<!-- wp:template-part {"slug":"footer","tagName":"footer","className":"uls-ql-site-footer"} /-->';
 		if ( empty( $_wp_current_template_id ) ) {
 			$_wp_current_template_id = get_stylesheet() . '//taxonomy-product_cat';
 		}
@@ -109,20 +110,15 @@ add_shortcode( 'uls_collection_archive', function () {
 			}
 		}
 		if ( '' === $hero_img && has_post_thumbnail( $p->ID ) ) {
-			// ***-247 (2026-07-30): serve the CLEAN master for the hero, not the
-			// watermarked preview. The product's featured image is the watermarked
-			// preview attachment; Code Snippet #45 holds the preview->master map and
-			// only swaps SMALL sizes, so the 'large' hero was still watermarked. Map
-			// it to the master here (guarded — no-op if the snippet is deactivated,
-			// which cleanly reverts to the previous watermarked-but-working hero).
+			// Client Hub interim (2026-10-28): serve the WATERMARKED preview for the hero.
+			// The ***-247 swap to the clean master's 'large' rendition is denied by
+			// wp-content/.htaccess (UPLAA-412: every "-master-<hex>" rendition except
+			// 100x100/300x300 returns 403), so the hero rendered as a bare gradient.
 			$hero_tid = get_post_thumbnail_id( $p->ID );
-			if ( function_exists( 'uplaa247_preview_to_master' ) ) {
-				$hero_map = uplaa247_preview_to_master();
-				if ( isset( $hero_map[ $hero_tid ] ) ) {
-					$hero_tid = $hero_map[ $hero_tid ];
-				}
+			$hero_img = (string) wp_get_attachment_image_url( $hero_tid, 'large' );
+			if ( false !== stripos( $hero_img, '-master-' ) ) { // same test as uplinksync_hub_is_master_url().
+				$hero_img = '';
 			}
-			$hero_img = wp_get_attachment_image_url( $hero_tid, 'large' );
 		}
 	}
 	if ( '' === $hero_img ) {
@@ -140,7 +136,7 @@ add_shortcode( 'uls_collection_archive', function () {
 	<style>
 	.uls-carch{--bg:#f5f6fb;--panel:#fff;--ink:#0b1b33;--muted:#5a6685;--line:#e6eaf3;--navy:#0b1b33;--teal:#17b9ab;--accent:#3358e0;--disp:"Georgia","Iowan Old Style",serif;background:var(--bg);color:var(--ink)}
 	.uls-carch .wrap{max-width:1080px;margin:0 auto;padding:28px 20px 64px}
-	.uls-carch .note{font-size:11.5px;line-height:1.55;color:var(--muted);text-align:center;max-width:66ch;margin:34px auto 0;padding:0 6px;opacity:.9}
+	.uls-carch .note{font-size:11.5px;line-height:1.55;color:var(--muted);text-align:center;max-width:66ch;margin:34px auto 0;padding:0 6px}
 	.uls-carch .back{display:inline-block;font-size:12.5px;color:var(--accent);text-decoration:none;margin-bottom:12px}
 	.uls-carch .back:hover{text-decoration:underline}
 	.uls-carch .hero{border-radius:16px;padding:26px 30px;background-size:cover;background-position:center;color:#fff;box-shadow:0 8px 26px rgba(11,27,51,.2)}

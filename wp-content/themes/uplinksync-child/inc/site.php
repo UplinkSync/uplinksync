@@ -303,17 +303,20 @@ function uplinksync_site_email_link() {
  * @return string
  */
 function uplinksync_site_hub() {
-	$tiles = array(
-		array( 'card', 'Pay an invoice', 'https://billing.uplinksync.com/client/login' ),
-		array( 'image', 'Your photos & video', 'https://media.uplinksync.com' ),
-		array( 'cal', 'Book time with us', UPLINKSYNC_SITE_BOOK_IT ),
-		array( 'print', 'Print shop', '/prints/' ),
-	);
-	$html = '';
-	foreach ( $tiles as $t ) {
-		$html .= sprintf( '<a class="hub-tile" href="%s"><span class="ico lt">%s</span>%s</a>', esc_url( $t[2] ), uplinksync_site_icon( $t[0], 20 ), esc_html( $t[1] ) );
+	// Destinations come from the Client Hub registry (inc/hub.php), so a link changes in one place.
+	$links = uplinksync_hub_links();
+	$html  = '';
+	foreach ( array( 'pay', 'media', 'book', 'prints' ) as $key ) {
+		$l     = $links[ $key ];
+		$html .= sprintf(
+			'<a class="hub-tile"%s><span class="ico lt">%s</span>%s%s</a>',
+			uplinksync_hub_attrs( $l ),
+			uplinksync_hub_icon( $l['icon'], 20 ),
+			esc_html( $l['label'] ),
+			empty( $l['external'] ) ? '' : '<span class="screen-reader-text"> (opens in a new tab)</span>'
+		);
 	}
-	return '<section class="hub-band" aria-labelledby="hub-h"><div class="wrap"><div><p class="eyebrow">Client hub</p><h2 id="hub-h">Already a client?</h2><p class="muted">Pay, download your files or book time in one place.</p></div><div class="hub-grid">' . $html . '</div></div></section>';
+	return '<section class="hub-band" aria-labelledby="hub-h"><div class="wrap"><div><p class="eyebrow">Client hub</p><h2 id="hub-h">Already a client?</h2><p class="muted">Pay, download your files or book time in one place. <a href="/hub/">Open the Client Hub</a></p></div><div class="hub-grid">' . $html . '</div></div></section>';
 }
 
 /**
