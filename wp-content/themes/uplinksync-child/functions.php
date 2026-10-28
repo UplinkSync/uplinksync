@@ -245,6 +245,9 @@ add_action( 'wp_enqueue_scripts', 'uplinksync_child_quiet_light_assets', 23 );
  */
 require_once get_stylesheet_directory() . '/inc/site.php';
 
+/** Client Hub (interim): destination registry, /hub/ tiles, back bar, /prints/ covers. */
+require_once get_stylesheet_directory() . '/inc/hub.php';
+
 /**
  * Quiet Light header logo: the Site Logo block in parts/header.html carries the class
  * `uls-ql-logo`. Render it with the existing horizontal lockup shipped in the theme

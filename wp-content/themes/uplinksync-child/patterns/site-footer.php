@@ -3,7 +3,7 @@
  * Title: Richer Quiet Light — Footer
  * Slug: uplinksync-child/site-footer
  * Categories: footer
- * Description: Site-wide footer (enrich/DESIGN-SPEC.md §3): brand blurb + credential chips, Services, Company, Client hub, legal row with email, the published phone (UPLINKSYNC_PHONE, hidden when empty) and the empty location slot.
+ * Description: Site-wide footer (enrich/DESIGN-SPEC.md §3): brand blurb + credential chips, Services, Company, Client hub (from the inc/hub.php registry), legal row with email, the published phone (UPLINKSYNC_PHONE, hidden when empty) and the empty location slot.
  * Inserter: false
  */
 
@@ -20,7 +20,7 @@ $uls_phone = uplinksync_site_phone_link();
 	</div>
 	<nav aria-label="Services"><h2>Services</h2><ul><li><a href="/services/managed-it/">Managed IT &amp; security</a></li><li><a href="/services/#what">Microsoft 365 &amp; networking</a></li><li><a href="/services/web/">Websites &amp; hosting</a></li><li><a href="/drone-services/">Aerial photo &amp; video</a></li></ul></nav>
 	<nav aria-label="Company"><h2>Company</h2><ul><li><a href="/about/">About</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy-policy/">Privacy</a></li><li><a href="/terms/">Terms</a></li></ul></nav>
-	<nav aria-label="Client hub"><h2>Client hub</h2><ul><li><a href="https://billing.uplinksync.com/client/login">Pay an invoice</a></li><li><a href="https://media.uplinksync.com">Your photos &amp; video</a></li><li><a href="https://book.uplinksync.com/team/uplinksync/it-consult">Book time with us</a></li><li><a href="/prints/">Print shop</a></li></ul></nav>
+	<nav aria-label="Client hub"><h2>Client hub</h2><ul><li><a href="/hub/">Client Hub home</a></li><?php echo uplinksync_hub_footer_items(); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in inc/hub.php. ?></ul></nav>
 </div>
 <!-- /wp:html -->
 

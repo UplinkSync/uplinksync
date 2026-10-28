@@ -34,9 +34,10 @@ add_filter( 'template_include', function ( $template ) {
 	if ( is_shop() && ! is_search() ) {
 		global $_wp_current_template_content, $_wp_current_template_id;
 		$_wp_current_template_content =
-			'<!-- wp:template-part {"slug":"header","tagName":"header","className":"site-header"} /-->' .
+			'<!-- wp:template-part {"slug":"header","tagName":"header","className":"site-header uls-ql-site-header"} /-->' .
+			'<!-- wp:pattern {"slug":"uplinksync-child/hub-backbar"} /-->' .
 			'<!-- wp:shortcode -->[uls_shop_catalog]<!-- /wp:shortcode -->' .
-			'<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->';
+			'<!-- wp:template-part {"slug":"footer","tagName":"footer","className":"uls-ql-site-footer"} /-->';
 		if ( empty( $_wp_current_template_id ) ) {
 			$_wp_current_template_id = get_stylesheet() . '//archive-product';
 		}
@@ -44,6 +45,21 @@ add_filter( 'template_include', function ( $template ) {
 	}
 	return $template;
 }, 98 );
+
+/**
+ * Enqueue the catalog behaviour script (footer, deferred). Called while the shortcode renders,
+ * which is before wp_footer, so the file still prints on the same page.
+ */
+function uplinksync_shop_catalog_enqueue_js() {
+	$rel = 'uplinksync-assets/shop-catalog.js';
+	wp_enqueue_script(
+		'uplinksync-shop-catalog',
+		content_url( 'mu-plugins/' . $rel ),
+		array(),
+		(string) filemtime( __DIR__ . '/' . $rel ),
+		array( 'in_footer' => true, 'strategy' => 'defer' )
+	);
+}
 
 /**
  * Format a price float as a compact "$NN" (drops trailing .00) for floors/meta.
@@ -204,8 +220,8 @@ add_shortcode( 'uls_shop_catalog', function () {
 	.uls-shop .chip{appearance:none;cursor:pointer;font:inherit;font-size:13px;font-weight:600;line-height:1;padding:9px 14px;min-height:36px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);transition:background .15s,border-color .15s,color .15s}
 	.uls-shop .chip:hover{border-color:var(--accent)}
 	.uls-shop .chip[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
-	.uls-shop .chip .n{opacity:.6;font-weight:600;margin-left:5px}
-	.uls-shop .chip[aria-pressed="true"] .n{opacity:.7}
+	.uls-shop .chip .n{color:#46628a;font-weight:600;margin-left:5px}
+	.uls-shop .chip[aria-pressed="true"] .n{color:#b2c6e2}
 	.uls-shop .chip:focus-visible{outline:3px solid var(--accent-teal);outline-offset:2px}
 	.uls-shop .toolbar-right{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
 	.uls-shop .searchwrap{display:flex;align-items:center}
@@ -250,7 +266,7 @@ add_shortcode( 'uls_shop_catalog', function () {
 	.uls-shop .addbtn:hover{background:#fff;color:var(--navy);border-color:var(--accent)}
 	.uls-shop .addbtn:focus-visible{outline:3px solid var(--accent-teal);outline-offset:2px}
 	.uls-shop .empty{padding:50px 20px;text-align:center;color:var(--muted)}
-	.uls-shop .note{font-size:11.5px;line-height:1.55;color:var(--muted);text-align:center;max-width:70ch;margin:26px auto 4px;opacity:.9}
+	.uls-shop .note{font-size:11.5px;line-height:1.55;color:var(--muted);text-align:center;max-width:70ch;margin:26px auto 4px}
 	/* CTA band */
 	.uls-shop .cta{margin-top:30px;background:linear-gradient(180deg,var(--navy),var(--navy-700,#1F4375));color:#fff;text-align:center;padding:56px 20px}
 	.uls-shop .cta h2{color:#fff;font-weight:700;font-size:clamp(24px,3.2vw,32px);margin:0 0 8px}
@@ -379,76 +395,9 @@ add_shortcode( 'uls_shop_catalog', function () {
 		<?php endif; ?>
 	</div>
 
-	<script>
-	(function(){
-		var root=document.currentScript.previousElementSibling;
-		if(!root||!root.classList.contains('uls-shop')){root=document.querySelector('.uls-shop');}
-		if(!root)return;
-		// Collection chips carry data-filter; orientation chips carry data-orient.
-		var collChips=[].slice.call(root.querySelectorAll('.chip[data-filter]'));
-		var orientChips=[].slice.call(root.querySelectorAll('.chip-orient'));
-		var sections=[].slice.call(root.querySelectorAll('.coll'));
-		var sortSel=root.querySelector('.sortwrap select');
-		var searchInput=root.querySelector('.uls-search');
-		var noResults=root.querySelector('.uls-noresults');
-		var clearBtn=root.querySelector('.uls-clear');
-		// UPLAA-458 #4 — combined filter state: place + orientation + free-text.
-		var state={coll:'all',orient:'all',q:''};
-
-		function apply(){
-			var q=state.q.trim().toLowerCase();
-			var anyVisible=false;
-			sections.forEach(function(sec){
-				var collMatch=(state.coll==='all'||sec.dataset.coll===state.coll);
-				var cards=[].slice.call(sec.querySelectorAll('.prod'));
-				var shownInSec=0;
-				cards.forEach(function(card){
-					var ok=collMatch
-						&&(state.orient==='all'||card.dataset.orient===state.orient)
-						&&(q===''||(card.dataset.name||'').indexOf(q)!==-1);
-					card.classList.toggle('is-hidden',!ok);
-					if(ok){shownInSec++;}
-				});
-				var secVisible=shownInSec>0;
-				sec.classList.toggle('is-hidden',!secVisible);
-				if(secVisible){anyVisible=true;}
-			});
-			if(noResults){noResults.hidden=anyVisible;}
-		}
-		function setColl(f){
-			state.coll=f;
-			collChips.forEach(function(c){c.setAttribute('aria-pressed',c.dataset.filter===f?'true':'false');});
-			apply();
-		}
-		function setOrient(o){
-			state.orient=o;
-			orientChips.forEach(function(c){c.setAttribute('aria-pressed',c.dataset.orient===o?'true':'false');});
-			apply();
-		}
-		function applySort(mode){
-			sections.forEach(function(sec){
-				var grid=sec.querySelector('.pgrid');if(!grid)return;
-				var cards=[].slice.call(grid.querySelectorAll('.prod'));
-				cards.sort(function(a,b){
-					if(mode==='price-asc')return (+a.dataset.price)-(+b.dataset.price)|| (+a.dataset.order)-(+b.dataset.order);
-					if(mode==='price-desc')return (+b.dataset.price)-(+a.dataset.price)|| (+a.dataset.order)-(+b.dataset.order);
-					if(mode==='name-asc')return a.dataset.name.localeCompare(b.dataset.name);
-					return (+a.dataset.order)-(+b.dataset.order);
-				});
-				cards.forEach(function(c){grid.appendChild(c);});
-			});
-		}
-		collChips.forEach(function(c){c.addEventListener('click',function(){setColl(c.dataset.filter);});});
-		orientChips.forEach(function(c){c.addEventListener('click',function(){setOrient(c.dataset.orient);});});
-		if(sortSel){sortSel.addEventListener('change',function(){applySort(sortSel.value);});}
-		if(searchInput){searchInput.addEventListener('input',function(){state.q=searchInput.value;apply();});}
-		if(clearBtn){clearBtn.addEventListener('click',function(){
-			state.q='';if(searchInput){searchInput.value='';}
-			setColl('all');setOrient('all');
-			if(searchInput){searchInput.focus();}
-		});}
-	})();
-	</script>
 	<?php
+	// QA M2: the script used to be printed inline here, and wpautop turned its blank lines into
+	// </p><p> (SyntaxError, dead chips + search). It now ships as an enqueued footer file.
+	uplinksync_shop_catalog_enqueue_js();
 	return ob_get_clean();
 } );

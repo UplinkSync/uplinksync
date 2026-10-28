@@ -90,7 +90,7 @@ add_action( 'woocommerce_after_single_product_summary', function () {
 			: wc_placeholder_img( 'woocommerce_gallery_thumbnail' );
 		$rel   = $is_prev ? 'prev' : 'next';
 		return sprintf(
-			'<a class="uls-pcyc__item uls-pcyc__%1$s" rel="%2$s" href="%3$s" aria-label="%4$s: %5$s"><span class="uls-pcyc__thumb">%6$s</span><span class="uls-pcyc__txt"><span class="uls-pcyc__eye">%7$s</span><span class="uls-pcyc__name">%5$s</span></span></a>',
+			'<a class="uls-pcyc__item uls-pcyc__%1$s" rel="%2$s" href="%3$s"><span class="uls-pcyc__thumb">%6$s</span><span class="uls-pcyc__txt"><span class="uls-pcyc__eye">%7$s</span><span class="uls-pcyc__name">%5$s</span></span></a>',
 			esc_attr( $dir ),
 			esc_attr( $rel ),
 			esc_url( get_permalink( $pid ) ),
