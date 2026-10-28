@@ -40,7 +40,7 @@ function money( $n ) {
  * @param float  $miles   Round-trip miles.
  * @param string $timing  standard|rush|same_day.
  */
-function uav_range( $line, $choices = array(), $checks = array(), $miles = 0, $timing = 'standard' ) {
+function uav_range( $line, $choices = array(), $checks = array(), $miles = 0, $timing = 'standard', $rights = 'standard', $raw = false ) {
 	$cfg = uls_estimator_uav_rates();
 	$l   = $cfg['lines'][ $line ];
 	if ( 'contact' === $l['posture'] ) {
@@ -57,6 +57,18 @@ function uav_range( $line, $choices = array(), $checks = array(), $miles = 0, $t
 			}
 		} elseif ( in_array( $o['id'], $checks, true ) ) {
 			$total += $o['add'];
+		}
+	}
+	// Usage rights (creative lines only): max( S × mult, S + minAdd ) + raw% of S; travel not marked up.
+	if ( ! empty( $l['rights'] ) ) {
+		$sub = $total;
+		foreach ( $cfg['rights']['choices'] as $rc ) {
+			if ( $rc['v'] === $rights && $rc['mult'] > 1 ) {
+				$total = max( $sub * $rc['mult'], $sub + $rc['minAdd'] );
+			}
+		}
+		if ( $raw ) {
+			$total += $sub * $cfg['rights']['raw']['pct'];
 		}
 	}
 	$over  = max( 0, $miles - $cfg['travel']['freeRadiusMi'] );
@@ -116,6 +128,11 @@ check( 'tower = contact (no number)', 'contact' === $u['lines']['tower']['postur
 check( 'add-ons: size 0/75/200, video 150, twilight 90', array( 0, 75, 200 ) === array_column( $u['lines']['real_estate']['options'][0]['choices'], 'add' ) && 150 === $u['lines']['real_estate']['options'][1]['add'] && 90 === $u['lines']['real_estate']['options'][2]['add'] );
 check( 'mapping adds: acreage 0/250/750, deliverable 0/300/450', array( 0, 250, 750 ) === array_column( $u['lines']['mapping']['options'][0]['choices'], 'add' ) && array( 0, 300, 450 ) === array_column( $u['lines']['mapping']['options'][1]['choices'], 'add' ) );
 check( 'inspection adds: structures 0/150/350, report 120', array( 0, 150, 350 ) === array_column( $u['lines']['inspection']['options'][0]['choices'], 'add' ) && 120 === $u['lines']['inspection']['options'][1]['add'] );
+$r = $u['rights'];
+check( 'usage rights: standard x1 / exclusive x1.5 / buy-out x2.5 min +400, raw +50%', array( 'standard', 'exclusive', 'buyout' ) === array_column( $r['choices'], 'v' ) && array( 1.0, 1.5, 2.5 ) === array_column( $r['choices'], 'mult' ) && array( 0, 0, 400 ) === array_column( $r['choices'], 'minAdd' ) && 0.5 === $r['raw']['pct'] );
+check( 'usage rights only on creative line (real_estate), not mapping/inspection', ! empty( $u['lines']['real_estate']['rights'] ) && empty( $u['lines']['mapping']['rights'] ) && empty( $u['lines']['inspection']['rights'] ) );
+check( 'Standard is the first (default) rights choice', 'standard' === $r['choices'][0]['v'] && 1.0 === $r['choices'][0]['mult'] );
+check( 'JS: rights applied to creative subtotal before travel/rush', false !== strpos( file_get_contents( __DIR__ . '/../uplinksync-estimator/estimator.js' ), 'total = applyRights(line, total, answers);' ) );
 check( 'disclaimer = LIVE wording ("can change")', 'Estimate only — a starting figure based on typical projects, not a quote. Your firm price is confirmed by a UplinkSync team member and can change with site conditions, access, and deliverables.' === $u['disclaimer'] );
 $i = uls_estimator_it_rates();
 check( 'IT managed tiers 60/150/275 per user, +150/server, +25%', array( 60, 150, 275 ) === array_column( $i['managed']['tiers'], 'rate' ) && 150 === $i['managed']['perServer'] && 0.25 === $i['managed']['spread'] );
@@ -132,6 +149,14 @@ $cases = array(
 	array( 'Drone mapping 20-100 acres + 3D model', uav_range( 'mapping', array( 'acres' => 'm', 'deliverable' => 'model' ) ), '$1,050 – $1,470' ),
 	array( 'Drone inspection 2-3 structures + report, same-day, 45 mi', uav_range( 'inspection', array( 'structures' => '2' ), array( 'report' ), 45, 'same_day' ), '$878 – $1,229' ),
 	array( 'Drone tower = scoped on a call', uav_range( 'tower' ), 'contact' ),
+	array( 'Rights: explicit Standard == no rights arg (<2,000 sq ft + video)', uav_range( 'real_estate', array(), array( 'video' ), 0, 'standard', 'standard' ), '$211 – $439' ),
+	array( 'Rights: Exclusive x1.5 (<2,000 sq ft + video, 325 -> 487.5)', uav_range( 'real_estate', array(), array( 'video' ), 0, 'standard', 'exclusive' ), '$317 – $658' ),
+	array( 'Rights: buy-out min +$400 wins (<2,000 sq ft, 175 -> 575 not 437.5)', uav_range( 'real_estate', array(), array(), 0, 'standard', 'buyout' ), '$374 – $776' ),
+	array( 'Rights: buy-out x2.5 wins (estate + video + twilight, 615 -> 1,537.5)', uav_range( 'real_estate', array( 'sqft' => 'large' ), array( 'video', 'twilight' ), 0, 'standard', 'buyout' ), '$999 – $2,076' ),
+	array( 'Rights: raw +50% on Standard (<2,000 sq ft + video, 325 + 162.5)', uav_range( 'real_estate', array(), array( 'video' ), 0, 'standard', 'standard', true ), '$317 – $658' ),
+	array( 'Rights: raw + Exclusive (325 x1.5 + 162.5 = 650)', uav_range( 'real_estate', array(), array( 'video' ), 0, 'standard', 'exclusive', true ), '$423 – $878' ),
+	array( 'Rights: Exclusive + 45 mi travel + rush (travel not marked up: (487.5 + 15) x1.3)', uav_range( 'real_estate', array(), array( 'video' ), 45, 'rush', 'exclusive' ), '$425 – $882' ),
+	array( 'Rights ignored on mapping (Project licence, no multiplier)', uav_range( 'mapping', array( 'acres' => 'm', 'deliverable' => 'model' ), array(), 0, 'standard', 'buyout', true ), '$1,050 – $1,470' ),
 	array( 'IT help desk 5 users, 0 servers', it_range( 'managed', array( 'tier' => 'basic', 'users' => 5, 'servers' => 0 ) ), '$300 – $375' ),
 	array( 'IT managed+security 12 users, 1 server', it_range( 'managed', array( 'tier' => 'security', 'users' => 12, 'servers' => 1 ) ), '$3,450 – $4,313' ),
 	array( 'IT web brochure, 6-15 pages, SEO', it_range( 'web', array( 'stype' => 'brochure', 'pages' => 'm', 'feat_seo' => 1 ) ), '$299 – $389' ),

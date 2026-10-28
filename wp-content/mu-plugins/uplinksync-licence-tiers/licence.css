@@ -1,0 +1,44 @@
+/* UplinkSync licence tiers — Quiet Light palette only (tools/ci/lint_palette_hex.py PALETTE). */
+.uls-lic-form table.variations,.uls-lic-form table.variations tbody,.uls-lic-form table.variations tr,.uls-lic-form table.variations td{display:block;width:100%;margin:0;padding:0;border:0;background:none}
+.uls-lic-form table.variations{margin:0 0 4px!important}
+.uls-lic-form table.variations th.label{display:none}
+.uls-lic-selwrap{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+.uls-lic-form .woocommerce-variation-price,.uls-lic-form .woocommerce-variation.single_variation{display:none}
+.uls-lic-picker{display:grid;gap:10px;margin:0 0 18px;padding:0;border:0;min-width:0}
+.uls-lic-picker legend{margin:0 0 10px;padding:0;font-size:15px;font-weight:700;color:var(--wp--preset--color--ink,#173258)}
+.uls-lic-opt{display:grid;grid-template-columns:20px 1fr auto;gap:4px 12px;align-items:start;padding:14px 16px;border:1px solid var(--wp--preset--color--line,#dbe2eb);border-radius:10px;background:var(--wp--preset--color--surface,#ffffff);color:var(--wp--preset--color--ink,#173258);cursor:pointer;transition:border-color .15s,background-color .15s}
+.uls-lic-opt:hover{border-color:var(--wp--preset--color--line-strong,#77879f)}
+.uls-lic-opt input{grid-row:1/span 2;width:18px;height:18px;margin:2px 0 0;accent-color:var(--wp--preset--color--accent,#0c5fc1)}
+.uls-lic-opt.is-on,.uls-lic-opt:has(input:checked){border-color:var(--wp--preset--color--accent,#0c5fc1);background:var(--wp--preset--color--surface-tint,#e2eeff)}
+.uls-lic-opt:focus-within{outline:2px solid var(--wp--preset--color--accent,#0c5fc1);outline-offset:2px}
+.uls-lic-opt__name{margin:0;font-weight:700;font-size:16px;line-height:1.3}
+.uls-lic-opt__price{font-weight:700;font-size:16px;font-variant-numeric:tabular-nums}
+.uls-lic-opt__sum{grid-column:2/4;font-size:14px;font-weight:400;line-height:1.45;color:var(--wp--preset--color--ink-muted,#46628a)}
+.uls-lic-badge{display:inline-block;margin-left:4px;padding:1px 8px;border-radius:999px;background:var(--wp--preset--color--surface,#ffffff);border:1px solid var(--wp--preset--color--accent,#0c5fc1);color:var(--wp--preset--color--accent-hover,#00499c);font-size:12px;font-weight:600;white-space:nowrap}
+.uls-lic-from{font-size:.7em;font-weight:600;color:var(--wp--preset--color--ink-muted,#46628a);text-transform:uppercase;letter-spacing:.04em}
+.uls-lic-more{margin:18px 0 0;padding:16px 18px;border-radius:10px;background:var(--wp--preset--color--surface-sunken,#eaeef4);font-size:14px;line-height:1.5;color:var(--wp--preset--color--ink,#173258)}
+.uls-lic-more p{margin:0 0 8px}
+.uls-lic-more p:last-child{margin:0}
+.uls-lic-owned{padding:10px 12px;border-left:3px solid var(--wp--preset--color--success,#0b7643);background:var(--wp--preset--color--surface,#ffffff)}
+.uls-lic-links{display:flex;flex-wrap:wrap;gap:8px 20px}
+.uls-lic-links a,.uls-lic-more a,.uls-lic-certs a,.uls-lic-page a{color:var(--wp--preset--color--accent,#0c5fc1);font-weight:600}
+.uls-lic-tablewrap{overflow-x:auto;margin:0 0 16px;-webkit-overflow-scrolling:touch}
+.uls-lic-table{width:100%;min-width:560px;border-collapse:collapse;font-size:14px;line-height:1.45;background:var(--wp--preset--color--surface,#ffffff)}
+.uls-lic-table th,.uls-lic-table td{padding:12px 14px;border-bottom:1px solid var(--wp--preset--color--line,#dbe2eb);text-align:left;vertical-align:top}
+.uls-lic-table thead th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--wp--preset--color--ink-muted,#46628a);background:var(--wp--preset--color--surface-sunken,#eaeef4)}
+.uls-lic-table tbody th span{display:block;font-weight:400;font-size:13px;color:var(--wp--preset--color--ink-muted,#46628a)}
+.uls-lic-num{font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.uls-lic-page{max-width:880px;margin:0 auto;color:var(--wp--preset--color--ink,#173258)}
+.uls-lic-page h2{margin-top:2em}
+.uls-lic-lede{font-size:18px;line-height:1.6}
+.uls-lic-fine{font-size:13px;color:var(--wp--preset--color--ink-muted,#46628a)}
+.uls-lic-draft{max-width:880px;margin:0 auto 20px;padding:12px 16px;border:1px solid var(--wp--preset--color--warning,#885700);border-left-width:4px;border-radius:8px;background:var(--wp--preset--color--surface,#ffffff);color:var(--wp--preset--color--warning,#885700);font-size:14px}
+.uls-lic-verify{max-width:880px;margin:0 auto 20px;padding:12px 16px;border-radius:8px;border-left:4px solid;background:var(--wp--preset--color--surface,#ffffff);font-size:15px}
+.uls-lic-verify.is-ok{border-color:var(--wp--preset--color--success,#0b7643)}
+.uls-lic-verify.is-bad{border-color:var(--wp--preset--color--danger,#ba2b2e)}
+.uls-lic-certs{margin:24px 0;padding:18px 20px;border:1px solid var(--wp--preset--color--line,#dbe2eb);border-radius:10px;background:var(--wp--preset--color--surface,#ffffff)}
+.uls-lic-certs h2{margin-top:0;font-size:20px}
+.uls-lic-certs ul{margin:0 0 10px;padding-left:18px}
+.uls-lic-certs li{margin:0 0 8px;line-height:1.5}
+@media (prefers-reduced-motion:reduce){.uls-lic-opt{transition:none}}
+@media (max-width:480px){.uls-lic-opt{padding:12px}.uls-lic-opt__name,.uls-lic-opt__price{font-size:15px}}

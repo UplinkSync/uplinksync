@@ -26,6 +26,26 @@ function uls_estimator_uav_rates() {
 		'currency'   => '$',
 		'travel'     => array( 'freeRadiusMi' => 25, 'perMileOver' => 0.75 ),
 		'rush'       => array( 'standard' => 1.00, 'rush' => 1.30, 'same_day' => 1.50 ),
+		/*
+		 * Usage rights for commissioned creative work (owner decision 2026-10-28, PRICING-PROPOSAL §2):
+		 * UplinkSync keeps the copyright; the client's licence for the use stated on the quote is
+		 * included. Only lines with 'rights' => true show the choice (mapping/inspection deliverables
+		 * are client data under a Project licence: no multiplier). Formula, applied to the creative
+		 * subtotal S = base + options (travel is never marked up, rush applies last):
+		 *   rights   = max( S × mult, S + minAdd )   (standard ×1 = S, so existing prices are unchanged)
+		 *   raw      = S × raw.pct when ticked        (additive; combinable with any rights choice)
+		 *   total    = ( rights + raw + travel ) × rush
+		 */
+		'rights'     => array(
+			'label'   => 'Usage rights',
+			'help'    => 'UplinkSync keeps the copyright. Standard covers the use stated on your quote (web, social, MLS, print and your own ads). Exclusive: we license it to no one else. Buy-out: the copyright is assigned to you.',
+			'choices' => array(
+				array( 'v' => 'standard', 'label' => 'Standard licence (included)', 'mult' => 1.0, 'minAdd' => 0 ),
+				array( 'v' => 'exclusive', 'label' => 'Exclusive use (x1.5)', 'mult' => 1.5, 'minAdd' => 0 ),
+				array( 'v' => 'buyout', 'label' => 'Full buy-out (x2.5, min +$400)', 'mult' => 2.5, 'minAdd' => 400 ),
+			),
+			'raw'     => array( 'label' => 'Raw / unedited footage', 'pct' => 0.5 ),
+		),
 		'disclaimer' => 'Estimate only — a starting figure based on typical projects, not a quote. Your firm price is confirmed by a UplinkSync team member and can change with site conditions, access, and deliverables.',
 		'lines'      => array(
 			'real_estate' => array(
@@ -33,6 +53,7 @@ function uls_estimator_uav_rates() {
 				'label'      => 'Real-estate / property photography',
 				'base'       => 175,
 				'bandSpread' => 0.35,
+				'rights'     => true,
 				'options'    => array(
 					array(
 						'id'      => 'sqft',
