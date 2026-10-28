@@ -2,11 +2,111 @@
 /**
  * Plugin Name: UplinkSync — Location-neutral presentation
  * Description: Keeps the gated site location-neutral until the business location is established (UPL-944). Rewrites database-backed public copy and metadata without changing quote, booking, service, or estimator behaviour.
- * Version: 1.1.0
+ * Version: 1.2.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
+}
+
+/**
+ * Location mode requested by configuration: 'neutral' (default) or 'utah'.
+ *
+ * The UPLINKSYNC_LOCATION_MODE constant (wp-config.php) wins over the
+ * `uplinksync_location_mode` option so a rollback never needs the database.
+ * Anything other than the exact string 'utah' means 'neutral' (fail closed).
+ *
+ * @return string
+ */
+function uplinksync_location_mode_requested() {
+	if ( defined( 'UPLINKSYNC_LOCATION_MODE' ) ) {
+		$mode = UPLINKSYNC_LOCATION_MODE;
+	} elseif ( function_exists( 'get_option' ) ) {
+		$mode = get_option( 'uplinksync_location_mode', 'neutral' );
+	} else {
+		$mode = 'neutral';
+	}
+	return 'utah' === $mode ? 'utah' : 'neutral';
+}
+
+/**
+ * True once the stored copy has been rewritten and the owner has set
+ * `uplinksync_location_utah_ready` (see DB-STEPS.md). Until then utah mode
+ * refuses to activate, because the database still holds Idaho-era copy that
+ * the neutral filters are currently hiding.
+ *
+ * @return bool
+ */
+function uplinksync_location_utah_ready() {
+	if ( defined( 'UPLINKSYNC_LOCATION_UTAH_READY' ) ) {
+		return (bool) UPLINKSYNC_LOCATION_UTAH_READY;
+	}
+	if ( ! function_exists( 'get_option' ) ) {
+		return false;
+	}
+	$ready = get_option( 'uplinksync_location_utah_ready', '' );
+	return ! in_array( $ready, array( '', '0', 0, false, null, 'no', 'false' ), true );
+}
+
+/**
+ * Effective location mode. 'utah' only when requested AND ready.
+ *
+ * @return string
+ */
+function uplinksync_location_mode() {
+	if ( 'utah' === uplinksync_location_mode_requested() && uplinksync_location_utah_ready() ) {
+		return 'utah';
+	}
+	return 'neutral';
+}
+
+/**
+ * Optional public phone number. Empty means hidden everywhere, including schema.
+ * Read-only: defined elsewhere (constant) or via the `uplinksync_phone` option.
+ *
+ * @return string
+ */
+function uplinksync_location_phone() {
+	// The validated number from uplinksync-phone.php wins when that plugin is present.
+	if ( function_exists( 'uplinksync_phone_e164' ) ) {
+		return (string) uplinksync_phone_e164();
+	}
+	if ( defined( 'UPLINKSYNC_PHONE' ) ) {
+		$phone = UPLINKSYNC_PHONE;
+	} elseif ( function_exists( 'get_option' ) ) {
+		$phone = get_option( 'uplinksync_phone', '' );
+	} else {
+		$phone = '';
+	}
+	return is_string( $phone ) ? trim( $phone ) : '';
+}
+
+if ( function_exists( 'add_action' ) ) {
+	// Requested utah mode while not ready: say so, and stay neutral.
+	add_action(
+		'admin_notices',
+		static function () {
+			if ( 'utah' !== uplinksync_location_mode_requested() || uplinksync_location_utah_ready() || ! current_user_can( 'manage_options' ) ) {
+				return;
+			}
+			echo '<div class="notice notice-error"><p><strong>UplinkSync location mode:</strong> Utah mode was requested but is NOT active. The site is still location-neutral because <code>uplinksync_location_utah_ready</code> is not set. Rewrite the stored page copy first (see DB-STEPS.md), then run <code>wp option update uplinksync_location_utah_ready 1</code>.</p></div>';
+		}
+	);
+}
+
+if ( function_exists( 'add_filter' ) ) {
+	// Refuse to store 'utah' while not ready, so the option never says one thing and the site does another.
+	add_filter(
+		'pre_update_option_uplinksync_location_mode',
+		static function ( $value, $old_value = null ) {
+			if ( 'utah' === $value && ! uplinksync_location_utah_ready() ) {
+				return $old_value;
+			}
+			return $value;
+		},
+		10,
+		2
+	);
 }
 
 /**
@@ -323,7 +423,6 @@ function uplinksync_location_neutral_rank_math_schema( $data ) {
 	$clean = uplinksync_location_neutral_schema_value( $data );
 	return is_array( $clean ) ? $clean : array();
 }
-add_filter( 'rank_math/json_ld', 'uplinksync_location_neutral_rank_math_schema', 999 );
 
 /**
  * Sanitize every JSON-LD block, including schema printed outside Rank Math.
@@ -450,8 +549,38 @@ function uplinksync_location_neutral_rewrite( $html ) {
 	return uplinksync_location_neutral_fragment( $html );
 }
 
-add_filter( 'render_block', 'uplinksync_location_neutral_fragment', 999 );
-add_filter( 'the_content', 'uplinksync_location_neutral_fragment', 999 );
+/**
+ * Location-free organization facts added to the head JSON-LD in neutral mode
+ * (after the neutraliser, priority 1000): founder, and telephone only when
+ * UPLINKSYNC_PHONE is set. No place data is ever added here.
+ *
+ * @param mixed $value Schema value (Rank Math graph or nested node).
+ * @return mixed
+ */
+function uplinksync_location_neutral_org_extras( $value ) {
+	if ( ! is_array( $value ) ) {
+		return $value;
+	}
+	$type = isset( $value['@type'] ) ? (array) $value['@type'] : array();
+	if ( in_array( 'Organization', $type, true ) && ! empty( $value['name'] ) ) {
+		if ( empty( $value['founder'] ) ) {
+			$value['founder'] = array(
+				'@type' => 'Person',
+				'name'  => 'Doug Irwin',
+			);
+		}
+		$phone = uplinksync_location_phone();
+		if ( '' !== $phone ) {
+			$value['telephone'] = $phone;
+		}
+	}
+	foreach ( $value as $prop => $item ) {
+		if ( is_array( $item ) ) {
+			$value[ $prop ] = uplinksync_location_neutral_org_extras( $item );
+		}
+	}
+	return $value;
+}
 
 /**
  * Last-priority SEO filters keep core, Rank Math and social metadata aligned.
@@ -459,26 +588,34 @@ add_filter( 'the_content', 'uplinksync_location_neutral_fragment', 999 );
 function uplinksync_location_neutral_seo_text( $value ) {
 	return uplinksync_location_neutral_text( $value );
 }
-add_filter( 'pre_get_document_title', 'uplinksync_location_neutral_seo_text', 999 );
-add_filter( 'rank_math/frontend/title', 'uplinksync_location_neutral_seo_text', 999 );
-add_filter( 'rank_math/frontend/description', 'uplinksync_location_neutral_seo_text', 999 );
-add_filter( 'rank_math/opengraph/facebook/og_title', 'uplinksync_location_neutral_seo_text', 999 );
-add_filter( 'rank_math/opengraph/facebook/og_description', 'uplinksync_location_neutral_seo_text', 999 );
-add_filter( 'rank_math/opengraph/twitter/twitter_title', 'uplinksync_location_neutral_seo_text', 999 );
-add_filter( 'rank_math/opengraph/twitter/twitter_description', 'uplinksync_location_neutral_seo_text', 999 );
-// og:image:alt / twitter:image:alt carry attachment alt text or the focus keyword.
-add_filter( 'rank_math/opengraph/facebook/og_image_alt', 'uplinksync_location_neutral_seo_text', 999 );
-add_filter( 'rank_math/opengraph/twitter/twitter_image_alt', 'uplinksync_location_neutral_seo_text', 999 );
 
-add_filter(
-	'document_title_parts',
-	static function ( $parts ) {
-		foreach ( $parts as $key => $value ) {
-			if ( is_string( $value ) ) {
-				$parts[ $key ] = uplinksync_location_neutral_text( $value );
+// Registered only in neutral mode (the default). In utah mode none of these run.
+if ( 'neutral' === uplinksync_location_mode() ) {
+	add_filter( 'rank_math/json_ld', 'uplinksync_location_neutral_rank_math_schema', 999 );
+	add_filter( 'render_block', 'uplinksync_location_neutral_fragment', 999 );
+	add_filter( 'the_content', 'uplinksync_location_neutral_fragment', 999 );
+	add_filter( 'pre_get_document_title', 'uplinksync_location_neutral_seo_text', 999 );
+	add_filter( 'rank_math/frontend/title', 'uplinksync_location_neutral_seo_text', 999 );
+	add_filter( 'rank_math/frontend/description', 'uplinksync_location_neutral_seo_text', 999 );
+	add_filter( 'rank_math/opengraph/facebook/og_title', 'uplinksync_location_neutral_seo_text', 999 );
+	add_filter( 'rank_math/opengraph/facebook/og_description', 'uplinksync_location_neutral_seo_text', 999 );
+	add_filter( 'rank_math/opengraph/twitter/twitter_title', 'uplinksync_location_neutral_seo_text', 999 );
+	add_filter( 'rank_math/opengraph/twitter/twitter_description', 'uplinksync_location_neutral_seo_text', 999 );
+	// og:image:alt / twitter:image:alt carry attachment alt text or the focus keyword.
+	add_filter( 'rank_math/opengraph/facebook/og_image_alt', 'uplinksync_location_neutral_seo_text', 999 );
+	add_filter( 'rank_math/opengraph/twitter/twitter_image_alt', 'uplinksync_location_neutral_seo_text', 999 );
+
+	add_filter(
+		'document_title_parts',
+		static function ( $parts ) {
+			foreach ( $parts as $key => $value ) {
+				if ( is_string( $value ) ) {
+					$parts[ $key ] = uplinksync_location_neutral_text( $value );
+				}
 			}
-		}
-		return $parts;
-	},
-	999
-);
+			return $parts;
+		},
+		999
+	);
+	add_filter( 'rank_math/json_ld', 'uplinksync_location_neutral_org_extras', 1000 );
+}
