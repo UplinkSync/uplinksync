@@ -98,10 +98,12 @@ function uplinksync_child_enrich_organization_schema( $data ) {
 		);
 	}
 
-	// Contact facts — reuse the owner-authoritative constants when the mu-plugin
-	// that owns them is present, so the value is never duplicated by hand.
-	if ( defined( 'UPLINKSYNC_CONTACT_PHONE_E164' ) ) {
-		$additions['telephone'] = UPLINKSYNC_CONTACT_PHONE_E164;
+	// Contact phone — ONLY the number published through UPLINKSYNC_PHONE
+	// (mu-plugins/uplinksync-phone.php). Empty = no telephone in the schema at all;
+	// the retired Idaho number is never emitted again.
+	$phone = function_exists( 'uplinksync_phone_e164' ) ? uplinksync_phone_e164() : '';
+	if ( '' !== $phone ) {
+		$additions['telephone'] = $phone;
 	}
 
 	/*

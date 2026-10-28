@@ -295,6 +295,17 @@ function uplinksync_location_neutral_text( $text ) {
 }
 
 /**
+ * True when $value is the phone number the owner publishes via UPLINKSYNC_PHONE.
+ * Safe when the phone mu-plugin is absent (then nothing is public).
+ *
+ * @param mixed $value tel: target, display text or schema value.
+ * @return bool
+ */
+function uplinksync_location_neutral_is_public_phone( $value ) {
+	return is_string( $value ) && function_exists( 'uplinksync_phone_is_public' ) && uplinksync_phone_is_public( $value );
+}
+
+/**
  * Remove address/phone blocks and neutralise legal/service-area clauses whose
  * markup spans multiple text nodes.
  *
@@ -329,11 +340,20 @@ function uplinksync_location_neutral_structural_rewrites( $html ) {
 		$html
 	);
 
-	// Remove any telephone anchor, including one injected by the contact fixer.
-	$html = preg_replace( '#<a\b[^>]*href=(["\'])tel:[^"\']*\1[^>]*>.*?</a>#is', '', $html );
-	// Remove the owner phone in plain-text variants and an immediately preceding
-	// line break/icon. Email remains the public contact route.
-	$html = preg_replace( '#(?:<br\s*/?>\s*)?(?:📞\s*)?(?:\+?1[\s.\-]*)?\(?208\)?[\s.\-]*995[\s.\-]*2704#u', '', $html );
+	// Remove every telephone anchor (including one injected by the contact fixer)
+	// EXCEPT the number published through UPLINKSYNC_PHONE (mu-plugins/uplinksync-phone.php).
+	$html = preg_replace_callback(
+		'#<a\b[^>]*href=(["\'])tel:([^"\']*)\1[^>]*>.*?</a>#is',
+		static function ( $m ) {
+			return uplinksync_location_neutral_is_public_phone( $m[2] ) ? $m[0] : '';
+		},
+		$html
+	);
+	// Remove the retired owner phone in plain-text variants and an immediately preceding
+	// line break/icon, unless the owner re-publishes that same number on purpose.
+	if ( ! uplinksync_location_neutral_is_public_phone( '+12089952704' ) ) {
+		$html = preg_replace( '#(?:<br\s*/?>\s*)?(?:📞\s*)?(?:\+?1[\s.\-]*)?\(?208\)?[\s.\-]*995[\s.\-]*2704#u', '', $html );
+	}
 
 	// Remove the former mailbox/address wherever a stale legal paragraph uses a
 	// slightly different entity encoding than the exact block above.
@@ -391,6 +411,10 @@ function uplinksync_location_neutral_schema_value( $value, $key = null ) {
 		'locationCreated', 'foundingLocation', 'hasMap', 'map', 'telephone', 'faxNumber',
 	);
 	foreach ( $drop as $key ) {
+		// The published business number (UPLINKSYNC_PHONE) is allowed through.
+		if ( 'telephone' === $key && isset( $value['telephone'] ) && uplinksync_location_neutral_is_public_phone( $value['telephone'] ) ) {
+			continue;
+		}
 		unset( $value[ $key ] );
 	}
 

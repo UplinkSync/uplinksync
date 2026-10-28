@@ -35,7 +35,23 @@
 	 * Reveal: fade + rise as the element enters the viewport.
 	 * Usage: <div data-uls-reveal>  |  data-uls-reveal-delay="0.1"
 	 */
+	/**
+	 * Never hide what is already on screen (2026-10-27 a11y fix: /about/ and /request-quote/
+	 * rendered washed out in static/slow renders). Only content that starts below the fold
+	 * animates in; everything else is shown immediately in its final state.
+	 */
+	function onScreen( el ) {
+		return el.getBoundingClientRect().top < window.innerHeight;
+	}
+	function show( els ) {
+		gsap.set( els, { opacity: 1, y: 0, clearProps: 'willChange' } );
+	}
+
 	gsap.utils.toArray( '[data-uls-reveal]' ).forEach( function ( el ) {
+		if ( onScreen( el ) ) {
+			show( el );
+			return;
+		}
 		gsap.fromTo(
 			el,
 			{ opacity: 0, y: 24 },
@@ -59,6 +75,10 @@
 		if ( ! kids.length ) {
 			return;
 		}
+		if ( onScreen( group ) ) {
+			show( kids );
+			return;
+		}
 		gsap.fromTo(
 			kids,
 			{ opacity: 0, y: 20 },
@@ -78,6 +98,12 @@
 	 * Deliberately subtle — big movement reads as cheap, not cinematic.
 	 * Usage: <div data-uls-parallax="0.15">
 	 */
+	// Failsafe: if ScrollTrigger never fires (print, snapshot, blocked scroll events), nothing
+	// may stay hidden — reveal everything after 3 s.
+	window.setTimeout( function () {
+		show( gsap.utils.toArray( '[data-uls-reveal], [data-uls-stagger] > *' ) );
+	}, 3000 );
+
 	gsap.utils.toArray( '[data-uls-parallax]' ).forEach( function ( el ) {
 		var amount = parseFloat( el.getAttribute( 'data-uls-parallax' ) ) || 0.15;
 		gsap.to( el, {
