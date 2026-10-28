@@ -1,0 +1,104 @@
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "name": "UplinkSync",
+   "legalName": "UplinkSync LLC",
+   "url": "https://uplinksync.com/",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://uplinksync.com/wp-content/themes/uplinksync-child/assets/images/uplinksync-logo.svg"
+   },
+   "telephone": "+12089952704",
+   "sameAs": [
+    "https://www.linkedin.com/company/uplinksync/",
+    "https://www.facebook.com/people/UplinkSync-LLC/61588243996549/",
+    "https://www.instagram.com/uplinksyncllc/"
+   ],
+   "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "telephone": "+12089952704",
+    "availableLanguage": "English"
+   },
+   "@id": "https://uplinksync.com/#organization",
+   "founder": {
+    "@type": "Person",
+    "name": "Doug Irwin"
+   }
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://uplinksync.com/#website",
+   "url": "https://uplinksync.com",
+   "name": "UplinkSync",
+   "publisher": {
+    "@id": "https://uplinksync.com/#organization"
+   },
+   "inLanguage": "en-US"
+  },
+  {
+   "@type": "ImageObject",
+   "@id": "https://uplinksync.com/wp-content/uploads/2026/07/uplinksync-founder-doug.jpg",
+   "url": "https://uplinksync.com/wp-content/uploads/2026/07/uplinksync-founder-doug.jpg",
+   "width": "200",
+   "height": "200",
+   "inLanguage": "en-US"
+  },
+  {
+   "@type": "WebPage",
+   "@id": "https://uplinksync.com/about/#webpage",
+   "url": "https://uplinksync.com/about/",
+   "name": "About - UplinkSync",
+   "datePublished": "2026-07-21T14:53:12-06:00",
+   "dateModified": "2026-07-29T00:39:09-06:00",
+   "isPartOf": {
+    "@id": "https://uplinksync.com/#website"
+   },
+   "primaryImageOfPage": {
+    "@id": "https://uplinksync.com/wp-content/uploads/2026/07/uplinksync-founder-doug.jpg"
+   },
+   "inLanguage": "en-US"
+  },
+  {
+   "@type": "Person",
+   "@id": "https:/af352445a8dfb27f310b327bbf4bdef9/af352445a8dfb27f310b327bbf4bdef9uplinksync.com/af352445a8dfb27f310b327bbf4bdef9author/af352445a8dfb27f310b327bbf4bdef9",
+   "url": "https:/af352445a8dfb27f310b327bbf4bdef9/af352445a8dfb27f310b327bbf4bdef9uplinksync.com/af352445a8dfb27f310b327bbf4bdef9author/af352445a8dfb27f310b327bbf4bdef9",
+   "image": {
+    "@type": "ImageObject",
+    "@id": "https://secure.gravatar.com/avatar/?s=96&amp;d=mm&amp;r=g",
+    "url": "https://secure.gravatar.com/avatar/?s=96&amp;d=mm&amp;r=g",
+    "inLanguage": "en-US"
+   },
+   "worksFor": {
+    "@id": "https://uplinksync.com/#organization"
+   }
+  },
+  {
+   "@type": "Article",
+   "headline": "About - UplinkSync",
+   "datePublished": "2026-07-21T14:53:12-06:00",
+   "dateModified": "2026-07-29T00:39:09-06:00",
+   "author": {
+    "@id": "https:/af352445a8dfb27f310b327bbf4bdef9/af352445a8dfb27f310b327bbf4bdef9uplinksync.com/af352445a8dfb27f310b327bbf4bdef9author/af352445a8dfb27f310b327bbf4bdef9"
+   },
+   "publisher": {
+    "@id": "https://uplinksync.com/#organization"
+   },
+   "description": "Responsive · Trustworthy · Tech-forward",
+   "name": "About - UplinkSync",
+   "@id": "https://uplinksync.com/about/#richSnippet",
+   "isPartOf": {
+    "@id": "https://uplinksync.com/about/#webpage"
+   },
+   "image": {
+    "@id": "https://uplinksync.com/wp-content/uploads/2026/07/uplinksync-founder-doug.jpg"
+   },
+   "inLanguage": "en-US",
+   "mainEntityOfPage": {
+    "@id": "https://uplinksync.com/about/#webpage"
+   }
+  }
+ ]
+}
