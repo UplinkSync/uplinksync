@@ -174,7 +174,29 @@
       }
       box.appendChild(f);
     });
+    if (line.rights && cfg.rights) {
+      var r = cfg.rights, rf = document.createElement("div"); rf.className = "qf-field";
+      var rh = '<label class="qf-l" for="qf-uavRights">' + r.label + '</label><select class="qf-select" id="qf-uavRights" data-rights="1">';
+      r.choices.forEach(function (c) { rh += '<option value="' + c.v + '" data-mult="' + c.mult + '" data-min="' + (c.minAdd || 0) + '" data-lbl="' + c.label + '">' + c.label + '</option>'; });
+      rh += '</select><p class="qf-help">' + (r.help || "") + '</p>';
+      if (r.raw) { rh += '<label class="qf-check-row"><input type="checkbox" id="qf-uavRaw" data-rights-raw="1"><span>' + r.raw.label + ' <span class="qf-opt">(+' + Math.round(r.raw.pct * 100) + '%)</span></span></label>'; }
+      rf.innerHTML = rh; box.appendChild(rf);
+    }
     calcUav(); syncDetails();
+  }
+  /* Usage rights on the creative subtotal S (config.php 'rights'): max(S x mult, S + minAdd) + raw. */
+  function applyRights(line, sub, answers) {
+    var sel = $("#qf-uavRights"), raw = $("#qf-uavRaw");
+    if (!line.rights || !cfg.rights || !sel) { return sub; }
+    var o = sel.options[sel.selectedIndex];
+    var mult = parseFloat(o.getAttribute("data-mult")) || 1, minAdd = parseFloat(o.getAttribute("data-min")) || 0;
+    var withRights = mult > 1 ? Math.max(sub * mult, sub + minAdd) : sub;
+    answers.push({ label: cfg.rights.label, value: o.getAttribute("data-lbl") + (withRights > sub ? " (+" + fmt(withRights - sub) + ")" : "") });
+    if (raw && raw.checked && cfg.rights.raw) {
+      var rawAdd = sub * cfg.rights.raw.pct; withRights += rawAdd;
+      answers.push({ label: cfg.rights.raw.label, value: "Yes (+" + fmt(rawAdd) + ")" });
+    }
+    return withRights;
   }
   function computeUav() {
     var line = cfg.lines[$("#qf-uavLine").value];
@@ -194,6 +216,7 @@
         answers.push({ label: el.getAttribute("data-optlabel"), value: "Yes (+" + fmt(a) + ")" });
       }
     });
+    total = applyRights(line, total, answers);
     var miles = parseFloat(val("#qf-uavMiles")) || 0;
     var timing = $("#qf-uavTiming").value || "standard";
     var overMi = Math.max(0, miles - cfg.travel.freeRadiusMi);
