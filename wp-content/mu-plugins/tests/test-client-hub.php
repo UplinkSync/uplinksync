@@ -55,7 +55,7 @@ foreach ( UPLINKSYNC_HUB_TILES as $k ) {
 	hub_check( "tile $k has label, description and href", '' !== $l[ $k ]['label'] && strlen( $l[ $k ]['desc'] ) > 20 && '' !== $l[ $k ]['href'] );
 }
 hub_check( 'pay links the public invoice host, not the Headscale-only billing host', 'https://invoice.uplinksync.com/client/login' === $l['pay']['href'] );
-hub_check( 'sign goes to the DocuSeal sign-in entry, not its marketing root', 'https://sign.uplinksync.com/sign_in' === $l['sign']['href'] );
+hub_check( 'sign never sends clients to the DocuSeal staff login', false === strpos( $l['sign']['href'], 'sign.uplinksync.com' ) && '/contact/?topic=signing' === $l['sign']['href'] );
 hub_check( 'store account is on-site', '/my-account/' === $l['store']['href'] && ! $l['store']['external'] );
 hub_check( 'book is a booking link (adopted into the native modal), not external', 0 === strpos( $l['book']['href'], 'https://book.uplinksync.com/team/uplinksync/' ) && ! $l['book']['external'] );
 hub_check( 'support is not the FreeScout agent login', false === strpos( $l['help']['href'], 'support.uplinksync.com/login' ) );
@@ -63,12 +63,12 @@ hub_check( 'no link to the DocuSeal marketing page anywhere', ! in_array( 'https
 
 // New-tab handling.
 $tiles = uplinksync_hub_tiles();
-hub_check( 'exactly three tiles open a new tab (pay, media, sign)', 3 === substr_count( $tiles, 'target="_blank" rel="noopener"' ) && 3 === substr_count( $tiles, 'opens in a new tab' ) );
+hub_check( 'exactly two tiles open a new tab (pay, media)', 2 === substr_count( $tiles, 'target="_blank" rel="noopener"' ) && 2 === substr_count( $tiles, 'opens in a new tab' ) );
 hub_check( 'book tile has no target', 1 === preg_match( '#<a class="htile" data-hub="book" href="[^"]+">#', $tiles ) );
 hub_check( 'tiles render escaped labels', false !== strpos( $tiles, 'Your photos &amp; video' ) );
 $foot = uplinksync_hub_footer_items();
 hub_check( 'footer column: six destinations + print shop', 7 === substr_count( $foot, '<li>' ) && false !== strpos( $foot, '/prints/' ) );
-hub_check( 'footer external links say so to screen readers', 3 === substr_count( $foot, '(opens in a new tab)' ) );
+hub_check( 'footer external links say so to screen readers', 2 === substr_count( $foot, '(opens in a new tab)' ) );
 $band = uplinksync_site_hub();
 hub_check( 'home band uses the registry (invoice host, no billing host)', false !== strpos( $band, 'invoice.uplinksync.com' ) && false === strpos( $band, 'billing.uplinksync.com' ) && false !== strpos( $band, 'href="/hub/"' ) );
 hub_check( 'back bar links the hub; store context adds the print shop', false !== strpos( uplinksync_hub_backbar(), 'href="/hub/"' ) && false === strpos( uplinksync_hub_backbar(), '/prints/' ) && false !== strpos( uplinksync_hub_backbar( 'store' ), 'href="/prints/"' ) );

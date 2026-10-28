@@ -25,8 +25,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * - pay:   billing.* 301s to invoice.* (billing.* is Headscale-only except /client/), so link
  *          the public host directly.
  * - media: unchanged (owner default Q1: keep the existing Immich link working).
- * - sign:  DocuSeal's "/" is its vendor marketing page; /sign_in is the sign-in entry. Signers
- *          normally arrive by an emailed per-document link, which the description says.
+ * - sign:  signers never need a DocuSeal account (per-document emailed link, /s/<slug>); DocuSeal's
+ *          /sign_in is the STAFF login, so the tile explains that and offers a resend via /contact/.
  * - book:  a book.uplinksync.com link is adopted by mu-plugins/uplinksync-booking-ctas.php
  *          into the native booking modal, so it is NOT marked external (no new tab).
  * - help:  /contact/ (owner question Q8 open; support.uplinksync.com/login is the agent login).
@@ -53,9 +53,9 @@ function uplinksync_hub_links() {
 		'sign'   => array(
 			'icon'     => 'sign',
 			'label'    => 'Sign a document',
-			'desc'     => 'Agreements and authorisations. You usually get a signing link by email; this is the way back in.',
-			'href'     => 'https://sign.uplinksync.com/sign_in',
-			'external' => true,
+			'desc'     => 'Signing links arrive by email, so there is no account to create. Can’t find yours? We’ll resend it.',
+			'href'     => '/contact/?topic=signing',
+			'external' => false,
 		),
 		'store'  => array(
 			'icon'     => 'user',
