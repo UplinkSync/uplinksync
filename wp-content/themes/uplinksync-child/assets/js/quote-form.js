@@ -106,6 +106,18 @@
 				selectOptionByLabel( select, chosenLabel );
 			}
 		} );
+
+		// Richer Quiet Light (2026-10-27): the master form shows Service Interest as a
+		// radio pill group with the same values. Pre-select it the same way.
+		var radios = document.querySelectorAll( 'input[type="radio"][name="service-interest"]' );
+		var anyChecked = Array.prototype.some.call( radios, function ( r ) {
+			return r.checked;
+		} );
+		Array.prototype.forEach.call( radios, function ( radio ) {
+			if ( radio.value === chosenLabel && ( explicitLabel || ! anyChecked ) ) {
+				radio.checked = true;
+			}
+		} );
 	}
 
 	function passUtmParams() {

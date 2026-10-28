@@ -224,40 +224,26 @@ function uplinksync_child_preload_fonts() {
 add_action( 'wp_head', 'uplinksync_child_preload_fonts', 1 );
 
 /**
- * Quiet Light (MR-B): the new header + footer template parts are site-wide, so their one
- * small stylesheet loads on every front-end page. Everything in it is scoped to .uls-ql-*.
+ * Richer Quiet Light (2026-10-27): ONE minified site stylesheet replaces quiet-light.css.
+ * It styles the site-wide header/footer parts and, scoped to <main class="uls-site rq">, the
+ * five file-driven templates. Source: assets/css/site.css -> tools/build_site_css.py.
  */
 function uplinksync_child_quiet_light_assets() {
 	wp_enqueue_style(
-		'uplinksync-quiet-light',
-		get_stylesheet_directory_uri() . '/assets/css/quiet-light.css',
+		'uplinksync-site',
+		get_stylesheet_directory_uri() . '/assets/css/site.min.css',
 		array( 'uplinksync-tokens' ),
-		uplinksync_child_asset_ver( 'assets/css/quiet-light.css' )
+		uplinksync_child_asset_ver( 'assets/css/site.min.css' )
 	);
 }
 add_action( 'wp_enqueue_scripts', 'uplinksync_child_quiet_light_assets', 23 );
 
 /**
- * Quiet Light front page: templates/front-page.html now renders only the quiet-* patterns,
- * so the previous homepage's presentation layers are dead weight there — and the legacy
- * brand layers would fight the new markup (brand-blocks.css pins headings to DM Sans with
- * !important). Dequeue them on the front page only; every other page is unchanged.
- * The files themselves are removed in MR-C (chore/quiet-light-cleanup).
+ * Richer Quiet Light page building blocks, the legacy-asset trim for the five templates
+ * (keyed off the `uls-site` marker in the RESOLVED template, so a DB-saved Site Editor
+ * override keeps its own stylesheets), nav aria-current and the header phone.
  */
-function uplinksync_child_quiet_light_trim_front_page() {
-	if ( ! is_front_page() ) {
-		return;
-	}
-	// uplinksync-hero = the old airframe poster/video loop (inc/hero-loop.php); it also pulls
-	// brand.css back in as a dependency, so it must go with the brand layers.
-	foreach ( array( 'uplinksync-hero', 'uplinksync-brand', 'uplinksync-brand-blocks', 'uplinksync-imagery-system', 'uplinksync-split-horizon', 'uplinksync-motion' ) as $handle ) {
-		wp_dequeue_style( $handle );
-	}
-	foreach ( array( 'uplinksync-hero', 'uplinksync-split-horizon', 'uplinksync-motion', 'gsap-scrolltrigger', 'gsap' ) as $handle ) {
-		wp_dequeue_script( $handle );
-	}
-}
-add_action( 'wp_enqueue_scripts', 'uplinksync_child_quiet_light_trim_front_page', 99 );
+require_once get_stylesheet_directory() . '/inc/site.php';
 
 /**
  * Quiet Light header logo: the Site Logo block in parts/header.html carries the class
@@ -276,9 +262,9 @@ function uplinksync_child_quiet_light_logo( $block_content, $block ) {
 		return $block_content;
 	}
 	return sprintf(
-		'<div class="wp-block-site-logo uls-ql-logo"><a href="%1$s" class="custom-logo-link" rel="home"><img class="custom-logo" src="%2$s" width="802" height="132" alt="%3$s" decoding="async" fetchpriority="high"></a></div>',
+		'<div class="wp-block-site-logo uls-ql-logo"><a href="%1$s" class="custom-logo-link" rel="home"><img class="custom-logo" src="%2$s" width="231" height="38" alt="%3$s" decoding="async"></a></div>',
 		esc_url( home_url( '/' ) ),
-		esc_url( get_stylesheet_directory_uri() . '/assets/images/uplinksync-logo-lockup.png' ),
+		esc_url( get_stylesheet_directory_uri() . '/assets/images/uplinksync-logo-lockup.webp' ),
 		esc_attr__( 'UplinkSync home', 'uplinksync-child' )
 	);
 }
@@ -445,7 +431,7 @@ add_action( 'wp_enqueue_scripts', 'uplinksync_child_estimate_book_assets', 21 );
 
 function uplinksync_child_drone_gallery_title( $title_parts ) {
 	if ( uplinksync_child_is_singular_slug( 'drone-services' ) ) {
-		return array( 'title' => 'Real Estate Drone Photo & Video | UplinkSync' );
+		return array( 'title' => 'Drone Photo, Video & Inspection | FAA Part 107 | UplinkSync' );
 	}
 	return $title_parts;
 }
@@ -462,7 +448,7 @@ add_filter(
 	'rank_math/frontend/title',
 	function ( $title ) {
 		return uplinksync_child_is_singular_slug( 'drone-services' )
-			? 'Real Estate Drone Photo & Video | UplinkSync'
+			? 'Drone Photo, Video & Inspection | FAA Part 107 | UplinkSync'
 			: $title;
 	}
 );

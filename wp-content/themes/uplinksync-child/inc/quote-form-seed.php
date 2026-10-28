@@ -49,7 +49,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * to the stored CF7 posts on the next request after deploy.
  */
 if ( ! defined( 'UPLINKSYNC_QUOTE_FORM_VERSION' ) ) {
-	define( 'UPLINKSYNC_QUOTE_FORM_VERSION', '2' );
+	define( 'UPLINKSYNC_QUOTE_FORM_VERSION', '3' );
 }
 
 /**
@@ -93,29 +93,15 @@ if ( ! defined( 'UPLINKSYNC_QUOTE_NOTIFY_EMAIL' ) ) {
  */
 function uplinksync_quote_master_form_template() {
 	return <<<'CF7'
-<p class="uls-form-legend"><span class="uls-req" aria-hidden="true">*</span> Required</p>
-
-<div class="uls-quote-field"><label>First Name <span class="uls-req" aria-hidden="true">*</span><br />
-[text* first-name autocomplete:given-name]</label></div>
-
-<div class="uls-quote-field"><label>Company Name <span class="uls-req" aria-hidden="true">*</span><br />
-[text* company-name autocomplete:organization]</label></div>
-
-<div class="uls-quote-field"><label>Email <span class="uls-req" aria-hidden="true">*</span><br />
-[email* your-email autocomplete:email]</label></div>
-
-<div class="uls-quote-field"><label>Phone <span class="uls-req" aria-hidden="true">*</span><br />
-[tel* phone autocomplete:tel]</label></div>
-
-<div class="uls-quote-field"><label>Service Interest <span class="uls-req" aria-hidden="true">*</span><br />
-[select* service-interest id:service-interest "Managed IT Services" "Business Automation" "Web Development" "Drone Services" "Not Sure"]</label></div>
-
-<div class="uls-quote-field"><label>How can we help?<br />
-[textarea help-text maxlength:500 placeholder "Brief description of what you're dealing with — no need to be technical."]</label></div>
-
+<p class="uls-form-legend">Fields marked <span class="uls-req" aria-hidden="true">*</span> are required. Takes about 2 minutes.</p>
+<fieldset class="uls-pills full"><legend>What can we help with? <span class="uls-req" aria-hidden="true">*</span></legend>[radio service-interest use_label_element "Managed IT Services" "Business Automation" "Web Development" "Drone Services" "Not Sure"]</fieldset>
+<div class="uls-quote-field"><label>First name <span class="uls-req" aria-hidden="true">*</span> [text* first-name autocomplete:given-name]</label></div>
+<div class="uls-quote-field"><label>Company name <span class="uls-req" aria-hidden="true">*</span> [text* company-name autocomplete:organization]</label></div>
+<div class="uls-quote-field"><label>Email <span class="uls-req" aria-hidden="true">*</span> [email* your-email autocomplete:email]</label></div>
+<div class="uls-quote-field"><label>Phone <span class="uls-opt">(optional)</span> [tel phone autocomplete:tel]</label></div>
+<div class="uls-quote-field full"><label>How can we help? <span class="uls-opt">(optional)</span> [textarea help-text maxlength:500 placeholder "A sentence or two is plenty. No need to be technical."]</label></div>
 [text honeypot-field class:uls-honeypot autocomplete:off]
-
-[submit "Get My Free Quote"]
+<div class="uls-form-submit full">[submit "Send my request"] <span class="uls-form-note">We reply within one business day. We never share your details.</span></div>
 CF7;
 }
 
