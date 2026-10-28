@@ -7,8 +7,8 @@
  *   catalog GROUPED INTO LOCATION SECTIONS using the same house product cards as the
  *   collection archive (uplinksync-collection-archive.php). Full catalog is kept — every
  *   published print renders on one page (behind /prints/), filter/sort are client-side.
- *   Small preview thumbnails are served clean by Code Snippet #45 (woocommerce_thumbnail
- *   swap); the single-product main image / zoom stay watermarked.
+ *   Every size (grid thumbnails, single-product image, zoom) is the watermarked preview
+ *   (DR-006; Code Snippet #45's clean-thumbnail swap was retired 2026-10-28).
  *   Presentation only — no price, checkout, or gating change. Renders through the real
  *   FSE canvas + wp:template-part blocks so the navy header/footer + block styles apply,
  *   exactly like the collection archive. Fully reversible: overwrite this file with an

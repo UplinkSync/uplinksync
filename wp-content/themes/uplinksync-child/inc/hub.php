@@ -219,8 +219,8 @@ function uplinksync_hub_is_master_url( $url ) {
 
 /**
  * Public cover URL for a preview attachment ('' when only a master would be served).
- * 'medium_large' (768) / 'large' (1024) are above the 400 px "clean size" swap in Code
- * Snippet 045, so WordPress returns the preview file itself.
+ * Returns the preview file itself (Code Snippet 045's small-size master swap was retired
+ * 2026-10-28; this guard still refuses any '-master-' URL).
  *
  * @param int    $attachment_id Preview attachment.
  * @param string $size          Image size.

@@ -19,13 +19,9 @@
     Require all denied
 </FilesMatch>
 
-# 2) Re-allow ONLY the small square thumbnails the store genuinely displays:
-#    -300x300 (shop grid + related products) and -100x100 (gallery nav strip).
-#    Listed AFTER the deny so the grant wins for these two sizes (Apache 2.4
-#    merges matching <FilesMatch> in order; last match wins).
-<FilesMatch "-master-[0-9a-f]+-(100x100|300x300)\.(jpe?g|png|webp)$">
-    Require all granted
-</FilesMatch>
+# 2) (removed 2026-10-28, DR-006) The -300x300 / -100x100 master re-allow is gone:
+#    the store now shows watermarked previews at every size (snippet 045 retired),
+#    so no clean master rendition is public except rule 3's five cleared aerials.
 
 # 3) UPLAA-418 — re-allow ONLY the 768x432 web rendition of the FIVE cleared,
 #    watermark-free aerials that the public /drone-services/ gallery displays
