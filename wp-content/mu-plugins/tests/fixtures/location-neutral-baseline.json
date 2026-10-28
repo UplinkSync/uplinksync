@@ -1,0 +1,78 @@
+{
+ "graph": {
+  "@context": "https://schema.org",
+  "@graph": [
+   {
+    "@type": [
+     "Organization"
+    ],
+    "@id": "https://uplinksync.com/#organization",
+    "name": "UplinkSync",
+    "url": "https://uplinksync.com/",
+    "logo": {
+     "@type": "ImageObject",
+     "url": "https://uplinksync.com/logo.svg"
+    }
+   },
+   {
+    "@type": "WebSite",
+    "@id": "https://uplinksync.com/#website",
+    "name": "UplinkSync",
+    "publisher": {
+     "@id": "https://uplinksync.com/#organization"
+    }
+   },
+   {
+    "@type": "WebPage",
+    "@id": "https://uplinksync.com/#webpage",
+    "name": "Local IT Support & Managed Services | UplinkSync"
+   }
+  ]
+ },
+ "fragment": "<section><h1>Cybersecurity for small and growing businesses</h1><p>Call </p></section>",
+ "block": "<section><h1>Cybersecurity for small and growing businesses</h1><p>Call </p></section>",
+ "seo": {
+  "home": {
+   "title": "Local IT Support & Managed Services | UplinkSync",
+   "desc": "Contact UplinkSync for managed IT, web, automation and drone work. Serving clients remotely and on-site by arrangement. A human replies in one business day.",
+   "og": "Local IT Support & Managed Services | UplinkSync",
+   "tw_desc": "Contact UplinkSync for managed IT, web, automation and drone work. Serving clients remotely and on-site by arrangement. A human replies in one business day.",
+   "doc": "Local IT Support & Managed Services | UplinkSync"
+  },
+  "services": {
+   "title": "Local IT Support & Managed Services | UplinkSync",
+   "desc": "Contact UplinkSync for managed IT, web, automation and drone work. Serving clients remotely and on-site by arrangement. A human replies in one business day.",
+   "og": "Local IT Support & Managed Services | UplinkSync",
+   "tw_desc": "Contact UplinkSync for managed IT, web, automation and drone work. Serving clients remotely and on-site by arrangement. A human replies in one business day.",
+   "doc": "Local IT Support & Managed Services | UplinkSync"
+  },
+  "drone-services": {
+   "title": "Local IT Support & Managed Services | UplinkSync",
+   "desc": "Contact UplinkSync for managed IT, web, automation and drone work. Serving clients remotely and on-site by arrangement. A human replies in one business day.",
+   "og": "Local IT Support & Managed Services | UplinkSync",
+   "tw_desc": "Contact UplinkSync for managed IT, web, automation and drone work. Serving clients remotely and on-site by arrangement. A human replies in one business day.",
+   "doc": "Local IT Support & Managed Services | UplinkSync"
+  },
+  "about": {
+   "title": "Local IT Support & Managed Services | UplinkSync",
+   "desc": "Contact UplinkSync for managed IT, web, automation and drone work. Serving clients remotely and on-site by arrangement. A human replies in one business day.",
+   "og": "Local IT Support & Managed Services | UplinkSync",
+   "tw_desc": "Contact UplinkSync for managed IT, web, automation and drone work. Serving clients remotely and on-site by arrangement. A human replies in one business day.",
+   "doc": "Local IT Support & Managed Services | UplinkSync"
+  },
+  "contact": {
+   "title": "Local IT Support & Managed Services | UplinkSync",
+   "desc": "Contact UplinkSync for managed IT, web, automation and drone work. Serving clients remotely and on-site by arrangement. A human replies in one business day.",
+   "og": "Local IT Support & Managed Services | UplinkSync",
+   "tw_desc": "Contact UplinkSync for managed IT, web, automation and drone work. Serving clients remotely and on-site by arrangement. A human replies in one business day.",
+   "doc": "Local IT Support & Managed Services | UplinkSync"
+  },
+  "other": {
+   "title": "Local IT Support & Managed Services | UplinkSync",
+   "desc": "Contact UplinkSync for managed IT, web, automation and drone work. Serving clients remotely and on-site by arrangement. A human replies in one business day.",
+   "og": "Local IT Support & Managed Services | UplinkSync",
+   "tw_desc": "Contact UplinkSync for managed IT, web, automation and drone work. Serving clients remotely and on-site by arrangement. A human replies in one business day.",
+   "doc": "Local IT Support & Managed Services | UplinkSync"
+  }
+ }
+}
