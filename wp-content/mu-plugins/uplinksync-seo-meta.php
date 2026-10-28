@@ -241,6 +241,7 @@ const UPLINKSYNC_SEO_OG_PAGES = array(
 	'drone-services' => 'drone',
 	'about'          => 'about',
 	'contact'        => 'contact',
+	'prints'         => 'prints',
 );
 
 /** Alt text per card (no place names). */
@@ -250,6 +251,7 @@ const UPLINKSYNC_SEO_OG_ALT = array(
 	'drone'    => 'UplinkSync aerial photo, video and inspections',
 	'about'    => 'Doug, owner of UplinkSync',
 	'contact'  => 'Get a quote or book a call with UplinkSync',
+	'prints'   => 'UplinkSync aerial prints: four watermarked previews from the print collections',
 	'default'  => 'UplinkSync: managed IT, web and aerial services',
 );
 

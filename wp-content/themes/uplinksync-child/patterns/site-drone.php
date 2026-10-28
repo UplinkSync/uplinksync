@@ -77,7 +77,7 @@ echo uplinksync_site_proof( // phpcs:ignore
 	</div>
 </div></section>
 <section class="sec white" id="work" aria-labelledby="wk-h"><div class="wrap">
-	<div class="sec-head"><p class="eyebrow">Real work · own footage</p><h2 id="wk-h">The work — browse &amp; license</h2><p>Every frame is our own cleared drone work, shown with watermarked previews. Full-resolution files and licensing on request.</p></div>
+	<div class="sec-head"><p class="eyebrow">Real work · own footage</p><h2 id="wk-h">The work — browse &amp; license</h2><p>Every frame is our own cleared drone work, shown with watermarked previews. Buy any frame as a print in the shop; full-resolution files and licensing on request.</p></div>
 	<ul class="filters" data-uls-filters hidden aria-label="Filter the gallery">
 		<li><button type="button" data-f="all" aria-pressed="true">All</button></li>
 		<li><button type="button" data-f="land" aria-pressed="false">Landscapes</button></li>
@@ -102,9 +102,9 @@ echo uplinksync_site_proof( // phpcs:ignore
 			);
 		}
 		?>
-		<a class="more-tile" href="/prints/">Full gallery →</a>
+		<a class="more-tile" href="/shop/">Shop all prints →</a>
 	</div>
-	<p class="actions"><a class="btn btn-primary" href="/prints/">Browse the full gallery</a><span class="muted">Gallery frames: Aerial by UplinkSync — uplinksync.com</span></p>
+	<p class="actions"><a class="btn btn-primary" href="/shop/">Shop all prints</a><a class="tlink" href="/prints/">Browse by collection <?php echo $uls_a; // phpcs:ignore ?></a><span class="muted">Gallery frames: Aerial by UplinkSync — uplinksync.com</span></p>
 </div></section>
 <section class="sec dark" aria-labelledby="mo-h"><div class="wrap">
 	<div class="sec-head"><p class="eyebrow">In motion · cinematic reel</p><h2 id="mo-h">See it in motion</h2><p>A cinematic reel cut from the same in-house aerial work. It plays only when you press play.</p></div>

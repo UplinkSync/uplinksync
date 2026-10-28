@@ -341,7 +341,7 @@ function uplinksync_hub_money( $amount ) {
  */
 function uplinksync_hub_collection_cards( array $cols ) {
 	if ( ! $cols ) {
-		return '<p class="muted">Collections are being updated. <a href="/shop/">Browse the full catalog</a>.</p>';
+		return '<p class="muted">Collections are being updated. <a href="/shop/">Shop all prints</a>.</p>';
 	}
 	$html = '';
 	foreach ( array_values( $cols ) as $i => $c ) {

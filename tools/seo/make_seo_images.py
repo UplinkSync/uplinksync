@@ -2,9 +2,12 @@
 """Build the share (og:image) cards and the favicon set shipped in the child theme.
 
 usage: python3 tools/seo/make_seo_images.py <owner-images-dir> <brand-favicons-dir>
+       python3 tools/seo/make_seo_images.py --prints <previews-dir>   (only og-prints.jpg)
 
 <owner-images-dir>   the approved owner set (imagery/incoming-20261027/*.png)
 <brand-favicons-dir> NAS 50_Brand/Logos/Web-Favicons (android-chrome-512x512.png etc.)
+<previews-dir>       the store's WATERMARKED previews (*-preview.jpg, 1600x900). Never masters: the
+                     /prints/ card is a collage of what the public can already see.
 
 Outputs (committed, so the site never depends on this script at runtime):
   wp-content/themes/uplinksync-child/assets/images/seo/og-<page>.jpg   1200x630, <= 300 KB
@@ -44,6 +47,14 @@ CARDS = {
     "contact": ("cta-band_A.png", 0.62, "Get a quote\nor book a call", "Tell us what you need. We reply with a plan."),
     "default": ("hero-aerial_utah_A.png", 0.60, "Managed IT, web\n& aerial services", "Owner-run · Plain answers · Clear quotes"),
 }
+
+# /prints/ collage: preview files (one per look), headline, sub line. No place names in the text.
+PRINTS = (
+    ("077-moun-palisades-reservoir-preview.jpg", "001-city-idaho-falls-preview.jpg",
+     "031-city-kaysville-preview.jpg", "092-moun-palisades-reservoir-preview.jpg"),
+    "Aerial prints,\nby collection",
+    "Our own drone work · Printed to order",
+)
 
 
 def font(path, size, weight):
@@ -115,6 +126,55 @@ def card(src_dir, key):
     print("%-34s %6.1f KB" % (os.path.relpath(out, ROOT), os.path.getsize(out) / 1024))
 
 
+def save_jpeg(base, key):
+    out = os.path.join(OUT_OG, "og-%s.jpg" % key)
+    rgb = base.convert("RGB")
+    for q in (86, 82, 78, 74, 70):
+        rgb.save(out, "JPEG", quality=q, optimize=True, progressive=True)
+        if os.path.getsize(out) <= MAX_BYTES:
+            break
+    print("%-34s %6.1f KB" % (os.path.relpath(out, ROOT), os.path.getsize(out) / 1024))
+
+
+def prints_card(previews_dir):
+    """Navy text panel on the left, a 2x2 wall of watermarked preview prints on the right."""
+    files, head, sub = PRINTS
+    for f in files:
+        if "-master-" in f or not f.endswith("-preview.jpg"):
+            sys.exit("prints card: only watermarked *-preview.jpg files may be used (%s)" % f)
+    base = Image.new("RGBA", (W, H), NAVY_950 + (255,))
+    gap, x0, y0 = 14, 560, 40
+    tw = (W - x0 - 40 - gap) // 2
+    th = (H - 2 * y0 - gap) // 2
+    for i, f in enumerate(files):
+        tile = Image.open(os.path.join(previews_dir, f)).convert("RGB")
+        scale = max(tw / tile.width, th / tile.height)
+        tile = tile.resize((round(tile.width * scale), round(tile.height * scale)), Image.LANCZOS)
+        left, top = (tile.width - tw) // 2, (tile.height - th) // 2
+        tile = tile.crop((left, top, left + tw, top + th))
+        x, y = x0 + (i % 2) * (tw + gap), y0 + (i // 2) * (th + gap)
+        mat = Image.new("RGBA", (tw + 8, th + 8), ON_DARK + (255,))  # thin print border
+        base.alpha_composite(mat, (x - 4, y - 4))
+        base.paste(tile, (x, y))
+    d = ImageDraw.Draw(base)
+    logo = Image.open(LOCKUP).convert("RGBA")
+    lw = 330
+    logo = logo.resize((lw, round(logo.height * lw / logo.width)), Image.LANCZOS)
+    base.alpha_composite(logo, (64, 64))
+    d.rectangle((64, 64 + logo.height + 34, 64 + 56, 64 + logo.height + 38), fill=TEAL)
+    hf = font(FONT_HEAD, 56, 700)
+    y = 64 + logo.height + 64
+    for line in head.split("\n"):
+        d.text((64, y), line, font=hf, fill=ON_DARK)
+        y += 68
+    sf = font(FONT_BODY, 24, 500)
+    for line in sub.split(" · ", 1):
+        d.text((64, y + 18), line, font=sf, fill=ON_DARK_MUTED)
+        y += 34
+    d.text((64, H - 64 - 26), "uplinksync.com/prints", font=font(FONT_BODY, 24, 600), fill=TEAL)
+    save_jpeg(base, "prints")
+
+
 def icons(fav_dir):
     mark = Image.open(os.path.join(fav_dir, "android-chrome-512x512.png")).convert("RGBA")
     master = Image.new("RGBA", (512, 512), (0, 0, 0, 0))
@@ -134,6 +194,10 @@ def icons(fav_dir):
 
 
 if __name__ == "__main__":
+    if len(sys.argv) == 3 and sys.argv[1] == "--prints":
+        os.makedirs(OUT_OG, exist_ok=True)
+        prints_card(sys.argv[2])
+        sys.exit(0)
     if len(sys.argv) != 3:
         sys.exit(__doc__)
     os.makedirs(OUT_OG, exist_ok=True)

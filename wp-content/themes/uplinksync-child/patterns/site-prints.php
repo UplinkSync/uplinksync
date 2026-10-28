@@ -20,7 +20,7 @@ $uls_cols = uplinksync_hub_collections();
 	</div></div>
 </section>
 <section class="sec prints" aria-labelledby="coll-h"><div class="wrap">
-	<div class="sec-head row"><div><p class="eyebrow">Collections</p><h2 id="coll-h">Choose a collection</h2><p>Watermarked previews are shown while you browse.</p></div><a class="tlink" href="/shop/">Browse the full catalog <?php echo uplinksync_site_arrow(); // phpcs:ignore ?></a></div>
+	<div class="sec-head row"><div><p class="eyebrow">Collections</p><h2 id="coll-h">Choose a collection</h2><p>Watermarked previews are shown while you browse.</p></div><a class="tlink" href="/shop/">Shop all prints <?php echo uplinksync_site_arrow(); // phpcs:ignore ?></a></div>
 	<?php echo uplinksync_hub_collection_cards( $uls_cols ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in inc/hub.php. ?>
 	<p class="prints-acct">Bought a print before? Your files are in <a href="/my-account/downloads/">your store account</a>.</p>
 </div></section>
