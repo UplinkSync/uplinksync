@@ -36,7 +36,8 @@ function uls_site_code_manifest() {
 	return array(
 		array( 'id' => 900, 'priority' => 5, 'scope' => 'global', 'file' => '900-uls-dr006-interim-client-media-authz.php' ), // DR-006 INTERIM client-media authz (M1 wp/v2/media, M2 Store API categories) — NOT a migrated row; native code, 9xx range
 		array( 'id' => 112, 'priority' => 6, 'scope' => 'global', 'file' => '112-uls-drm-v1-encrypted-hls-hero-reel-endpoints-player.php' ), // ULS DRM v1 — encrypted-HLS hero reel (endpoints + play
-		array( 'id' => 45, 'priority' => 10, 'scope' => 'front-end', 'file' => '045-uplaa-247-store-clean-grid-thumbs-watermarked-enlarg.php' ), // UPLAA-247 Store: clean grid thumbs / watermarked enlar
+		// id 45 (UPLAA-247 clean grid thumbs -> master swap) RETIRED 2026-10-28: store shows watermarked previews
+		// everywhere (DR-006). File kept for revert; re-add this array row to restore.
 		array( 'id' => 91, 'priority' => 10, 'scope' => 'global', 'file' => '091-uplaa-366-allow-anon-woocommerce-store-api-checkout.php' ), // UPLAA-366 Allow anon WooCommerce Store API (checkout/S
 		array( 'id' => 120, 'priority' => 10, 'scope' => 'front-end', 'file' => '120-uplaa-p3-phase-3-ia-redirects-single-hop-external-sa.php' ), // UPLAA-P3 Phase 3 IA redirects (single-hop, external sa
 		array( 'id' => 108, 'priority' => 11, 'scope' => 'front-end', 'file' => '108-uplaa-drone-dynamic-browse-license-collection-tiles.php' ), // UPLAA Drone: dynamic browse-&-license collection tiles
