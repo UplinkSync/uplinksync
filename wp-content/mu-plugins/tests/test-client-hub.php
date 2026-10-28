@@ -186,5 +186,13 @@ hub_check( 'closed mini-cart drawer leaves the focus order (QA m2)', false !== s
 hub_check( 'logo never wider than the room left by quote + menu at 360px', false !== strpos( $css, 'width: min(170px, 42vw, calc(100vw - 236px))' ) );
 hub_check( 'header mini-cart has its own 44px slot; quote button yields under 600px (QA M3)', false !== strpos( $css, '.wc-block-mini-cart__button { min-width: 44px; min-height: 44px;' ) && false !== strpos( $css, '.uls-ql-bar:has(.wp-block-woocommerce-mini-cart) .uls-ql-header-cta { display: none; }' ) );
 
+// Drone -> shop wayfinding: "shop" words go to the full catalog, "collection" words to /prints/.
+$drone  = file_get_contents( get_stylesheet_directory() . '/patterns/site-drone.php' );
+$prints = file_get_contents( get_stylesheet_directory() . '/patterns/site-prints.php' );
+hub_check( 'drone gallery tile + button say "Shop all prints" and open /shop/', 2 === substr_count( $drone, 'href="/shop/">Shop all prints' ) );
+hub_check( 'drone gallery offers "Browse by collection" -> /prints/', false !== strpos( $drone, 'href="/prints/">Browse by collection' ) );
+hub_check( 'no misleading "full gallery" label left on the drone page', false === stripos( $drone, 'full gallery' ) );
+hub_check( '/prints/ names its /shop/ link the same way', false !== strpos( $prints, 'href="/shop/">Shop all prints' ) );
+
 echo $failures ? "\n$failures FAILED\n" : "\nAll client hub checks passed.\n";
 exit( $failures ? 1 : 0 );

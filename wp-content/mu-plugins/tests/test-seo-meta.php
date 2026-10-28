@@ -136,10 +136,10 @@ seo_check( 'adds 16px + .ico link tags', 2 === count( $tags ) && false !== strpo
 
 echo "Share images\n";
 seo_check( 'front page -> home card', 'home' === uplinksync_seo_og_key_for( true, '' ) );
-foreach ( array( 'services' => 'services', 'drone-services' => 'drone', 'about' => 'about', 'contact' => 'contact', 'terms' => '' ) as $slug => $key ) {
+foreach ( array( 'services' => 'services', 'drone-services' => 'drone', 'about' => 'about', 'contact' => 'contact', 'prints' => 'prints', 'terms' => '' ) as $slug => $key ) {
 	seo_check( "slug {$slug} -> '{$key}'", $key === uplinksync_seo_og_key_for( false, $slug ) );
 }
-foreach ( array( 'home', 'services', 'drone', 'about', 'contact', 'default' ) as $key ) {
+foreach ( array( 'home', 'services', 'drone', 'about', 'contact', 'prints', 'default' ) as $key ) {
 	$p  = get_stylesheet_directory() . '/assets/images/seo/og-' . $key . '.jpg';
 	$im = is_readable( $p ) ? getimagesize( $p ) : array( 0, 0, 'mime' => '' );
 	seo_check( "og-{$key}.jpg 1200x630 jpeg <= 300 KB", 1200 === $im[0] && 630 === $im[1] && 'image/jpeg' === $im['mime'] && filesize( $p ) <= 300 * 1024 );
@@ -149,6 +149,10 @@ foreach ( array( 'home', 'services', 'drone', 'about', 'contact', 'default' ) as
 $GLOBALS['uplinksync_seo_og_forced'] = uplinksync_seo_og_card( 'home' )['url'];
 seo_check( 'key page: card accepted', array() !== uplinksync_seo_og_only_card( uplinksync_seo_og_card( 'home' ) ) );
 seo_check( 'key page: stored place-named still dropped', array() === uplinksync_seo_og_only_card( array( 'url' => 'https://uplinksync.com/wp-content/uploads/aerial-stills/idaho-falls-full.jpg' ) ) );
+// /prints/: the stale page-content cover (a 403 "-master-" rendition) never reaches og:image.
+$GLOBALS['uplinksync_seo_og_forced'] = uplinksync_seo_og_card( 'prints' )['url'];
+seo_check( 'prints: stale -master- content image dropped', array() === uplinksync_seo_og_only_card( array( 'url' => 'https://uplinksync.com/wp-content/uploads/2026/07/040-moun-palisades-reservoir-master-c6fdeb6f7af4df20-1024x576.jpg' ) ) );
+seo_check( 'prints: card url is the theme collage', false !== strpos( uplinksync_seo_og_card( 'prints' )['url'], '/assets/images/seo/og-prints.jpg' ) );
 $GLOBALS['uplinksync_seo_og_forced'] = '';
 $a = array( 'url' => 'https://uplinksync.com/x.jpg' );
 seo_check( 'other page: candidates untouched', $a === uplinksync_seo_og_only_card( $a ) );
