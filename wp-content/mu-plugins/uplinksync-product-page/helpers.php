@@ -90,12 +90,26 @@ function uls_pp_aspect( $w, $h ) {
  */
 function uls_pp_about_html( $html ) {
 	$html = (string) $html;
-	// Interim copy: "Licence: Personal (...). Commercial licences are coming soon; ... Request a quote</a>." (links optional).
-	$html = preg_replace( '#\s*Licence:\s*Personal\b.*?Request a quote(?:</a>)?\.\s*#is', ' ', $html );
-	// Pre-tier copy (the line the migration replaces).
-	$html = str_replace( 'Personal + commercial license; no physical item is shipped.', 'No physical item is shipped.', $html );
-	$html = preg_replace( '/ {2,}/', ' ', $html );
-	return trim( preg_replace( '#\s+</p>#', '</p>', $html ) );
+	// 1. The exact sentence tools/licence-tiers/personal-only.php wrote ($new there), links included or stripped.
+	$exact = array(
+		'Licence: Personal (private, non-commercial use). Commercial licences are coming soon; for business use, <a href="/contact/?topic=licensing">contact us</a>. Need exclusive rights? <a href="/contact/?topic=licensing">Request a quote</a>. No physical item is shipped.',
+		'Licence: Personal (private, non-commercial use). Commercial licences are coming soon; for business use, contact us. Need exclusive rights? Request a quote. No physical item is shipped.',
+		'Personal + commercial license; no physical item is shipped.',
+	);
+	$html = str_replace( $exact, 'No physical item is shipped.', $html );
+	// 2. Lightly edited variants of the same sentence: anchored on its fixed opening and never allowed to
+	//    cross a block tag, so owner copy in other paragraphs/lists can't be swallowed (review Medium-1).
+	$r = preg_replace(
+		'#\s*Licence:\s*Personal\s*\(private, non-commercial use\)\.\s*Commercial licences are coming soon;(?:(?!</?(?:p|li|ul|ol|div|h\d|br|table|blockquote)\b).){0,400}?Request a quote(?:</a>)?\.#is',
+		'',
+		$html
+	);
+	$html = null === $r ? $html : $r; // PCRE limit hit: keep the copy as written rather than blank it.
+	$r    = preg_replace( '/ {2,}/', ' ', $html );
+	$html = null === $r ? $html : $r;
+	$r    = preg_replace( '#\s+</p>#', '</p>', $html );
+	$html = null === $r ? $html : $r;
+	return trim( $html );
 }
 
 /**
@@ -115,4 +129,49 @@ function uls_pp_strip_window( array $ids, $idx, $n = 6 ) {
 		$out[] = (int) $ids[ ( $idx + $k ) % $total ];
 	}
 	return $out;
+}
+
+/**
+ * Copy for the table lede, the business FAQ answer and the help card, derived from tier state so a
+ * partial launch never says "commercial licences aren't on sale" next to a buyable commercial tier.
+ * `{contact}` in the returned strings is replaced by the caller with the escaped contact URL.
+ *
+ * @param string[] $on     Available slugs.
+ * @param string[] $off    Coming-soon slugs.
+ * @param array    $labels slug => label.
+ * @return array{lede:string,business:string,help:array{0:string,1:string,2:string}}
+ */
+function uls_pp_band_copy( array $on, array $off, array $labels ) {
+	$commercial_on  = (bool) array_diff( $on, array( 'personal' ) );
+	$commercial_off = array_values( array_diff( $off, array( 'personal' ) ) );
+	$names          = array();
+	foreach ( $off as $s ) {
+		$names[] = isset( $labels[ $s ] ) ? $labels[ $s ] : $s;
+	}
+	$soon = $off ? htmlspecialchars( implode( ' and ', $names ), ENT_QUOTES, 'UTF-8' ) . ( count( $off ) > 1 ? ' are' : ' is' ) . ' coming soon — <a href="{contact}">ask us</a> if you need ' . ( count( $off ) > 1 ? 'them' : 'it' ) . ' now.' : '';
+
+	if ( ! $off ) {
+		$lede = 'Every licence is perpetual, worldwide and non-exclusive, for one licensee.';
+	} elseif ( array( 'personal' ) === $on ) {
+		$lede = 'Personal is available today. Commercial licences are coming soon — <a href="{contact}">ask us</a> if you need business use now.';
+	} else {
+		$lede = $soon;
+	}
+
+	$exclusive = array( 'Need exclusive rights or a bigger run?', 'We license exclusive use and larger print or merchandise runs directly. Tell us where the photo will appear and we\'ll reply within one business day.', 'Request a quote →' );
+	if ( ! $commercial_on && $commercial_off ) {
+		$business = 'Commercial licences are coming soon. Until then, <a href="{contact}">contact us about licensing</a> and we\'ll sort it out with you directly.';
+		$help     = array( 'Need it for a business today?', 'Commercial licences aren\'t on sale yet, but we license business use directly. Tell us where the photo will appear and we\'ll reply within one business day.', 'Ask about commercial use →' );
+	} elseif ( $commercial_on && $commercial_off ) {
+		$business = 'Choose a commercial licence above; the table shows what each one covers. ' . $soon;
+		$help     = $exclusive;
+	} else {
+		$business = 'Choose a commercial licence above; the table shows what each one covers. Not sure which fits? <a href="{contact}">Ask us</a>.';
+		$help     = $exclusive;
+	}
+	return array(
+		'lede'     => $lede,
+		'business' => $business,
+		'help'     => $help,
+	);
 }

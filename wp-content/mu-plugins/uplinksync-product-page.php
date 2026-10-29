@@ -314,22 +314,10 @@ function uls_pp_band() {
 	$tiers            = uls_lic_tiers();
 	$contact          = esc_url( home_url( '/contact/?topic=licensing' ) );
 	$facts            = uls_pp_facts( $product );
-	$soon_commercial  = (bool) array_diff( $off, array( 'personal' ) );
 	$cols             = $state ? array_keys( $state ) : array_keys( $tiers );
 
-	if ( ! $off ) {
-		$lede = 'Every licence is perpetual, worldwide and non-exclusive, for one licensee.';
-	} elseif ( array( 'personal' ) === $on ) {
-		$lede = 'Personal is available today. Commercial licences are coming soon — <a href="' . $contact . '">ask us</a> if you need business use now.';
-	} else {
-		$names = array_map(
-			function ( $s ) use ( $tiers ) {
-				return $tiers[ $s ]['label'];
-			},
-			$off
-		);
-		$lede  = esc_html( implode( ' and ', $names ) ) . ( count( $off ) > 1 ? ' are' : ' is' ) . ' coming soon — <a href="' . $contact . '">ask us</a> if you need ' . ( count( $off ) > 1 ? 'them' : 'it' ) . ' now.';
-	}
+	$copy             = uls_pp_band_copy( $on, $off, array_combine( array_keys( $tiers ), array_column( $tiers, 'label' ) ) );
+	$lede             = str_replace( '{contact}', $contact, $copy['lede'] );
 
 	echo '<section class="uls-pp-band" id="uls-licences" aria-labelledby="uls-pp-cmp-h"><div class="uls-pp-two"><div class="uls-pp-cmpcol">';
 	echo '<h2 class="uls-pp-h2" id="uls-pp-cmp-h">What you can do with each licence</h2><p class="uls-pp-lede">' . $lede . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput -- built from escaped parts.
@@ -362,9 +350,7 @@ function uls_pp_band() {
 	$faq = array(
 		array( 'What exactly do I get?', 'One full-resolution JPEG' . $mp . ' without the preview watermark, available to download straight after checkout, plus an email receipt with your licence summary.' ),
 		array( 'Can I print it?', 'Yes. The Personal licence covers prints for your own home at any size. We don\'t ship a physical print.' ),
-		$soon_commercial
-			? array( 'I need it for my business', 'Commercial licences are coming soon. Until then, <a href="' . $contact . '">contact us about licensing</a> and we\'ll sort it out with you directly.' )
-			: array( 'I need it for my business', 'Choose a commercial licence above; the table shows what each one covers. Not sure which fits? <a href="' . $contact . '">Ask us</a>.' ),
+		array( 'I need it for my business', str_replace( '{contact}', $contact, $copy['business'] ) ),
 		array( 'Can I get exclusive rights?', 'Exclusive use is quoted per photo. <a href="' . $contact . '">Request a quote</a>.' ),
 		array( 'The download link didn\'t arrive', 'Check your spam folder, then reply to your receipt email and we\'ll re-send it within one business day.' ),
 	);
@@ -373,11 +359,7 @@ function uls_pp_band() {
 		echo '<details' . ( 0 === $i ? ' open' : '' ) . '><summary>' . esc_html( $q[0] ) . '</summary><p>' . wp_kses_post( $q[1] ) . '</p></details>';
 	}
 	echo '</div>';
-	if ( $soon_commercial ) {
-		echo '<aside class="uls-pp-help" aria-labelledby="uls-pp-help-h"><h3 id="uls-pp-help-h">Need it for a business today?</h3><p>Commercial licences aren\'t on sale yet, but we license business use directly. Tell us where the photo will appear and we\'ll reply within one business day.</p><a href="' . $contact . '">Ask about commercial use →</a></aside>';
-	} else {
-		echo '<aside class="uls-pp-help" aria-labelledby="uls-pp-help-h"><h3 id="uls-pp-help-h">Need exclusive rights or a bigger run?</h3><p>We license exclusive use and larger print or merchandise runs directly. Tell us where the photo will appear and we\'ll reply within one business day.</p><a href="' . $contact . '">Request a quote →</a></aside>';
-	}
+	echo '<aside class="uls-pp-help" aria-labelledby="uls-pp-help-h"><h3 id="uls-pp-help-h">' . esc_html( $copy['help'][0] ) . '</h3><p>' . esc_html( $copy['help'][1] ) . '</p><a href="' . $contact . '">' . esc_html( $copy['help'][2] ) . '</a></aside>';
 	echo '</div></div></section>';
 }
 

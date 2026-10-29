@@ -211,3 +211,45 @@ function uls_lic_matrix() {
 	$rows[] = array( 'Credit line', $credit );
 	return $rows;
 }
+
+/**
+ * Tier state from raw variation rows (see uls_lic_variation_rows()): slug => [price, available], in
+ * uls_lic_tiers() order. A tier needs a published variation with a non-empty price; it is available
+ * when its stock status is not "outofstock" (Woo semantics: "onbackorder" is on sale). The first row
+ * per tier wins; duplicate meta rows are ignored.
+ *
+ * @param array $rows           Rows with vid, status, slug, stock, price.
+ * @param array $display_prices vid => display price (Woo's variation-prices cache); raw price otherwise.
+ * @return array
+ */
+function uls_lic_state_from_rows( array $rows, array $display_prices = array() ) {
+	$found = array();
+	foreach ( $rows as $r ) {
+		$slug = isset( $r['slug'] ) ? strtolower( trim( (string) $r['slug'] ) ) : '';
+		if ( '' === $slug || isset( $found[ $slug ] ) || 'publish' !== ( isset( $r['status'] ) ? $r['status'] : '' ) || ! isset( $r['price'] ) || '' === (string) $r['price'] ) {
+			continue;
+		}
+		$vid            = isset( $r['vid'] ) ? (int) $r['vid'] : 0;
+		$found[ $slug ] = array(
+			'price'     => (float) ( isset( $display_prices[ $vid ] ) ? $display_prices[ $vid ] : $r['price'] ),
+			'available' => 'outofstock' !== ( isset( $r['stock'] ) && '' !== (string) $r['stock'] ? $r['stock'] : 'instock' ),
+		);
+	}
+	$out = array();
+	foreach ( array_keys( uls_lic_tiers() ) as $slug ) {
+		if ( isset( $found[ $slug ] ) ) {
+			$out[ $slug ] = $found[ $slug ];
+		}
+	}
+	return $out;
+}
+
+/**
+ * True when at least one non-Personal tier can be bought now.
+ *
+ * @param string[] $available Available slugs.
+ * @return bool
+ */
+function uls_lic_commercial_on( array $available ) {
+	return (bool) array_diff( $available, array( 'personal' ) );
+}

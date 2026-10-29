@@ -91,8 +91,15 @@ class WC_Product {
 	public function get_variation_price( $m, $d ) {
 		return 35;
 	}
+	public function get_variation_prices( $d ) {
+		$out = array();
+		foreach ( $this->children as $vid ) {
+			$out[ $vid ] = $GLOBALS['uls_vars'][ $vid ]->price;
+		}
+		return array( 'price' => $out );
+	}
 }
-class WC_Product_Variation_Stub {
+class WC_Product_Variation_Stub extends WC_Product {
 	public $slug, $price, $stock;
 	public function __construct( $slug, $price, $stock ) {
 		$this->slug  = $slug;
@@ -110,6 +117,19 @@ class WC_Product_Variation_Stub {
 	}
 }
 $GLOBALS['uls_vars'] = array();
+$GLOBALS['uls_rows'] = array();
+define( 'ARRAY_A', 'ARRAY_A' );
+class Uls_Wpdb_Stub {
+	public $posts = 'wp_posts', $postmeta = 'wp_postmeta', $queries = 0;
+	public function prepare( $q, ...$a ) {
+		return $q;
+	}
+	public function get_results( $q, $f ) {
+		$this->queries++;
+		return $GLOBALS['uls_rows'];
+	}
+}
+$GLOBALS['wpdb'] = new Uls_Wpdb_Stub();
 function wc_get_product( $id ) {
 	return isset( $GLOBALS['uls_vars'][ $id ] ) ? $GLOBALS['uls_vars'][ $id ] : null;
 }
@@ -186,12 +206,15 @@ function make_product( $id, $stock ) {
 	$i    = $id * 10;
 	foreach ( array( 'personal' => 35, 'commercial-credit' => 79, 'commercial' => 119, 'extended' => 399 ) as $slug => $p ) {
 		$GLOBALS['uls_vars'][ ++$i ] = new WC_Product_Variation_Stub( $slug, $p, $stock[ $slug ] );
+		$GLOBALS['uls_rows'][]       = array( 'vid' => $i, 'pid' => $id, 'status' => 'publish', 'slug' => $slug, 'stock' => $stock[ $slug ] ? 'instock' : 'outofstock', 'price' => (string) $p );
 		$kids[]                      = $i;
 	}
-	$GLOBALS['uls_state_version'] = 'v' . $id;
 	return new WC_Product( $id, 'variable', array( 'pa_licence' => 'x' ), $kids );
 }
-$p      = make_product( 1, array( 'personal' => true, 'commercial-credit' => false, 'commercial' => false, 'extended' => false ) );
+// All rows exist before the first (single, per-request) query.
+$p = make_product( 1, array( 'personal' => true, 'commercial-credit' => false, 'commercial' => false, 'extended' => false ) );
+$q = make_product( 2, array( 'personal' => true, 'commercial-credit' => true, 'commercial' => true, 'extended' => true ) );
+$r = make_product( 3, array( 'personal' => true, 'commercial-credit' => false, 'commercial' => false, 'extended' => true ) );
 $picker = hook( 'woocommerce_dropdown_variation_attribute_options_html' );
 $html   = $picker( '<select></select>', array( 'attribute' => 'pa_licence', 'product' => $p, 'selected' => 'commercial' ) );
 check( 'one radio only (Personal), checked', 1 === substr_count( $html, 'type="radio"' ) && false !== strpos( $html, 'value="personal" checked' ) );
@@ -207,7 +230,6 @@ $btn = hook( 'woocommerce_product_single_add_to_cart_text' );
 check( 'button "Add to cart · $35"', 'Add to cart · $35' === $btn( 'Add to cart', $p ) );
 
 echo "\nLaunched (all tiers in stock):\n";
-$q    = make_product( 2, array( 'personal' => true, 'commercial-credit' => true, 'commercial' => true, 'extended' => true ) );
 $html = $picker( '<select></select>', array( 'attribute' => 'pa_licence', 'product' => $q, 'selected' => '' ) );
 check( 'four radios, no coming-soon group', 4 === substr_count( $html, 'type="radio"' ) && false === strpos( $html, 'uls-lic-soon' ) );
 check( 'credit badge + prices shown', false !== strpos( $html, 'Credit required' ) && false !== strpos( $html, '$399' ) );
@@ -215,9 +237,73 @@ check( '"Ask about commercial use" dropped, Exclusive stays', false === strpos( 
 check( 'price "From $35"', false !== strpos( $price( 'x', $q ), 'From</span> <span class="amount">$35' ) );
 
 echo "\nPartial (Extended opens first):\n";
-$r    = make_product( 3, array( 'personal' => true, 'commercial-credit' => false, 'commercial' => false, 'extended' => true ) );
 $html = $picker( '<select></select>', array( 'attribute' => 'pa_licence', 'product' => $r, 'selected' => 'extended' ) );
 check( 'two radios, Extended selectable and selected, two still soon', 2 === substr_count( $html, 'type="radio"' ) && false !== strpos( $html, 'value="extended" checked' ) && false !== strpos( $html, 'Commercial with credit · Commercial' ) );
+
+echo "\nReview fixes (MR !190 review 2026-10-28):\n";
+// High-1: one query per request, however many products.
+foreach ( array( $p, $q, $r ) as $prod ) {
+	uls_lic_tier_state( $prod );
+}
+check( 'tier state for 3 products = 1 query, no variation objects', 1 === $GLOBALS['wpdb']->queries );
+$rows = array(
+	array( 'vid' => 1, 'status' => 'publish', 'slug' => 'personal', 'stock' => 'instock', 'price' => '35' ),
+	array( 'vid' => 1, 'status' => 'publish', 'slug' => 'personal', 'stock' => 'instock', 'price' => '35' ),
+	array( 'vid' => 2, 'status' => 'publish', 'slug' => 'commercial-credit', 'stock' => 'onbackorder', 'price' => '79' ),
+	array( 'vid' => 3, 'status' => 'private', 'slug' => 'commercial', 'stock' => 'instock', 'price' => '119' ),
+	array( 'vid' => 4, 'status' => 'publish', 'slug' => 'extended', 'stock' => 'outofstock', 'price' => '' ),
+);
+$st   = uls_lic_state_from_rows( $rows, array( 1 => 36.75 ) );
+check( 'rows: display price from Woo cache, duplicate meta ignored', array( 'personal', 'commercial-credit' ) === array_keys( $st ) && 36.75 === $st['personal']['price'] );
+check( 'rows: onbackorder counts as on sale (Woo semantics -> runbook: never enable backorders)', true === $st['commercial-credit']['available'] );
+check( 'rows: disabled (private) or unpriced variations are not tiers', ! isset( $st['commercial'] ) && ! isset( $st['extended'] ) );
+check( 'rows: missing stock meta = instock', true === uls_lic_state_from_rows( array( array( 'vid' => 9, 'status' => 'publish', 'slug' => 'personal', 'price' => '35' ) ) )['personal']['available'] );
+
+// Medium-2: array/invalid attribute_pa_licence never reaches sanitize_title.
+$_REQUEST['attribute_pa_licence'] = array( 'x' );
+check( 'array param ignored -> product default', 'personal' === uls_lic_requested_tier( $p ) );
+check( 'array param: button still renders', 'Add to cart · $35' === $btn( 'Add to cart', $p ) );
+$a = $args( array( 'attribute' => 'pa_licence', 'product' => $p, 'options' => array( 'personal', 'extended' ), 'selected' => false ) );
+check( 'array param: select falls back to personal', 'personal' === $a['selected'] );
+// Low-1: a deep link to a LIVE tier is honoured once more than one tier is on sale.
+$_REQUEST['attribute_pa_licence'] = 'extended';
+$a = $args( array( 'attribute' => 'pa_licence', 'product' => $r, 'options' => array( 'personal', 'commercial-credit', 'commercial', 'extended' ), 'selected' => false ) );
+check( 'deep link ?attribute_pa_licence=extended preselects Extended when it is live', 'extended' === $a['selected'] && array( 'personal', 'extended' ) === $a['options'] );
+check( 'button names the deep-linked tier price', 'Add to cart · $399' === $btn( 'Add to cart', $r ) );
+$_REQUEST['attribute_pa_licence'] = 'commercial';
+check( 'deep link to a coming-soon tier still falls back', 'Add to cart · $35' === $btn( 'Add to cart', $r ) );
+unset( $_REQUEST['attribute_pa_licence'] );
+
+// Medium-1: reviewer repros — the About cleaner never crosses blocks or leaves open tags.
+$r1 = '<p>Licence: Personal shots at dawn.</p><p>Owner story about the lake.</p><p>Want a print run? Request a quote.</p>';
+check( 'repro 1: owner paragraphs survive', $r1 === uls_pp_about_html( $r1 ) );
+$r2 = '<p><strong>Licence: Personal</strong> use only.</p><ul><li>Item</li></ul><p><a href="/x">Request a quote</a>.</p>';
+check( 'repro 2: markup untouched (no unbalanced tag)', $r2 === uls_pp_about_html( $r2 ) );
+$plain = '<p>Scene. Licence: Personal (private, non-commercial use). Commercial licences are coming soon; for business use, contact us. Need exclusive rights? Request a quote. No physical item is shipped.</p>';
+check( 'link-less interim sentence removed', '<p>Scene. No physical item is shipped.</p>' === uls_pp_about_html( $plain ) );
+$edited = '<p>Scene. Licence: Personal (private, non-commercial use). Commercial licences are coming soon; ask us. Request a quote.</p><p>Keep me.</p>';
+check( 'edited variant removed within its paragraph only', '<p>Scene.</p><p>Keep me.</p>' === uls_pp_about_html( $edited ) );
+$huge = str_repeat( 'Licence: Personal (private, non-commercial use). Commercial licences are coming soon; ', 20000 );
+check( 'PCRE limit never blanks the copy', '' !== uls_pp_about_html( $huge ) );
+
+// Medium-3: partial launch copy is consistent with what can be bought.
+$labels = array( 'personal' => 'Personal', 'commercial-credit' => 'Commercial with credit', 'commercial' => 'Commercial', 'extended' => 'Extended' );
+$c      = uls_pp_band_copy( array( 'personal', 'commercial-credit' ), array( 'commercial', 'extended' ), $labels );
+check( 'partial: no "aren\'t on sale yet"/"coming soon. Until then"', false === strpos( $c['business'] . implode( ' ', $c['help'] ), 'on sale yet' ) && false === strpos( $c['business'], 'Until then' ) );
+check( 'partial: names what is still coming', false !== strpos( $c['business'], 'Commercial and Extended are coming soon' ) && false !== strpos( $c['lede'], 'Commercial and Extended are coming soon' ) );
+$c = uls_pp_band_copy( array( 'personal' ), array( 'commercial-credit', 'commercial', 'extended' ), $labels );
+check( 'interim: business + help say not on sale yet', false !== strpos( $c['business'], 'coming soon' ) && 'Need it for a business today?' === $c['help'][0] );
+$c = uls_pp_band_copy( array_keys( $labels ), array(), $labels );
+check( 'launched: no coming-soon wording', false === stripos( implode( ' ', array( $c['lede'], $c['business'], $c['help'][1] ) ), 'coming soon' ) );
+$html = $picker( '<select></select>', array( 'attribute' => 'pa_licence', 'product' => $r, 'selected' => 'personal' ) );
+check( 'partial picker: no "Ask about commercial use"; group titled "More commercial licences"', false === strpos( $html, 'Ask about commercial use' ) && false !== strpos( $html, 'More commercial licences' ) );
+
+// Low-3: variation JSON + schema.
+$avail = hook( 'woocommerce_available_variation' );
+$d     = $avail( array( 'price_html' => '$79', 'display_price' => 79, 'display_regular_price' => 79 ), $p, $GLOBALS['uls_vars'][12] );
+check( 'coming-soon variation JSON carries no price', '' === $d['price_html'] && null === $d['display_price'] );
+$d = $avail( array( 'price_html' => '$35', 'display_price' => 35 ), $p, $GLOBALS['uls_vars'][11] );
+check( 'Personal variation JSON keeps its price', 35 === $d['display_price'] );
 
 echo "\nWiring (source):\n";
 $src = file_get_contents( __DIR__ . '/../uplinksync-product-page.php' );

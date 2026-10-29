@@ -55,9 +55,44 @@ add_action(
 /* ------------------------------------------------------------ product page */
 
 /**
+ * Every licence variation on the site, grouped by parent: [ parent_id => [ row, ... ] ] where a row is
+ * vid / status / slug / stock / price straight from the posts + postmeta tables. ONE query per request,
+ * so shop and collection grids (122 / 83 products) do not hydrate four WC_Product_Variation objects
+ * per card (MR !190 review High-1). Never cached across requests, so a stock change shows at once.
+ *
+ * @param int $parent_id Parent product id.
+ * @return array
+ */
+function uls_lic_variation_rows( $parent_id ) {
+	static $all = null;
+	if ( null === $all ) {
+		global $wpdb;
+		$all  = array();
+		$rows = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$wpdb->prepare(
+				"SELECT v.ID AS vid, v.post_parent AS pid, v.post_status AS status, a.meta_value AS slug, s.meta_value AS stock, pr.meta_value AS price
+				FROM {$wpdb->posts} v
+				INNER JOIN {$wpdb->postmeta} a ON a.post_id = v.ID AND a.meta_key = %s
+				LEFT JOIN {$wpdb->postmeta} s ON s.post_id = v.ID AND s.meta_key = '_stock_status'
+				LEFT JOIN {$wpdb->postmeta} pr ON pr.post_id = v.ID AND pr.meta_key = '_price'
+				WHERE v.post_type = 'product_variation'",
+				'attribute_' . ULS_LIC_ATTRIBUTE
+			),
+			ARRAY_A
+		);
+		foreach ( (array) $rows as $r ) {
+			$all[ (int) $r['pid'] ][] = $r;
+		}
+	}
+	return isset( $all[ (int) $parent_id ] ) ? $all[ (int) $parent_id ] : array();
+}
+
+/**
  * Tier state for a variable product, in display order: slug => [ 'price' => display price,
- * 'available' => purchasable AND in stock ]. A tier with no published, priced variation is absent.
- * Keyed off data, so a tier opens on the page the moment its variation is put in stock.
+ * 'available' => purchasable AND in stock ]. Purchasable = published variation with a price (as
+ * WC_Product_Variation::is_purchasable); in stock = stock status not "outofstock" (so "onbackorder"
+ * counts as on sale, exactly like Woo core: never enable backorders on licence variations).
+ * Display prices come from Woo's own cached variation-prices transient (tax display included).
  *
  * @param WC_Product $product Parent product.
  * @return array
@@ -67,32 +102,12 @@ function uls_lic_tier_state( $product ) {
 	if ( ! uls_lic_is_tiered( $product ) ) {
 		return array();
 	}
-	$key = $product->get_id() . ':' . $product->get_date_modified();
-	if ( isset( $cache[ $key ] ) ) {
-		return $cache[ $key ];
+	$pid = $product->get_id();
+	if ( ! isset( $cache[ $pid ] ) ) {
+		$prices        = $product->get_variation_prices( true );
+		$cache[ $pid ] = uls_lic_state_from_rows( uls_lic_variation_rows( $pid ), isset( $prices['price'] ) ? (array) $prices['price'] : array() );
 	}
-	$found = array();
-	foreach ( $product->get_children() as $vid ) {
-		$v = wc_get_product( $vid );
-		if ( $v && $v->is_purchasable() ) {
-			$at   = $v->get_attributes();
-			$slug = isset( $at[ ULS_LIC_ATTRIBUTE ] ) ? sanitize_title( $at[ ULS_LIC_ATTRIBUTE ] ) : '';
-			if ( '' !== $slug ) {
-				$found[ $slug ] = array(
-					'price'     => (float) wc_get_price_to_display( $v ),
-					'available' => $v->is_in_stock(),
-				);
-			}
-		}
-	}
-	$out = array();
-	foreach ( array_keys( uls_lic_tiers() ) as $slug ) {
-		if ( isset( $found[ $slug ] ) ) {
-			$out[ $slug ] = $found[ $slug ];
-		}
-	}
-	$cache[ $key ] = $out;
-	return $out;
+	return $cache[ $pid ];
 }
 
 /** Price per tier slug (available tiers only). */
@@ -121,6 +136,22 @@ function uls_lic_icon( $name ) {
 	return '<svg class="uls-lic-ico uls-lic-ico--' . esc_attr( $name ) . '" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' . $paths[ $name ] . '</svg>';
 }
 
+/**
+ * Tier asked for in the URL/POST (attribute_pa_licence), else the product default; '' when neither.
+ * Non-string input (arrays) is ignored, never passed on (review Medium-2: was an unauthenticated 500).
+ *
+ * @param WC_Product $product Parent product.
+ * @return string
+ */
+function uls_lic_requested_tier( $product ) {
+	$k = 'attribute_' . ULS_LIC_ATTRIBUTE;
+	if ( isset( $_REQUEST[ $k ] ) && is_string( $_REQUEST[ $k ] ) && '' !== $_REQUEST[ $k ] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		return sanitize_title( wp_unslash( $_REQUEST[ $k ] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	}
+	$d = $product->get_variation_default_attribute( ULS_LIC_ATTRIBUTE );
+	return is_string( $d ) ? sanitize_title( $d ) : '';
+}
+
 /** The native select offers only tiers that can be bought now; a coming-soon tier in the URL falls back to Personal. */
 add_filter(
 	'woocommerce_dropdown_variation_attribute_options_args',
@@ -135,7 +166,13 @@ add_filter(
 		if ( ! empty( $args['options'] ) ) {
 			$args['options'] = array_values( array_intersect( (array) $args['options'], $on ) );
 		}
-		$args['selected'] = uls_lic_pick_default( isset( $args['selected'] ) ? sanitize_title( (string) $args['selected'] ) : '', $on );
+		// Woo reads the request only when 'selected' is still false after this filter, so read it here
+		// (string-guarded: ?attribute_pa_licence[]=x must never reach sanitize_title).
+		$want = isset( $args['selected'] ) && is_string( $args['selected'] ) ? $args['selected'] : '';
+		if ( '' === $want ) {
+			$want = uls_lic_requested_tier( $args['product'] );
+		}
+		$args['selected'] = uls_lic_pick_default( sanitize_title( $want ), $on );
 		return $args;
 	}
 );
@@ -180,14 +217,14 @@ add_filter(
 				$soon_commercial = $soon_commercial || 'personal' !== $slug;
 				$items          .= '<li><b>' . esc_html( $tiers[ $slug ]['label'] ) . '</b> ' . esc_html( $tiers[ $slug ]['summary'] ) . '</li>';
 			}
-			$title = in_array( 'personal', $off, true ) ? 'More licences' : ( count( $off ) > 1 ? 'Commercial licences' : $tiers[ $off[0] ]['label'] . ' licence' );
+			$title = in_array( 'personal', $off, true ) ? 'More licences' : ( count( $off ) > 1 ? ( uls_lic_commercial_on( $on ) ? 'More commercial licences' : 'Commercial licences' ) : $tiers[ $off[0] ]['label'] . ' licence' );
 			$f    .= '<details class="uls-lic-soon"><summary>' . uls_lic_icon( 'lock' )
 				. '<span class="uls-lic-soon__t">' . esc_html( $title ) . ( count( $off ) > 1 ? '<small>' . esc_html( implode( ' · ', $names ) ) . '</small>' : '' ) . '</span>'
 				. '<span class="uls-lic-pill">Coming soon</span>' . uls_lic_icon( 'chev' ) . '</summary>'
 				. '<ul class="uls-lic-soon__list">' . $items . '</ul></details>';
 		}
 		$f .= '</fieldset><p class="uls-lic-ask">';
-		if ( $soon_commercial ) {
+		if ( $soon_commercial && ! uls_lic_commercial_on( $on ) ) {
 			$f .= '<a href="' . esc_url( $contact ) . '">Ask about commercial use ' . uls_lic_icon( 'arrow' ) . '</a>';
 		}
 		$f .= '<a href="' . esc_url( add_query_arg( 'subject', rawurlencode( 'Exclusive licence: ' . $product->get_name() ), $contact ) ) . '">Exclusive rights? Request a quote</a></p>';
@@ -206,12 +243,68 @@ add_filter(
 		}
 		$state     = uls_lic_tier_state( $product );
 		list( $on ) = uls_lic_split_state( $state );
-		$req       = isset( $_REQUEST[ 'attribute_' . ULS_LIC_ATTRIBUTE ] ) ? sanitize_title( wp_unslash( $_REQUEST[ 'attribute_' . ULS_LIC_ATTRIBUTE ] ) ) : $product->get_variation_default_attribute( ULS_LIC_ATTRIBUTE ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$sel       = uls_lic_pick_default( (string) $req, $on );
+		$sel       = uls_lic_pick_default( uls_lic_requested_tier( $product ), $on );
 		return '' === $sel ? $text : $text . ' · ' . html_entity_decode( wp_strip_all_tags( uls_lic_money( $state[ $sel ]['price'] ) ), ENT_QUOTES, 'UTF-8' );
 	},
 	10,
 	2
+);
+
+/**
+ * Coming-soon tiers do not publish their prices in the variation JSON (data-product_variations): the
+ * picker never offers them, so Woo's form never needs them (review Low-3).
+ */
+add_filter(
+	'woocommerce_available_variation',
+	function ( $data, $product, $variation ) {
+		if ( uls_lic_is_tiered( $product ) && $variation instanceof WC_Product && ! $variation->is_in_stock() ) {
+			$data['price_html']            = '';
+			$data['display_price']         = null;
+			$data['display_regular_price'] = null;
+		}
+		return $data;
+	},
+	10,
+	3
+);
+
+/**
+ * Product schema offers = the tiers on sale now (review Low-3): a single Offer at $35 while only
+ * Personal can be bought, an AggregateOffer over the buyable tiers once more open. Rank Math otherwise
+ * publishes lowPrice 35 / highPrice 399 / offerCount 4 / InStock, which overstates what is for sale.
+ */
+add_filter(
+	'rank_math/json_ld',
+	function ( $data ) {
+		if ( ! is_array( $data ) || ! function_exists( 'is_product' ) || ! is_product() ) {
+			return $data;
+		}
+		$product = wc_get_product( get_queried_object_id() );
+		$prices  = uls_lic_is_tiered( $product ) ? uls_lic_variation_prices( $product ) : array();
+		if ( ! $prices ) {
+			return $data;
+		}
+		foreach ( $data as $k => $node ) {
+			if ( ! is_array( $node ) || empty( $node['offers'] ) || ! is_array( $node['offers'] ) || ! in_array( isset( $node['@type'] ) ? $node['@type'] : '', array( 'Product', 'ProductGroup' ), true ) ) {
+				continue;
+			}
+			$o = $node['offers'];
+			unset( $o['lowPrice'], $o['highPrice'], $o['offerCount'], $o['price'] );
+			if ( 1 === count( $prices ) ) {
+				$o['@type'] = 'Offer';
+				$o['price'] = number_format( (float) min( $prices ), 2, '.', '' );
+			} else {
+				$o['@type']      = 'AggregateOffer';
+				$o['lowPrice']   = number_format( (float) min( $prices ), 2, '.', '' );
+				$o['highPrice']  = number_format( (float) max( $prices ), 2, '.', '' );
+				$o['offerCount'] = (string) count( $prices );
+			}
+			$o['availability']   = 'https://schema.org/InStock';
+			$data[ $k ]['offers'] = $o;
+		}
+		return $data;
+	},
+	99
 );
 
 /** No "Clear" link: a licence is always chosen (Personal by default). */
