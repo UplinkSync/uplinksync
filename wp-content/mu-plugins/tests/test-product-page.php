@@ -313,6 +313,8 @@ check( 'hero never lazy, high priority', false !== strpos( $src, "'fetchpriority
 check( '"certificate" only behind the v2 flag', 1 === substr_count( $src, 'Licence certificate (PDF)' ) && false !== strpos( $src, 'uls_lic_live()' ) );
 $css = file_get_contents( __DIR__ . '/../../themes/uplinksync-child/assets/css/product.css' );
 check( 'gallery never opacity-gated', false !== strpos( $css, '.woocommerce-product-gallery{opacity:1!important' ) );
+check( 'media column is static (owner: image must not float over later sections)', false !== strpos( $css, '.uls-pp-media{grid-column:1;order:1;position:static;' ) && 0 === preg_match( '/uls-pp-(media|frame|facts|about)[^{]*\{[^}]*position:\s*(sticky|fixed)/', $css ) );
+check( 'image chips stay inside an isolated frame', false !== strpos( $css, '.uls-pp-frame{position:relative;isolation:isolate;' ) );
 check( 'reduced motion honoured', false !== strpos( $css, 'prefers-reduced-motion:reduce' ) );
 check( 'no royal #0d266b', false === stripos( $css . $src, '#0d266b' ) );
 
