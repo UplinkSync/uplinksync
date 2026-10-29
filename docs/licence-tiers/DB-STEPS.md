@@ -41,3 +41,21 @@ wp eval-file $D/undo.php $D/full   # deletes variations, restores simple type/pr
 Proven on staging (product 811: apply → undo → apply → undo, byte-identical copy, price 45, type simple).
 Last resort: `zcat $D/db.sql.gz | mysql ...`. Page 1265 content is NOT changed (v2 text is rendered by the
 mu-plugin behind the flag); `wp option delete uls_licence_tiers_v2` alone reverts the page/tab/checkout text.
+
+## Go-live: opening a tier (product page redesign, MR !190)
+
+The product page, shop grid prices ("$35" vs "From $35"), the licence table, FAQ/help copy, the
+upgrade/credit box and the Product schema offers all key off **variation data**, never a flag:
+a tier is on sale when its variation is published, priced and its stock status is not `outofstock`.
+
+- **Enabling a tier = set that tier's variations to In stock** (all 122 products, e.g.
+  `wp eval 'foreach (wc_get_products(["limit"=>-1,"type"=>"variable","category"=>["aerial-photography"]]) as $p) foreach ($p->get_children() as $v) { $v = wc_get_product($v); if ("commercial" === $v->get_attribute("pa_licence")) { $v->set_stock_status("instock"); $v->save(); } }'`).
+  Only do this after the counsel, tax and G5 gates in "Production gates" above are cleared — nothing in code re-checks them.
+- **Never enable backorders on licence variations.** With "Manage stock" + backorders allowed the status becomes
+  `onbackorder`, which WooCommerce (and this page) treat as on sale.
+- Undo = set the variation back to Out of stock; the page reverts by itself (no deploy, no cache step today: pages are not page-cached).
+- When a commercial tier opens, also refresh the copy that still says "coming soon" in data: each product's
+  description/short description (meta + OG descriptions are built from it) and the variations' descriptions.
+- After the product page redesign is on production, **Code Snippet 123** ("ULS licence tiers — interim item-page text")
+  can be deactivated: the page no longer shows the Licence tab it rewrote. Its only other effect is the
+  "Available soon" stock text in cart/stock contexts.
