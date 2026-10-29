@@ -306,6 +306,23 @@ function uplinksync_child_woocommerce_assets() {
 add_action( 'wp_enqueue_scripts', 'uplinksync_child_woocommerce_assets', 21 );
 
 /**
+ * Aerial photo product page (redesign 2026-10-28): only on licence-tier product pages, as decided by
+ * mu-plugins/uplinksync-product-page.php (uls_pp_active). Every other product keeps woocommerce.css only.
+ */
+function uplinksync_child_product_page_assets() {
+	if ( ! function_exists( 'uls_pp_active' ) || ! uls_pp_active() ) {
+		return;
+	}
+	wp_enqueue_style(
+		'uplinksync-product',
+		get_stylesheet_directory_uri() . '/assets/css/product.css',
+		array( 'uplinksync-woocommerce' ),
+		uplinksync_child_asset_ver( 'assets/css/product.css' )
+	);
+}
+add_action( 'wp_enqueue_scripts', 'uplinksync_child_product_page_assets', 22 );
+
+/**
  * *** — trim WooCommerce/WooCommerce-Blocks stylesheets off brochure pages.
  *
  * WooCommerce ships several stylesheets that load site-wide by default

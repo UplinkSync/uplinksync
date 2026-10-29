@@ -54,47 +54,161 @@ add_action(
 
 /* ------------------------------------------------------------ product page */
 
-/** Price per tier slug for a variable product (from its live variations). */
-function uls_lic_variation_prices( $product ) {
-	$out = array();
+/**
+ * Tier state for a variable product, in display order: slug => [ 'price' => display price,
+ * 'available' => purchasable AND in stock ]. A tier with no published, priced variation is absent.
+ * Keyed off data, so a tier opens on the page the moment its variation is put in stock.
+ *
+ * @param WC_Product $product Parent product.
+ * @return array
+ */
+function uls_lic_tier_state( $product ) {
+	static $cache = array();
+	if ( ! uls_lic_is_tiered( $product ) ) {
+		return array();
+	}
+	$key = $product->get_id() . ':' . $product->get_date_modified();
+	if ( isset( $cache[ $key ] ) ) {
+		return $cache[ $key ];
+	}
+	$found = array();
 	foreach ( $product->get_children() as $vid ) {
 		$v = wc_get_product( $vid );
 		if ( $v && $v->is_purchasable() ) {
 			$at   = $v->get_attributes();
 			$slug = isset( $at[ ULS_LIC_ATTRIBUTE ] ) ? sanitize_title( $at[ ULS_LIC_ATTRIBUTE ] ) : '';
 			if ( '' !== $slug ) {
-				$out[ $slug ] = (float) wc_get_price_to_display( $v );
+				$found[ $slug ] = array(
+					'price'     => (float) wc_get_price_to_display( $v ),
+					'available' => $v->is_in_stock(),
+				);
 			}
+		}
+	}
+	$out = array();
+	foreach ( array_keys( uls_lic_tiers() ) as $slug ) {
+		if ( isset( $found[ $slug ] ) ) {
+			$out[ $slug ] = $found[ $slug ];
+		}
+	}
+	$cache[ $key ] = $out;
+	return $out;
+}
+
+/** Price per tier slug (available tiers only). */
+function uls_lic_variation_prices( $product ) {
+	$out = array();
+	foreach ( uls_lic_tier_state( $product ) as $slug => $s ) {
+		if ( $s['available'] ) {
+			$out[ $slug ] = $s['price'];
 		}
 	}
 	return $out;
 }
 
-/** Radio-card picker next to the (visually hidden) native select that Woo's variation JS drives. */
+/** "$35" with no decimals. */
+function uls_lic_money( $amount ) {
+	return wc_price( $amount, array( 'decimals' => 0 ) );
+}
+
+/** Inline SVG icon (decorative). */
+function uls_lic_icon( $name ) {
+	$paths = array(
+		'lock'  => '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+		'chev'  => '<path d="M6 9l6 6 6-6"/>',
+		'arrow' => '<path d="M5 12h14M13 6l6 6-6 6"/>',
+	);
+	return '<svg class="uls-lic-ico uls-lic-ico--' . esc_attr( $name ) . '" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' . $paths[ $name ] . '</svg>';
+}
+
+/** The native select offers only tiers that can be bought now; a coming-soon tier in the URL falls back to Personal. */
+add_filter(
+	'woocommerce_dropdown_variation_attribute_options_args',
+	function ( $args ) {
+		if ( ! isset( $args['attribute'] ) || ULS_LIC_ATTRIBUTE !== $args['attribute'] || empty( $args['product'] ) || ! uls_lic_is_tiered( $args['product'] ) ) {
+			return $args;
+		}
+		list( $on ) = uls_lic_split_state( uls_lic_tier_state( $args['product'] ) );
+		if ( ! $on ) {
+			return $args;
+		}
+		if ( ! empty( $args['options'] ) ) {
+			$args['options'] = array_values( array_intersect( (array) $args['options'], $on ) );
+		}
+		$args['selected'] = uls_lic_pick_default( isset( $args['selected'] ) ? sanitize_title( (string) $args['selected'] ) : '', $on );
+		return $args;
+	}
+);
+
+/**
+ * Radio-card picker next to the (visually hidden) native select that Woo's variation JS drives.
+ * Tiers that can be bought now are radio rows; tiers that cannot are ONE collapsed "Coming soon"
+ * group with no inputs and no prices (product-page spec §4). Each tier switches to a normal row on
+ * its own as soon as its variation is purchasable and in stock.
+ */
 add_filter(
 	'woocommerce_dropdown_variation_attribute_options_html',
 	function ( $html, $args ) {
 		if ( ULS_LIC_ATTRIBUTE !== $args['attribute'] || empty( $args['product'] ) ) {
 			return $html;
 		}
-		$prices = uls_lic_variation_prices( $args['product'] );
-		$sel    = isset( $args['selected'] ) && '' !== $args['selected'] ? $args['selected'] : 'personal';
-		$f      = '<fieldset class="uls-lic-picker"><legend>Choose a licence</legend>';
-		foreach ( uls_lic_tiers() as $slug => $t ) {
-			if ( ! isset( $prices[ $slug ] ) ) {
-				continue;
-			}
+		$product        = $args['product'];
+		$state          = uls_lic_tier_state( $product );
+		list( $on, $off ) = uls_lic_split_state( $state );
+		$tiers          = uls_lic_tiers();
+		$sel            = uls_lic_pick_default( isset( $args['selected'] ) ? (string) $args['selected'] : '', $on );
+		$contact        = home_url( '/contact/?topic=licensing' );
+		$f              = '<fieldset class="uls-lic-picker"><legend>Choose a licence</legend>'
+			. '<a class="uls-lic-compare" href="' . esc_url( apply_filters( 'uls_lic_compare_url', home_url( '/' . ULS_LIC_PAGE_SLUG . '/' ) ) ) . '">Compare all</a>';
+		foreach ( $on as $slug ) {
+			$t  = $tiers[ $slug ];
 			$id = 'uls-lic-' . $slug;
 			$f .= '<label class="uls-lic-opt" for="' . esc_attr( $id ) . '">'
 				. '<input type="radio" name="uls_lic_pick" id="' . esc_attr( $id ) . '" value="' . esc_attr( $slug ) . '"' . checked( $sel, $slug, false ) . '>'
 				. '<span class="uls-lic-opt__name">' . esc_html( $t['label'] ) . '</span>'
-				. '<span class="uls-lic-opt__price">' . wp_kses_post( wc_price( $prices[ $slug ], array( 'decimals' => 0 ) ) ) . '</span>'
+				. '<span class="uls-lic-opt__price">' . wp_kses_post( uls_lic_money( $state[ $slug ]['price'] ) ) . '</span>'
 				. '<span class="uls-lic-opt__sum">' . esc_html( $t['summary'] )
-				. ( 'required' === $t['credit'] ? ' <span class="uls-lic-badge">Credit required</span>' : '' ) . '</span>'
+				. ( 'required' === $t['credit'] && count( $on ) > 1 ? ' <span class="uls-lic-badge">Credit required</span>' : '' ) . '</span>'
 				. '</label>';
 		}
-		$f .= '</fieldset>';
+		$soon_commercial = false;
+		if ( $off ) {
+			$names = array();
+			$items = '';
+			foreach ( $off as $slug ) {
+				$names[]         = $tiers[ $slug ]['label'];
+				$soon_commercial = $soon_commercial || 'personal' !== $slug;
+				$items          .= '<li><b>' . esc_html( $tiers[ $slug ]['label'] ) . '</b> ' . esc_html( $tiers[ $slug ]['summary'] ) . '</li>';
+			}
+			$title = in_array( 'personal', $off, true ) ? 'More licences' : ( count( $off ) > 1 ? 'Commercial licences' : $tiers[ $off[0] ]['label'] . ' licence' );
+			$f    .= '<details class="uls-lic-soon"><summary>' . uls_lic_icon( 'lock' )
+				. '<span class="uls-lic-soon__t">' . esc_html( $title ) . ( count( $off ) > 1 ? '<small>' . esc_html( implode( ' · ', $names ) ) . '</small>' : '' ) . '</span>'
+				. '<span class="uls-lic-pill">Coming soon</span>' . uls_lic_icon( 'chev' ) . '</summary>'
+				. '<ul class="uls-lic-soon__list">' . $items . '</ul></details>';
+		}
+		$f .= '</fieldset><p class="uls-lic-ask">';
+		if ( $soon_commercial ) {
+			$f .= '<a href="' . esc_url( $contact ) . '">Ask about commercial use ' . uls_lic_icon( 'arrow' ) . '</a>';
+		}
+		$f .= '<a href="' . esc_url( add_query_arg( 'subject', rawurlencode( 'Exclusive licence: ' . $product->get_name() ), $contact ) ) . '">Exclusive rights? Request a quote</a></p>';
 		return '<div class="uls-lic-selwrap">' . $html . '</div>' . $f;
+	},
+	10,
+	2
+);
+
+/** "Add to cart · $35": the button names the price of the selected tier (licence.js keeps it in step). */
+add_filter(
+	'woocommerce_product_single_add_to_cart_text',
+	function ( $text, $product ) {
+		if ( ! uls_lic_is_tiered( $product ) ) {
+			return $text;
+		}
+		$state     = uls_lic_tier_state( $product );
+		list( $on ) = uls_lic_split_state( $state );
+		$req       = isset( $_REQUEST[ 'attribute_' . ULS_LIC_ATTRIBUTE ] ) ? sanitize_title( wp_unslash( $_REQUEST[ 'attribute_' . ULS_LIC_ATTRIBUTE ] ) ) : $product->get_variation_default_attribute( ULS_LIC_ATTRIBUTE ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$sel       = uls_lic_pick_default( (string) $req, $on );
+		return '' === $sel ? $text : $text . ' · ' . html_entity_decode( wp_strip_all_tags( uls_lic_money( $state[ $sel ]['price'] ) ), ENT_QUOTES, 'UTF-8' );
 	},
 	10,
 	2
@@ -118,14 +232,21 @@ add_filter(
 	}
 );
 
-/** "From $35" instead of "$35.00 – $399.00" on tiered products. */
+/**
+ * Variable price on tiered products: "From $35" only when two or more tiers can be bought, a plain
+ * "$35" while only one can (orchestrator decision 2026-10-28), instead of "$35.00 – $399.00".
+ */
 add_filter(
 	'woocommerce_variable_price_html',
 	function ( $html, $product ) {
 		if ( ! uls_lic_is_tiered( $product ) ) {
 			return $html;
 		}
-		return '<span class="uls-lic-from">From</span> ' . wc_price( $product->get_variation_price( 'min', true ), array( 'decimals' => 0 ) );
+		$prices = uls_lic_variation_prices( $product );
+		if ( ! $prices ) {
+			return '<span class="uls-lic-from">From</span> ' . uls_lic_money( $product->get_variation_price( 'min', true ) );
+		}
+		return ( count( $prices ) > 1 ? '<span class="uls-lic-from">From</span> ' : '' ) . uls_lic_money( min( $prices ) );
 	},
 	10,
 	2
@@ -168,7 +289,11 @@ function uls_lic_owned( $product_id ) {
 	return $own;
 }
 
-/** Credit note, Exclusive quote link and upgrade path, under the add-to-cart form. */
+/**
+ * Credit note and upgrade path under the add-to-cart form. Shown only once two or more tiers can be
+ * bought (no upgrade or credit line to talk about before then); a buyer who already holds a licence
+ * for this image always sees that line. The Exclusive quote link now sits under the picker.
+ */
 add_action(
 	'woocommerce_after_add_to_cart_form',
 	function () {
@@ -176,17 +301,22 @@ add_action(
 		if ( ! uls_lic_is_tiered( $product ) ) {
 			return;
 		}
-		$title = $product->get_name();
-		$tiers = uls_lic_tiers();
+		$tiers    = uls_lic_tiers();
+		$state    = uls_lic_tier_state( $product );
+		list( $on ) = uls_lic_split_state( $state );
+		$launched = count( $on ) > 1;
+		$own      = uls_lic_owned( $product->get_id() );
+		if ( ! $launched && ! $own ) {
+			return;
+		}
 		echo '<div class="uls-lic-more">';
-		$own = uls_lic_owned( $product->get_id() );
 		if ( $own ) {
 			list( $tier, $lid ) = $own[0];
 			$ups                = array();
-			foreach ( $tiers as $slug => $t ) {
+			foreach ( $on as $slug ) {
 				$d = uls_lic_upgrade_price( $tier, $slug );
 				if ( $d > 0 && uls_lic_rank( $slug ) > uls_lic_rank( $tier ) ) {
-					$ups[] = esc_html( $t['label'] ) . ' +$' . (int) $d;
+					$ups[] = esc_html( $tiers[ $slug ]['label'] ) . ' +$' . (int) $d;
 				}
 			}
 			echo '<p class="uls-lic-owned"><strong>You hold ' . ( 'extended' === $tier ? 'an ' : 'a ' ) . esc_html( $tiers[ $tier ]['label'] ) . ' licence for this image</strong> (' . esc_html( $lid ) . ').';
@@ -195,12 +325,14 @@ add_action(
 			}
 			echo '</p>';
 		}
-		echo '<p><strong>Credit line</strong> for &ldquo;Commercial with credit&rdquo;: &ldquo;Aerial by UplinkSync&rdquo; with a link to uplinksync.com on every use (the plain URL in print).</p>';
-		if ( ! $own ) {
-			echo '<p><strong>Bought Personal and now need it for business?</strong> Upgrade any time for the price difference (Personal to Commercial: $' . (int) uls_lic_upgrade_price( 'personal', 'commercial' ) . ').</p>';
+		if ( $launched ) {
+			if ( in_array( 'commercial-credit', $on, true ) ) {
+				echo '<p><strong>Credit line</strong> for &ldquo;Commercial with credit&rdquo;: &ldquo;Aerial by UplinkSync&rdquo; with a link to uplinksync.com on every use (the plain URL in print).</p>';
+			}
+			if ( ! $own && in_array( 'personal', $on, true ) && in_array( 'commercial', $on, true ) ) {
+				echo '<p><strong>Bought Personal and now need it for business?</strong> Upgrade any time for the price difference (Personal to Commercial: $' . (int) uls_lic_upgrade_price( 'personal', 'commercial' ) . ').</p>';
+			}
 		}
-		echo '<p class="uls-lic-links"><a href="' . esc_url( home_url( '/' . ULS_LIC_PAGE_SLUG . '/' ) ) . '">Compare licences in full</a>'
-			. '<a href="' . esc_url( home_url( '/contact/?subject=' . rawurlencode( 'Exclusive licence: ' . $title ) ) ) . '">Exclusive rights? Request a quote</a></p>';
 		echo '</div>';
 	}
 );
