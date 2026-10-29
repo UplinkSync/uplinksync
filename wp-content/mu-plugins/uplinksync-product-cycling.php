@@ -31,6 +31,35 @@ function uplinksync_pcycle_pick_term( $product_id ) {
 	return $fallback ? $fallback : $terms[0];
 }
 
+/**
+ * Product ids of a collection in archive order (menu_order ASC, title ASC). Cached per request.
+ * Shared with the product-page redesign (uplinksync-product-page.php: facts "Photo N of M" + strip).
+ *
+ * @param int $term_id product_cat term id.
+ * @return int[]
+ */
+function uplinksync_pcycle_ids( $term_id ) {
+	static $cache = array();
+	$term_id = (int) $term_id;
+	if ( ! isset( $cache[ $term_id ] ) ) {
+		$q = new WP_Query( array(
+			'post_type'      => 'product',
+			'post_status'    => 'publish',
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+			'orderby'        => array( 'menu_order' => 'ASC', 'title' => 'ASC' ),
+			'no_found_rows'  => true,
+			'tax_query'      => array( array(
+				'taxonomy' => 'product_cat',
+				'field'    => 'term_id',
+				'terms'    => $term_id,
+			) ),
+		) );
+		$cache[ $term_id ] = array_map( 'intval', $q->posts );
+	}
+	return $cache[ $term_id ];
+}
+
 add_action( 'woocommerce_after_single_product_summary', function () {
 	if ( ! function_exists( 'is_product' ) || ! is_product() ) {
 		return;
@@ -42,6 +71,10 @@ add_action( 'woocommerce_after_single_product_summary', function () {
 	if ( ! $product ) {
 		return;
 	}
+	// The redesigned photo product page renders its own "More from this collection" strip.
+	if ( ! apply_filters( 'uplinksync_pcycle_card', true, $product ) ) {
+		return;
+	}
 	$current_id = $product->get_id();
 	$term       = uplinksync_pcycle_pick_term( $current_id );
 	if ( ! $term ) {
@@ -49,21 +82,7 @@ add_action( 'woocommerce_after_single_product_summary', function () {
 	}
 
 	// Same ordering as the collection archive.
-	$q = new WP_Query( array(
-		'post_type'      => 'product',
-		'post_status'    => 'publish',
-		'posts_per_page' => -1,
-		'fields'         => 'ids',
-		'orderby'        => array( 'menu_order' => 'ASC', 'title' => 'ASC' ),
-		'no_found_rows'  => true,
-		'tax_query'      => array( array(
-			'taxonomy' => 'product_cat',
-			'field'    => 'term_id',
-			'terms'    => $term->term_id,
-		) ),
-	) );
-	$ids = $q->posts;
-	wp_reset_postdata();
+	$ids = uplinksync_pcycle_ids( $term->term_id );
 
 	$total = count( $ids );
 	if ( $total < 2 ) {

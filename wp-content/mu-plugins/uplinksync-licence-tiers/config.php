@@ -143,3 +143,71 @@ function uls_lic_rank( $slug ) {
 	$k = array_search( $slug, array_keys( uls_lic_tiers() ), true );
 	return false === $k ? -1 : (int) $k;
 }
+
+/**
+ * Split licence tiers into those a buyer can choose now and those that are coming soon.
+ * A tier is available when its variation is purchasable AND in stock (state keyed off data, not a flag).
+ *
+ * @param array $state slug => ['price' => float, 'available' => bool] (tiers without a variation absent).
+ * @return array{0:string[],1:string[]} [available slugs, coming-soon slugs] in input order.
+ */
+function uls_lic_split_state( array $state ) {
+	$on  = array();
+	$off = array();
+	foreach ( $state as $slug => $s ) {
+		if ( ! empty( $s['available'] ) ) {
+			$on[] = $slug;
+		} else {
+			$off[] = $slug;
+		}
+	}
+	return array( $on, $off );
+}
+
+/**
+ * The tier a picker should select: the requested one when it can be bought now, else Personal,
+ * else the first available tier ('' when none). Keeps ?attribute_pa_licence=<coming-soon tier> from
+ * pre-selecting something that cannot be bought.
+ *
+ * @param string   $requested Requested slug ('' for none).
+ * @param string[] $available Available slugs.
+ * @return string
+ */
+function uls_lic_pick_default( $requested, array $available ) {
+	if ( '' !== (string) $requested && in_array( $requested, $available, true ) ) {
+		return $requested;
+	}
+	if ( in_array( 'personal', $available, true ) ) {
+		return 'personal';
+	}
+	return $available ? $available[0] : '';
+}
+
+/**
+ * "What you can do with each licence" comparison rows (product page table). Values are words, never
+ * colour or icons alone; they restate uls_lic_tiers() allowed/not text in short form. The credit row
+ * is derived from each tier's `credit` key.
+ *
+ * @return array<int,array{0:string,1:array<string,string>}> [row label, slug => cell text]
+ */
+function uls_lic_matrix() {
+	$rows   = array(
+		array( 'Prints for your own home, gifts not sold', array( 'personal' => 'Yes', 'commercial-credit' => 'Yes', 'commercial' => 'Yes', 'extended' => 'Yes' ) ),
+		array( 'Personal social, blog, family video (no income)', array( 'personal' => 'Yes', 'commercial-credit' => 'Yes', 'commercial' => 'Yes', 'extended' => 'Yes' ) ),
+		array( 'Business website, social, email', array( 'personal' => 'No', 'commercial-credit' => 'Yes, with credit', 'commercial' => 'Yes', 'extended' => 'Yes' ) ),
+		array( 'Printed marketing (up to 5,000)', array( 'personal' => 'No', 'commercial-credit' => 'Yes, with credit', 'commercial' => 'Yes', 'extended' => 'Unlimited' ) ),
+		array( 'Paid ads, broadcast', array( 'personal' => 'No', 'commercial-credit' => 'No', 'commercial' => 'No', 'extended' => 'Yes' ) ),
+		array( 'Merchandise for sale', array( 'personal' => 'No', 'commercial-credit' => 'No', 'commercial' => 'No', 'extended' => 'Up to 10,000' ) ),
+	);
+	$words  = array(
+		'requested' => 'Appreciated',
+		'required'  => 'Required',
+		'optional'  => 'Optional',
+	);
+	$credit = array();
+	foreach ( uls_lic_tiers() as $slug => $t ) {
+		$credit[ $slug ] = isset( $words[ $t['credit'] ] ) ? $words[ $t['credit'] ] : 'Optional';
+	}
+	$rows[] = array( 'Credit line', $credit );
+	return $rows;
+}

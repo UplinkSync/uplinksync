@@ -4,16 +4,35 @@
 .uls-lic-form table.variations th.label{display:none}
 .uls-lic-selwrap{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
 .uls-lic-form .woocommerce-variation-price,.uls-lic-form .woocommerce-variation.single_variation{display:none}
-.uls-lic-picker{display:grid;gap:10px;margin:0 0 18px;padding:0;border:0;min-width:0}
-.uls-lic-picker legend{margin:0 0 10px;padding:0;font-size:15px;font-weight:700;color:var(--wp--preset--color--ink,#173258)}
-.uls-lic-opt{display:grid;grid-template-columns:20px 1fr auto;gap:4px 12px;align-items:start;padding:14px 16px;border:1px solid var(--wp--preset--color--line,#dbe2eb);border-radius:10px;background:var(--wp--preset--color--surface,#ffffff);color:var(--wp--preset--color--ink,#173258);cursor:pointer;transition:border-color .15s,background-color .15s}
+.uls-lic-picker{position:relative;display:grid;gap:8px;margin:0 0 8px;padding:0;border:0;min-width:0}
+.uls-lic-picker legend{float:left;width:100%;box-sizing:border-box;margin:0 0 8px;padding:0 96px 0 0;font-size:15px;font-weight:600;color:var(--wp--preset--color--ink,#173258)}
+.uls-lic-picker legend+*{clear:both}
+.uls-lic-compare{position:absolute;top:0;right:0;font-size:14px;font-weight:500;line-height:1.5;color:var(--wp--preset--color--accent,#0c5fc1)}
+.uls-lic-opt{display:grid;grid-template-columns:20px 1fr auto;gap:2px 12px;align-items:center;padding:12px 14px;border:1px solid var(--wp--preset--color--line,#dbe2eb);border-radius:10px;background:var(--wp--preset--color--surface,#ffffff);color:var(--wp--preset--color--ink,#173258);cursor:pointer;transition:border-color .15s,background-color .15s}
 .uls-lic-opt:hover{border-color:var(--wp--preset--color--line-strong,#77879f)}
-.uls-lic-opt input{grid-row:1/span 2;width:18px;height:18px;margin:2px 0 0;accent-color:var(--wp--preset--color--accent,#0c5fc1)}
-.uls-lic-opt.is-on,.uls-lic-opt:has(input:checked){border-color:var(--wp--preset--color--accent,#0c5fc1);background:var(--wp--preset--color--surface-tint,#e2eeff)}
+.uls-lic-opt input{grid-row:1/span 2;align-self:start;width:18px;height:18px;margin:3px 0 0;accent-color:var(--wp--preset--color--accent,#0c5fc1)}
+.uls-lic-opt.is-on,.uls-lic-opt:has(input:checked){padding:11px 13px;border:2px solid var(--wp--preset--color--accent,#0c5fc1);background:var(--wp--preset--color--surface-tint,#e2eeff)}
 .uls-lic-opt:focus-within{outline:2px solid var(--wp--preset--color--accent,#0c5fc1);outline-offset:2px}
-.uls-lic-opt__name{margin:0;font-weight:700;font-size:16px;line-height:1.3}
+.uls-lic-opt__name{margin:0;font-weight:600;font-size:16px;line-height:1.3}
 .uls-lic-opt__price{font-weight:700;font-size:16px;font-variant-numeric:tabular-nums}
 .uls-lic-opt__sum{grid-column:2/4;font-size:14px;font-weight:400;line-height:1.45;color:var(--wp--preset--color--ink-muted,#46628a)}
+.uls-lic-ico{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.uls-lic-soon{border:1px dashed var(--wp--preset--color--line-strong,#77879f);border-radius:10px;background:var(--wp--preset--color--surface-sunken,#eaeef4);color:var(--wp--preset--color--ink,#173258)}
+.uls-lic-soon>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:20px 1fr auto 16px;gap:2px 12px;align-items:center;min-height:56px;padding:10px 14px;border-radius:10px}
+.uls-lic-soon>summary::-webkit-details-marker{display:none}
+.uls-lic-soon>summary:focus-visible{outline:2px solid var(--wp--preset--color--accent,#0c5fc1);outline-offset:2px}
+.uls-lic-soon .uls-lic-ico--lock{color:var(--wp--preset--color--ink-muted,#46628a)}
+.uls-lic-soon .uls-lic-ico--chev{width:16px;height:16px;transition:transform .2s cubic-bezier(.2,.7,.2,1)}
+.uls-lic-soon[open] .uls-lic-ico--chev{transform:rotate(180deg)}
+.uls-lic-soon__t{font-weight:600;font-size:15px;line-height:1.35}
+.uls-lic-soon__t small{display:block;font-weight:400;font-size:14px;color:var(--wp--preset--color--ink-muted,#46628a)}
+.uls-lic-pill{display:inline-flex;align-items:center;padding:3px 10px;border-radius:999px;border:1px solid var(--wp--preset--color--line-strong,#77879f);background:var(--wp--preset--color--surface,#ffffff);color:var(--wp--preset--color--ink-muted,#46628a);font-size:12px;font-weight:600;line-height:1.4;white-space:nowrap}
+.uls-lic-soon__list{list-style:none;margin:0;padding:0 14px 10px 46px}
+.uls-lic-soon__list li{padding:10px 0;border-top:1px solid var(--wp--preset--color--line,#dbe2eb);font-size:14px;line-height:1.45;color:var(--wp--preset--color--ink-muted,#46628a)}
+.uls-lic-soon__list b{display:block;font-size:15px;font-weight:600;color:var(--wp--preset--color--ink,#173258)}
+.uls-lic-ask{display:flex;flex-wrap:wrap;gap:0 18px;margin:4px 0 16px;font-size:14px}
+.uls-lic-ask a{display:inline-flex;align-items:center;gap:4px;min-height:32px;font-weight:600;color:var(--wp--preset--color--accent,#0c5fc1)}
+.uls-lic-ask .uls-lic-ico{width:15px;height:15px}
 .uls-lic-badge{display:inline-block;margin-left:4px;padding:1px 8px;border-radius:999px;background:var(--wp--preset--color--surface,#ffffff);border:1px solid var(--wp--preset--color--accent,#0c5fc1);color:var(--wp--preset--color--accent-hover,#00499c);font-size:12px;font-weight:600;white-space:nowrap}
 .uls-lic-from{font-size:.7em;font-weight:600;color:var(--wp--preset--color--ink-muted,#46628a);text-transform:uppercase;letter-spacing:.04em}
 .uls-lic-more{margin:18px 0 0;padding:16px 18px;border-radius:10px;background:var(--wp--preset--color--surface-sunken,#eaeef4);font-size:14px;line-height:1.5;color:var(--wp--preset--color--ink,#173258)}
@@ -40,5 +59,5 @@
 .uls-lic-certs h2{margin-top:0;font-size:20px}
 .uls-lic-certs ul{margin:0 0 10px;padding-left:18px}
 .uls-lic-certs li{margin:0 0 8px;line-height:1.5}
-@media (prefers-reduced-motion:reduce){.uls-lic-opt{transition:none}}
-@media (max-width:480px){.uls-lic-opt{padding:12px}.uls-lic-opt__name,.uls-lic-opt__price{font-size:15px}}
+@media (prefers-reduced-motion:reduce){.uls-lic-opt,.uls-lic-soon .uls-lic-ico--chev{transition:none}}
+@media (max-width:767px){.uls-lic-soon>summary{grid-template-columns:20px 1fr 16px}.uls-lic-soon__t small{display:none}.uls-lic-soon .uls-lic-pill{grid-column:2;grid-row:2;justify-self:start}.uls-lic-soon .uls-lic-ico--chev{grid-column:3;grid-row:1/span 2}.uls-lic-soon__list{padding-left:14px}.uls-lic-ask{flex-direction:column}}
