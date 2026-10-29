@@ -2,7 +2,7 @@
 /**
  * Plugin Name: UplinkSync — Aerial photo product page (redesign 2026-10-28)
  * Description: Two-column product page for licence-tier photo products (portal/product-page/DESIGN.md):
- *   sticky media column (gallery, facts strip, "About this photo"), buy box (eyebrow, price, picker,
+ *   media column (gallery, facts strip, "About this photo"; static, never sticky), buy box (eyebrow, price, picker,
  *   add to cart, express pay, trust list), licence comparison table + FAQ + help card in place of the
  *   Description/Licence tabs, and "More from this collection" in place of the next-print card and
  *   Related products. Facts are read at render time from existing product data (description text,
