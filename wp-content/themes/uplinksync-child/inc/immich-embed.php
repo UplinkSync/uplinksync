@@ -237,6 +237,13 @@ function uplinksync_immich_playback_src( $asset_id, $key ) {
  *   ratio   (optional) Aspect ratio W/H, default 16/9. Bounded to sane values.
  *   label   (optional) Caption / accessible label.
  *   class   (optional) Extra class on the wrapping <figure> (e.g. layout hook).
+ *   loop    (optional) "1" = silent ambient loop (vertical/social cuts): no native
+ *                     controls, muted + loop + playsinline, preload="metadata",
+ *                     marked data-uls-loop for assets/js/site.js, which starts it
+ *                     when on screen, pauses it off screen, honours reduced motion
+ *                     and adds a small play/pause toggle (WCAG 2.2.2). No HTML
+ *                     autoplay attribute, so a reduced-motion visitor never sees
+ *                     motion before the script runs; without JS the poster stays.
  *
  * Renders a lazy (`preload="none"`) inline player. No `crossorigin` attribute is
  * set: plain media playback needs no CORS, and asserting it would demand headers
@@ -255,6 +262,7 @@ function uplinksync_immich_video_shortcode( $atts ) {
 			'ratio'  => '16/9',
 			'label'  => 'Aerial video',
 			'class'  => '',
+			'loop'   => '',
 		),
 		$atts,
 		'immich_video'
@@ -296,12 +304,17 @@ function uplinksync_immich_video_shortcode( $atts ) {
 		uplinksync_child_asset_ver( 'assets/css/immich-embed.css' )
 	);
 
-	$fig_class    = trim( 'wp-block-image uls-immich-video ' . $extra );
+	$loop = in_array( strtolower( trim( (string) $atts['loop'] ) ), array( '1', 'true', 'yes' ), true );
+
+	$fig_class    = trim( 'wp-block-image uls-immich-video ' . ( $loop ? 'uls-immich-video--loop ' : '' ) . $extra );
 	$style        = 'aspect-ratio: ' . esc_attr( str_replace( '/', ' / ', $ratio ) ) . ';';
 	$poster_attr  = '' !== $poster ? ' poster="' . $poster . '"' : '';
+	$play_attrs   = $loop
+		? 'muted loop playsinline disablepictureinpicture preload="metadata" data-uls-loop'
+		: 'controls playsinline preload="none"';
 
 	return sprintf(
-		'<figure class="%1$s"><video class="uls-immich-video__player" controls playsinline preload="none"%2$s style="%3$s" aria-label="%4$s">' .
+		'<figure class="%1$s"><video class="uls-immich-video__player" ' . $play_attrs . '%2$s style="%3$s" aria-label="%4$s">' .
 		'<source src="%5$s" type="video/mp4">' .
 		'</video>%6$s</figure>',
 		esc_attr( $fig_class ),
