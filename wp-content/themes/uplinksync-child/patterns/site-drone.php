@@ -3,7 +3,7 @@
  * Title: Richer Quiet Light — Drone & Aerial
  * Slug: uplinksync-child/site-drone
  * Categories: uplinksync
- * Description: /drone-services/ body (enrich/DESIGN-SPEC.md §5): hero + "Every shoot includes", drone proof band, what you receive, own-work gallery with filters (location-free captions), reel + vertical cuts (play only on press), how a shoot works, FAQ, CTA.
+ * Description: /drone-services/ body (enrich/DESIGN-SPEC.md §5): hero + "Every shoot includes", drone proof band, what you receive, own-work gallery with filters (location-free captions), reel (plays on press) + vertical cuts (silent loops), how a shoot works, FAQ, CTA.
  * Inserter: false
  */
 
@@ -11,10 +11,12 @@ $uls_a     = uplinksync_site_arrow();
 $uls_stills = get_stylesheet_directory_uri() . '/assets/images/site/';
 
 /**
- * Inline Immich player (inc/immich-embed.php). Native controls, preload="none": it only
- * plays when pressed. Not the uls-air-videocard--9x16 class, which DB snippet 110 auto-loops.
+ * Inline Immich player (inc/immich-embed.php), progressive MP4 (H.264) from the media host.
+ * Reel: native controls, preload="none" — plays only when pressed. Verticals ($loop = true):
+ * silent ambient loops, no controls, started/paused on screen by assets/js/site.js (reduced
+ * motion: poster + play button). Posters are frames cut from each clip's own footage.
  */
-$uls_video = static function ( $asset, $share, $poster, $ratio, $label ) {
+$uls_video = static function ( $asset, $share, $poster, $ratio, $label, $loop = false ) {
 	if ( ! function_exists( 'uplinksync_immich_video_shortcode' ) ) {
 		return '';
 	}
@@ -25,6 +27,7 @@ $uls_video = static function ( $asset, $share, $poster, $ratio, $label ) {
 			'poster' => $poster,
 			'ratio'  => $ratio,
 			'label'  => $label,
+			'loop'   => $loop ? '1' : '',
 		)
 	);
 };
@@ -108,13 +111,13 @@ echo uplinksync_site_proof( // phpcs:ignore
 </div></section>
 <section class="sec dark" aria-labelledby="mo-h"><div class="wrap">
 	<div class="sec-head"><p class="eyebrow">In motion · cinematic reel</p><h2 id="mo-h">See it in motion</h2><p>A cinematic reel cut from the same in-house aerial work. It plays only when you press play.</p></div>
-	<div class="reel"><?php echo $uls_video( 'b688e5d2-aa13-49a8-9683-70400bd89196', 'https://media.uplinksync.com/share/_b-4s67XtAtfb48X7zHBot_WlLXccranYqYfqh-jnCcG4sW6aWp2TqqFku4-hfYYUSA', $uls_poster . 'uplinksync-aerial-site-sunset-1280.webp', '16/9', 'Cinematic aerial reel — press play to watch our own footage' ); // phpcs:ignore ?></div>
-	<div class="sec-head" style="margin:56px 0 24px"><h3>Vertical / social</h3><p>Short vertical cuts, ready for reels and stories — framed 9:16.</p></div>
+	<div class="reel"><?php echo $uls_video( 'b688e5d2-aa13-49a8-9683-70400bd89196', 'https://media.uplinksync.com/share/_b-4s67XtAtfb48X7zHBot_WlLXccranYqYfqh-jnCcG4sW6aWp2TqqFku4-hfYYUSA', $uls_poster . 'uplinksync-reel-poster-1280.webp', '16/9', 'Cinematic aerial reel — press play to watch our own footage' ); // phpcs:ignore ?></div>
+	<div class="sec-head" style="margin:56px 0 24px"><h3>Vertical / social</h3><p>Short vertical cuts, ready for reels and stories — framed 9:16. They play silently on a loop.</p></div>
 	<div class="verticals">
 		<?php
-		echo $uls_video( '7be5a074-5852-430d-a2a3-ac70f97553e9', 'https://media.uplinksync.com/share/0nvSX6X4yoadOQNUWD17pFYZ67a5lmxnf5hOpxIvPNOaJw94WdhY0c_s7S83Wgq6fOY', $uls_poster . 'uplinksync-vertical-site-460.webp', '9/16', 'Vertical aerial clip 1' ); // phpcs:ignore
-		echo $uls_video( 'cf524131-01cf-41cc-bcab-ecd4cb72ad9c', 'https://media.uplinksync.com/share/twvinN24QDAPlsz-lcH6-vN2EbBCPxOhIoQTrgtT6rLqRdcljOVZgofcAQCkm2D4DfE', $uls_poster . 'uplinksync-vertical-town-460.webp', '9/16', 'Vertical aerial clip 2' ); // phpcs:ignore
-		echo $uls_video( 'b7a3c631-d9eb-4bd9-a9dc-f51f316d096a', 'https://media.uplinksync.com/share/UgXWsDIyaPcYKRRlV7vqsYoNn2-ZkvUZJxJZ4w-mVVgataU-hWjMZGgZN41ia3huuh0', $uls_poster . 'uplinksync-vertical-pilot-460.webp', '9/16', 'Vertical aerial clip 3' ); // phpcs:ignore
+		echo $uls_video( '7be5a074-5852-430d-a2a3-ac70f97553e9', 'https://media.uplinksync.com/share/0nvSX6X4yoadOQNUWD17pFYZ67a5lmxnf5hOpxIvPNOaJw94WdhY0c_s7S83Wgq6fOY', $uls_poster . 'uplinksync-clip-forest-460.webp', '9/16', 'Vertical clip — hillside homes among autumn aspens', true ); // phpcs:ignore
+		echo $uls_video( 'cf524131-01cf-41cc-bcab-ecd4cb72ad9c', 'https://media.uplinksync.com/share/twvinN24QDAPlsz-lcH6-vN2EbBCPxOhIoQTrgtT6rLqRdcljOVZgofcAQCkm2D4DfE', $uls_poster . 'uplinksync-clip-valley-460.webp', '9/16', 'Vertical clip — open valley below the mountains', true ); // phpcs:ignore
+		echo $uls_video( 'b7a3c631-d9eb-4bd9-a9dc-f51f316d096a', 'https://media.uplinksync.com/share/UgXWsDIyaPcYKRRlV7vqsYoNn2-ZkvUZJxJZ4w-mVVgataU-hWjMZGgZN41ia3huuh0', $uls_poster . 'uplinksync-clip-town-460.webp', '9/16', 'Vertical clip — a neighbourhood from above', true ); // phpcs:ignore
 		?>
 	</div>
 </div></section>
