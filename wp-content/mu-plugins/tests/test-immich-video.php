@@ -60,6 +60,14 @@ iv_check( 'loop player keeps an accessible name', false !== strpos( $loop, 'aria
 iv_check( 'loop player keeps its poster', false !== strpos( $loop, 'poster="/wp-content/x.webp"' ) );
 iv_check( 'loop="0" stays the default player', false !== strpos( uplinksync_immich_video_shortcode( $base + array( 'loop' => '0' ) ), ' controls ' ) );
 
+// src="..." light rendition: first <source>, Immich stream kept as fallback.
+$lt = uplinksync_immich_video_shortcode( $base + array( 'loop' => '1', 'src' => '/wp-content/themes/uplinksync-child/assets/media/video/a.mp4' ) );
+iv_check( 'light src is the first source', 1 === preg_match( '#<source src="/wp-content/themes/uplinksync-child/assets/media/video/a\.mp4" type="video/mp4"><source src="https://media\.uplinksync\.com/#', $lt ) );
+foreach ( array( 'https://evil.test/a.mp4', '//evil.test/wp-content/themes/a.mp4', '/wp-content/themes/../../wp-config.mp4', '/wp-content/plugins/x.mp4', '/wp-content/themes/a.mp4?x=1', '/wp-content/themes/a.php' ) as $bad ) {
+	iv_check( "bad light src dropped: $bad", '' === uplinksync_immich_light_src( $bad ) );
+}
+iv_check( 'no src -> single Immich source', 1 === substr_count( $reel, '<source ' ) );
+
 // Fail closed.
 iv_check( 'bad asset -> comment only', 0 === strpos( uplinksync_immich_video_shortcode( array( 'asset' => 'nope', 'share' => $share, 'loop' => '1' ) ), '<!--' ) );
 
@@ -75,6 +83,15 @@ $rp = @filesize( __DIR__ . '/../../themes/uplinksync-child/assets/images/site/up
 iv_check( 'reel poster exists and <= 150 KB', $rp && $rp <= 150000 );
 iv_check( 'pattern: three looped 9:16 verticals', 3 === preg_match_all( "/uplinksync-clip-[a-z]+-460\\.webp', '9\\/16', '[^']+', true \\)/", $pat ) );
 iv_check( 'pattern: reel stays click-to-play', 1 === preg_match( "/uplinksync-reel-poster-1280\\.webp', '16\\/9', '[^']+' \\)/", $pat ) );
+// Light renditions: present, wired, within budget (loops <= 4 MB, reel <= 16 MB), MP4 faststart (moov before mdat).
+$vdir = __DIR__ . '/../../themes/uplinksync-child/assets/media/video/';
+foreach ( array( 'uplinksync-loop-forest-720x1280.mp4' => 4000000, 'uplinksync-loop-valley-720x1280.mp4' => 4000000, 'uplinksync-loop-town-720x1280.mp4' => 4000000, 'uplinksync-reel-1080p.mp4' => 16000000 ) as $f => $max ) {
+	$sz = @filesize( $vdir . $f );
+	iv_check( "light $f wired in pattern", false !== strpos( $pat, "'$f'" ) );
+	iv_check( "light $f exists and <= $max bytes", $sz && $sz <= $max );
+	$head = (string) @file_get_contents( $vdir . $f, false, null, 0, 4096 );
+	iv_check( "light $f is faststart", false !== strpos( $head, 'moov' ) );
+}
 
 echo $failures ? "\n$failures FAILED\n" : "\nALL PASS\n";
 exit( $failures ? 1 : 0 );
