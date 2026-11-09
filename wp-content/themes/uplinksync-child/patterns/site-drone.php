@@ -15,8 +15,20 @@ $uls_stills = get_stylesheet_directory_uri() . '/assets/images/site/';
  * Reel: native controls, preload="none" — plays only when pressed. Verticals ($loop = true):
  * silent ambient loops, no controls, started/paused on screen by assets/js/site.js (reduced
  * motion: poster + play button). Posters are frames cut from each clip's own footage.
+ *
+ * Light renditions (assets/media/video/, served by the site, H.264 High, faststart, no audio)
+ * are the first <source>; the Immich original stays as the fallback source. Loops: 720x1280
+ * ~2.2 Mbps (~3.8 MB / 14 s, originals 12-25 MB); reel: 1080p ~3.3 Mbps (14.7 MB, was 54.7 MB).
+ * Masters: Immich + NAS UplinkSync:/50_Brand/Photography/Website/video/masters/.
  */
-$uls_video = static function ( $asset, $share, $poster, $ratio, $label, $loop = false ) {
+$uls_media = wp_make_link_relative( get_stylesheet_directory_uri() . '/assets/media/video/' );
+$uls_light = array(
+	'b688e5d2-aa13-49a8-9683-70400bd89196' => 'uplinksync-reel-1080p.mp4',
+	'7be5a074-5852-430d-a2a3-ac70f97553e9' => 'uplinksync-loop-forest-720x1280.mp4',
+	'cf524131-01cf-41cc-bcab-ecd4cb72ad9c' => 'uplinksync-loop-valley-720x1280.mp4',
+	'b7a3c631-d9eb-4bd9-a9dc-f51f316d096a' => 'uplinksync-loop-town-720x1280.mp4',
+);
+$uls_video = static function ( $asset, $share, $poster, $ratio, $label, $loop = false ) use ( $uls_media, $uls_light ) {
 	if ( ! function_exists( 'uplinksync_immich_video_shortcode' ) ) {
 		return '';
 	}
@@ -28,6 +40,7 @@ $uls_video = static function ( $asset, $share, $poster, $ratio, $label, $loop = 
 			'ratio'  => $ratio,
 			'label'  => $label,
 			'loop'   => $loop ? '1' : '',
+			'src'    => isset( $uls_light[ $asset ] ) ? $uls_media . $uls_light[ $asset ] : '',
 		)
 	);
 };
@@ -116,8 +129,8 @@ echo uplinksync_site_proof( // phpcs:ignore
 	<div class="verticals">
 		<?php
 		echo $uls_video( '7be5a074-5852-430d-a2a3-ac70f97553e9', 'https://media.uplinksync.com/share/0nvSX6X4yoadOQNUWD17pFYZ67a5lmxnf5hOpxIvPNOaJw94WdhY0c_s7S83Wgq6fOY', $uls_poster . 'uplinksync-clip-forest-460.webp', '9/16', 'Vertical clip — hillside homes among autumn aspens', true ); // phpcs:ignore
-		echo $uls_video( 'cf524131-01cf-41cc-bcab-ecd4cb72ad9c', 'https://media.uplinksync.com/share/twvinN24QDAPlsz-lcH6-vN2EbBCPxOhIoQTrgtT6rLqRdcljOVZgofcAQCkm2D4DfE', $uls_poster . 'uplinksync-clip-valley-460.webp', '9/16', 'Vertical clip — open valley below the mountains', true ); // phpcs:ignore
 		echo $uls_video( 'b7a3c631-d9eb-4bd9-a9dc-f51f316d096a', 'https://media.uplinksync.com/share/UgXWsDIyaPcYKRRlV7vqsYoNn2-ZkvUZJxJZ4w-mVVgataU-hWjMZGgZN41ia3huuh0', $uls_poster . 'uplinksync-clip-town-460.webp', '9/16', 'Vertical clip — a neighbourhood from above', true ); // phpcs:ignore
+		echo $uls_video( 'cf524131-01cf-41cc-bcab-ecd4cb72ad9c', 'https://media.uplinksync.com/share/twvinN24QDAPlsz-lcH6-vN2EbBCPxOhIoQTrgtT6rLqRdcljOVZgofcAQCkm2D4DfE', $uls_poster . 'uplinksync-clip-valley-460.webp', '9/16', 'Vertical clip — open valley below the mountains', true ); // phpcs:ignore
 		?>
 	</div>
 </div></section>

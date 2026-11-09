@@ -52,6 +52,10 @@ $GLOBALS['_wp_current_template_content'] = '<!-- wp:group {"className":"uls-spli
 site_check( 'DB override without marker is not trimmed', ! uplinksync_site_is_page() );
 $GLOBALS['_wp_current_template_content'] = null;
 site_check( 'no resolved template -> not trimmed', ! uplinksync_site_is_page() );
+site_check( 'HLS player kept where no RQL template renders', true === uplinksync_site_skip_hls_player( true ) );
+$GLOBALS['_wp_current_template_content'] = '<!-- wp:group {"className":"uls-site rq"} -->';
+site_check( 'HLS player (hls.min.js) skipped on RQL templates', false === uplinksync_site_skip_hls_player( true ) );
+$GLOBALS['_wp_current_template_content'] = null;
 
 // Phone link: hidden when empty, tel: link when published.
 site_check( 'phone hidden by default', '' === uplinksync_site_phone_link() );

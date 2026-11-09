@@ -455,6 +455,23 @@ function uplinksync_site_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'uplinksync_site_assets', 99 );
 
+/**
+ * Snippet 112 (ULS DRM v1) prints hls.min.js (414 KB) + its init on /drone-services/ for
+ * video[data-uls-hls]. The file-driven drone template plays progressive MP4 and emits no such
+ * element (2026-11-04: the only DB content still carrying data-uls-hls/reel.m3u8 is the DRAFT
+ * wp_template 410 and its revisions, on staging and prod). So skip the player whenever a
+ * Richer Quiet Light template renders; if a DB override without the RQL marker comes back,
+ * uplinksync_site_is_page() is false and the HLS player loads again as before. The REST
+ * endpoints (reel.m3u8 / key) are untouched.
+ *
+ * @param bool $needs Snippet 112's own decision.
+ * @return bool
+ */
+function uplinksync_site_skip_hls_player( $needs ) {
+	return uplinksync_site_is_page() ? false : $needs;
+}
+add_filter( 'uls_drm_needs_player', 'uplinksync_site_skip_hls_player' );
+
 /** Preload the hero image on the five pages (the LCP element). */
 function uplinksync_site_head() {
 	if ( ! uplinksync_site_is_page() ) {

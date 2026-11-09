@@ -237,6 +237,10 @@ function uplinksync_immich_playback_src( $asset_id, $key ) {
  *   ratio   (optional) Aspect ratio W/H, default 16/9. Bounded to sane values.
  *   label   (optional) Caption / accessible label.
  *   class   (optional) Extra class on the wrapping <figure> (e.g. layout hook).
+ *   src     (optional) Same-site path to a light MP4 rendition (H.264, faststart) under
+ *                     /wp-content/themes/ or /wp-content/uploads/. It becomes the FIRST
+ *                     <source>; the Immich playback stream stays as the second source, so a
+ *                     missing light file falls back to the original. Anything else is dropped.
  *   loop    (optional) "1" = silent ambient loop (vertical/social cuts): no native
  *                     controls, muted + loop + playsinline, preload="metadata",
  *                     marked data-uls-loop for assets/js/site.js, which starts it
@@ -263,12 +267,14 @@ function uplinksync_immich_video_shortcode( $atts ) {
 			'label'  => 'Aerial video',
 			'class'  => '',
 			'loop'   => '',
+			'src'    => '',
 		),
 		$atts,
 		'immich_video'
 	);
 
-	$src = uplinksync_immich_playback_src( $atts['asset'], $atts['share'] );
+	$src   = uplinksync_immich_playback_src( $atts['asset'], $atts['share'] );
+	$light = uplinksync_immich_light_src( $atts['src'] );
 	if ( '' === $src ) {
 		return '<!-- immich_video: rejected (need asset UUID + a ' . esc_html( UPLINKSYNC_MEDIA_HOST ) . '/share/... key) -->';
 	}
@@ -315,14 +321,32 @@ function uplinksync_immich_video_shortcode( $atts ) {
 
 	return sprintf(
 		'<figure class="%1$s"><video class="uls-immich-video__player" ' . $play_attrs . '%2$s style="%3$s" aria-label="%4$s">' .
-		'<source src="%5$s" type="video/mp4">' .
+		'%7$s<source src="%5$s" type="video/mp4">' .
 		'</video>%6$s</figure>',
 		esc_attr( $fig_class ),
 		$poster_attr,
 		$style,
 		esc_attr( $label ),
 		esc_url( $src ),
-		'' !== $label ? '<figcaption class="uls-air-credit">' . esc_html( $label ) . '</figcaption>' : ''
+		'' !== $label ? '<figcaption class="uls-air-credit">' . esc_html( $label ) . '</figcaption>' : '',
+		'' !== $light ? '<source src="' . esc_url( $light ) . '" type="video/mp4">' : ''
 	);
+}
+
+/**
+ * Validate a same-site light rendition path for [immich_video src="..."].
+ *
+ * Only a root-relative path under /wp-content/themes/ or /wp-content/uploads/ ending in
+ * .mp4, with no traversal, query or host, is accepted; everything else returns ''.
+ *
+ * @param string $src Candidate path.
+ * @return string The path, or ''.
+ */
+function uplinksync_immich_light_src( $src ) {
+	$src = trim( (string) $src );
+	if ( '' === $src || ! preg_match( '#^/wp-content/(themes|uploads)/[A-Za-z0-9/_.-]+\.mp4$#', $src ) || false !== strpos( $src, '..' ) || false !== strpos( $src, '//' ) ) {
+		return '';
+	}
+	return $src;
 }
 add_shortcode( 'immich_video', 'uplinksync_immich_video_shortcode' );
