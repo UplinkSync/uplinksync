@@ -23,3 +23,4 @@ Thumbs.db
 
 # Generated per-run by the deploy workflow (UPLAA-QW8); never committed.
 wp-content/deploy-marker.txt
+__pycache__/
