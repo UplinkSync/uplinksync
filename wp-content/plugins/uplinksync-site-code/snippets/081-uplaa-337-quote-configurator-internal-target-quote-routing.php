@@ -29,11 +29,46 @@
 add_action( 'wp_ajax_nopriv_uls337_target_quote', 'uls337_handle_target_quote' );
 add_action( 'wp_ajax_uls337_target_quote', 'uls337_handle_target_quote' );
 
+/**
+ * Anonymous leads are accepted only from this site's own pages.
+ *
+ * A WordPress nonce embedded in cacheable HTML goes stale, which loses real
+ * leads.  Browsers supply Origin for fetch/XHR and Referer as a fallback for
+ * form-like requests; a missing or other-host value is rejected.
+ *
+ * @return bool
+ */
+function uls337_is_same_origin_request() {
+	$site_host = wp_parse_url( home_url( '/' ), PHP_URL_HOST );
+	$origin    = isset( $_SERVER['HTTP_ORIGIN'] ) ? trim( (string) $_SERVER['HTTP_ORIGIN'] ) : '';
+	$referer   = isset( $_SERVER['HTTP_REFERER'] ) ? trim( (string) $_SERVER['HTTP_REFERER'] ) : '';
+	$source    = '' !== $origin ? $origin : $referer;
+	$host      = '' !== $source ? wp_parse_url( $source, PHP_URL_HOST ) : '';
+
+	return is_string( $site_host ) && '' !== $site_host && is_string( $host ) && '' !== $host && 0 === strcasecmp( $site_host, $host );
+}
+
 function uls337_handle_target_quote() {
 	$p = wp_unslash( $_POST );
 
 	// Honeypot: silently accept and drop bots.
 	if ( ! empty( $p['company_url'] ) ) {
+		wp_send_json_success( array( 'ok' => true ) );
+	}
+
+	if ( ! uls337_is_same_origin_request() ) {
+		wp_send_json_error( array( 'msg' => 'Please reload and try again.' ), 403 );
+	}
+
+	if ( ! uls337_rate_limit_allows_request() ) {
+		wp_send_json_error( array( 'msg' => 'Please wait a few minutes before trying again.' ), 429 );
+	}
+
+	$idempotency_key = isset( $p['uls337_idempotency_key'] ) ? sanitize_text_field( (string) $p['uls337_idempotency_key'] ) : '';
+	if ( ! uls337_idempotency_key_is_valid( $idempotency_key ) ) {
+		wp_send_json_error( array( 'msg' => 'Please reload and try again.' ), 400 );
+	}
+	if ( ! uls337_reserve_idempotency_key( $idempotency_key ) ) {
 		wp_send_json_success( array( 'ok' => true ) );
 	}
 
@@ -101,10 +136,67 @@ function uls337_handle_target_quote() {
 
 	$sent = wp_mail( 'dirwin@uplinksync.com', $subject, $body, $headers );
 	if ( ! $sent ) {
-		error_log( '[UPLAA-337] wp_mail failed for target-quote lead: ' . $email );
+		uls337_forget_idempotency_key( $idempotency_key );
+		// Operator signal only: never put the lead address or other PII in logs.
+		error_log( '[UPLAA-337] target-quote lead mail delivery failed.' );
+		wp_send_json_error( array( 'msg' => 'We could not send your request. Please try again shortly.' ), 500 );
 	}
 
 	wp_send_json_success( array( 'ok' => true ) );
+}
+
+/**
+ * Reuse the estimator's Cloudflare-aware client-IP resolver. It accepts
+ * CF-Connecting-IP only when the TCP peer is a published Cloudflare range and
+ * otherwise uses REMOTE_ADDR. Store only a one-way hash of the resolved IP.
+ *
+ * @return bool
+ */
+function uls337_rate_limit_allows_request() {
+	// The resolver lives in the estimator mu-plugin; fall back to the TCP peer if it is ever disabled.
+	$ip  = function_exists( 'uls_estimator_client_ip' ) ? uls_estimator_client_ip( $_SERVER ) : ( isset( $_SERVER['REMOTE_ADDR'] ) ? (string) $_SERVER['REMOTE_ADDR'] : '' );
+	$key = 'uls337_rate_' . hash( 'sha256', $ip );
+	$hit = (int) get_transient( $key );
+	if ( $hit >= 5 ) {
+		return false;
+	}
+	set_transient( $key, $hit + 1, 10 * MINUTE_IN_SECONDS );
+	return true;
+}
+
+/** @return bool */
+function uls337_idempotency_key_is_valid( $key ) {
+	return 1 === preg_match( '/^[A-Za-z0-9_-]{16,128}$/', $key );
+}
+
+/** @return string */
+function uls337_idempotency_storage_key( $key ) {
+	return 'uls337_idem_' . hash( 'sha256', $key );
+}
+
+/** @return bool */
+function uls337_reserve_idempotency_key( $key ) {
+	$storage_key = uls337_idempotency_storage_key( $key );
+	if ( false !== get_transient( $storage_key ) ) {
+		return false;
+	}
+
+	// wp_cache_add is atomic in the persistent object cache. The transient
+	// supplies cross-request TTL storage where a persistent cache is absent.
+	// Reserving before wp_mail prevents simultaneous Back→Continue requests from
+	// sending two messages; a failed mail releases its reservation below.
+	if ( ! wp_cache_add( $storage_key, 1, 'uls337_idempotency', DAY_IN_SECONDS ) ) {
+		return false;
+	}
+
+	set_transient( $storage_key, 1, DAY_IN_SECONDS );
+	return true;
+}
+
+function uls337_forget_idempotency_key( $key ) {
+	$storage_key = uls337_idempotency_storage_key( $key );
+	delete_transient( $storage_key );
+	wp_cache_delete( $storage_key, 'uls337_idempotency' );
 }
 
 /* 2) Shortcode: [uls_quote_configurator] */
@@ -285,6 +377,14 @@ add_shortcode( 'uls_quote_configurator', function () {
   var ackBox    = root.querySelector('[data-role="ack"]');
   var errBox    = root.querySelector('[data-role="err"]');
   var submitBtn = root.querySelector('[data-role="submit"]');
+  var idempotencyKey = "";
+
+  function getIdempotencyKey(){
+    if (idempotencyKey) return idempotencyKey;
+    if (window.crypto && window.crypto.randomUUID) { idempotencyKey = window.crypto.randomUUID().replace(/-/g, ""); }
+    else { idempotencyKey = "uls" + Date.now().toString(36) + Math.random().toString(36).slice(2); }
+    return idempotencyKey;
+  }
 
   function show(el){ if(el) el.hidden = false; }
   function hide(el){ if(el) el.hidden = true; }
@@ -404,6 +504,7 @@ add_shortcode( 'uls_quote_configurator', function () {
     fd.append("target_label", computed.targetLabel);
     fd.append("answers_json", JSON.stringify(computed.answers));
     fd.append("company_url", hp ? hp.value : "");
+    fd.append("uls337_idempotency_key", getIdempotencyKey());
 
     submitBtn.disabled = true;
     submitBtn.textContent = "Sending…";

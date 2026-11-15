@@ -11,6 +11,14 @@
   if (document.readyState === "loading") { document.addEventListener("DOMContentLoaded", init); } else { init(); }
   function init() {
   var BOOT = window.ULS_QF_BOOT || {};
+  var leadIdempotencyKey = "";
+
+  function leadKey() {
+    if (leadIdempotencyKey) { return leadIdempotencyKey; }
+    if (window.crypto && window.crypto.randomUUID) { leadIdempotencyKey = window.crypto.randomUUID().replace(/-/g, ""); }
+    else { leadIdempotencyKey = "uls" + Date.now().toString(36) + Math.random().toString(36).slice(2); }
+    return leadIdempotencyKey;
+  }
 
   /* ======================= Modal (snippet #84) ======================= */
   var modal = document.getElementById("uls-qmodal");
@@ -562,6 +570,7 @@
       fd.append("target_label", lead.targetLabel);
       fd.append("answers_json", JSON.stringify(lead.answers));
       fd.append("company_url", trapVal());
+      fd.append("uls337_idempotency_key", leadKey());
       fetch(endpoint, { method: "POST", body: fd, credentials: "same-origin" });
     } catch (e) {}
   }
