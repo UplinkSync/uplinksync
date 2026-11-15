@@ -38,7 +38,6 @@ function uls_site_code_manifest() {
 		array( 'id' => 112, 'priority' => 6, 'scope' => 'global', 'file' => '112-uls-drm-v1-encrypted-hls-hero-reel-endpoints-player.php' ), // ULS DRM v1 — encrypted-HLS hero reel (endpoints + play
 		// id 45 (UPLAA-247 clean grid thumbs -> master swap) RETIRED 2026-10-28: store shows watermarked previews
 		// everywhere (DR-006). File kept for revert; re-add this array row to restore.
-		array( 'id' => 81, 'priority' => 10, 'scope' => 'global', 'file' => '081-uplaa-337-quote-configurator-internal-target-quote-routing.php' ), // UPLAA-337 target-quote admin-ajax handler + dormant shortcode
 		array( 'id' => 91, 'priority' => 10, 'scope' => 'global', 'file' => '091-uplaa-366-allow-anon-woocommerce-store-api-checkout.php' ), // UPLAA-366 Allow anon WooCommerce Store API (checkout/S
 		array( 'id' => 93, 'priority' => 10, 'scope' => 'front-end', 'file' => '093-uls-proofing-retired.php' ), // UPLAA-179 proofing-gallery retirement redirect (the DB row is deactivated, not deleted)
 		array( 'id' => 120, 'priority' => 10, 'scope' => 'front-end', 'file' => '120-uplaa-p3-phase-3-ia-redirects-single-hop-external-sa.php' ), // UPLAA-P3 Phase 3 IA redirects (single-hop, external sa
