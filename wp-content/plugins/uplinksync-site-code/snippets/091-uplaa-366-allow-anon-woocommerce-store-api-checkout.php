@@ -38,7 +38,20 @@ add_filter( 'rest_authentication_errors', function ( $result ) {
 		$route = '/' . ltrim( $route, '/' );
 
 		// Public WooCommerce Store API only (cart, checkout, products, payment methods).
-		if ( 0 === strpos( $route, '/wc/store/' ) || false !== strpos( $path, '/wc/store/' ) ) {
+		//
+		// The pretty-permalink path needs the same anchoring as $route. Extract the
+		// route portion after the REST prefix before checking it: a path such as
+		// /wp-json/wp/v2/users/wc/store/ is not a Store API request and must remain
+		// denied (doc 125 §5.4).
+		$prefix     = function_exists( 'rest_get_url_prefix' ) ? trim( rest_get_url_prefix(), '/' ) : 'wp-json';
+		$path_route = '';
+		$marker     = '/' . $prefix . '/';
+		$marker_at  = strpos( $path, $marker );
+		if ( false !== $marker_at ) {
+			$path_route = substr( $path, $marker_at + strlen( $marker ) );
+		}
+
+		if ( 0 === strpos( $route, '/wc/store/' ) || 0 === strpos( $path_route, 'wc/store/' ) ) {
 			return true; // allow anonymous access to the storefront API
 		}
 	}

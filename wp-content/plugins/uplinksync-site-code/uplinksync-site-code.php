@@ -39,6 +39,7 @@ function uls_site_code_manifest() {
 		// id 45 (UPLAA-247 clean grid thumbs -> master swap) RETIRED 2026-10-28: store shows watermarked previews
 		// everywhere (DR-006). File kept for revert; re-add this array row to restore.
 		array( 'id' => 91, 'priority' => 10, 'scope' => 'global', 'file' => '091-uplaa-366-allow-anon-woocommerce-store-api-checkout.php' ), // UPLAA-366 Allow anon WooCommerce Store API (checkout/S
+		array( 'id' => 93, 'priority' => 10, 'scope' => 'front-end', 'file' => '093-uls-proofing-retired.php' ), // UPLAA-179 proofing-gallery retirement redirect (the DB row is deactivated, not deleted)
 		array( 'id' => 120, 'priority' => 10, 'scope' => 'front-end', 'file' => '120-uplaa-p3-phase-3-ia-redirects-single-hop-external-sa.php' ), // UPLAA-P3 Phase 3 IA redirects (single-hop, external sa
 		array( 'id' => 108, 'priority' => 11, 'scope' => 'front-end', 'file' => '108-uplaa-drone-dynamic-browse-license-collection-tiles.php' ), // UPLAA Drone: dynamic browse-&-license collection tiles
 		array( 'id' => 77, 'priority' => 20, 'scope' => 'front-end', 'file' => '077-uplaa-277-hide-standalone-estimator-trigger-moved-in.php' ), // UPLAA-277 Hide standalone estimator trigger (moved int
